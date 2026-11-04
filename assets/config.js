@@ -3,10 +3,10 @@
 window.MW_CONFIG = {
   apiBase: "",                 // e.g. "https://api.madwackd.ai" or the Cloud Run URL
   firebase: {                  // Firebase console > Project settings > Your apps > Web app config
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    appId: ""
+    apiKey: "AIzaSyDNSqjDqD5jQBUXQt9h3j1vwiv2TWgAGYY",
+    authDomain: "madwackd-studio.firebaseapp.com",
+    projectId: "madwackd-studio",
+    appId: "1:643956245063:web:a94552d287ac5cf4c96762"
   },
   turnstileSiteKey: ""         // Cloudflare Turnstile site key (public)
 };
