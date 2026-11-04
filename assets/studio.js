@@ -1,16 +1,19 @@
-/* Madwackd Studio v1.3 - studio workspace UI. Talks to the API, or to the in-browser mock when no API URL is set. */
+/* Madwackd Studio v2.0 - studio workspace UI (demo tabs). Talks to the API, or to the in-browser mock when no API URL is set. */
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
   var CREDIT_USD = 0.10;
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function money(c) { return "$" + (c * CREDIT_USD).toFixed(2); }
+  /* Credits cost $0.08 (Business plan) to $0.12 (100-credit pack) each, so dollars show as a range. */
+  function money(c) { return "$" + (c * 0.08).toFixed(2) + " to $" + (c * 0.12).toFixed(2); }
 
   /* ---------- connection ---------- */
   $("api").value = store("mws_api"); $("tok").value = store("mws_tok");
-  function apiBase() { return ($("api").value || "").trim().replace(/\/+$/, ""); }
-  function setMode() { var live = !!apiBase(); $("mode").textContent = live ? "API: " + apiBase().replace(/^https?:\/\//, "") : "Mock mode"; $("mode").className = "mode" + (live ? " live" : ""); }
+  /* v2.0: the workspace tabs below always run on the in-browser demo. Real renders go through the
+     signed-in Live render panel (studio-live.js). The old v1 token connection only works with mws_legacy=1. */
+  function apiBase() { if (store("mws_legacy") !== "1") return ""; return ($("api").value || "").trim().replace(/\/+$/, ""); }
+  function setMode() { var live = !!apiBase(); $("mode").textContent = live ? "API: " + apiBase().replace(/^https?:\/\//, "") : "Demo workspace"; $("mode").className = "mode" + (live ? " live" : ""); }
   setMode();
   $("open-conn").addEventListener("click", function () { $("conn-dlg").showModal(); });
   $("conn-dlg").addEventListener("close", function () { if ($("conn-dlg").returnValue === "save") { store("mws_api", $("api").value.trim()); store("mws_tok", $("tok").value); setMode(); loadProjectList(); refresh(); } });

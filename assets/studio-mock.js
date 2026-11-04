@@ -192,7 +192,7 @@
       var total = lines.reduce(function (a, l) { return a + l.credits; }, 0), rem = pr.budget_credits - pr.spent_credits;
       q.credits = total; q.usd = lines.reduce(function (a, l) { return a + l.provider_usd; }, 0);
       log(pr, "quoted", { shot: /preview|full|shot_still/.test(kind) ? target : "", version: q.version || "", model: q.model || "", credits: total, provider_usd: q.usd, detail: kind + "; " + lines[0].math });
-      return { quote_id: sign(q), kind: kind, lines: lines, total_credits: total, total_price_usd: Math.round(total * CREDIT_USD * 100) / 100, provider_usd: q.usd, budget_credits: pr.budget_credits, remaining_credits: rem, over_budget: total > rem, expires_in_seconds: TTL, policy: "Blocked or failed generations are never charged." };
+      return { quote_id: sign(q), kind: kind, lines: lines, total_credits: total, total_price_usd: Math.round(total * CREDIT_USD * 100) / 100, provider_usd: q.usd, budget_credits: pr.budget_credits, remaining_credits: rem, over_budget: total > rem, expires_in_seconds: TTL, policy: "Technical failures are refunded. Safety-blocked videos and unwanted takes are not." };
     },
     sheet: function (pr, cid, b) { var ch = pr.characters[cid]; if (!ch) throw E(404, "not_found", "Unknown character."); var q = useQuote(pr, b.quote_id, b.confirm, "cast_sheet", cid); ch.sheet = ["front", "three-quarter", "profile"].map(function (v) { return "mock://" + cid + "/" + v; }); charge(pr, q, "cast sheet for " + ch.name); return ch; },
     lock: function (pr, cid, b) { var ch = pr.characters[cid]; if (!ch || !ch.sheet.length) throw E(400, "no_sheet", "Generate the cast sheet, then pick a still to lock."); ch.approved_still = ch.sheet[+b.still_index || 0]; ch.locked = true; log(pr, "character_locked", { detail: ch.name, ref: ch.approved_still }); return ch; },
@@ -219,8 +219,7 @@
       if (tk.status !== "running") return tk;
       var j = S.jobs[tid] || { start: 0 }; if (Date.now() - j.start < 3000) return tk;
       if (j.filter) { tk.status = "filtered"; tk.message = "Mock safety filter: no video returned.";
-        if (tk.credits) { pr.spent_credits -= tk.credits; log(pr, "refunded", { shot: tk.shot, version: tk.version, credits: tk.credits, ref: tid, detail: "filtered (never charged for failures)" }); }
-        if (tk.free) pr.free_previews_used = Math.max(0, pr.free_previews_used - 1);
+        log(pr, "flagged", { shot: tk.shot, version: tk.version, ref: tid, detail: "safety block (not refunded)" });
       } else { tk.status = "done"; tk.video_uri = "mock://" + tid + ".mp4"; tk.signed_url = ""; log(pr, "take_done", { shot: tk.shot, version: tk.version, model: tk.model, ref: tk.video_uri }); }
       return tk;
     },
@@ -229,9 +228,7 @@
       if (tk.status !== "done") throw E(409, "not_done", "Only finished takes can be flagged.");
       if (tk.flag) throw E(409, "already_flagged", "This take was already flagged.");
       tk.flag = b.reason;
-      if (b.reason === "technical" && tk.kind === "full" && !sh.reroll_used && tk.credits) { sh.reroll_used = true; pr.reroll_credits += tk.credits; log(pr, "reroll_credit", { shot: sh.id, credits: tk.credits, ref: tid, detail: "technical fault: " + (b.detail || "") }); msg = "Re-roll credit of " + tk.credits + " credits added. It applies to your next full render."; }
-      else if (b.reason === "technical" && tk.kind === "preview") { msg = "Logged. Previews don't earn re-roll credits; adjust with a director's note and preview again."; log(pr, "flagged", { shot: sh.id, ref: tid, detail: "technical on preview" }); }
-      else if (b.reason === "technical") { msg = "Logged. This shot already used its re-roll credit (one per shot)."; log(pr, "flagged", { shot: sh.id, ref: tid, detail: "technical (no credit)" }); }
+      if (b.reason === "technical") { msg = "Logged for our team. Finished takes aren't refunded; adjust with a director's note and check it with a cheap preview."; log(pr, "flagged", { shot: sh.id, ref: tid, detail: "technical: " + (b.detail || "") }); }
       else { msg = "Creative changes go through director's notes: write what to change, approve the new version, and check it with a preview before the full render."; log(pr, "flagged", { shot: sh.id, ref: tid, detail: "creative" }); }
       return { take: tk, message: msg, reroll_credits: pr.reroll_credits };
     },

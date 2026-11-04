@@ -19,14 +19,92 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Madwackd Studio home"><span class="mw-logo mw-head"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="150px" alt="Madwackd" width="300" height="97"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+    <a class="brand" href="/" aria-label="Madwackd Studio home"><span class="mw-logo mw-head"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="240px" alt="Madwackd" width="300" height="97"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
     <div class="st-head-right">
-      <button class="btn btn-outline btn-sm" type="button" id="open-conn">Connection</button>
+      <a class="btn btn-outline btn-sm" href="/">Home</a><button class="btn btn-outline btn-sm" type="button" id="open-conn" hidden>Connection</button>
     </div>
   </div>
 </header>
 
 <main id="main" class="wrap st-main">
+  <section class="lv" id="live" aria-labelledby="lv-title">
+    <div class="lv-head">
+      <h1 id="lv-title">Live render</h1>
+      <span id="lv-badge" class="mode">Demo</span>
+    </div>
+    <p id="lv-msg" class="lv-msg" role="status" hidden></p>
+
+    <div id="lv-off">
+      <p><b id="lv-off-why">Checking the studio connection...</b> The workspace below runs as a demo in your browser: nothing renders and nothing is charged.</p>
+    </div>
+
+    <div id="lv-signin" hidden>
+      <p>Sign in to render real video. Madwackd Studio is in private early access.</p>
+      <div class="lv-signin">
+        <button class="btn btn-primary" type="button" id="lv-google">Sign in with Google</button>
+        <form id="lv-email-form" class="lv-email" autocomplete="on">
+          <label for="lv-email" class="sr">Email</label>
+          <input id="lv-email" type="email" required placeholder="you@example.com" autocomplete="email">
+          <button class="btn btn-outline" type="submit">Email me a link</button>
+        </form>
+      </div>
+      <p class="fine">No passwords. Sign in with Google or a one-time email link.</p>
+    </div>
+
+    <div id="lv-wait" hidden>
+      <p id="lv-wait-msg"></p>
+      <div class="cta-row"><a class="btn btn-primary" href="/early-access/">See early access</a><button class="btn btn-outline" type="button" data-signout>Sign out</button></div>
+    </div>
+
+    <div id="lv-signup" hidden>
+      <p>One last step to finish signing up.</p>
+      <label class="radio"><input type="checkbox" id="lv-terms"> <span>I'm 18 or older and I agree to the <a href="/terms/">Terms of Service</a>, the <a href="/acceptable-use/">Acceptable Use Policy</a> and the <a href="/privacy/">Privacy Policy</a>.</span></label>
+      <div id="lv-ts-signup" class="lv-ts"></div>
+      <div class="cta-row"><button class="btn btn-primary" type="button" id="lv-signup-go">Finish sign-up</button><button class="btn btn-outline" type="button" data-signout>Sign out</button></div>
+    </div>
+
+    <div id="lv-ready" hidden>
+      <div class="lv-acct">
+        <span>Signed in as <b id="lv-who"></b></span>
+        <span><b id="lv-bal">0</b> credits</span>
+        <button class="btn btn-outline btn-sm" type="button" data-signout>Sign out</button>
+      </div>
+      <p class="err" id="lv-locked" hidden>This account is paused for a safety review. Call 1-800-481-8638.</p>
+      <div class="lv-buy" id="lv-buy"></div>
+      <p class="fine" id="lv-buy-closed">Buying credits opens soon.</p>
+      <div class="lv-owner" id="lv-owner" hidden>
+        <b>Owner tools</b>
+        <div class="st-inline"><label for="lv-grant-n" class="sr">Credits</label><input id="lv-grant-n" type="number" min="1" max="5000" value="50"><button class="btn btn-outline btn-sm" type="button" id="lv-grant">Add owner test credits</button></div>
+        <p class="fine">Owner accounts only. Logged in the credit ledger. Customers get credits only by paying.</p>
+      </div>
+      <form id="lv-form" class="form st-form" autocomplete="off">
+        <label for="lv-prompt">Describe the shot</label>
+        <textarea id="lv-prompt" required maxlength="4000" placeholder="A lanky cartoon alien in a yellow scarf bonks into a lamppost on a rainy city street. Audio: rain, a hollow clang."></textarea>
+        <div class="opts">
+          <div><label for="lv-asp">Aspect</label><select id="lv-asp"><option>16:9</option><option>9:16</option></select></div>
+          <div><label for="lv-sec">Seconds</label><select id="lv-sec"><option>8</option><option>6</option><option>4</option></select></div>
+          <div><label for="lv-q">Quality</label><select id="lv-q"><option value="fast">Fast</option><option value="standard">Top quality</option></select></div>
+          <div><label for="lv-res">Resolution</label><select id="lv-res"><option>1080p</option><option>720p</option></select></div>
+          <div><label class="radio"><input type="checkbox" id="lv-audio" checked> Sound on</label></div>
+        </div>
+        <button class="btn btn-primary" type="submit" id="lv-quote-btn">Get quote</button>
+      </form>
+      <div class="lv-quote st-card" id="lv-quote" hidden>
+        <p class="est" id="lv-q-price"></p>
+        <p id="lv-q-detail"></p>
+        <p class="fine" id="lv-q-bal"></p>
+        <p class="fine">If Google hits a technical error and makes no video, your credits come back automatically. Safety-blocked videos and takes you don't like aren't refunded. This quote expires in 15 minutes.</p>
+        <div id="lv-ts-render" class="lv-ts"></div>
+        <div class="cta-row"><button class="btn btn-primary" type="button" id="lv-confirm">Confirm and render</button><button class="btn btn-outline" type="button" id="lv-cancel">Cancel</button></div>
+      </div>
+      <div id="lv-out" class="st-list"></div>
+      <h2 class="lv-h2">Your renders</h2>
+      <div id="lv-jobs" class="st-takes"></div>
+    </div>
+  </section>
+
+  <h2 class="lv-demo-h">Demo workspace</h2>
+  <p class="fine">Plan, cast, direct and export in a browser demo. Nothing here renders or charges.</p>
   <div class="st-bar" id="bar">
     <div class="st-bar-proj">
       <span id="mode" class="mode">Mock mode</span>
@@ -35,7 +113,7 @@
       <button class="btn btn-primary btn-sm" type="button" id="new-proj">New project</button>
     </div>
     <div class="st-meter" id="meter" hidden>
-      <div class="st-meter-text"><b id="m-spent">0</b> of <b id="m-cap">0</b> credits used &middot; <span id="m-free">0</span> free previews left &middot; re-roll credit <span id="m-reroll">0</span></div>
+      <div class="st-meter-text"><b id="m-spent">0</b> of <b id="m-cap">0</b> credits used &middot; <span id="m-free">0</span> free previews left<span id="m-reroll" hidden>0</span></div>
       <div class="qc-bar"><span id="m-fill" style="width:0"></span></div>
     </div>
   </div>
@@ -53,7 +131,7 @@
 
   <!-- 1. AI Producer -->
   <section class="st-panel" data-panel="producer">
-    <h1>AI Producer</h1>
+    <h2>AI Producer</h2>
     <p class="fine">Describe the video. You'll get a shot list and a budget. Nothing renders or charges until you approve a quote.</p>
     <form id="plan-form" class="form st-form" autocomplete="off">
       <label for="idea">Your idea</label>
@@ -165,7 +243,7 @@
     <div class="form st-form st-budget">
       <label for="cap">Project budget cap (credits)</label>
       <div class="st-inline"><input id="cap" type="number" min="0" step="10"><button class="btn btn-outline btn-sm" type="button" id="cap-save">Save cap</button></div>
-      <p class="fine">1 credit = $0.10. Blocked or failed renders are never charged. Placeholder early-access rates.</p>
+      <p class="fine">Credits cost $0.08 to $0.12 each, depending on your plan or pack. Prompts our safety check blocks cost nothing. Technical failures are refunded; safety-blocked videos aren't. Early-access rates.</p>
     </div>
     <div class="cta-row" style="margin:14px 0"><button class="btn btn-outline" type="button" id="dl-csv">Download rights pack (CSV)</button><button class="btn btn-outline" type="button" id="dl-pdf">Download rights pack (PDF)</button></div>
     <div class="tbl-wrap"><table class="tbl" id="spend-tbl"><thead><tr><th>Time (UTC)</th><th>Event</th><th>Detail</th><th>Credits</th></tr></thead><tbody></tbody></table></div>
@@ -179,7 +257,7 @@
     <p class="est" id="q-total"></p>
     <p class="fine" id="q-budget"></p>
     <p class="err" id="q-over" hidden>This is over the project budget cap. Raise the cap in Spend &amp; rights, or trim the shot.</p>
-    <p class="fine">Blocked or failed generations are never charged. This quote expires in 15 minutes.</p>
+    <p class="fine">Demo only. In the live studio, technical failures are refunded and safety-blocked videos aren't. This quote expires in 15 minutes.</p>
     <div class="cta-row"><button class="btn btn-primary" value="ok" id="q-ok">Confirm</button><button class="btn btn-outline" value="cancel">Cancel</button></div>
   </form>
 </dialog>
@@ -198,5 +276,7 @@
 <script src="/assets/mw-logo.js" defer></script>
 <script src="/assets/studio-mock.js" defer></script>
 <script src="/assets/studio.js" defer></script>
+<script src="/assets/config.js" defer></script>
+<script src="/assets/studio-live.js" defer></script>
 </body>
 </html>

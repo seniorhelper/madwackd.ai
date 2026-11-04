@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.3 - light, Inter only, squared buttons */
+/* Madwackd Studio v2.0 - light, Inter only, squared buttons */
 :root{
   --ink:#0d1330; --text:#2a3150; --muted:#545d7a; --line:#e3e7f3;
   --bg:#ffffff; --soft:#f5f7ff; --soft2:#fff4fa;
@@ -185,6 +185,20 @@ section{padding:64px 0}
 }
 .nav .soon{display:inline-block;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;background:var(--lime);color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:1px 5px;margin-left:4px;vertical-align:2px}
 @media (max-width:1080px) and (min-width:861px){.nav{gap:14px}.nav .nav-phone{display:none}}
+/* ---- v2.0: legal pages + live studio ---- */
+.legal-wrap{max-width:820px;padding-top:36px;padding-bottom:56px}
+.legal-page h1{font-size:clamp(1.8rem,4vw,2.6rem);margin:.4em 0 .3em}
+.legal-page h2{font-size:1.25rem;margin:1.6em 0 .5em}
+.legal-page p,.legal-page li{line-height:1.65;overflow-wrap:anywhere}
+.legal-page ul{padding-left:1.2em}
+@media (min-width:961px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+.plans-wide{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.plan .price small{font-size:.55em;font-weight:700;color:var(--muted)}
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:18px}
+.pack{background:#fff;border:2px solid var(--ink);border-radius:var(--radius);padding:18px;box-shadow:4px 4px 0 var(--cyan);min-width:0}
+.pack h3{margin:0 0 4px}.pack .price{font-size:1.5rem;font-weight:800;color:var(--ink);margin:0 0 6px}.pack p{margin:0 0 8px}
+.legal-draft-banner{background:#fff4c2;border:2px solid #f0b400;color:#3a2a00;padding:10px 14px;border-radius:6px}
+
 /* ---- v1.1 additions: Madwackd logo, quote card, features, studio ---- */
 .brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
 .studio-tag{font-weight:900;font-size:1.02rem;letter-spacing:.02em;text-transform:uppercase;color:#fff;background:var(--ink);padding:3px 8px;border-radius:4px;line-height:1.2}
@@ -194,7 +208,9 @@ section{padding:64px 0}
 .mw-tilt img{display:block;width:100%;height:auto;animation:mwJelly 3.2s ease-in-out infinite;transform-origin:50% 90%;-webkit-user-drag:none;user-select:none}
 .mw-tilt::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 36%,rgba(255,255,255,.62) 46%,rgba(255,255,255,0) 56%) 0 0/250% 100% no-repeat;-webkit-mask:url(/assets/img/madwackd-logo-3d-600.webp) center/100% 100% no-repeat;mask:url(/assets/img/madwackd-logo-3d-600.webp) center/100% 100% no-repeat;mix-blend-mode:screen;animation:mwShine 4.5s ease-in-out infinite}
 .mw-logo.is-hot{filter:drop-shadow(0 8px 8px rgba(120,20,90,.32)) drop-shadow(0 18px 26px rgba(255,46,166,.32)) drop-shadow(0 0 18px rgba(43,180,255,.35))}
-.mw-head{width:132px}
+.mw-head{width:238px}
+.site-header .wrap{height:92px}
+@media (max-width:860px){.site-header .nav{top:100%}}
 .mw-foot{width:200px;max-width:100%}
 .mw-hero{display:block;width:clamp(240px,30vw,400px);margin:0 0 6px -6px;cursor:pointer;animation-duration:5s}
 .mw-hero .mw-tilt::after{animation-duration:3.6s}
@@ -260,7 +276,7 @@ section{padding:64px 0}
 @media (max-width:1180px) and (min-width:861px){.nav{gap:14px}.nav .nav-phone{display:none}}
 @media (max-width:960px){.make-grid{grid-template-columns:repeat(3,1fr)}.feat-grid{grid-template-columns:1fr}}
 @media (max-width:640px){
-  .mw-head{width:104px}.studio-tag{font-size:.85rem;padding:2px 6px}
+  .mw-head{width:187px}.site-header .wrap{height:76px;gap:10px}.studio-tag{font-size:.85rem;padding:2px 6px}
   .mw-hero{width:min(220px,62vw);margin:0 0 2px -4px}
   .hero h1{font-size:1.85rem}
   .make-grid{grid-template-columns:1fr 1fr}.make{min-height:110px}

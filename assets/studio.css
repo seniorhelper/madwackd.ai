@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.3 - studio workspace */
+/* Madwackd Studio v2.0 - studio workspace */
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .btn-sm{min-height:38px;padding:7px 12px;font-size:.9rem}
 .st-head-right{display:flex;align-items:center;gap:10px}
@@ -73,3 +73,25 @@ label.radio input{width:18px;height:18px;margin-top:3px;flex:none}
 @media (max-width:520px){.opts{grid-template-columns:1fr}.st-newbox{grid-template-columns:1fr}.st-head-right .btn{padding:6px 9px}.mode{max-width:34vw}}
 .st-panel{padding:0}
 .st-card select,.st-card input:not([type=checkbox]):not([type=radio]){font:inherit;font-size:1rem;padding:9px 10px;border:1.5px solid #c4cadf;border-radius:6px;background:#fff;color:var(--ink);max-width:100%}
+
+/* v2.0 Live render panel */
+.lv{background:#fff;border:2px solid var(--ink);border-radius:var(--radius);padding:16px 16px 18px;box-shadow:5px 5px 0 var(--lime);margin-bottom:26px;min-width:0}
+.lv-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lv-head h1{font-size:1.7rem;margin:0}
+.lv p{overflow-wrap:anywhere}
+.lv-msg{border-radius:8px;padding:10px 12px;font-weight:600;background:var(--soft);color:var(--ink);margin:10px 0}
+.lv-msg.ok{background:#e6ffc2;color:#145c16}.lv-msg.bad{background:#ffe1e6;color:#5a0010}
+.lv-signin{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.lv-email{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 320px;min-width:0}
+.lv-email input{flex:1 1 200px;min-width:0;font:inherit;font-size:1rem;padding:9px 10px;border:1.5px solid #c4cadf;border-radius:6px}
+.lv-acct{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:8px 0 10px;color:var(--ink)}
+.lv-acct b{overflow-wrap:anywhere}
+.lv-buy{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.lv-owner{border:1.5px dashed var(--ink);border-radius:8px;padding:10px 12px;margin:10px 0 14px;background:#fffbe8}
+.lv-owner input{width:110px;flex:0 0 110px;font:inherit;padding:7px 8px;border:1.5px solid #c4cadf;border-radius:6px}
+.lv-quote{margin:0 0 16px}
+.lv-out video{width:100%;max-width:720px;border-radius:8px;display:block;background:#000}
+.lv-h2{font-size:1.2rem;margin:18px 0 8px}
+.lv-ts{margin:8px 0;min-height:0}
+.lv-demo-h{font-size:1.3rem;margin:0 0 4px}
+.st-head-right [hidden],.lv [hidden]{display:none!important}

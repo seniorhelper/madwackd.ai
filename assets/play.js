@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.3 - interactive demos: live-render storyboard card and the pricing estimator.
+/* Madwackd Studio v2.0 - interactive demos: live-render storyboard card and the pricing estimator.
    Everything here is a code-drawn illustration. Nothing is rendered by an AI model and nothing is sent anywhere. */
 (function () {
   "use strict";
@@ -12,7 +12,8 @@
     return Math.ceil(Math.round(m.usd * secs * takes * m.mult / CREDIT_USD * 1e6) / 1e6);
   }
   var PREVIEW = credits("fast", 4, 1); // a 4-second, low-res preview
-  function money(cr) { return "$" + (cr * CREDIT_USD).toFixed(2); }
+  /* Credits cost $0.08 (Business plan) to $0.12 (100-credit pack) each, so dollars show as a range. */
+  function money(c) { return "$" + (c * 0.08).toFixed(2) + " to $" + (c * 0.12).toFixed(2); }
   function tween(from, to, ms, fn, done) {
     if (RM.matches || ms <= 0) { fn(to); if (done) done(); return; }
     var t0 = performance.now();
