@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.0 - menu, forms, small helpers */
+/* Madwackd Studio v1.3 - menu, forms, small helpers */
 (function () {
   "use strict";
   // Mobile menu

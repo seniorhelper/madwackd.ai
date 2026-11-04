@@ -44,6 +44,7 @@
 </header>
 <main id="main">
 <section class="hero">
+  <canvas class="fx-field" data-dense aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-copy">
       <div class="mw-logo mw-hero" data-mw-big><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="(max-width:640px) 230px, 400px" alt="Madwackd logo" width="300" height="97" fetchpriority="high"></span></div>
@@ -52,16 +53,47 @@
       <p class="sub">Ads, trailers, music videos and more. See the price before every render.</p>
       <div class="cta-row"><a class="btn btn-primary" href="/early-access/">Get early access</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
     </div>
-    <div class="quote-card" role="img" aria-label="A price estimate shown before a render: 40 credits for two 8-second takes">
-  <div class="qc-top"><b>Shot 3 &middot; v2</b><span class="pill ok">Approved</span></div>
-  <p class="qc-prompt">Close-up of the roofer on a sunny suburban roof. Expression: a broad, warm smile. Golden hour.</p>
-  <div class="qc-diff"><del>make him smile more</del> <ins>Expression: a broad, warm smile</ins></div>
-  <div class="qc-math"><span>8 s</span><i>&times;</i><span>Fast model</span><i>&times;</i><span>2 takes</span><i>=</i><strong>40 credits</strong></div>
-  <div class="qc-bar"><span style="width:38%"></span></div>
-  <div class="qc-foot"><small>Project budget: 152 of 400 credits used</small><span class="qc-btn">Confirm render</span></div>
+    <div class="lr-card" id="live-render" data-par="-0.04" aria-labelledby="lr-title">
+  <div class="lr-top"><b id="lr-title">Live storyboard demo</b><span class="pill pill-demo">Demo</span></div>
+  <form class="lr-form" autocomplete="off">
+    <label class="sr-only" for="lr-idea">Your video idea</label>
+    <input id="lr-idea" maxlength="80" placeholder="Coffee shop grand opening ad" value="Coffee shop grand opening ad">
+    <button class="btn btn-primary lr-go" type="submit">Storyboard it</button>
+  </form>
+  <div class="lr-chips" aria-label="Try an idea">
+    <button type="button" data-idea="Roofing company spring promo">Roofing promo</button>
+    <button type="button" data-idea="Indie band music video">Music video</button>
+    <button type="button" data-idea="Sci-fi movie trailer">Movie trailer</button>
+    <button type="button" data-idea="Surf shop summer sale">Surf shop</button>
+  </div>
+  <div class="lr-frames">
+    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>1 &middot; Wide</figcaption></figure>
+    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>2 &middot; Medium</figcaption></figure>
+    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>3 &middot; Close-up</figcaption></figure>
+    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>4 &middot; Title</figcaption></figure>
+    <span class="lr-lock" aria-hidden="true">&#128274; Character Lock</span>
+  </div>
+  <p class="lr-status" data-lr="status" aria-live="polite">Type an idea or pick one above.</p>
+  <div class="lr-diff"><span class="lr-note-l">Director's note</span> <span data-lr="note"></span><div class="lr-dl"><del>Slow pan across the set, calm music</del> <ins></ins></div></div>
+  <div class="lr-meter">
+    <div class="lr-mrow"><span>Price before render</span><strong><span data-lr="cr">0</span> credits <em data-lr="usd">$0.00</em></strong></div>
+    <div class="qc-bar"><span data-lr="bar" style="width:0"></span></div>
+    <small data-lr="math">4 shots &times; 8 s &times; Fast &times; 1 take</small>
+  </div>
+  <p class="lr-fine">Demo only: code-drawn sketches, not AI renders. Credits use early-access placeholder pricing.</p>
 </div>
   </div>
 </section>
+<section class="facts-sec"><div class="wrap">
+  <p class="kicker">Product facts, not hype</p>
+  <div class="facts">
+    <div class="fact"><b><span data-count="4">4</span> s</b><span>Low-res preview before a full render</span></div>
+    <div class="fact"><b><span data-count="8">8</span> s</b><span>Longest single shot (4, 6 or 8 s), stitched into longer videos</span></div>
+    <div class="fact"><b><span data-count="2">2</span></b><span>Aspect ratios: 9:16 and 16:9</span></div>
+    <div class="fact"><b><span data-count="0.10" data-pre="$">$0.10</span></b><span>Per credit (early-access placeholder)</span></div>
+    <div class="fact"><b><span data-count="0">0</span></b><span>Credits charged for blocked or failed renders</span></div>
+  </div>
+</div></section>
 
 <section>
   <div class="wrap">
@@ -93,20 +125,61 @@
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <p class="kicker">How it works</p>
-    <h2>Idea to export in five steps.</h2>
-    <ol class="steps">
-      <li><b>Pitch the idea.</b> The AI Producer turns it into a shot list and a budget.</li>
-      <li><b>Lock your cast.</b> Approve each character's look once.</li>
-      <li><b>Preview first.</b> A quick 4-second, low-res take for a few credits to check the direction.</li>
-      <li><b>Confirm and render.</b> See the quote, approve it, and the full shots render.</li>
-      <li><b>Add voice and export.</b> Voiceover, music and captions, stitched into one file.</li>
-    </ol>
-    <p style="margin-top:18px"><a class="btn btn-outline" href="/how-it-works/">See the full workflow</a></p>
+<section class="est-sec" id="estimate"><div class="wrap">
+  <p class="kicker">Pricing estimator</p>
+  <h2>Estimate a video before you make it.</h2>
+  <div class="est" data-estimator>
+    <div class="est-in">
+      <div class="est-row"><label for="es-sec">Video length</label><output data-eo="sec" for="es-sec">16 s</output></div>
+      <input type="range" id="es-sec" data-es="sec" min="4" max="120" step="4" value="16">
+      <fieldset class="seg"><legend>Model</legend>
+        <label><input type="radio" name="es-model" data-es="model" value="fast" checked><span>Fast<small>2.5 credits/s</small></span></label>
+        <label><input type="radio" name="es-model" data-es="model" value="quality"><span>Quality<small>9 credits/s</small></span></label>
+      </fieldset>
+      <div class="est-row"><label for="es-takes">Takes per shot</label><output data-eo="takes" for="es-takes">2</output></div>
+      <input type="range" id="es-takes" data-es="takes" min="1" max="4" step="1" value="2">
+      <label class="chk"><input type="checkbox" data-es="prev" checked> Add a 4-second, low-res preview per shot</label>
+    </div>
+    <div class="est-out" aria-live="polite">
+      <span class="est-l">Estimated price</span>
+      <p class="est-big"><b data-eo="cr">0</b> credits <em data-eo="usd">$0.00</em></p>
+      <div class="qc-bar"><span data-eo="bar" style="width:0"></span></div>
+      <ul class="est-lines" data-eo="lines"></ul>
+      <p class="est-fine"><b>Early-access estimate.</b> Placeholder pricing to show how quotes work, not a final offer. 1 credit = $0.10. Blocked or failed renders are never charged. The studio shows the exact quote before every render.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="tl-sec" data-timeline>
+  <div class="wrap tl-grid">
+    <div class="tl-side">
+      <p class="kicker">How it works</p>
+      <h2>Idea to export in seven moves.</h2>
+      <div class="tl-ring" aria-hidden="true"><svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="48"/><circle class="v" cx="55" cy="55" r="48"/></svg><span><b data-tl="pct">0</b>/7</span></div>
+      <p class="tl-cur" aria-hidden="true" data-tl="cur">Start with an idea</p>
+      <p><a class="btn btn-outline" href="/how-it-works/">See the full workflow</a></p>
+    </div>
+    <div class="tl-track"><span class="tl-rail" aria-hidden="true"><span class="tl-fill"></span></span><ol class="tl-list"><li class="tl-step" data-name="Idea"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 1 3.5 10.9V17h-7v-3.1A6 6 0 0 1 12 3zM9 20h6"/></svg></span><div><b>1. Idea</b><p>Pitch it in a sentence. Ads, trailers, music videos, explainers.</p></div></li><li class="tl-step" data-name="Shot list"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><b>2. Shot list</b><p>The AI Producer turns it into shots, lengths and a budget.</p></div></li><li class="tl-step" data-name="Lock cast"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg></span><div><b>3. Lock cast</b><p>Approve each character once. Character Lock keeps faces the same.</p></div></li><li class="tl-step" data-name="Preview"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4l14 8-14 8z"/></svg></span><div><b>4. Preview</b><p>A 4-second, low-res take for a few credits checks the direction.</p></div></li><li class="tl-step" data-name="Render"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H4zM8 21h8M12 17v4"/></svg></span><div><b>5. Render</b><p>See the quote, confirm it, and the full shots render on Veo 3.1.</p></div></li><li class="tl-step" data-name="Voice"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><div><b>6. Voice</b><p>Stock voices, your upload, or record yourself, with consent checks.</p></div></li><li class="tl-step" data-name="Export"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></span><div><b>7. Export</b><p>Shots, voice, music and captions stitched into one 9:16 or 16:9 file.</p></div></li></ol></div>
   </div>
 </section>
+
+<section class="reel-sec" id="showreel"><div class="wrap">
+  <p class="kicker">Showreel</p>
+  <h2>Real renders, coming soon.</h2>
+  <div class="reel-grid">
+    <figure class="reel-card reel-soon">
+      <div class="reel-media">
+        <video class="reel-video" data-inview data-src="" muted loop playsinline preload="none" aria-label="Madwackd Studio showreel"></video>
+        <div class="leader" aria-hidden="true"><span class="ld-ring"></span><span class="ld-sweep"></span><span class="ld-n"><i>3</i><i>2</i><i>1</i></span><span class="ld-cross"></span></div>
+      </div>
+      <figcaption><b>Madwackd Studio&trade; showreel</b><span>Coming soon. Real Veo 3.1 clips from early-access projects will play here, with permission.</span></figcaption>
+    </figure>
+    <figure class="reel-card">
+      <div class="reel-media"><video class="reel-video" data-inview data-src="/assets/media/earth-teaser-720.mp4" muted loop playsinline preload="none" poster="/assets/media/earth-teaser-poster.jpg" width="1280" height="720" aria-label="THE EARTH MOVIE title teaser"></video></div>
+      <figcaption><b>From our studio: THE EARTH MOVIE (Summer 2027)</b><span>An elemental title teaser. <a href="https://www.theearthmovie.com">Visit theearthmovie.com</a></span></figcaption>
+    </figure>
+  </div>
+</div></section>
 
 <section class="section-pink">
   <div class="wrap grid-2" style="align-items:center">
@@ -171,5 +244,7 @@
 <div class="heart-line"><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2.2 4.5 6 4.5c2.2 0 3.6 1.2 4.4 2.5h3.2c.8-1.3 2.2-2.5 4.4-2.5 3.8 0 5.7 3.9 4 7.2C19.5 16.4 12 21 12 21z"/></svg><a href="https://eyetoad.com">Need a website?</a></div>
 <script src="/assets/site.js" defer></script>
 <script src="/assets/mw-logo.js" defer></script>
+<script src="/assets/fx.js" defer></script>
+<script src="/assets/play.js" defer></script>
 </body>
 </html>

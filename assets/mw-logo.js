@@ -1,4 +1,4 @@
-/* Madwackd logo: cursor-following 3D tilt, tap bounce-squash and sparkle burst. Vanilla, no deps. */
+/* Madwackd logo (v1.3): cursor-following 3D tilt, tap bounce-squash and sparkle burst. Vanilla, no deps. */
 (function () {
   "use strict";
   var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
@@ -107,13 +107,13 @@
     mraf = 0;
     for (var i = 0; i < states.length; i++) {
       var s = states[i];
-      if (!s.big && !s.hover) continue;
       var r = s.L.getBoundingClientRect();
       if (r.bottom < 0 || r.top > window.innerHeight) continue;
-      var reach = s.hover ? Math.max(r.width, r.height) * 0.6 : Math.max(420, r.width * 1.6);
+      /* v1.3: small logos also lean gently toward the cursor */
+      var reach = s.hover ? Math.max(r.width, r.height) * 0.6 : s.big ? Math.max(420, r.width * 1.6) : 640;
       var dx = (mx - (r.left + r.width / 2)) / reach, dy = (my - (r.top + r.height / 2)) / reach;
       dx = Math.max(-1, Math.min(1, dx)); dy = Math.max(-1, Math.min(1, dy));
-      var amp = s.hover ? 1 : 0.6;
+      var amp = s.hover ? 1 : s.big ? 0.6 : 0.3;
       s.try_ = dx * 22 * amp; s.trx = -dy * 16 * amp;
       wake(s);
     }

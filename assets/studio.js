@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.1 - studio workspace UI. Talks to the API, or to the in-browser mock when no API URL is set. */
+/* Madwackd Studio v1.3 - studio workspace UI. Talks to the API, or to the in-browser mock when no API URL is set. */
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };

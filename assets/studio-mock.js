@@ -1,4 +1,4 @@
-/* Madwackd Studio v1.1 - in-browser mock of the project API (same routes and response shapes
+/* Madwackd Studio v1.3 - in-browser mock of the project API (same routes and response shapes
    as api/app/routes.py). Nothing leaves the browser and nothing is billed. Used when no API URL is set. */
 (function () {
   "use strict";
