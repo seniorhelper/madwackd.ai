@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; form-action https://formsubmit.co; base-uri 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>AI Voiceover for Video: Stock, Upload or Record | Madwackd Studio&trade;</title>
 <meta name="description" content="Add AI voiceovers to your video: stock voices, upload your own, or record in the browser, with a consent check for every custom voice.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://www.madwackd.ai/voice/">
-<meta name="theme-color" content="#ff2ea6">
+<meta name="theme-color" content="#0c0d10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -25,7 +27,7 @@
 <meta name="twitter:image" content="https://www.madwackd.ai/assets/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.madwackd.ai/#org", "name": "Madwackd Studio", "url": "https://www.madwackd.ai/", "logo": "https://www.madwackd.ai/assets/icon-512.png", "telephone": "1-800-481-8638", "parentOrganization": {"@type": "Organization", "name": "Madwackd Productions", "url": "https://www.madwackd.com/"}, "address": {"@type": "PostalAddress", "streetAddress": "1001 Bannock St #660", "addressLocality": "Denver", "addressRegion": "CO", "postalCode": "80204", "addressCountry": "US"}, "areaServed": "Worldwide", "contactPoint": {"@type": "ContactPoint", "telephone": "1-800-481-8638", "contactType": "sales", "areaServed": "Worldwide", "availableLanguage": "English"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I clone my own voice?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, in early access. Record in the browser or upload a sample, tick the consent box, and confirm it's your voice."}}, {"@type": "Question", "name": "Can I use someone else's voice?", "acceptedAnswer": {"@type": "Answer", "text": "Only with their written permission, and you'll name them in the consent step. We never make voices of celebrities or public figures."}}, {"@type": "Question", "name": "Do the characters lip-sync?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. Lip-sync is on the roadmap. Today, voiceovers play over the video, and the video model can generate short spoken lines itself."}}, {"@type": "Question", "name": "Which voice engines do you use?", "acceptedAnswer": {"@type": "Answer", "text": "We use leading commercial text-to-speech providers through their business APIs, behind one voice layer, so we can pick the best voice for each job."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.madwackd.ai/"}, {"@type": "ListItem", "position": 2, "name": "Voice", "item": "https://www.madwackd.ai/voice/"}]}]}</script>
 </head>
@@ -33,10 +35,11 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Madwackd Studio home"><span class="mw-logo mw-head"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="240px" alt="Madwackd" width="300" height="97" fetchpriority="high"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+    <a class="brand" href="/" aria-label="Madwackd Studio home"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="bm-bars" d="M3 5h7v22H3zM22 5h7v22h-7z"/><path class="bm-play" d="M11 5h10l-5 13z"/></svg><span class="brand-word">Madwackd <span>Studio</span><sup>&trade;</sup></span></a>
     <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span></button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="/features/">Features</a><a href="/how-it-works/">How it works</a><a href="/voice/" aria-current="page">Voice</a><a href="/pricing/">Pricing</a><a href="/producers/">Producers</a>
+      <a href="/studio/">Open studio</a>
       <a class="nav-phone" href="tel:+18004818638">1-800-481-8638</a>
       <a class="btn btn-primary" href="/early-access/">Get early access</a>
     </nav>
@@ -44,7 +47,6 @@
 </header>
 <main id="main">
 <section class="page-hero">
-  <canvas class="fx-field" aria-hidden="true"></canvas>
   <div class="wrap">
     <div>
       <p class="kicker">Voice</p>
@@ -56,9 +58,9 @@
   </div>
 </section>
 <section><div class="wrap grid-3">
-  <div class="card"><div class="ico p">&#127897;</div><h3>Stock voices</h3><p>Narrator, trailer, upbeat promo, friendly neighbor and documentary styles to start, with more at launch.</p><span class="pill ea">Early access</span></div>
-  <div class="card"><div class="ico c">&#128228;</div><h3>Upload a voice</h3><p>Upload a clean sample of your own voice, or one you have written permission to use.</p><span class="pill ea">Early access</span></div>
-  <div class="card"><div class="ico l">&#127908;</div><h3>Record in the browser</h3><p>Hit record, read the short script, and stop. No app to install.</p><span class="pill ea">Early access</span></div>
+  <div class="card"><div class="ico"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-voice"/></svg></div><h3>Stock voices</h3><p>Narrator, trailer, upbeat promo, friendly neighbor and documentary styles to start, with more at launch.</p><span class="pill ea">Early access</span></div>
+  <div class="card"><div class="ico"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-upload"/></svg></div><h3>Upload a voice</h3><p>Upload a clean sample of your own voice, or one you have written permission to use.</p><span class="pill ea">Early access</span></div>
+  <div class="card"><div class="ico"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-mic"/></svg></div><h3>Record in the browser</h3><p>Hit record, read the short script, and stop. No app to install.</p><span class="pill ea">Early access</span></div>
 </div></section>
 <section class="section-soft"><div class="wrap grid-2" style="align-items:center">
   <div>
@@ -82,7 +84,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><span class="mw-logo mw-foot"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="220px" alt="Madwackd" width="300" height="97" loading="lazy"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+        <a class="brand" href="/" aria-label="Madwackd Studio home"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="bm-bars" d="M3 5h7v22H3zM22 5h7v22h-7z"/><path class="bm-play" d="M11 5h10l-5 13z"/></svg><span class="brand-word">Madwackd <span>Studio</span><sup>&trade;</sup></span></a>
         <p style="margin-top:10px">Madwackd Studio&trade; turns ideas into finished video with voice. <a href="https://www.madwackd.com/"><strong>A Madwackd Productions&trade; studio.</strong></a> Headquartered in Denver, Colorado, and making video for businesses and creators worldwide.</p>
         <p><a href="tel:+18004818638"><strong>1-800-481-8638</strong></a><br>1001 Bannock St #660, Denver, CO 80204</p>
       </div>
@@ -103,8 +105,7 @@
           <li><a href="/about/">About</a></li>
           <li><a href="/early-access/">Early access</a></li>
           <li><a href="https://www.madwackd.com/">Madwackd Productions&trade;</a></li>
-          <li><a href="/llms.txt">llms.txt</a></li>
-        </ul>
+                  </ul>
       </div>
       <div>
         <h4>Legal</h4>
@@ -122,7 +123,6 @@
 </footer>
 <div class="heart-line"><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2.2 4.5 6 4.5c2.2 0 3.6 1.2 4.4 2.5h3.2c.8-1.3 2.2-2.5 4.4-2.5 3.8 0 5.7 3.9 4 7.2C19.5 16.4 12 21 12 21z"/></svg><a href="https://eyetoad.com">Need a website?</a></div>
 <script src="/assets/site.js" defer></script>
-<script src="/assets/mw-logo.js" defer></script>
 <script src="/assets/fx.js" defer></script>
 
 </body>

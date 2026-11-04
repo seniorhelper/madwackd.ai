@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg"><defs><style>.l{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}.t{fill:#e5341d}</style></defs>
+<symbol id="i-quote" viewBox="0 0 24 24"><path class="l" d="M5 3h14v18l-3.5-2-3.5 2-3.5-2L5 21zM8.5 8h7M8.5 12h3.5"/><circle class="t" cx="15" cy="12.5" r="1.75"/></symbol>
+<symbol id="i-notes" viewBox="0 0 24 24"><path class="l" d="M3 10h18v11H3zM3 10 2.2 6.5l17.5-4L20.6 6zM7 5.6 9 9.7M12 4.5l2 4.1M7 15h7"/><circle class="t" cx="17.5" cy="15.5" r="1.75"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><path class="l" d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5M9 11V9.5a3 3 0 0 1 6 0V11M8 11h8v6H8z"/><circle class="t" cx="12" cy="14" r="1.25"/></symbol>
+<symbol id="i-voice" viewBox="0 0 24 24"><path class="l" d="M3 10v4M7 7v10M11 3v18M15 7v10"/><circle class="t" cx="20" cy="12" r="2.25"/></symbol>
+<symbol id="i-export" viewBox="0 0 24 24"><path class="l" d="M2.5 9h13v9h-13zM15.5 5h6v15h-6"/><circle class="t" cx="9" cy="13.5" r="1.75"/></symbol>
+<symbol id="i-rights" viewBox="0 0 24 24"><path class="l" d="M5 2.5h10l4 4V21.500H5zM15 2.500V7h4M8.500 11h7M8.500 14.500h3"/><circle class="t" cx="15.500" cy="17" r="1.750"/></symbol>
+<symbol id="i-ad" viewBox="0 0 24 24"><path class="l" d="M7 2.500h10v19H7zM10 18h4"/><path class="t" d="M10.500 8v6l5-3z"/></symbol>
+<symbol id="i-trailer" viewBox="0 0 24 24"><path class="l" d="M2 5h20v14H2zM2 8.500h20M2 15.500h20"/><path class="t" d="m10 10 4.500 2-4.500 2z"/></symbol>
+<symbol id="i-music" viewBox="0 0 24 24"><path class="l" d="M2.500 5h19v14h-19zM6 10.500v3M9 9v6M15 9v6M18 10.500v3"/><circle class="t" cx="12" cy="12" r="1.750"/></symbol>
+<symbol id="i-explain" viewBox="0 0 24 24"><path class="l" d="M2.500 4h19v13h-19zM6 21h12M7 13.500h10"/><circle class="t" cx="7.500" cy="8.500" r="1.750"/></symbol>
+<symbol id="i-social" viewBox="0 0 24 24"><path class="l" d="M9 2.500h9.500v16H9zM5.500 6v15.500H15"/><circle class="t" cx="13.750" cy="10.500" r="1.750"/></symbol>
+<symbol id="i-idea" viewBox="0 0 24 24"><path class="l" d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/><circle class="t" cx="12" cy="12" r="2"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path class="l" d="M3 4.500h5v4H3zM3 15.500h5v4H3zM11.500 6.500H21M11.500 17.500H21"/><circle class="t" cx="13" cy="12" r="1.500"/></symbol>
+<symbol id="i-preview" viewBox="0 0 24 24"><path class="l" d="M2.500 5h19v14h-19zM8.500 5v14M15 5v14M2.500 12h19"/><path class="t" d="M9.250 12.750h5v5.500h-5z"/></symbol>
+<symbol id="i-render" viewBox="0 0 24 24"><path class="l" d="M2.500 4h19v13h-19zM2.500 20.500h19"/><path class="t" d="M2.500 19.750h11v1.500h-11z"/><path class="l" d="m10 8 5 2.500-5 2.500z"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path class="l" d="M12 15V4M7.500 8.500 12 4l4.500 4.500M3 14v6.500h18V14"/><circle class="t" cx="17.500" cy="17" r="1.500"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><path class="l" d="M9 3h6v11H9zM5 11v3a7 7 0 0 0 14 0v-3M12 21v1.500"/><circle class="t" cx="12" cy="7" r="1.500"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path class="l" d="M4 12h15M13.500 6l6 6-6 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path class="l" d="m4.500 12.500 5 5 10-11"/></symbol>
+</svg>

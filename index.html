@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; form-action https://formsubmit.co; base-uri 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Madwackd Studio&trade;: AI Video Generator With Voice | Ads, Trailers, Music Videos</title>
 <meta name="description" content="Turn your ideas into finished video with voice. AI video studio for ads, trailers, music videos and explainers, with a price before every render. Early access.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://www.madwackd.ai/">
-<meta name="theme-color" content="#ff2ea6">
+<meta name="theme-color" content="#0c0d10">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -25,7 +27,7 @@
 <meta name="twitter:image" content="https://www.madwackd.ai/assets/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.madwackd.ai/#org", "name": "Madwackd Studio", "url": "https://www.madwackd.ai/", "logo": "https://www.madwackd.ai/assets/icon-512.png", "telephone": "1-800-481-8638", "parentOrganization": {"@type": "Organization", "name": "Madwackd Productions", "url": "https://www.madwackd.com/"}, "address": {"@type": "PostalAddress", "streetAddress": "1001 Bannock St #660", "addressLocality": "Denver", "addressRegion": "CO", "postalCode": "80204", "addressCountry": "US"}, "areaServed": "Worldwide", "contactPoint": {"@type": "ContactPoint", "telephone": "1-800-481-8638", "contactType": "sales", "areaServed": "Worldwide", "availableLanguage": "English"}}, {"@type": "SoftwareApplication", "@id": "https://www.madwackd.ai/#app", "name": "Madwackd Studio", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "AI video generator with voice", "operatingSystem": "Web browser", "url": "https://www.madwackd.ai/", "publisher": {"@id": "https://www.madwackd.ai/#org"}, "description": "AI video studio in early access. Turn ideas into finished video with voice: ads, trailers, music videos, explainers and social clips, with a price estimate before every render.", "featureList": ["Price estimate before every render", "Per-project budget cap", "Director's notes with versioned prompts", "Character Lock for consistent faces", "Stock, uploaded and recorded voices", "Timeline export in 9:16 and 16:9", "Rights pack per project", "Low-cost low-res preview before full renders"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Early-access waitlist"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Madwackd Studio?", "acceptedAnswer": {"@type": "Answer", "text": "An AI video studio that turns an idea into a finished video with voice: ads, trailers, music videos, explainers and social clips. You see the price before every render, keep characters consistent from shot to shot, and download a rights pack for every project. It's in early access."}}, {"@type": "Question", "name": "Is it only for ads?", "acceptedAnswer": {"@type": "Answer", "text": "No. Ads are a big part of it, but the same workflow makes movie trailers, music videos, explainers, product demos and short social clips in 9:16 and 16:9."}}, {"@type": "Question", "name": "How do I know what a render will cost?", "acceptedAnswer": {"@type": "Answer", "text": "Every render starts with a quote: seconds times model times takes, in credits. You confirm it before anything is spent, each project has a budget cap. Prompts our safety check blocks cost nothing, and if Google hits a technical error and makes no video, the credits come back automatically."}}, {"@type": "Question", "name": "What if I don't like a shot?", "acceptedAnswer": {"@type": "Answer", "text": "Takes you don't like aren't refunded, so start with a low-cost, low-res 4-second preview before the full render. Fix the direction with director's notes and another cheap preview, then render the full shot."}}, {"@type": "Question", "name": "Can the video have a voice?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, from day one. Pick a stock voice, upload a voice, or record your own in the browser. Custom voices need a consent check: your own voice, or written permission from the speaker."}}, {"@type": "Question", "name": "Which AI model makes the video?", "acceptedAnswer": {"@type": "Answer", "text": "Google Veo 3.1 through Google Cloud's Vertex AI, using generally available model versions. Every clip carries Google's invisible SynthID watermark."}}, {"@type": "Question", "name": "Can I put a real celebrity in my video?", "acceptedAnswer": {"@type": "Answer", "text": "No. Requests for a real person's name or likeness are blocked. Use original characters, your own product, or people who've signed a release."}}, {"@type": "Question", "name": "Can a person produce it for me?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hire a Madwackd producer: Junior, Senior or Executive packages, from a single social ad to a full trailer. See human producers."}}]}]}</script>
 </head>
@@ -33,10 +35,11 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Madwackd Studio home"><span class="mw-logo mw-head"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="240px" alt="Madwackd" width="300" height="97" fetchpriority="high"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+    <a class="brand" href="/" aria-label="Madwackd Studio home"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="bm-bars" d="M3 5h7v22H3zM22 5h7v22h-7z"/><path class="bm-play" d="M11 5h10l-5 13z"/></svg><span class="brand-word">Madwackd <span>Studio</span><sup>&trade;</sup></span></a>
     <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span></button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="/features/">Features</a><a href="/how-it-works/">How it works</a><a href="/voice/">Voice</a><a href="/pricing/">Pricing</a><a href="/producers/">Producers</a>
+      <a href="/studio/">Open studio</a>
       <a class="nav-phone" href="tel:+18004818638">1-800-481-8638</a>
       <a class="btn btn-primary" href="/early-access/">Get early access</a>
     </nav>
@@ -44,84 +47,161 @@
 </header>
 <main id="main">
 <section class="hero">
-  <canvas class="fx-field" data-dense aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="hero-copy">
-      <div class="mw-logo mw-hero" data-mw-big><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="(max-width:640px) 230px, 400px" alt="Madwackd logo" width="300" height="97" fetchpriority="high"></span></div>
-      <span class="badge"><i></i> Madwackd Studio&trade; &middot; Early access</span>
-      <h1>Turn your ideas into finished video <span class="hl">&mdash; with voice.</span></h1>
-      <p class="sub">Ads, trailers, music videos and more. See the price before every render.</p>
+    <p class="hero-status"><span class="tally" aria-hidden="true"></span><span>Early access. Built on Google Veo 3.1.</span></p>
+    <h1>AI video, directed.<br><span class="hl">Priced before it rolls.</span></h1>
+    <div class="hero-row">
+      <p class="sub">Ads, trailers and music videos, finished with voice. Every render gets a quote, and nothing is spent until you approve it.</p>
       <div class="cta-row"><a class="btn btn-primary" href="/early-access/">Get early access</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
     </div>
-    <div class="lr-card" id="live-render" data-par="-0.04" aria-labelledby="lr-title">
-  <div class="lr-top"><b id="lr-title">Live storyboard demo</b><span class="pill pill-demo">Demo</span></div>
-  <form class="lr-form" autocomplete="off">
-    <label class="sr-only" for="lr-idea">Your video idea</label>
-    <input id="lr-idea" maxlength="80" placeholder="Coffee shop grand opening ad" value="Coffee shop grand opening ad">
-    <button class="btn btn-primary lr-go" type="submit">Storyboard it</button>
-  </form>
-  <div class="lr-chips" aria-label="Try an idea">
-    <button type="button" data-idea="Roofing company spring promo">Roofing promo</button>
-    <button type="button" data-idea="Indie band music video">Music video</button>
-    <button type="button" data-idea="Sci-fi movie trailer">Movie trailer</button>
-    <button type="button" data-idea="Surf shop summer sale">Surf shop</button>
-  </div>
-  <div class="lr-frames">
-    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>1 &middot; Wide</figcaption></figure>
-    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>2 &middot; Medium</figcaption></figure>
-    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>3 &middot; Close-up</figcaption></figure>
-    <figure class="lr-f"><canvas width="320" height="180"></canvas><figcaption>4 &middot; Title</figcaption></figure>
-    <span class="lr-lock" aria-hidden="true">&#128274; Character Lock</span>
-  </div>
-  <p class="lr-status" data-lr="status" aria-live="polite">Type an idea or pick one above.</p>
-  <div class="lr-diff"><span class="lr-note-l">Director's note</span> <span data-lr="note"></span><div class="lr-dl"><del>Slow pan across the set, calm music</del> <ins></ins></div></div>
-  <div class="lr-meter">
-    <div class="lr-mrow"><span>Price before render</span><strong><span data-lr="cr">0</span> credits <em data-lr="usd">$0.00</em></strong></div>
-    <div class="qc-bar"><span data-lr="bar" style="width:0"></span></div>
-    <small data-lr="math">4 shots &times; 8 s &times; Fast &times; 1 take</small>
-  </div>
-  <p class="lr-fine">Demo only: code-drawn sketches, not AI renders. Credits use early-access placeholder pricing.</p>
-</div>
+    <div class="monitor" data-monitor>
+      <div class="mon-bar"><span><span class="tally" aria-hidden="true"></span><b>Quote panel</b></span><span>Interface preview</span></div>
+      <div class="mon-main">
+        <div class="mon-view">
+          <img data-mon="view" src="/assets/img/earth-orbit-960.webp" srcset="/assets/img/earth-orbit-960.webp 960w, /assets/img/earth-orbit-1920.webp 1920w" sizes="(max-width:1040px) 100vw, 840px" width="960" height="540" alt="Still from THE EARTH MOVIE: Earth from orbit with glowing red city lights" fetchpriority="high">
+          <span class="mon-safe" aria-hidden="true"></span>
+          <span class="mon-tag tl" data-mon="label">Shot 01, City lights</span>
+          <span class="mon-tag br" data-mon="tc">00:00:08:00</span>
+        </div>
+        <div class="mon-quote" role="group" aria-label="Quote controls">
+          <h2>Try a quote for this shot</h2>
+          <fieldset class="mseg"><legend>Length</legend><div>
+            <label><input type="radio" name="mon-sec" value="4"><span>4 s</span></label>
+            <label><input type="radio" name="mon-sec" value="6"><span>6 s</span></label>
+            <label><input type="radio" name="mon-sec" value="8" checked><span>8 s</span></label>
+          </div></fieldset>
+          <fieldset class="mseg"><legend>Model</legend><div>
+            <label><input type="radio" name="mon-model" value="fast" checked><span>Fast</span></label>
+            <label><input type="radio" name="mon-model" value="quality"><span>Quality</span></label>
+          </div></fieldset>
+          <fieldset class="mseg"><legend>Takes</legend><div>
+            <label><input type="radio" name="mon-takes" value="1" checked><span>1</span></label>
+            <label><input type="radio" name="mon-takes" value="2"><span>2</span></label>
+            <label><input type="radio" name="mon-takes" value="3"><span>3</span></label>
+          </div></fieldset>
+          <div class="mon-total" aria-live="polite">
+            <p class="mon-num"><span data-mon="cr">20</span><small>credits</small></p>
+            <p class="mon-usd" data-mon="usd">$1.60 to $2.40</p>
+            <p class="mon-math" data-mon="math">8 s &times; Fast &times; 1 take</p>
+            <button class="btn mon-approve" type="button" data-mon="approve">Approve quote</button>
+            <p class="mon-status" data-mon="status">Nothing is spent until you approve.</p>
+          </div>
+        </div>
+      </div>
+      <ol class="mon-strip" aria-label="Shots in this preview">
+        <li><button type="button" data-shot="Shot 01, City lights" aria-pressed="true"><span class="mon-thumb"><img src="/assets/img/earth-orbit-960.webp" data-full="/assets/img/earth-orbit-1920.webp" data-alt="Still from THE EARTH MOVIE: Earth from orbit with glowing red city lights" alt="" width="960" height="540" loading="lazy"></span>01 City lights</button></li>
+        <li><button type="button" data-shot="Shot 02, The coast" aria-pressed="false"><span class="mon-thumb"><img src="/assets/img/earth-orbit-960.webp" data-full="/assets/img/earth-orbit-1920.webp" data-alt="Close crop of the same still: a glowing coastline from orbit" alt="" width="960" height="540" loading="lazy" style="transform:scale(1.8);transform-origin:45% 55%"></span>02 The coast</button></li>
+        <li><button type="button" data-shot="Shot 03, Earth wide" aria-pressed="false"><span class="mon-thumb"><img src="/assets/img/earth-face-960.webp" data-full="/assets/img/earth-face-1920.webp" data-alt="Still from THE EARTH MOVIE: the planet Earth with a sleeping face formed from clouds" alt="" width="960" height="540" loading="lazy"></span>03 Earth wide</button></li>
+        <li><button type="button" data-shot="Shot 04, Close on the eyes" aria-pressed="false"><span class="mon-thumb"><img src="/assets/img/earth-face-960.webp" data-full="/assets/img/earth-face-1920.webp" data-alt="Close crop of the same still: closed eyes made of clouds" alt="" width="960" height="540" loading="lazy" style="transform:scale(1.9);transform-origin:50% 30%"></span>04 Close on the eyes</button></li>
+      </ol>
+    </div>
+    <p class="mon-cap">Interface preview with early-access pricing. Frames are stills from THE EARTH MOVIE, our own AI-made feature, and nothing in this panel renders or charges.</p>
   </div>
 </section>
-<section class="facts-sec"><div class="wrap">
-  <p class="kicker">Product facts, not hype</p>
-  <div class="facts">
-    <div class="fact"><b><span data-count="4">4</span> s</b><span>Low-res preview before a full render</span></div>
-    <div class="fact"><b><span data-count="8">8</span> s</b><span>Longest single shot (4, 6 or 8 s), stitched into longer videos</span></div>
-    <div class="fact"><b><span data-count="2">2</span></b><span>Aspect ratios: 9:16 and 16:9</span></div>
-    <div class="fact"><b><span data-count="0.08" data-pre="$">$0.08</span></b><span>Per credit and up (early access)</span></div>
-    <div class="fact"><b><span data-count="0">0</span></b><span>Credits charged for prompts our safety check blocks</span></div>
-  </div>
-</div></section>
+
+<section class="facts-sec"><div class="wrap"><div class="facts">
+  <div class="fact"><b>Google Veo 3.1</b><span>Generally available models, run through Google Cloud's Vertex AI.</span></div>
+  <div class="fact"><b>Quote, then confirm</b><span>Seconds &times; model &times; takes, shown before any credit is spent.</span></div>
+  <div class="fact"><b>0 credits for blocked prompts</b><span>Technical failures with no video are refunded automatically.</span></div>
+  <div class="fact"><b>Receipts on every project</b><span>Prompts, models, dates and voice consent, in one rights pack.</span></div>
+</div></div></section>
 
 <section>
   <div class="wrap">
-    <p class="kicker">What you can make</p>
-    <h2>One studio. Every kind of video.</h2>
-    <div class="make-grid">
-      <div class="make m1"><b>Ads</b><span>9:16 and 16:9 spots that sell</span></div>
-      <div class="make m2"><b>Trailers</b><span>Movie and launch trailers</span></div>
-      <div class="make m3"><b>Music videos</b><span>Your track, your look</span></div>
-      <div class="make m4"><b>Explainers</b><span>Clear, voiced walk-throughs</span></div>
-      <div class="make m5"><b>Social clips</b><span>Hooks for Reels, Shorts and TikTok</span></div>
+    <div class="sec-head">
+      <div><p class="kicker">Why it's different</p><h2>Built for finished video, not random clips.</h2></div>
+      <p>Model access is the easy part. These are the controls a production needs around it, each marked with where it stands today.</p>
     </div>
+    <div class="bento">
+      <article class="bx w3 rv">
+        <div class="bx-top"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-quote"/></svg><span class="pill ok">Built</span></div>
+        <h3>Price before every render</h3>
+        <p>Budget caps per project. A quote expires after 15 minutes and works once, so a stale number can't be spent.</p>
+        <div class="bx-vis"><div class="panel" role="img" aria-label="Example ledger: three shots and their previews total 126 credits against a project cap of 400 credits">
+          <div class="ledger">
+            <div>Shot 01, 8 s, Fast, 2 takes<b>40 cr</b></div>
+            <div>Shot 02, 8 s, Fast, 1 take<b>20 cr</b></div>
+            <div>Shot 03, 4 s, Quality, 1 take<b>36 cr</b></div>
+            <div>Three 4 s previews<b>30 cr</b></div>
+            <div class="tot">Quote<b>126 cr</b></div>
+          </div>
+          <div class="cap"><i style="width:31.5%"></i></div>
+          <div class="cap-l"><span>Project cap</span><span>126 of 400 credits</span></div>
+        </div></div>
+      </article>
+      <article class="bx w3 rv">
+        <div class="bx-top"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-notes"/></svg><span class="pill ea">Early access</span></div>
+        <h3>Director's notes</h3>
+        <p>Say "make him smile more." We rewrite a clean v2 prompt, show you exactly what changed, and wait for your OK.</p>
+        <div class="bx-vis"><div class="panel diffp">
+          <p><small>Version 1</small>A friendly plumber holds a wrench in a bright kitchen.</p>
+          <p><small>Your note</small><em>Make him smile more, and get closer.</em></p>
+          <p><small>Version 2, waiting for your OK</small><ins>Slow push-in to a close-up.</ins> A friendly plumber holds a wrench in a bright kitchen. <ins>Expression: a broad, warm, natural smile.</ins></p>
+        </div></div>
+      </article>
+      <article class="bx rv">
+        <div class="bx-top"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-lock"/></svg><span class="pill ea">Early access</span></div>
+        <h3>Character Lock</h3>
+        <p>Approve a cast sheet once. Every shot starts from that approved still, so faces hold from scene to scene.</p>
+        <div class="bx-vis"><div class="lockset" role="img" aria-label="Illustration: one approved still of the character Earth, cropped three ways to show it carrying through shots"><figure><img src="/assets/img/earth-face-960.webp" alt="" width="960" height="540" loading="lazy" style=""><figcaption>Locked still</figcaption></figure><figure><img src="/assets/img/earth-face-960.webp" alt="" width="960" height="540" loading="lazy" style="transform:scale(2.1);transform-origin:32% 34%"><figcaption>Shot 1</figcaption></figure><figure><img src="/assets/img/earth-face-960.webp" alt="" width="960" height="540" loading="lazy" style="transform:scale(2.1);transform-origin:70% 34%"><figcaption>Shot 2</figcaption></figure><figure><img src="/assets/img/earth-face-960.webp" alt="" width="960" height="540" loading="lazy" style="transform:scale(2.1);transform-origin:50% 72%"><figcaption>Shot 3</figcaption></figure></div></div>
+      </article>
+      <article class="bx rv">
+        <div class="bx-top"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-voice"/></svg><span class="pill ea">Early access</span></div>
+        <h3>Voice in the same studio</h3>
+        <p>Stock voices, your uploaded voice, or record yourself in the browser, with a consent check for every custom voice.</p>
+        <div class="bx-vis"><div class="panel">
+          <svg class="wave" viewBox="0 0 240 56" preserveAspectRatio="none" fill="currentColor" aria-hidden="true"><rect x="0" y="23.8" width="2" height="8.5"/><rect x="4" y="18.9" width="2" height="18.2"/><rect x="8" y="21.4" width="2" height="13.1"/><rect x="12" y="18.4" width="2" height="19.3"/><rect x="16" y="21.9" width="2" height="12.2"/><rect x="20" y="22.1" width="2" height="11.7"/><rect x="24" y="20.9" width="2" height="14.1"/><rect x="28" y="23.2" width="2" height="9.6"/><rect x="32" y="21.1" width="2" height="13.9"/><rect x="36" y="21.9" width="2" height="12.2"/><rect x="40" y="22.9" width="2" height="10.2"/><rect x="44" y="21.4" width="2" height="13.3"/><rect x="48" y="20.6" width="2" height="14.9"/><rect x="52" y="14.1" width="2" height="27.8"/><rect x="56" y="17.4" width="2" height="21.3"/><rect x="60" y="14.8" width="2" height="26.4"/><rect x="64" y="16.3" width="2" height="23.4"/><rect x="68" y="14.6" width="2" height="26.9"/><rect x="72" y="15.2" width="2" height="25.6"/><rect x="76" y="15.3" width="2" height="25.4"/><rect x="80" y="22.2" width="2" height="11.6"/><rect x="84" y="21.6" width="2" height="12.9"/><rect x="88" y="17.1" width="2" height="21.8"/><rect x="92" y="7.0" width="2" height="42.0"/><rect x="96" y="13.9" width="2" height="28.2"/><rect x="100" y="6.6" width="2" height="42.7"/><rect x="104" y="9.9" width="2" height="36.3"/><rect x="108" y="8.7" width="2" height="38.6"/><rect x="112" y="14.8" width="2" height="26.4"/><rect x="116" y="16.1" width="2" height="23.8"/><rect x="120" y="21.4" width="2" height="13.2"/><rect x="124" y="20.1" width="2" height="15.8"/><rect x="128" y="15.2" width="2" height="25.5"/><rect x="132" y="15.0" width="2" height="26.0"/><rect x="136" y="17.5" width="2" height="21.0"/><rect x="140" y="18.3" width="2" height="19.4"/><rect x="144" y="13.1" width="2" height="29.8"/><rect x="148" y="18.0" width="2" height="20.0"/><rect x="152" y="21.3" width="2" height="13.4"/><rect x="156" y="19.9" width="2" height="16.2"/><rect x="160" y="22.4" width="2" height="11.1"/><rect x="164" y="22.2" width="2" height="11.5"/><rect x="168" y="21.3" width="2" height="13.4"/><rect x="172" y="22.1" width="2" height="11.7"/><rect x="176" y="20.4" width="2" height="15.2"/><rect x="180" y="15.8" width="2" height="24.3"/><rect x="184" y="19.1" width="2" height="17.7"/><rect x="188" y="14.3" width="2" height="27.3"/><rect x="192" y="19.2" width="2" height="17.5"/><rect x="196" y="17.1" width="2" height="21.9"/><rect x="200" y="19.9" width="2" height="16.2"/><rect x="204" y="20.1" width="2" height="15.7"/><rect x="208" y="16.0" width="2" height="24.0"/><rect x="212" y="14.2" width="2" height="27.5"/><rect x="216" y="14.1" width="2" height="27.8"/><rect x="220" y="12.9" width="2" height="30.2"/><rect x="224" y="8.0" width="2" height="40.0"/><rect x="228" y="9.1" width="2" height="37.9"/><rect x="232" y="15.6" width="2" height="24.9"/><rect x="236" y="11.9" width="2" height="32.2"/></svg>
+          <div class="consentline"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-check"/></svg>Consent recorded in the rights pack</div>
+        </div></div>
+      </article>
+      <article class="bx rv">
+        <div class="bx-top"><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-rights"/></svg><span class="pill ea">Early access</span></div>
+        <h3>Rights pack</h3>
+        <p>Every prompt, model, date, consent and receipt in one downloadable file per project.</p>
+        <div class="bx-vis"><div class="panel docs">
+          <div>Prompts and versions<b>Included</b></div>
+          <div>Models and dates<b>Included</b></div>
+          <div>Voice consent<b>Included</b></div>
+          <div>Credit receipts<b>Included</b></div>
+          <div>Download<b>CSV or PDF</b></div>
+        </div></div>
+      </article>
+    </div>
+    <p style="margin:28px 0 0"><a class="btn btn-outline" href="/features/">See every feature and its status</a></p>
   </div>
 </section>
 
 <section class="section-soft">
   <div class="wrap">
-    <p class="kicker">Why it's different</p>
-    <h2>Built for finished video, not random clips.</h2>
-    <div class="grid-3" style="margin-top:24px">
-      <div class="card"><div class="ico p">&#128176;</div><h3>Price before every render</h3><p>Seconds &times; model &times; takes, shown in credits before you click. Budget caps per project. Technical failures are refunded automatically.</p></div>
-      <div class="card"><div class="ico c">&#127916;</div><h3>Director's notes</h3><p>Say "make him smile more." We rewrite a clean v2 prompt, show you exactly what changed, and wait for your OK.</p></div>
-      <div class="card"><div class="ico l">&#128100;</div><h3>Character Lock</h3><p>Approve a cast sheet once. Every shot starts from that approved still, so faces stay the same from scene to scene.</p></div>
-      <div class="card"><div class="ico v">&#127908;</div><h3>Voice from day one</h3><p>Stock voices, your uploaded voice, or record yourself in the browser, with a consent check for every custom voice.</p></div>
-      <div class="card"><div class="ico o">&#127902;</div><h3>Finished exports</h3><p>Stitch shots, voice, music, captions and your watermark into one 9:16 or 16:9 file.</p></div>
-      <div class="card"><div class="ico p">&#128196;</div><h3>Rights pack</h3><p>Every prompt, model, date, consent and receipt in one downloadable file per project.</p></div>
+    <div class="sec-head">
+      <div><p class="kicker">What you can make</p><h2>One studio. Every kind of video.</h2></div>
+      <p>Single shots run 4, 6 or 8 seconds and get stitched into longer videos. Finished exports are launching next.</p>
     </div>
-    <p style="margin-top:22px"><a class="btn btn-outline" href="/features/">See every feature</a></p>
+    <ul class="formats">
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-ad"/></svg><b>Ads</b><span>Spots for your product or service</span><small>9:16 and 16:9</small></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-trailer"/></svg><b>Trailers</b><span>Movie and launch trailers</span><small>16:9</small></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-music"/></svg><b>Music videos</b><span>Your track, your look</span><small>9:16 and 16:9</small></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-explain"/></svg><b>Explainers</b><span>Clear, voiced walk-throughs</span><small>16:9</small></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-social"/></svg><b>Social clips</b><span>Hooks for Reels, Shorts and TikTok</span><small>9:16</small></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">How it works</p><h2>Idea to export in seven moves.</h2></div>
+      <p><a href="/how-it-works/">See the full workflow</a></p>
+    </div>
+    <ol class="moves">
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-idea"/></svg><b><i>1</i>Idea</b><p>Pitch it in a sentence.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-list"/></svg><b><i>2</i>Shot list</b><p>The AI Producer plans shots, lengths and a budget.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-lock"/></svg><b><i>3</i>Lock cast</b><p>Approve each character once.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-preview"/></svg><b><i>4</i>Preview</b><p>A 4-second, low-res take checks the direction.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-render"/></svg><b><i>5</i>Render</b><p>Confirm the quote. Full shots render on Veo 3.1.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-voice"/></svg><b><i>6</i>Voice</b><p>Stock, upload or record, with consent checks.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-export"/></svg><b><i>7</i>Export</b><p>Shots, voice, music and captions in one file.</p></li>
+    </ol>
   </div>
 </section>
 
@@ -150,70 +230,51 @@
   </div>
 </div></section>
 
-<section class="tl-sec" data-timeline>
-  <div class="wrap tl-grid">
-    <div class="tl-side">
-      <p class="kicker">How it works</p>
-      <h2>Idea to export in seven moves.</h2>
-      <div class="tl-ring" aria-hidden="true"><svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="48"/><circle class="v" cx="55" cy="55" r="48"/></svg><span><b data-tl="pct">0</b>/7</span></div>
-      <p class="tl-cur" aria-hidden="true" data-tl="cur">Start with an idea</p>
-      <p><a class="btn btn-outline" href="/how-it-works/">See the full workflow</a></p>
-    </div>
-    <div class="tl-track"><span class="tl-rail" aria-hidden="true"><span class="tl-fill"></span></span><ol class="tl-list"><li class="tl-step" data-name="Idea"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 1 3.5 10.9V17h-7v-3.1A6 6 0 0 1 12 3zM9 20h6"/></svg></span><div><b>1. Idea</b><p>Pitch it in a sentence. Ads, trailers, music videos, explainers.</p></div></li><li class="tl-step" data-name="Shot list"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><div><b>2. Shot list</b><p>The AI Producer turns it into shots, lengths and a budget.</p></div></li><li class="tl-step" data-name="Lock cast"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg></span><div><b>3. Lock cast</b><p>Approve each character once. Character Lock keeps faces the same.</p></div></li><li class="tl-step" data-name="Preview"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4l14 8-14 8z"/></svg></span><div><b>4. Preview</b><p>A 4-second, low-res take for a few credits checks the direction.</p></div></li><li class="tl-step" data-name="Render"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H4zM8 21h8M12 17v4"/></svg></span><div><b>5. Render</b><p>See the quote, confirm it, and the full shots render on Veo 3.1.</p></div></li><li class="tl-step" data-name="Voice"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><div><b>6. Voice</b><p>Stock voices, your upload, or record yourself, with consent checks.</p></div></li><li class="tl-step" data-name="Export"><span class="tl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></span><div><b>7. Export</b><p>Shots, voice, music and captions stitched into one 9:16 or 16:9 file.</p></div></li></ol></div>
-  </div>
-</section>
-
-<section class="reel-sec" id="showreel"><div class="wrap">
-  <p class="kicker">Showreel</p>
-  <h2>Real renders, coming soon.</h2>
-  <div class="reel-grid">
-    <figure class="reel-card reel-soon">
-      <div class="reel-media">
-        <video class="reel-video" data-inview data-src="" muted loop playsinline preload="none" aria-label="Madwackd Studio showreel"></video>
-        <div class="leader" aria-hidden="true"><span class="ld-ring"></span><span class="ld-sweep"></span><span class="ld-n"><i>3</i><i>2</i><i>1</i></span><span class="ld-cross"></span></div>
-      </div>
-      <figcaption><b>Madwackd Studio&trade; showreel</b><span>Coming soon. Real Veo 3.1 clips from early-access projects will play here, with permission.</span></figcaption>
+<section class="film" id="showreel">
+  <img src="/assets/img/earth-face-1920.webp" alt="" width="1920" height="1080" loading="lazy">
+  <div class="wrap"><div class="film-c">
+    <p class="kicker">From our studio</p>
+    <h2>Built by a studio making its own feature.</h2>
+    <p class="lead">THE EARTH MOVIE is an AI-made feature from Madwackd Productions&trade;, coming Summer 2027. Studio renders join the reel as early-access projects finish, with permission.</p>
+    <div class="cta-row"><a class="btn btn-outline" href="https://www.theearthmovie.com" rel="noopener">Visit theearthmovie.com</a></div>
+    <figure class="film-reel">
+      <video controls muted playsinline preload="none" poster="/assets/media/earth-teaser-poster.jpg" width="1280" height="720" aria-label="THE EARTH MOVIE title teaser"><source src="/assets/media/earth-teaser-720.mp4" type="video/mp4"></video>
+      <figcaption>Title teaser, 5 seconds, silent.</figcaption>
     </figure>
-    <figure class="reel-card">
-      <div class="reel-media"><video class="reel-video" data-inview data-src="/assets/media/earth-teaser-720.mp4" muted loop playsinline preload="none" poster="/assets/media/earth-teaser-poster.jpg" width="1280" height="720" aria-label="THE EARTH MOVIE title teaser"></video></div>
-      <figcaption><b>From our studio: THE EARTH MOVIE (Summer 2027)</b><span>An elemental title teaser. <a href="https://www.theearthmovie.com">Visit theearthmovie.com</a></span></figcaption>
-    </figure>
-  </div>
-</div></section>
-
-<section class="section-pink">
-  <div class="wrap grid-2" style="align-items:center">
-    <div>
-      <p class="kicker">Do it yourself, or hand it off</p>
-      <h2>Self-serve, AI Producer or a real producer.</h2>
-      <p class="lead">Make it yourself with credits, let the AI Producer plan it with you, or hire a Madwackd producer to run the whole thing.</p>
-      <div class="cta-row"><a class="btn btn-primary" href="/pricing/">See early-access pricing</a><a class="btn btn-outline" href="/producers/">Meet the producers</a></div>
-    </div>
-    <div class="tier-mini">
-      <div><b>Self-serve</b><span>Pay for what you render</span></div>
-      <div><b>AI Producer</b><span>Monthly plan with a planning assistant</span></div>
-      <div><b>Human Producer</b><span>Junior, Senior or Executive packages</span></div>
-    </div>
-  </div>
+  </div></div>
 </section>
 
 <section>
-  <div class="wrap faq">
-    <p class="kicker">FAQ</p>
-    <h2>Questions, answered straight.</h2>
-    <details><summary>What is Madwackd Studio?</summary><div><p>An AI video studio that turns an idea into a finished video with voice: ads, trailers, music videos, explainers and social clips. You see the price before every render, keep characters consistent from shot to shot, and download a rights pack for every project. It's in early access.</p></div></details><details><summary>Is it only for ads?</summary><div><p>No. Ads are a big part of it, but the same workflow makes movie trailers, music videos, explainers, product demos and short social clips in 9:16 and 16:9.</p></div></details><details><summary>How do I know what a render will cost?</summary><div><p>Every render starts with a quote: seconds times model times takes, in credits. You confirm it before anything is spent, each project has a budget cap. Prompts our safety check blocks cost nothing, and if Google hits a technical error and makes no video, the credits come back automatically.</p></div></details><details><summary>What if I don't like a shot?</summary><div><p>Takes you don't like aren't refunded, so start with a low-cost, low-res 4-second preview before the full render. Fix the direction with director's notes and another cheap preview, then render the full shot.</p></div></details><details><summary>Can the video have a voice?</summary><div><p>Yes, from day one. Pick a stock voice, upload a voice, or record your own in the browser. Custom voices need a consent check: your own voice, or written permission from the speaker.</p></div></details><details><summary>Which AI model makes the video?</summary><div><p>Google Veo 3.1 through Google Cloud's Vertex AI, using generally available model versions. Every clip carries Google's invisible SynthID watermark.</p></div></details><details><summary>Can I put a real celebrity in my video?</summary><div><p>No. Requests for a real person's name or likeness are blocked. Use original characters, your own product, or people who've signed a release.</p></div></details><details><summary>Can a person produce it for me?</summary><div><p>Yes. Hire a Madwackd producer: Junior, Senior or Executive packages, from a single social ad to a full trailer. See <a href="/producers/">human producers</a>.</p></div></details>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="kicker">Do it yourself, or hand it off</p><h2>Self-serve, AI Producer or a real producer.</h2></div>
+    </div>
+    <div class="ways">
+      <div class="way"><h3>Self-serve</h3><p>Make it yourself and pay for what you render with credits.</p><a href="/pricing/">Early-access pricing <svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-arrow"/></svg></a></div>
+      <div class="way"><h3>AI Producer</h3><p>A monthly plan with a planning assistant that turns an idea into a shot list and budget.</p><a href="/pricing/">Compare plans <svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-arrow"/></svg></a></div>
+      <div class="way"><h3>Human Producer</h3><p>Hire a Madwackd producer to run the whole thing: Junior, Senior or Executive packages.</p><a href="/producers/">Meet the producers <svg class="ic" aria-hidden="true"><use href="/assets/icons.svg#i-arrow"/></svg></a></div>
+    </div>
   </div>
 </section>
-<section><div class="wrap"><div class="cta-band">
+
+<section class="section-soft">
+  <div class="wrap faq-wrap">
+    <div><p class="kicker">FAQ</p><h2>Questions, answered straight.</h2></div>
+    <div class="faq">
+      <details><summary>What is Madwackd Studio?</summary><div><p>An AI video studio that turns an idea into a finished video with voice: ads, trailers, music videos, explainers and social clips. You see the price before every render, keep characters consistent from shot to shot, and download a rights pack for every project. It's in early access.</p></div></details><details><summary>Is it only for ads?</summary><div><p>No. Ads are a big part of it, but the same workflow makes movie trailers, music videos, explainers, product demos and short social clips in 9:16 and 16:9.</p></div></details><details><summary>How do I know what a render will cost?</summary><div><p>Every render starts with a quote: seconds times model times takes, in credits. You confirm it before anything is spent, each project has a budget cap. Prompts our safety check blocks cost nothing, and if Google hits a technical error and makes no video, the credits come back automatically.</p></div></details><details><summary>What if I don't like a shot?</summary><div><p>Takes you don't like aren't refunded, so start with a low-cost, low-res 4-second preview before the full render. Fix the direction with director's notes and another cheap preview, then render the full shot.</p></div></details><details><summary>Can the video have a voice?</summary><div><p>Yes, from day one. Pick a stock voice, upload a voice, or record your own in the browser. Custom voices need a consent check: your own voice, or written permission from the speaker.</p></div></details><details><summary>Which AI model makes the video?</summary><div><p>Google Veo 3.1 through Google Cloud's Vertex AI, using generally available model versions. Every clip carries Google's invisible SynthID watermark.</p></div></details><details><summary>Can I put a real celebrity in my video?</summary><div><p>No. Requests for a real person's name or likeness are blocked. Use original characters, your own product, or people who've signed a release.</p></div></details><details><summary>Can a person produce it for me?</summary><div><p>Yes. Hire a Madwackd producer: Junior, Senior or Executive packages, from a single social ad to a full trailer. See <a href="/producers/">human producers</a>.</p></div></details>
+    </div>
+  </div>
+</section>
+<div class="cta-sec"><div class="wrap"><div class="cta-band">
   <div><h2>Make your first video with us.</h2><p>Early-access spots open in small groups. Join the list or call 1-800-481-8638.</p></div>
   <div class="cta-row"><a class="btn btn-lime" href="/early-access/">Join early access</a></div>
-</div></div></section>
+</div></div></div>
 </main>
 <footer class="site-footer">
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><span class="mw-logo mw-foot"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="220px" alt="Madwackd" width="300" height="97" loading="lazy"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+        <a class="brand" href="/" aria-label="Madwackd Studio home"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path class="bm-bars" d="M3 5h7v22H3zM22 5h7v22h-7z"/><path class="bm-play" d="M11 5h10l-5 13z"/></svg><span class="brand-word">Madwackd <span>Studio</span><sup>&trade;</sup></span></a>
         <p style="margin-top:10px">Madwackd Studio&trade; turns ideas into finished video with voice. <a href="https://www.madwackd.com/"><strong>A Madwackd Productions&trade; studio.</strong></a> Headquartered in Denver, Colorado, and making video for businesses and creators worldwide.</p>
         <p><a href="tel:+18004818638"><strong>1-800-481-8638</strong></a><br>1001 Bannock St #660, Denver, CO 80204</p>
       </div>
@@ -234,8 +295,7 @@
           <li><a href="/about/">About</a></li>
           <li><a href="/early-access/">Early access</a></li>
           <li><a href="https://www.madwackd.com/">Madwackd Productions&trade;</a></li>
-          <li><a href="/llms.txt">llms.txt</a></li>
-        </ul>
+                  </ul>
       </div>
       <div>
         <h4>Legal</h4>
@@ -253,7 +313,6 @@
 </footer>
 <div class="heart-line"><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2.2 4.5 6 4.5c2.2 0 3.6 1.2 4.4 2.5h3.2c.8-1.3 2.2-2.5 4.4-2.5 3.8 0 5.7 3.9 4 7.2C19.5 16.4 12 21 12 21z"/></svg><a href="https://eyetoad.com">Need a website?</a></div>
 <script src="/assets/site.js" defer></script>
-<script src="/assets/mw-logo.js" defer></script>
 <script src="/assets/fx.js" defer></script>
 <script src="/assets/play.js" defer></script>
 </body>
