@@ -1,0 +1,23 @@
+# Madwackd Studio
+
+> AI video studio that turns ideas into finished video with voice: ads, trailers, music videos, explainers and social clips. A Madwackd Productions studio, headquartered in Denver, Colorado. Early access.
+
+Key facts:
+- A price estimate (seconds x model x takes) is shown before every render; each project has a budget cap; blocked or failed generations are never charged.
+- Director's notes: feedback is rewritten into a clean, versioned prompt with a diff the user approves.
+- Character Lock: an approved cast-sheet still starts every shot so faces stay consistent.
+- Voice: stock voices, uploaded voices and in-browser recording, with a consent check for custom voices.
+- Video model: Google Veo 3.1 (generally available versions) on Google Cloud Vertex AI. Clips carry Google's SynthID watermark.
+- Plans: Self-serve credits, AI Producer monthly plan, Human Producer packages (Junior, Senior, Executive). Pricing is early-access placeholder pricing.
+- Contact: 1-800-481-8638, 1001 Bannock St #660, Denver, CO 80204. Parent studio: https://www.madwackd.com/
+
+## Pages
+- [Home](https://www.madwackd.ai/)
+- [Features](https://www.madwackd.ai/features/)
+- [How it works](https://www.madwackd.ai/how-it-works/)
+- [Voice](https://www.madwackd.ai/voice/)
+- [Pricing](https://www.madwackd.ai/pricing/)
+- [Human producers](https://www.madwackd.ai/producers/)
+- [Trust and safety](https://www.madwackd.ai/trust/)
+- [Early access](https://www.madwackd.ai/early-access/)
+- [About](https://www.madwackd.ai/about/)

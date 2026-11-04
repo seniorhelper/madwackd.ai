@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio | Madwackd Studio&trade;</title>
+<meta name="description" content="Madwackd Studio project workspace.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ff2ea6">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/studio.css">
+</head>
+<body class="studio-body">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Madwackd Studio home"><span class="mw-logo mw-head"><span class="mw-tilt"><img src="/assets/img/madwackd-logo-3d-600.webp" srcset="/assets/img/madwackd-logo-3d-300.webp 300w, /assets/img/madwackd-logo-3d-600.webp 600w" sizes="150px" alt="Madwackd" width="300" height="97"></span></span><span class="studio-tag">Studio<sup>&trade;</sup></span></a>
+    <div class="st-head-right">
+      <button class="btn btn-outline btn-sm" type="button" id="open-conn">Connection</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="wrap st-main">
+  <div class="st-bar" id="bar">
+    <div class="st-bar-proj">
+      <span id="mode" class="mode">Mock mode</span>
+      <label for="proj-select" class="sr">Project</label>
+      <select id="proj-select"><option value="">No project yet</option></select>
+      <button class="btn btn-primary btn-sm" type="button" id="new-proj">New project</button>
+    </div>
+    <div class="st-meter" id="meter" hidden>
+      <div class="st-meter-text"><b id="m-spent">0</b> of <b id="m-cap">0</b> credits used &middot; <span id="m-free">0</span> free previews left &middot; re-roll credit <span id="m-reroll">0</span></div>
+      <div class="qc-bar"><span id="m-fill" style="width:0"></span></div>
+    </div>
+  </div>
+
+  <nav class="st-tabs" role="tablist" aria-label="Studio sections">
+    <button role="tab" aria-selected="true" data-tab="producer">1. Producer</button>
+    <button role="tab" aria-selected="false" data-tab="cast">2. Cast</button>
+    <button role="tab" aria-selected="false" data-tab="shots">3. Shots</button>
+    <button role="tab" aria-selected="false" data-tab="voice">4. Voice</button>
+    <button role="tab" aria-selected="false" data-tab="export">5. Export</button>
+    <button role="tab" aria-selected="false" data-tab="spend">6. Spend &amp; rights</button>
+  </nav>
+
+  <div id="err" class="err" hidden role="alert"></div>
+
+  <!-- 1. AI Producer -->
+  <section class="st-panel" data-panel="producer">
+    <h1>AI Producer</h1>
+    <p class="fine">Describe the video. You'll get a shot list and a budget. Nothing renders or charges until you approve a quote.</p>
+    <form id="plan-form" class="form st-form" autocomplete="off">
+      <label for="idea">Your idea</label>
+      <textarea id="idea" required maxlength="1000" placeholder="30-second ad for a Denver roofing company. Upbeat, sunny, ends on the phone number."></textarea>
+      <div class="opts">
+        <div><label for="fmt">Format</label><select id="fmt"><option value="ad">Ad</option><option value="trailer">Trailer</option><option value="music_video">Music video</option><option value="explainer">Explainer</option><option value="social">Social clip</option></select></div>
+        <div><label for="plen">Length (seconds)</label><input id="plen" type="number" min="4" max="180" value="30"></div>
+        <div><label for="pasp">Aspect</label><select id="pasp"><option>9:16</option><option>16:9</option></select></div>
+        <div><label for="pq">Quality</label><select id="pq"><option value="fast">Fast</option><option value="standard">Top quality</option></select></div>
+        <div><label for="ptakes">Takes per shot</label><select id="ptakes"><option>1</option><option selected>2</option><option>3</option></select></div>
+        <div><label for="pchars">Characters</label><input id="pchars" type="number" min="0" max="6" value="1"></div>
+      </div>
+      <button class="btn btn-primary" type="submit">Plan it</button>
+    </form>
+    <div id="plan-out"></div>
+  </section>
+
+  <!-- 2. Cast / Character Lock -->
+  <section class="st-panel" data-panel="cast" hidden>
+    <h2>Cast: Character Lock</h2>
+    <p class="fine">Add each character, generate a 3-still cast sheet, then lock one still. Every shot with that character starts from it. Original characters only.</p>
+    <form id="char-form" class="form st-form" autocomplete="off">
+      <div class="opts">
+        <div><label for="cname">Name</label><input id="cname" required maxlength="60" placeholder="Character name"></div>
+        <div><label for="cref">Reference image (optional)</label><input id="cref" type="file" accept="image/png,image/jpeg,image/webp"></div>
+      </div>
+      <label for="cdesc">Look and wardrobe</label>
+      <textarea id="cdesc" required maxlength="1000" placeholder="A lanky cartoon alien with teal skin, big round eyes and a yellow scarf"></textarea>
+      <button class="btn btn-primary" type="submit">Add character</button>
+    </form>
+    <div id="cast-list" class="st-list"></div>
+  </section>
+
+  <!-- 3. Shots + director's notes -->
+  <section class="st-panel" data-panel="shots" hidden>
+    <h2>Shots</h2>
+    <form id="shot-form" class="form st-form" autocomplete="off">
+      <label for="scene">Scene</label>
+      <textarea id="scene" required maxlength="2000" placeholder="A roofer waves from a sunny suburban roof. Audio: birds, distant traffic."></textarea>
+      <div class="opts">
+        <div><label for="sasp">Aspect</label><select id="sasp"><option>9:16</option><option>16:9</option></select></div>
+        <div><label for="ssec">Seconds</label><select id="ssec"><option>8</option><option>6</option><option>4</option></select></div>
+      </div>
+      <fieldset class="st-chars" id="shot-chars"><legend>Characters in this shot</legend><p class="fine">No characters yet.</p></fieldset>
+      <button class="btn btn-primary" type="submit">Add shot</button>
+    </form>
+    <div id="shot-list" class="st-list"></div>
+  </section>
+
+  <!-- 4. Voice -->
+  <section class="st-panel" data-panel="voice" hidden>
+    <h2>Voice</h2>
+    <div class="grid-2 st-voice">
+      <div class="form st-form">
+        <h3>Add a voice</h3>
+        <label for="vkind">Voice source</label>
+        <select id="vkind"><option value="stock">Stock voice</option><option value="upload">Upload a sample</option><option value="record">Record in the browser</option></select>
+        <div id="v-stock"><label for="vstock">Stock voice</label><select id="vstock"></select></div>
+        <div id="v-custom" hidden>
+          <label for="vname">Voice name</label><input id="vname" maxlength="60" placeholder="Voice name">
+          <div id="v-upload"><label for="vfile">Audio sample (under 15 MB)</label><input id="vfile" type="file" accept="audio/*"></div>
+          <div id="v-record" hidden>
+            <p class="fine">Read a few natural sentences for 10 to 30 seconds in a quiet room.</p>
+            <div class="cta-row"><button class="btn btn-outline btn-sm" type="button" id="rec-start">Start recording</button><button class="btn btn-outline btn-sm" type="button" id="rec-stop" disabled>Stop</button></div>
+            <p class="fine" id="rec-status" role="status">Not recording.</p>
+            <audio id="rec-play" controls hidden></audio>
+          </div>
+          <div class="consent">
+            <p class="consent-text" id="consent-text"></p>
+            <label class="radio"><input type="radio" name="vbasis" value="own_voice" checked> This is my own voice</label>
+            <label class="radio"><input type="radio" name="vbasis" value="written_permission"> I have written permission from the speaker</label>
+            <div id="v-speaker" hidden><label for="vspeaker">Speaker's full name</label><input id="vspeaker" maxlength="80" placeholder="Speaker's full name"></div>
+            <label class="radio"><input type="checkbox" id="vagree"> I agree to the statement above</label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="button" id="add-voice">Add voice</button>
+      </div>
+      <div class="form st-form">
+        <h3>Voiceover</h3>
+        <label for="vo-voice">Voice</label><select id="vo-voice"><option value="">Add a voice first</option></select>
+        <label for="vo-text">Script</label>
+        <textarea id="vo-text" maxlength="5000" placeholder="In a world that forgot how to laugh..."></textarea>
+        <button class="btn btn-primary" type="button" id="vo-go">Quote voiceover</button>
+        <div id="vo-list" class="st-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Export -->
+  <section class="st-panel" data-panel="export" hidden>
+    <h2>Export a finished video</h2>
+    <p class="fine">Pick finished takes in order, add a voiceover, and export one file with captions, a watermark and AI-content labels in the file data.</p>
+    <div class="form st-form">
+      <fieldset id="ex-takes" class="st-chars"><legend>Takes (in shot order)</legend><p class="fine">No finished takes yet.</p></fieldset>
+      <div class="opts">
+        <div><label for="ex-asp">Aspect</label><select id="ex-asp"><option>9:16</option><option>16:9</option></select></div>
+        <div><label for="ex-vo">Voiceover</label><select id="ex-vo"><option value="">None</option></select></div>
+        <div><label class="radio"><input type="checkbox" id="ex-cap" checked> Burn in captions</label></div>
+        <div><label class="radio"><input type="checkbox" id="ex-wm" checked> Add my watermark</label></div>
+      </div>
+      <button class="btn btn-primary" type="button" id="ex-go">Quote export</button>
+    </div>
+    <div id="ex-out" class="st-list"></div>
+  </section>
+
+  <!-- 6. Spend + rights pack -->
+  <section class="st-panel" data-panel="spend" hidden>
+    <h2>Spend log and rights pack</h2>
+    <div class="form st-form st-budget">
+      <label for="cap">Project budget cap (credits)</label>
+      <div class="st-inline"><input id="cap" type="number" min="0" step="10"><button class="btn btn-outline btn-sm" type="button" id="cap-save">Save cap</button></div>
+      <p class="fine">1 credit = $0.10. Blocked or failed renders are never charged. Placeholder early-access rates.</p>
+    </div>
+    <div class="cta-row" style="margin:14px 0"><button class="btn btn-outline" type="button" id="dl-csv">Download rights pack (CSV)</button><button class="btn btn-outline" type="button" id="dl-pdf">Download rights pack (PDF)</button></div>
+    <div class="tbl-wrap"><table class="tbl" id="spend-tbl"><thead><tr><th>Time (UTC)</th><th>Event</th><th>Detail</th><th>Credits</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</main>
+
+<dialog id="quote-dlg" class="st-dlg" aria-labelledby="q-title">
+  <form method="dialog">
+    <h2 id="q-title">Confirm the price</h2>
+    <div id="q-lines"></div>
+    <p class="est" id="q-total"></p>
+    <p class="fine" id="q-budget"></p>
+    <p class="err" id="q-over" hidden>This is over the project budget cap. Raise the cap in Spend &amp; rights, or trim the shot.</p>
+    <p class="fine">Blocked or failed generations are never charged. This quote expires in 15 minutes.</p>
+    <div class="cta-row"><button class="btn btn-primary" value="ok" id="q-ok">Confirm</button><button class="btn btn-outline" value="cancel">Cancel</button></div>
+  </form>
+</dialog>
+
+<dialog id="conn-dlg" class="st-dlg" aria-labelledby="c-title">
+  <form method="dialog">
+    <h2 id="c-title">API connection</h2>
+    <p class="fine">Leave the URL empty to use the built-in mock: nothing leaves this browser and nothing is billed. After the API is deployed, paste its URL and studio token. Both are saved only in this browser.</p>
+    <label for="api">API URL</label><input id="api" placeholder="https://madwackd-studio-api-xxxxx-uc.a.run.app">
+    <label for="tok">Studio token</label><input id="tok" type="password" placeholder="Studio token">
+    <div class="cta-row"><button class="btn btn-primary" value="save" id="conn-save">Save</button><button class="btn btn-outline" value="cancel">Close</button></div>
+  </form>
+</dialog>
+
+<div class="heart-line"><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.3 8.4 2.2 4.5 6 4.5c2.2 0 3.6 1.2 4.4 2.5h3.2c.8-1.3 2.2-2.5 4.4-2.5 3.8 0 5.7 3.9 4 7.2C19.5 16.4 12 21 12 21z"/></svg><a href="https://eyetoad.com">Need a website?</a></div>
+<script src="/assets/mw-logo.js" defer></script>
+<script src="/assets/studio-mock.js" defer></script>
+<script src="/assets/studio.js" defer></script>
+</body>
+</html>
