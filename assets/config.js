@@ -1,7 +1,7 @@
 /* Madwackd Studio public config. PUBLIC values only (Firebase web config and the Turnstile SITE key are
    meant to be public). Never put a secret key here. Leave apiBase empty to keep /studio/ in demo mode. */
 window.MW_CONFIG = {
-  apiBase: "",                 // e.g. "https://api.madwackd.ai" or the Cloud Run URL
+  apiBase: "https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app", // e.g. "https://api.madwackd.ai" or the Cloud Run URL
   firebase: {                  // Firebase console > Project settings > Your apps > Web app config
     apiKey: "AIzaSyDNSqjDqD5jQBUXQt9h3j1vwiv2TWgAGYY",
     authDomain: "madwackd-studio.firebaseapp.com",
