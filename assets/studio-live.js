@@ -150,7 +150,7 @@
       var r = q.price_usd_range || [0, 0];
       $("lv-q-price").textContent = q.credits + " credits (about $" + r[0].toFixed(2) + " to $" + r[1].toFixed(2) + ", depending on your plan or pack)";
       $("lv-q-detail").textContent = q.seconds + "-second shot on " + (b.quality === "fast" ? "Fast" : "Top quality") + " at " + b.resolution +
-        (q.provider_cost_usd != null ? ". Google cost estimate: $" + q.provider_cost_usd.toFixed(2) + "." : ".");
+        (q.provider_cost_usd != null ? ". Engine cost estimate: $" + q.provider_cost_usd.toFixed(2) + "." : ".");
       $("lv-q-bal").textContent = q.enough ? "You have " + q.balance_credits + " credits." : "You have " + q.balance_credits + " credits. Add credits to render this.";
       $("lv-confirm").disabled = !q.enough;
       show("lv-quote", true);
@@ -189,7 +189,7 @@
   function play(j) {
     var out = $("lv-out");
     out.innerHTML = '<div class="st-card"><video controls playsinline preload="metadata"></video><p class="fine">Private link, expires in ' +
-      esc(j.signed_url_expires_minutes) + ' minutes. <a download href="' + esc(j.signed_url) + '">Download the MP4</a>. AI-generated; carries Google\'s SynthID watermark.</p></div>';
+      esc(j.signed_url_expires_minutes) + ' minutes. <a download href="' + esc(j.signed_url) + '">Download the MP4</a>. AI-generated, with an invisible provenance mark.</p></div>';
     out.querySelector("video").src = j.signed_url;
   }
 

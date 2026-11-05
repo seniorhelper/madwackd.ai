@@ -3,10 +3,10 @@
 (function () {
   "use strict";
   var CREDIT_USD = 0.10, FREE_PREVIEWS = 0, TTL = 900;
-  var RATES = { "veo-3.1-generate-001|720p|1": 0.40, "veo-3.1-generate-001|1080p|1": 0.40, "veo-3.1-generate-001|720p|0": 0.20, "veo-3.1-generate-001|1080p|0": 0.20,
-    "veo-3.1-fast-generate-001|720p|1": 0.10, "veo-3.1-fast-generate-001|1080p|1": 0.12, "veo-3.1-fast-generate-001|720p|0": 0.08, "veo-3.1-fast-generate-001|1080p|0": 0.10 };
-  var MULT = { "veo-3.1-generate-001": 2.25, "veo-3.1-fast-generate-001": 2.5, image: 2.5, tts: 3.0 };
-  var MODELS = { fast: "veo-3.1-fast-generate-001", standard: "veo-3.1-generate-001" };
+  var RATES = { "Top quality|720p|1": 0.40, "Top quality|1080p|1": 0.40, "Top quality|720p|0": 0.20, "Top quality|1080p|0": 0.20,
+    "Fast|720p|1": 0.10, "Fast|1080p|1": 0.12, "Fast|720p|0": 0.08, "Fast|1080p|0": 0.10 };
+  var MULT = { "Top quality": 2.25, "Fast": 2.5, image: 2.5, tts: 3.0 };
+  var MODELS = { fast: "Fast", standard: "Top quality" };
   var CONSENT = "I confirm this is my own voice, or I have written permission from the person whose voice this is to create and use an AI version of it for this project. I will not use it to impersonate anyone or mislead viewers.";
   var STOCK = [
     { id: "stock_narrator_warm", name: "Warm narrator", style: "calm, friendly, mid-range" },
