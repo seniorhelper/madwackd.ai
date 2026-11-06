@@ -8,5 +8,5 @@ window.MW_CONFIG = {
     projectId: "madwackd-studio",
     appId: "1:643956245063:web:a94552d287ac5cf4c96762"
   },
-  turnstileSiteKey: ""         // Cloudflare Turnstile site key (public)
+  turnstileSiteKey: "0x4AAAAAAF2yhBA8QpfftD-a"         // Cloudflare Turnstile site key (public)
 };
