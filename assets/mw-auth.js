@@ -126,8 +126,12 @@
         out.addEventListener('click', function () { if (api.signOut) api.signOut(); });
         el.appendChild(who); el.appendChild(out);
       } else {
-        var a = document.createElement('a'); a.className = el.getAttribute('data-mw-btn') || 'btn-top'; a.href = '/studio/#live'; a.textContent = 'Sign in';
-        el.appendChild(a);
+        // /studio/ has both sign-in options (Google, or an emailed sign-in link) and sends you back here afterwards.
+        var back = ['/dashboard/', '/studio-board/', '/creator-studio/'].indexOf(location.pathname) > -1 ? '?return=' + encodeURIComponent(location.pathname) : '';
+        var a = document.createElement('a'); a.className = el.getAttribute('data-mw-btn') || 'btn-top'; a.href = '/studio/' + back + '#live';
+        a.textContent = 'Sign in'; a.title = 'Continue with Google or email';
+        var hint = document.createElement('span'); hint.className = 'mw-acct-who'; hint.textContent = 'Google or email';
+        el.appendChild(hint); el.appendChild(a);
       }
     }
   }

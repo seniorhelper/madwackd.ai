@@ -41,6 +41,31 @@
     });
   }
 
+  /* ---------- friendly sign-in errors ---------- */
+  function authMsg(e) {
+    var c = (e && e.code) || "";
+    if (c === "auth/invalid-email" || c === "auth/missing-email") return "That email address doesn't look right. Please check it.";
+    if (c === "auth/invalid-action-code" || c === "auth/expired-action-code") return "That sign-in link has expired or was already used. Send yourself a new one.";
+    if (c === "auth/too-many-requests" || c === "auth/quota-exceeded") return "Too many tries. Please wait a few minutes and try again.";
+    if (c === "auth/network-request-failed") return "No connection. Check your internet and try again.";
+    if (c === "auth/operation-not-allowed") return "Email sign-in isn't switched on yet. Please use Google for now.";
+    if (c === "auth/user-disabled") return "This account is turned off. Call 1-800-481-8638.";
+    return "Sign-in didn't work. Please try again.";
+  }
+  /* ---------- come back to the app page you started from (/studio/?return=/dashboard/) ---------- */
+  var RETURNS = ["/dashboard/", "/studio-board/", "/creator-studio/"];
+  (function () {
+    var r = new URLSearchParams(location.search).get("return");
+    if (r && RETURNS.indexOf(r) > -1) { store("mw_return", r + "|" + Date.now()); history.replaceState(null, "", location.pathname + location.hash); }
+  })();
+  function goBack() {
+    var v = store("mw_return"); if (!v) return false;
+    store("mw_return", null);
+    var parts = v.split("|"), path = parts[0], at = +parts[1] || 0;
+    if (RETURNS.indexOf(path) < 0 || Date.now() - at > 3600000) return false;
+    location.assign(path); return true;
+  }
+
   /* ---------- boot ---------- */
   /* ---------- buy links from the pricing page: /studio/?buy=<item> ----------
      The choice is kept through sign-in (email links reload the page), then sent to Stripe once. */
@@ -73,8 +98,8 @@
       if (auth.isSignInWithEmailLink(location.href)) {
         var em = store("mw_email_for_link");
         if (em) {
-          auth.signInWithEmailLink(em, location.href).then(function () { store("mw_email_for_link", null); history.replaceState(null, "", location.pathname); }).catch(function (e) { msg(e.message, "bad"); });
-        } else { msg("Type your email again and press Email me a link to finish signing in.", ""); }
+          auth.signInWithEmailLink(em, location.href).then(function () { store("mw_email_for_link", null); history.replaceState(null, "", location.pathname); }).catch(function (e) { history.replaceState(null, "", location.pathname); msg(authMsg(e), "bad"); });
+        } else { msg("You opened the sign-in link on a different device or browser. Type your email again and press Continue with email to finish.", ""); }
       }
       auth.onAuthStateChanged(function (u) { user = u; if (!u) { state("lv-signin"); if (store("mw_buy")) msg("Sign in or create your free account to finish checkout. It takes a few seconds.", ""); return; } refreshMe(); });
     });
@@ -84,6 +109,7 @@
     return api("GET", "/v2/me").then(function (m) {
       me = m;
       if (!m.signed_up) { state("lv-signup"); renderTurnstile("lv-ts-signup"); return; }
+      if (!store("mw_buy") && goBack()) return;
       state("lv-ready"); paintMe(); loadJobs(); checkoutReturn(); pendingBuy();
     }).catch(function (e) {
       if (e.code === "waitlist") { state("lv-wait"); $("lv-wait-msg").textContent = e.message; return; }
@@ -175,19 +201,27 @@
     var p = new window.firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(p).catch(function (e) {
       if (e && (e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment")) return auth.signInWithRedirect(p);
-      if (e && e.code !== "auth/popup-closed-by-user") msg(e.message, "bad");
+      if (e && e.code !== "auth/popup-closed-by-user") msg(authMsg(e), "bad");
     });
   });
+  var emailWait = 0;
   $("lv-email-form").addEventListener("submit", function (ev) {
     ev.preventDefault();
     var em = $("lv-email").value.trim(); if (!em) return;
+    if (!auth) { msg("Sign-in is still loading. Try again in a moment.", ""); return; }
     if (auth.isSignInWithEmailLink(location.href)) {
-      auth.signInWithEmailLink(em, location.href).then(function () { history.replaceState(null, "", location.pathname); }).catch(function (e) { msg(e.message, "bad"); });
+      auth.signInWithEmailLink(em, location.href).then(function () { store("mw_email_for_link", null); history.replaceState(null, "", location.pathname); }).catch(function (e) { msg(authMsg(e), "bad"); });
       return;
     }
+    var left = Math.ceil((emailWait - Date.now()) / 1000);
+    if (left > 0) { msg("We just sent a link. You can send another in " + left + " seconds.", ""); return; }
+    var btn = $("lv-email-go"); if (btn) btn.disabled = true;
     auth.sendSignInLinkToEmail(em, { url: location.origin + "/studio/", handleCodeInApp: true }).then(function () {
-      store("mw_email_for_link", em); msg("Check your inbox for a sign-in link from Madwackd Studio.", "ok");
-    }).catch(function (e) { msg(e.message, "bad"); });
+      store("mw_email_for_link", em);
+      emailWait = Date.now() + 60000;
+      msg("We'll email you a sign-in link. Check your inbox (and spam) for a message from Madwackd Studio, then open the link on this device.", "ok");
+      if (btn) { btn.textContent = "Resend in 60s"; var t = setInterval(function () { var l = Math.ceil((emailWait - Date.now()) / 1000); if (l <= 0) { clearInterval(t); btn.disabled = false; btn.textContent = "Continue with email"; } else btn.textContent = "Resend in " + l + "s"; }, 1000); }
+    }).catch(function (e) { if (btn) btn.disabled = false; msg(authMsg(e), "bad"); });
   });
   [].forEach.call(document.querySelectorAll("[data-signout]"), function (b) { b.addEventListener("click", function () { if (auth) auth.signOut(); msg(""); }); });
 
