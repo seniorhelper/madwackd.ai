@@ -8,15 +8,12 @@
 .zg-panel button:focus-visible,.zg-panel a:focus-visible,.zg-panel input:focus-visible,.zg-tip button:focus-visible,.zg-solo:focus-visible{outline:3px solid var(--zg-lime);outline-offset:2px}
 
 /* the stage: Producer Z stands in a pool of light */
-.zg-stage{position:relative;display:flex;align-items:flex-end;gap:12px;min-height:160px;padding:8px 8px 8px 14px;flex:none;
-  background:linear-gradient(180deg,#0E0C15,var(--zg-scr2));border-bottom:1px solid var(--zg-line);overflow:hidden}
-.zg-actor{position:relative;width:118px;height:148px;flex:none}
-/* his own spotlight: a soft cone from above and a warm pool at his feet */
-.zg-actor::before{content:"";position:absolute;left:50%;bottom:4px;width:150%;height:calc(100% + 40px);transform:translateX(-50%);pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,246,214,.34),rgba(255,236,170,.08) 85%,rgba(255,236,170,0));clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);filter:blur(3px)}
-.zg-actor::after{content:"";position:absolute;left:50%;bottom:-6px;width:130%;height:26px;transform:translateX(-50%);pointer-events:none;
-  background:radial-gradient(closest-side,rgba(255,236,170,.38),rgba(255,236,170,0))}
-.zg-actor .zc{position:relative;z-index:1}
+.zg-stage{position:relative;display:flex;align-items:center;gap:10px;min-height:150px;padding:6px 8px 6px 6px;flex:none;
+  background:#0B0A10;border-bottom:1px solid var(--zg-line);overflow:hidden}
+.zg-actor{position:relative;display:block;width:170px;height:156px;flex:none;padding:0;border:0;border-radius:12px;background:#0B0A10 url(/assets/z/z-hero.webp) center/cover;cursor:pointer;transition:transform .15s ease-out}
+.zg-actor video{display:block;width:100%;height:100%;object-fit:cover;border-radius:12px;
+  -webkit-mask-image:radial-gradient(ellipse 60% 64% at 50% 46%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 60% 64% at 50% 46%,#000 72%,transparent 100%)}
+.zg-actor{background:none}
 .zg-name{flex:1;padding-bottom:8px}
 .zg-name strong{display:block;color:#fff;font-size:17px}.zg-name small{color:var(--zg-mut)}
 .zg-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--zg-txt);font-size:26px;cursor:pointer}
@@ -48,43 +45,12 @@
 .zg-tip p{margin:0 0 10px}.zg-tip .zg-chip{background:var(--signal,#FF2E93);border-color:transparent;color:#fff;margin-right:8px}
 .zg-skip{background:transparent}
 
-/* ---- character animation ---- */
-.zc{display:block;width:100%;height:100%;overflow:visible}
-.zc g,.zc ellipse,.zc path{transform-box:fill-box}
-.zc-bob{transform-origin:50% 100%;animation:zc-bob 2.8s ease-in-out infinite}
-.zc-clap{transform-origin:0% 100%;transform:rotate(-16deg);transition:transform .2s}
-.zc-lid{transform-origin:50% 0%;transform:scaleY(0);animation:zc-blink 5.2s infinite}
-.zc-eye.r .zc-lid{animation-delay:.04s}
-.zc-pupil{transition:transform .12s ease-out}
-.zc-open{opacity:0;transform-origin:50% 50%}
-.zc-armL{transform-origin:100% 100%}
-.zc-armR{transform-origin:0% 0%;animation:zc-hold 2.8s ease-in-out infinite}
-.zc-legR{transform-origin:30% 0%}
-.zc-shadow{transform-origin:50% 50%;animation:zc-shadow 2.8s ease-in-out infinite}
-.zg-actor.is-in .zc{animation:zc-pop .55s cubic-bezier(.2,1.5,.45,1) both}
-.zg-actor.is-waving .zc-armL{animation:zc-wave .42s ease-in-out 4 alternate}
-.zg-actor.is-talking .zc-clap{animation:zc-clap .26s ease-in-out infinite alternate}
-.zg-actor.is-talking .zc-smile{opacity:0}
-.zg-actor.is-talking .zc-open{opacity:1;animation:zc-mouth .18s ease-in-out infinite alternate}
-.zg-actor.is-thinking .zc-pupil{transform:translate(1.6px,-2.2px)}
-.zg-actor.is-thinking .zc-legR{animation:zc-tap .5s ease-in-out infinite alternate}
-@keyframes zc-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
-@keyframes zc-shadow{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.9)}}
-@keyframes zc-blink{0%,93%,100%{transform:scaleY(0)}95.5%{transform:scaleY(1)}}
-@keyframes zc-clap{from{transform:rotate(-16deg)}to{transform:rotate(-1deg)}}
-@keyframes zc-mouth{from{transform:scaleY(.45)}to{transform:scaleY(1.1)}}
-@keyframes zc-wave{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}
-@keyframes zc-hold{0%,100%{transform:rotate(0)}50%{transform:rotate(-4deg)}}
-@keyframes zc-tap{from{transform:rotate(0)}to{transform:rotate(-7deg)}}
-@keyframes zc-pop{0%{transform:translateY(40px) scale(.25);opacity:0}60%{opacity:1}100%{transform:none;opacity:1}}
-
 @media (max-width:480px){
   .zg-panel{right:8px;left:8px;width:auto;bottom:84px;max-height:calc(100vh - 100px)}
-  .zg-stage{min-height:134px}.zg-actor{width:96px;height:120px}
+  .zg-stage{min-height:122px}.zg-actor{width:132px;height:121px}
 }
 @media (prefers-reduced-motion:reduce){
-  .zc *,.zg-actor.is-in .zc{animation:none!important;transition:none!important}
-  .zc-lid{transform:scaleY(0)}
+  .zg-actor{transition:none}
   .zg-spot{transition:none}
 }
 @media print{.zg{display:none}}

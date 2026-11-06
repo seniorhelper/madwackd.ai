@@ -38,59 +38,7 @@
   }
   function safeLink(href) { return PATHS.indexOf(href) > -1 || FAMILY.indexOf(href) > -1; }
 
-  /* Producer Z, full body: the madwackd logo come to life. Head = the logo's rainbow clapper (it claps when he
-     talks), face = the two eyeball "a"s from the wordmark, body = a slate, plus rubber-hose arms and legs,
-     sneakers and a megaphone. Plain SVG, same-origin, no images. */
-  function character() {
-    var COLORS = ["#FF2E93", "#FF8A00", "#FFD60A", "#7ED321", "#00B8F0", "#8B3DFF"], base = "", top = "", i, x;
-    for (i = 0; i < 6; i++) {
-      x = 29 + i * 12;
-      base += '<polygon points="' + x + ',41 ' + (x + 6) + ',41 ' + (x + 2) + ',51 ' + (x - 4) + ',51" fill="' + COLORS[i] + '"/>';
-      top += '<polygon points="' + x + ',29 ' + (x + 6) + ',29 ' + (x + 10) + ',38 ' + (x + 4) + ',38" fill="' + COLORS[5 - i] + '"/>';
-    }
-    function eye(cx, color, cls) {
-      return '<g class="zc-eye ' + cls + '">' +
-        '<rect x="' + (cx + 7) + '" y="61" width="6.5" height="22" rx="2.2" fill="' + color + '" stroke="#15121F" stroke-width="2.6"/>' +
-        '<circle cx="' + cx + '" cy="72" r="11" fill="' + color + '" stroke="#15121F" stroke-width="2.8"/>' +
-        '<circle cx="' + cx + '" cy="72" r="6.6" fill="#fff" stroke="#15121F" stroke-width="2.4"/>' +
-        '<circle class="zc-pupil" cx="' + (cx + 0.8) + '" cy="72.8" r="3.3" fill="#15121F"/>' +
-        '<circle cx="' + (cx - 1.6) + '" cy="70" r="1.1" fill="#fff" opacity=".9"/>' +
-        '<ellipse class="zc-lid" cx="' + cx + '" cy="72" rx="7.6" ry="7.6" fill="' + color + '"/></g>';
-    }
-    return '<svg class="zc" viewBox="0 0 120 150" aria-hidden="true" focusable="false">' +
-      '<ellipse class="zc-shadow" cx="60" cy="145" rx="32" ry="4.5" fill="#000" opacity=".35"/>' +
-      '<g class="zc-bob">' +
-      /* legs + sneakers */
-      '<g class="zc-legL"><path d="M47 110q-3 14-7 25" fill="none" stroke="#15121F" stroke-width="5.5" stroke-linecap="round"/>' +
-      '<path d="M27 141q0-10 11-10 10 0 12 7v3z" fill="#FF2E93" stroke="#15121F" stroke-width="2.5" stroke-linejoin="round"/>' +
-      '<path d="M27 141.5h23" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M36 133l5 2M34 136l5 2" stroke="#7ED321" stroke-width="1.6"/></g>' +
-      '<g class="zc-legR"><path d="M73 110q3 14 7 25" fill="none" stroke="#15121F" stroke-width="5.5" stroke-linecap="round"/>' +
-      '<path d="M93 141q0-10-11-10-10 0-12 7v3z" fill="#00B8F0" stroke="#15121F" stroke-width="2.5" stroke-linejoin="round"/>' +
-      '<path d="M70 141.5h23" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M84 133l-5 2M86 136l-5 2" stroke="#FFD60A" stroke-width="1.6"/></g>' +
-      /* arms: left waves, right holds the megaphone */
-      '<g class="zc-armL"><path d="M24 80q-13-1-15-18" fill="none" stroke="#15121F" stroke-width="5" stroke-linecap="round"/>' +
-      '<circle cx="9" cy="58" r="6.5" fill="#fff" stroke="#15121F" stroke-width="2.5"/><path d="M5 55.5h4" stroke="#15121F" stroke-width="1.4" stroke-linecap="round"/></g>' +
-      '<g class="zc-armR"><path d="M96 82q13 3 14 15" fill="none" stroke="#15121F" stroke-width="5" stroke-linecap="round"/>' +
-      '<path d="M104 92l13-9v24l-13-6z" fill="#FFD60A" stroke="#15121F" stroke-width="2.4" stroke-linejoin="round"/>' +
-      '<ellipse cx="117" cy="95" rx="2.2" ry="12" fill="#FF8A00" stroke="#15121F" stroke-width="2"/>' +
-      '<circle cx="109" cy="99" r="6.5" fill="#fff" stroke="#15121F" stroke-width="2.5"/></g>' +
-      /* body: the slate */
-      '<rect x="22" y="50" width="76" height="62" rx="7" fill="#15121F"/>' +
-      '<rect x="26.5" y="54" width="67" height="54" rx="4" fill="#2A2440"/>' +
-      '<path d="M31 98h58M60 98v7" stroke="#F4F0FA" stroke-opacity=".45" stroke-width="1.2"/>' +
-      '<text x="33" y="106" font-family="Inter,system-ui,sans-serif" font-size="6.5" font-weight="700" fill="#F4F0FA" fill-opacity=".6">SCENE 1</text>' +
-      '<text x="64" y="106" font-family="Inter,system-ui,sans-serif" font-size="6.5" font-weight="700" fill="#F4F0FA" fill-opacity=".6">TAKE Z</text>' +
-      eye(43, "#FF8A00", "l") + eye(71, "#00B8F0", "r") +
-      '<path class="zc-smile" d="M51 88q9 7 18 0" fill="none" stroke="#FF2E93" stroke-width="3" stroke-linecap="round"/>' +
-      '<ellipse class="zc-open" cx="60" cy="89.5" rx="6.5" ry="4.2" fill="#0B0A10" stroke="#FF2E93" stroke-width="2.2"/>' +
-      /* head: the logo's clapper. Base bar is fixed; the top stick hinges at the left and claps. */
-      '<rect x="22" y="40" width="76" height="12" rx="3" fill="#fff" stroke="#15121F" stroke-width="2.6"/>' + base +
-      '<g class="zc-clap"><rect x="22" y="28" width="76" height="11" rx="3" fill="#fff" stroke="#15121F" stroke-width="2.6"/>' + top + '</g>' +
-      '<circle cx="23.5" cy="39.5" r="2.4" fill="#FFD60A" stroke="#15121F" stroke-width="1.6"/>' +
-      "</g></svg>";
-  }
-
-  if (typeof document === "undefined") { module.exports = { scrub: scrub, safeLink: safeLink, character: character }; return; }
+  if (typeof document === "undefined") { module.exports = { scrub: scrub, safeLink: safeLink }; return; }
 
   var C = window.MW_CONFIG || {};
   var API = String(C.apiBase || "").trim().replace(/\/+$/, "");
@@ -98,6 +46,7 @@
   var TIER = String(window.MW_USER_TIER || "anon");
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var L = window.__mwzLauncher || null;
+  var Z = "/assets/z/", ZV = "20261106v3";
   var history = [];
   var busy = false;
   var store = {
@@ -120,7 +69,8 @@
   var root = el("div", "zg");
   root.innerHTML =
     '<section class="zg-panel" id="zg-panel" role="dialog" aria-modal="false" aria-labelledby="zg-title" hidden>' +
-    '<header class="zg-stage"><div class="zg-actor">' + character() + '</div>' +
+    '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="Producer Z: click for an action!">' +
+    '<video muted playsinline preload="metadata" aria-hidden="true" poster="' + Z + 'z-hero.webp?v=' + ZV + '"></video></button>' +
     '<div class="zg-name"><strong id="zg-title">Producer Z</strong><small>Your AI director</small></div>' +
     '<button class="zg-x" type="button" aria-label="Close Producer Z">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
@@ -143,12 +93,12 @@
       panel.hidden = false;
       if (L) L.root.classList.add("is-open");
       if (launcher) { launcher.setAttribute("aria-expanded", "true"); launcher.setAttribute("aria-label", "Close Producer Z"); }
-      actor.classList.remove("is-in"); void actor.offsetWidth; actor.classList.add("is-in");
       wave();
       document.addEventListener("pointermove", look, { passive: true });
     }
     if (!log.childNodes.length) say("Hi, I'm Producer Z, your AI director. I know this whole site, and I'm here to get your video made. Want a 30-second tour, or tell me what you're making?",
       [], ["Take the tour", "What does it cost?", "Make it for me"]);
+    if (topic === "help") say("Love it. What are you making, and who is it for? I'll plan it, price it, or hand it to our team.", [], ["An ad for my business", "A music video", "Something for social"]);
     if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
     input.focus();
   }
@@ -158,35 +108,40 @@
     if (L) L.root.classList.remove("is-open");
     if (launcher) { launcher.setAttribute("aria-expanded", "false"); launcher.setAttribute("aria-label", "Ask Producer Z, the AI director"); launcher.focus(); }
     document.removeEventListener("pointermove", look);
+    rest();
   }
   function toggle() { isOpen() ? close() : open(); }
 
-  /* ---------------- the character: eyes follow the pointer, clapper talks ---------------- */
-  var eyes = [].slice.call(root.querySelectorAll(".zc-eye")), raf = 0, px = 0, py = 0;
+  /* ---------------- the character: claymation clips (wave, talk, clap); leans toward the pointer ---------------- */
+  var vid = actor.querySelector("video"), clip = "", talkTimer = 0, raf = 0, px = 0, py = 0;
+  function play(name, loop) {
+    if (REDUCED || !vid) return;
+    if (clip !== name) { vid.src = Z + "z-" + name + ".mp4?v=" + ZV; clip = name; }
+    else { try { vid.currentTime = 0; } catch (e) { /* not ready */ } }
+    vid.loop = !!loop;
+    var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {});
+  }
+  function rest() { if (vid && !REDUCED) { vid.loop = false; vid.pause(); } }
+  if (vid) vid.addEventListener("ended", function () { if (clip !== "wave") play("wave"); });
   function look(e) {
     if (REDUCED) return;
     px = e.clientX; py = e.clientY;
     if (raf) return;
     raf = requestAnimationFrame(function () {
       raf = 0;
-      eyes.forEach(function (g) {
-        var r = g.getBoundingClientRect(), dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
-        var d = Math.sqrt(dx * dx + dy * dy) || 1, m = Math.min(2.6, d / 40);
-        g.querySelector(".zc-pupil").setAttribute("transform", "translate(" + (dx / d * m).toFixed(2) + " " + (dy / d * m).toFixed(2) + ")");
-      });
+      var r = actor.getBoundingClientRect(), dx = (px - (r.left + r.width / 2)) / innerWidth, dy = (py - (r.top + r.height / 2)) / innerHeight;
+      actor.style.transform = "perspective(500px) rotateY(" + Math.max(-9, Math.min(9, dx * 24)).toFixed(1) + "deg) rotateX(" +
+        Math.max(-6, Math.min(6, -dy * 14)).toFixed(1) + "deg)";
     });
   }
-  var talkTimer = 0;
   function talk(ms) {
     if (REDUCED) return;
-    actor.classList.add("is-talking");
+    play("talk", true);
     clearTimeout(talkTimer);
-    talkTimer = setTimeout(function () { actor.classList.remove("is-talking"); }, Math.min(3200, Math.max(700, ms)));
+    talkTimer = setTimeout(function () { vid.loop = false; }, Math.min(9000, Math.max(1500, ms)));
   }
-  function wave() {
-    if (REDUCED) return;
-    actor.classList.remove("is-waving"); void actor.offsetWidth; actor.classList.add("is-waving");
-  }
+  function wave() { play("wave"); }
+  actor.addEventListener("click", function () { play("clap"); });
 
   function say(text, links, chips, who) {
     var row = el("div", "zg-msg " + (who || "bot"));
@@ -275,7 +230,7 @@
     form.querySelector(".zg-send").disabled = true;
     var typing = el("div", "zg-msg bot zg-typing", "Producer Z is thinking...");
     log.appendChild(typing); log.scrollTop = log.scrollHeight;
-    actor.classList.add("is-thinking");
+    play("clap");
     var headers = { "Content-Type": "application/json" };
     if (window.MW_ID_TOKEN) headers.Authorization = "Bearer " + window.MW_ID_TOKEN;
     var body = { messages: history.slice(-6), page: location.pathname };
@@ -300,7 +255,6 @@
       .then(function () {
         busy = false;
         form.querySelector(".zg-send").disabled = false;
-        actor.classList.remove("is-thinking");
         if (typing.parentNode) typing.parentNode.removeChild(typing);
       });
   }
