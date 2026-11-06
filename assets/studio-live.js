@@ -192,9 +192,9 @@
   [].forEach.call(document.querySelectorAll("[data-signout]"), function (b) { b.addEventListener("click", function () { if (auth) auth.signOut(); msg(""); }); });
 
   $("lv-signup-go").addEventListener("click", function () {
-    if (!$("lv-terms").checked) { msg("Please accept the Terms and the Acceptable Use Policy.", "bad"); return; }
+    if (!$("lv-terms").checked) { msg("Please confirm you are 18 or older and accept the Terms.", "bad"); return; }
     if (TS_KEY && !tsToken) { msg("Please finish the human check first.", "bad"); return; }
-    api("POST", "/v2/signup", { accept_terms: true, turnstile_token: useToken() }).then(function () { msg(""); refreshMe(); }).catch(function (e) { msg(e.message, "bad"); });
+    api("POST", "/v2/signup", { accept_terms: true, confirm_age_18: true, turnstile_token: useToken() }).then(function () { msg(""); refreshMe(); }).catch(function (e) { msg(e.message, "bad"); });
   });
 
   /* ---------- quote -> confirm -> render -> poll ---------- */
