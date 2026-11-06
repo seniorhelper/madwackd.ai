@@ -9,6 +9,7 @@ Key facts:
 - Voice: stock voices, uploaded voices and in-browser recording, with a consent check for custom voices.
 - Video model: third-party, generally available AI video models from a major cloud provider. Clips carry an invisible provenance mark.
 - Early-access pricing: Test Drive $5 (50 credits, one per account). Plans: Starter $29/mo (300 credits), Pro $79/mo (900), Business $199/mo (2,500), Agency $499/mo (6,000), White-Label $999/mo (12,000, by application). Credit packs: $12/100, $55/500, $100/1,000, $450/5,000. Done for you: Ad in a Day $149, Launch Pack $449, Monthly Ad Engine $899/mo, Video Press Release $199. Human Producer packages (Junior, Senior, Executive) quoted per project.
+- Climate commitment: Madwackd Studio is enrolled in Stripe Climate; 1.5% of every purchase funds permanent carbon removal. Prepaid, priced-before-it-renders credits and spending caps avoid wasted compute. Details: https://www.madwackd.ai/our-mission/
 - Contact: 1-800-481-8638, 1001 Bannock St #660, Denver, CO 80204. Parent studio: https://www.madwackd.com/
 
 ## Pages
@@ -21,3 +22,4 @@ Key facts:
 - [Trust and safety](https://www.madwackd.ai/trust/)
 - [Early access](https://www.madwackd.ai/early-access/)
 - [About](https://www.madwackd.ai/about/)
+- [Our mission](https://www.madwackd.ai/our-mission/)
