@@ -730,3 +730,9 @@ a:hover{color:var(--signal-text)}
 /* Payment trust line (Stripe-hosted Checkout) */
 .pay-trust{display:flex;align-items:flex-start;gap:8px;margin:12px 0 0;font-size:.9rem;line-height:1.45;color:var(--muted);max-width:640px}
 .pay-trust .pay-lock{flex:0 0 16px;margin-top:2px;color:var(--ink)}
+
+/* TV commercials row (home) */
+.tv-spots{padding:clamp(32px,5vw,64px) 0}
+.tv-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.tv-grid .best-card{margin:0}
+.tv-grid video{width:100%;height:auto;display:block;border-radius:12px;background:#000}
