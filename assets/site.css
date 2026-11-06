@@ -726,3 +726,7 @@ a:hover{color:var(--signal-text)}
 @media (max-width:640px){.vbest-grid{grid-template-columns:1fr}.vbest{padding:14px}}
 .hero-free{margin:14px 0 0;font-size:1rem;color:var(--muted)}.hero-free a{font-weight:700;color:var(--signal-text);text-decoration:underline;text-underline-offset:3px}
 .sub-link{margin:-8px 0 20px}.sub-link a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+/* Payment trust line (Stripe-hosted Checkout) */
+.pay-trust{display:flex;align-items:flex-start;gap:8px;margin:12px 0 0;font-size:.9rem;line-height:1.45;color:var(--muted);max-width:640px}
+.pay-trust .pay-lock{flex:0 0 16px;margin-top:2px;color:var(--ink)}

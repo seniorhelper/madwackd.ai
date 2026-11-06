@@ -298,7 +298,8 @@
     var p = doc.createElement('p'); p.textContent = 'Mix voice and music, add sounds, cut your clips and export. Starter is $29/mo; Pro ($79/mo) adds auto-ducking, a brand kit and talking Producer Z.';
     var a = doc.createElement('a'); a.className = 'dash-lock-cta'; a.href = '/pricing/'; a.textContent = 'See plans';
     var b = doc.createElement('a'); b.className = 'dash-lock-alt'; b.href = '/creator-studio/'; b.textContent = 'Use the free tools';
-    lock.appendChild(h); lock.appendChild(p); lock.appendChild(a); lock.appendChild(b);
+    var t = doc.createElement('p'); t.className = 'pay-trust'; t.textContent = 'Payments are processed securely by Stripe. We never see or store your full card number.';
+    lock.appendChild(h); lock.appendChild(p); lock.appendChild(a); lock.appendChild(b); lock.appendChild(t);
     main.parentNode.insertBefore(lock, main);
   }
 })(window);

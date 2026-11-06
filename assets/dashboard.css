@@ -180,3 +180,6 @@ progress { width: 200px; height: 14px; accent-color: var(--d-lime); }
 /* Account chip (filled by /assets/mw-auth.js) */
 .mw-acct { display: inline-flex; gap: 8px; align-items: center; margin-left: auto; min-width: 0; }
 .mw-acct .mw-acct-who { color: #b9b6cc; font-size: 13px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pay-trust { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0 0; font-size: 12.5px; line-height: 1.45; color: #b9b6cc; }
+.pay-trust .pay-lock { flex: 0 0 14px; width: 14px; height: 14px; margin-top: 2px; }
+.dash-lock .pay-trust { flex-basis: 100%; justify-content: center; }
