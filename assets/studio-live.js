@@ -113,18 +113,20 @@
 
   /* ---------- credit meter + Boost ---------- */
   function paintMeter() {
-    var m = me && me.meter;
-    if (!m) { show("lv-meter", false); return; }
-    show("lv-meter", true);
-    var pct = Math.max(4, Math.min(100, Math.round(100 * m.balance_credits / Math.max(1, m.low_threshold * 4))));
-    $("lv-meter-fill").style.width = pct + "%";
-    $("lv-meter").className = "lv-meter lv-" + m.state;
-    $("lv-boost").hidden = !m.boost;
+    var m = me && me.meter, el = $("lv-tank");
+    if (!m || !window.MWTank) { show("lv-tank", false); return; }
+    var fresh = !el.getAttribute("data-built");
+    window.MWTank.build(el); show("lv-tank", true);
+    if (fresh) el.querySelector(".tank-boost").addEventListener("click", boost);
+    /* full tank = 4x the low-credit line, or the balance itself if bigger */
+    var full = Math.max(m.low_threshold * 4, m.balance_credits, 1);
+    window.MWTank.set(el, { credits: m.balance_credits, pct: m.balance_credits <= 0 ? 0 : Math.max(4, 100 * m.balance_credits / full), state: m.state });
   }
-  $("lv-boost").addEventListener("click", function () {
+  function boost() {
     var items = (me && me.meter && me.meter.boost_items) || ["pack_100"];
-    if (cfg && cfg.stripe_enabled) { checkout(items[1] || items[0]); }
-  });
+    if (cfg && cfg.stripe_enabled) { msg("Opening secure checkout...", "ok"); checkout(items[1] || items[0]); }
+    else msg("Buying credits opens soon.", "");
+  }
 
   /* ---------- voiceover ---------- */
   var voicesLoaded = false;

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=20261106">
-<link rel="stylesheet" href="/assets/studio.css?v=20261106b">
+<link rel="stylesheet" href="/assets/studio.css?v=20261106c">
 <link rel="stylesheet" href="/assets/producer.css?v=20261106">
 </head>
 <body class="studio-body">
@@ -166,9 +166,10 @@
     <div id="lv-ready" hidden>
       <div class="lv-acct">
         <span>Signed in as <b id="lv-who"></b></span>
-        <span class="lv-cred"><b id="lv-bal">0</b> credits</span><span id="lv-meter" class="lv-meter" hidden><span class="lv-meter-bar"><span id="lv-meter-fill"></span></span><button class="btn btn-primary btn-sm" type="button" id="lv-boost">Boost</button></span>
+        <span class="lv-cred"><b id="lv-bal">0</b> credits</span>
         <button class="btn btn-outline btn-sm" type="button" data-signout>Sign out</button>
       </div>
+      <div id="lv-tank" class="lv-tank" hidden></div>
       <p class="err" id="lv-locked" hidden>This account is paused for a safety review. Call 1-800-481-8638.</p>
       <div class="lv-buy" id="lv-buy"></div>
       <p class="fine" id="lv-buy-closed">Buying credits opens soon.</p>
@@ -390,7 +391,8 @@
 <script src="/assets/studio-mock.js" defer></script>
 <script src="/assets/studio.js?v=20261106" defer></script>
 <script src="/assets/config.js" defer></script>
-<script src="/assets/studio-live.js?v=20261106c" defer></script>
+<script src="/assets/tank.js?v=20261106" defer></script>
+<script src="/assets/studio-live.js?v=20261106d" defer></script>
 <script src="/assets/producer.js?v=20261106" defer></script>
 
 <script src="/assets/guide.js?v=20261106" defer></script>

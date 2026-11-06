@@ -101,14 +101,12 @@ label.radio input{width:18px;height:18px;margin-top:3px;flex:none}
 .lv-head h1,.st-panel h1{letter-spacing:-.03em;line-height:1.1}
 
 /* credit meter + voiceover (Nov 6 2026) */
-.lv-meter{display:inline-flex;align-items:center;gap:10px;margin-left:12px;vertical-align:middle}
-.lv-meter-bar{display:inline-block;width:120px;height:10px;border-radius:6px;background:#e9e4f3;overflow:hidden;border:2px solid #15121F}
-.lv-meter-bar span{display:block;height:100%;background:#7ED321;transition:width .4s}
-.lv-meter.lv-low .lv-meter-bar span{background:#FFD60A}
-.lv-meter.lv-empty .lv-meter-bar span{background:#FF2E93}
-.lv-meter.lv-low .lv-meter-bar,.lv-meter.lv-empty .lv-meter-bar{animation:lvPulse 1.2s ease-in-out infinite}
-@keyframes lvPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,46,147,.0)}50%{box-shadow:0 0 0 6px rgba(255,214,10,.45)}}
-@media (prefers-reduced-motion:reduce){.lv-meter-bar{animation:none!important}}
+
+
+
+
+
+
 .lv-vo{margin:22px 0}
 .lv-vo audio{width:100%;margin-top:8px}
 
@@ -130,3 +128,4 @@ label.radio input{width:18px;height:18px;margin-top:3px;flex:none}
 .mw-num{flex:none;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font:800 1.1rem Poppins,sans-serif;color:#15121F;background:var(--c);border:2px solid #15121F;box-shadow:3px 3px 0 #15121F}
 .mw-guide-tip{margin:16px 0 4px;padding:12px 14px;border-radius:12px;background:#15121F;color:#FBF8FF}
 .mw-guide-tip b{color:#FFD60A}
+.lv-tank{margin:14px 0}
