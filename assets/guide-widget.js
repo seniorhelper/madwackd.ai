@@ -132,21 +132,60 @@
   }
 
   /* ---------------- chat ---------------- */
+  /* ---------------- human check (anonymous visitors, first AI reply only) ---------------- */
+  var TS_KEY = String(((window.MW_CONFIG || {}).turnstileSiteKey) || "").trim();
+  var sess = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
+               set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* private mode */ } } };
+  var tsLoad = null;
+  function loadTurnstile() {
+    tsLoad = tsLoad || new Promise(function (ok, bad) {
+      var s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true;
+      s.onload = function () { window.turnstile ? ok(window.turnstile) : bad(); };
+      s.onerror = function () { tsLoad = null; bad(); };
+      document.head.appendChild(s);
+    });
+    return tsLoad;
+  }
+  function humanCheck() {
+    if (!TS_KEY) { say("Sign in to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in" }]); return; }
+    var box = el("div", "zg-msg bot zg-check");
+    box.appendChild(el("p", "", "Quick human check: tick the box below and I'll answer right away."));
+    var slot = el("div", "");
+    box.appendChild(slot);
+    log.appendChild(box); log.scrollTop = log.scrollHeight;
+    loadTurnstile().then(function (ts) {
+      ts.render(slot, { sitekey: TS_KEY, theme: "dark", size: "flexible",
+        callback: function (token) { if (box.parentNode) box.parentNode.removeChild(box); post(token); },
+        "error-callback": function () { if (box.parentNode) box.parentNode.removeChild(box); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); } });
+    }).catch(function () { if (box.parentNode) box.parentNode.removeChild(box); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); });
+  }
+
+  /* ---------------- chat ---------------- */
   function send(text) {
     text = String(text || "").trim().slice(0, 800);
     if (!text || busy) return;
     say(text, [], [], "you");
     history.push({ role: "user", text: text });
     if (!API) { say("I'm warming up. Meanwhile: Test Drive is $5 for about two shots, or call 1-800-481-8638.", [{ href: "/pricing/", label: "Pricing" }]); return; }
+    post("");
+  }
+  function post(token) {
     busy = true;
     var typing = el("div", "zg-msg bot zg-typing", "Producer Z is thinking...");
     log.appendChild(typing);
     var headers = { "Content-Type": "application/json" };
     if (window.MW_ID_TOKEN) headers.Authorization = "Bearer " + window.MW_ID_TOKEN;
-    fetch(API + "/v2/guide/chat", { method: "POST", headers: headers,
-      body: JSON.stringify({ messages: history.slice(-8), page: location.pathname }) })
-      .then(function (r) { return r.json().catch(function () { return {}; }); })
+    var body = { messages: history.slice(-8), page: location.pathname };
+    var pass = sess.get("mw_z_pass");
+    if (pass) body.pass = pass;
+    if (token) body.turnstile_token = token;
+    var status = 0;
+    fetch(API + "/v2/guide/chat", { method: "POST", headers: headers, body: JSON.stringify(body) })
+      .then(function (r) { status = r.status; return r.json().catch(function () { return {}; }); })
       .then(function (j) {
+        if (status === 403 && j.needs_check) { humanCheck(); return; }
+        if (j.pass) sess.set("mw_z_pass", String(j.pass).slice(0, 64));
         var reply = j.reply || SAFE;
         history.push({ role: "assistant", text: reply });
         say(reply, j.links || []);
@@ -161,7 +200,7 @@
     { sel: "[data-tour='best-work']", optional: true, text: "Our best work: music videos made by our studio team." },
     { sel: "[data-tour='creator-studio'], a[href='/creator-studio/']", text: "Free tools: hook writer, script fitter, captions and more. No account needed." },
     { sel: "[data-tour='start'], a[href='/studio/']", text: "Make a video: the Studio shows the exact price before every render. Start with the $5 Test Drive." },
-    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Done-for-you starts at $149, or call 1-800-481-8638." },
+    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes it for you: commercial spots from $2,500. Or call 1-800-481-8638." },
     { sel: ".zg-fab", text: "I'm always right here. Ask me anything." }
   ];
   var spot = el("div", "zg-spot"), tip = el("div", "zg-tip");
