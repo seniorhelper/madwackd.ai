@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Madwackd Studio&trade;: The Ultimate AI Video Tool, With Real Producers</title>
 <meta name="description" content="The ultimate AI video tool: ads, music videos and trailers with voice, priced before every render. Do it yourself, or hand it to a real human producer.">
@@ -25,10 +25,8 @@
 <meta name="twitter:title" content="Madwackd Studio&trade;: The Ultimate AI Video Tool, With Real Producers">
 <meta name="twitter:description" content="The ultimate AI video tool: ads, music videos and trailers with voice, priced before every render. Do it yourself, or hand it to a real human producer.">
 <meta name="twitter:image" content="https://www.madwackd.ai/assets/og-image.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=20261106b">
+<link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
+<link rel="stylesheet" href="/assets/site.css?v=20261106c">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.madwackd.ai/#org", "name": "Madwackd Studio", "url": "https://www.madwackd.ai/", "logo": "https://www.madwackd.ai/assets/icon-512.png", "telephone": "1-800-481-8638", "parentOrganization": {"@type": "Organization", "name": "Madwackd Productions", "url": "https://www.madwackd.com/"}, "address": {"@type": "PostalAddress", "streetAddress": "1001 Bannock St #660", "addressLocality": "Denver", "addressRegion": "CO", "postalCode": "80204", "addressCountry": "US"}, "areaServed": "Worldwide", "contactPoint": {"@type": "ContactPoint", "telephone": "1-800-481-8638", "contactType": "sales", "areaServed": "Worldwide", "availableLanguage": "English"}}, {"@type": "SoftwareApplication", "@id": "https://www.madwackd.ai/#app", "name": "Madwackd Studio", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "AI video generator with voice", "operatingSystem": "Web browser", "url": "https://www.madwackd.ai/", "publisher": {"@id": "https://www.madwackd.ai/#org"}, "description": "AI video studio with real human producers. Turn ideas into finished video with voice: ads, trailers, music videos, explainers and social clips, with a price estimate before every render.", "featureList": ["Price estimate before every render", "Per-project budget cap", "Director's notes with versioned prompts", "Character Lock for consistent faces", "Stock, uploaded and recorded voices", "Timeline export in 9:16 and 16:9", "Rights pack per project", "Low-cost low-res preview before full renders"], "offers": {"@type": "Offer", "price": "5", "priceCurrency": "USD", "description": "Test Drive: 50 credits"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Madwackd Studio?", "acceptedAnswer": {"@type": "Answer", "text": "An AI video studio that turns an idea into a finished video with voice: ads, trailers, music videos, explainers and social clips. You see the price before every render, keep characters consistent from shot to shot, and download a rights pack for every project."}}, {"@type": "Question", "name": "How do I know what a render will cost?", "acceptedAnswer": {"@type": "Answer", "text": "Every render starts with a quote: seconds times model times takes, in credits. You confirm it before anything is spent, each project has a budget cap. Prompts our safety check blocks cost nothing, and if the video engine hits a technical error and makes no video, the credits come back automatically."}}, {"@type": "Question", "name": "What if I don't like a shot?", "acceptedAnswer": {"@type": "Answer", "text": "Takes you don't like aren't refunded, so start with a low-cost, low-res 4-second preview before the full render. Fix the direction with director's notes and another cheap preview, then render the full shot."}}, {"@type": "Question", "name": "Can the video have a voice?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pick one of our studio narrator voices, type the script, and see the price before it's made. Custom voices are coming, and they'll need a consent check: your own voice, or written permission from the speaker."}}, {"@type": "Question", "name": "Can a person produce it for me?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hire a Madwackd producer: Junior, Senior or Executive packages, from a single social ad to a full trailer. See human producers."}}]}]}</script>
 </head>
 <body>
@@ -47,11 +45,21 @@
 <main id="main">
 <section class="hero hero-v2">
   <div class="wrap">
-    <p class="hero-status"><span class="tally" aria-hidden="true"></span><span>AI video studio + real human producers</span></p>
-    <h1>The ultimate video tool.<br><span class="hl">AI power. Real producers.</span></h1>
-    <div class="hero-row">
-      <p class="sub">Type an idea, see the price, get TV-quality video with voice. Or hand it to a pro.</p>
-      <div class="cta-row"><a class="btn btn-primary" href="/studio/?buy=test_drive">Start for $5</a><a class="btn btn-outline" href="tel:+18004818638">Call a producer</a></div>
+    <div class="hero-top">
+      <div class="hero-main">
+        <p class="hero-status"><span class="tally" aria-hidden="true"></span><span>AI video studio + real human producers</span></p>
+        <h1>The ultimate video tool.<br><span class="hl">AI power. Real producers.</span></h1>
+        <div class="hero-row">
+          <p class="sub">Type an idea, see the price, get TV-quality video with voice. Or hand it to a pro.</p>
+          <div class="cta-row"><a class="btn btn-primary" href="/studio/?buy=test_drive">Start for $5</a><a class="btn btn-outline" href="tel:+18004818638">Call a producer</a></div>
+        </div>
+      </div>
+      <aside class="best-work" aria-labelledby="best-h">
+        <p class="best-kicker" id="best-h"><span class="tally" aria-hidden="true"></span>Our best work</p>
+        <figure class="best-card"><video controls playsinline preload="none" poster="/assets/media/showcase/tell-me-why.jpg" width="1280" height="720" aria-label="Tell Me Why, full music video"><source src="/assets/media/showcase/tell-me-why-720.mp4" type="video/mp4"></video><figcaption><b>Tell Me Why</b><span>Country music video, 4:19. Written and produced by Zach Wennstedt. A Madwackd Studio production.</span></figcaption></figure>
+        <figure class="best-card"><video controls playsinline preload="none" poster="/assets/media/showcase/what-love-really-is.jpg" width="1280" height="720" aria-label="What Love Really Is, full music video"><source src="/assets/media/showcase/what-love-really-is-720.mp4" type="video/mp4"></video><figcaption><b>What Love Really Is</b><span>Neon cartoon music video, 5:01. Written and produced by Zach Wennstedt. A Madwackd Studio production.</span></figcaption></figure>
+        <a class="best-link" href="/producers/">Want one like these? Our producers make full videos &rarr;</a>
+      </aside>
     </div>
     <figure class="reel">
       <video class="reel-vid" id="spot" autoplay muted loop playsinline preload="auto" poster="/assets/media/showcase/commercial-poster.jpg" width="1280" height="720" aria-label="Madwackd Studio 27-second commercial">

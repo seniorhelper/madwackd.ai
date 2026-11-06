@@ -703,3 +703,24 @@ a:hover{color:var(--signal-text)}
 .mv-facts b{font-size:1.6rem;line-height:1.1;color:#FF7CC0}
 .mv-facts span{font-size:.92rem;color:#e4dff0}
 @media (max-width:860px){.mv-grid{grid-template-columns:1fr;gap:24px}.mv-feature{padding:56px 0}}
+
+/* Our best work: two full music videos, top right of the home hero and top of the vault (2026-11-06) */
+.hero-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:28px 48px;align-items:start}
+.hero-top .hero-row{grid-template-columns:1fr;align-items:start}
+.best-work{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:16px;background:#15121F;box-shadow:0 0 0 3px #15121F,6px 6px 0 #8B3DFF}
+.best-kicker{display:flex;align-items:center;gap:8px;margin:0;font:800 .8rem/1 var(--head);letter-spacing:.12em;text-transform:uppercase;color:#FFD60A}
+.best-card{margin:0;border-radius:12px;overflow:hidden;background:#221D30}
+.best-card video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.best-card figcaption{display:flex;flex-direction:column;gap:2px;padding:8px 10px 10px;color:#F4F0FA;font-size:.82rem;line-height:1.35}
+.best-card figcaption b{font:700 .95rem var(--head);color:#fff}
+.best-card figcaption span{color:#B9B2C8}
+.best-link{color:#FF7CC0;font-weight:700;font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
+.best-link:hover{color:#FFD60A}
+@media (max-width:960px){.hero-top{grid-template-columns:1fr}.best-work{max-width:560px}}
+.vbest{margin:0 0 40px;padding:20px;border-radius:18px;background:#15121F;color:#F4F0FA;box-shadow:0 0 0 3px #15121F,6px 6px 0 #FF2E93}
+.vbest-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-bottom:14px}
+.vbest-head .kicker{margin:0;color:#FFD60A}
+.vbest-head p{margin:0;color:#B9B2C8}
+.vbest-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.vbest-cta{margin:16px 0 0}
+@media (max-width:640px){.vbest-grid{grid-template-columns:1fr}.vbest{padding:14px}}

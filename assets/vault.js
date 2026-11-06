@@ -2,12 +2,12 @@
 (function () {
   "use strict";
   var box = document.getElementById("vbox"), v = document.getElementById("vbox-v"), t = document.getElementById("vbox-t");
-  var cards = [].slice.call(document.querySelectorAll(".vcard")), last = null;
+  var cards = [].slice.call(document.querySelectorAll(".vcard")), grid = [].slice.call(document.querySelectorAll(".vgrid .vcard")), last = null;
   [].forEach.call(document.querySelectorAll(".vf button"), function (b, _, all) {
     b.addEventListener("click", function () {
       var f = b.getAttribute("data-f");
       [].forEach.call(document.querySelectorAll(".vf button"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-      cards.forEach(function (c) { c.hidden = !(f === "all" || c.getAttribute("data-cat") === f); c.classList.toggle("vbig", f === "all" && c === cards[0]); });
+      grid.forEach(function (c) { c.hidden = !(f === "all" || c.getAttribute("data-cat") === f); c.classList.toggle("vbig", f === "all" && c === grid[0]); });
     });
   });
   function close() { v.pause(); v.removeAttribute("src"); v.load(); if (box.open) box.close(); if (last) last.focus(); }
