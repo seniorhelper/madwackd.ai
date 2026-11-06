@@ -117,7 +117,7 @@
 
   /* ---------------- voice: browser speech for everyone (free); studio voice for paid tiers ---------------- */
   function speak(text) {
-    if (["pro", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
+    if (["pro", "studio", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
       fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
         Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text }) })
         .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
@@ -202,7 +202,7 @@
   window.addEventListener("mw:guide-tour", function () { tour(0); });
 
   /* Offer the tour once, gently, on a first visit (not on the studio app or dashboard). */
-  if (!store.get("mw_z_toured") && !/^\/(studio|dashboard)\//.test(location.pathname)) {
+  if (!store.get("mw_z_toured") && !/^\/(studio|studio-board|dashboard)\//.test(location.pathname)) {
     setTimeout(function () { if (panel.hidden && !document.querySelector("dialog[open]")) open(); }, 4000);
   }
 
