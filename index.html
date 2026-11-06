@@ -54,6 +54,13 @@
       <p class="sub">Ads, trailers and music videos, finished with voice. Every render gets a quote, and nothing is spent until you approve it.</p>
       <div class="cta-row"><a class="btn btn-primary" href="/early-access/">Get early access</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
     </div>
+    <figure class="reel">
+      <video class="reel-vid" autoplay muted loop playsinline preload="auto" poster="/assets/media/showcase/reel-poster.jpg" width="1280" height="720" aria-label="Showreel: scenes from ads our team made with AI video">
+        <source src="/assets/media/showcase/reel-640.mp4" type="video/mp4" media="(max-width: 700px)">
+        <source src="/assets/media/showcase/reel-1280.mp4" type="video/mp4">
+      </video>
+      <figcaption><span class="tally" aria-hidden="true"></span>Every shot here was made with AI video. <a href="#showcase">Watch the full ads</a></figcaption>
+    </figure>
     <div class="monitor" data-monitor>
       <div class="mon-bar"><span><span class="tally" aria-hidden="true"></span><b>Quote panel</b></span><span>Interface preview</span></div>
       <div class="mon-main">
@@ -96,6 +103,23 @@
       </ol>
     </div>
     <p class="mon-cap">Interface preview with early-access pricing. Frames are stills from THE EARTH MOVIE, our own AI-made feature, and nothing in this panel renders or charges.</p>
+  </div>
+</section>
+
+<section id="showcase" class="showcase" aria-labelledby="showcase-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Made with AI video</p>
+      <h2 id="showcase-h">TV-quality ads. No film crew.</h2>
+      <p>Real ads our team made for our own brands, with voiceover, music and a finished end card. Tap one to watch with sound.</p>
+    </div>
+    <div class="show-grid">
+      <figure class="show-card"><video controls playsinline preload="none" poster="/assets/media/showcase/eyetoad-billboards-45s-v1.jpg" width="1280" height="720"><source src="/assets/media/showcase/eyetoad-billboards-45s-v1.mp4" type="video/mp4"></video><figcaption><b>Billboards</b><span>Marketing agency brand ad, 45 s</span></figcaption></figure>
+      <figure class="show-card"><video controls playsinline preload="none" poster="/assets/media/showcase/painterhotline-first-snow-49s-v1.jpg" width="1280" height="720"><source src="/assets/media/showcase/painterhotline-first-snow-49s-v1.mp4" type="video/mp4"></video><figcaption><b>First Snow</b><span>Painting company holiday ad, 49 s</span></figcaption></figure>
+      <figure class="show-card"><video controls playsinline preload="none" poster="/assets/media/showcase/eyetoad-burned-60s-v1.jpg" width="1280" height="720"><source src="/assets/media/showcase/eyetoad-burned-60s-v1.mp4" type="video/mp4"></video><figcaption><b>Burned Before</b><span>Agency story ad, 60 s</span></figcaption></figure>
+      <figure class="show-card"><video controls playsinline preload="none" poster="/assets/media/showcase/painterhotline-sunday-40s-v1.jpg" width="1280" height="720"><source src="/assets/media/showcase/painterhotline-sunday-40s-v1.mp4" type="video/mp4"></video><figcaption><b>Ready by Sunday</b><span>Painting company offer ad, 40 s</span></figcaption></figure>
+    </div>
+    <div class="cta-row show-cta"><a class="btn btn-primary" href="/early-access/">Make yours</a><a class="btn btn-outline" href="/producers/">Have us make it</a></div>
   </div>
 </section>
 
@@ -322,5 +346,6 @@
 <script src="/assets/site.js" defer></script>
 <script src="/assets/fx.js" defer></script>
 <script src="/assets/play.js" defer></script>
+<script>(function(){var r=document.querySelector('.reel-vid');if(r&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){r.removeAttribute('autoplay');r.pause();}document.querySelectorAll('.show-card video').forEach(function(v){v.addEventListener('play',function(){document.querySelectorAll('.show-card video').forEach(function(o){if(o!==v)o.pause();});});});})();</script>
 </body>
 </html>

@@ -552,3 +552,18 @@ a:hover{color:var(--signal-text)}
   .neo,.neo .on,.neo .snap,.pl,.pr,.neo .pl,.neo .pr,.candy .pl,.candy .pr{animation:none!important}
   .btn{transition:none}
 }
+
+/* Showreel + showcase (Nov 5 2026) */
+.reel{margin:28px 0 22px;border-radius:18px;overflow:hidden;background:#15121F;box-shadow:0 0 0 3px #15121F,8px 8px 0 #FF2E93}
+.reel-vid{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.reel figcaption{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:12px 16px;color:#FBF8FF;font-size:.95rem;background:#15121F}
+.reel figcaption a{color:#FFD60A;font-weight:700}
+.showcase{padding:64px 0}
+.show-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:26px}
+.show-card{margin:0;border:3px solid #15121F;border-radius:16px;overflow:hidden;background:#fff}
+.show-card video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#15121F}
+.show-card figcaption{display:flex;flex-direction:column;gap:2px;padding:12px 16px}
+.show-card figcaption b{font-family:Poppins,Inter,system-ui,sans-serif;font-size:1.05rem}
+.show-card figcaption span{color:#5d5670;font-size:.92rem}
+.show-cta{margin-top:26px;justify-content:center}
+@media (max-width:700px){.show-grid{grid-template-columns:1fr}.reel{box-shadow:0 0 0 3px #15121F,5px 5px 0 #FF2E93}}
