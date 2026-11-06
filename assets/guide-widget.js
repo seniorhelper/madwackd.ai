@@ -1,211 +1,98 @@
-/* Madwackd Studio - Producer Z, the producer guide. Chat panel, first-visit tour, read-aloud.
-   Plain JS, no inline handlers (CSP script-src 'self'). Needs /assets/config.js (MW_CONFIG.apiBase).
-   Renders replies with textContent only. Links are rebuilt from an allowlist. */
+/* Madwackd Studio - Producer Z launcher (small, loads with the page).
+   Closed state: a movie spotlight. The chat panel and the full-body character (guide-z.js + guide-z.css)
+   load only on first use, or when the browser is idle, so they never slow the first paint.
+   Plain JS, no inline handlers (CSP script-src 'self'). Same-origin files only. */
 (function () {
   "use strict";
+  if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  /* Blocked names are stored only as 32-bit FNV-1a hashes, so page source names no one. Source of truth:
-     guide/mw_guide/guardrails.py (server); regenerate with tools/hash_terms.py. */
-  var BLOCK_HASH = [0x8dd413bc,0x660dbe6f,0xb0d11833,0xede616c3,0xadaad958,0x1cd93fd7,0xf2362cc1,0x08fb8333,
-    0x36cb88ff,0xd7ac1a8d,0x9da4e586,0x77305731,0x90e14d8e,0x292d430a,0xe1fc8517,0x463bef82,0x172be6ba,0xdcd757fc,
-    0x8ccc3104,0x945367a7,0xeb7609fa,0x91ef7b40,0x796a932e,0xfa5219e8,0x7b009f24,0xb9d61633,0xc0729580];
-  function fnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
-  var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
-    "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
-    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/"];
-  var FAMILY = ["https://www.eyetoad.com/", "https://www.searchconverts.com/", "https://doorhanger.ai/",
-    "https://donkley.ai/", "https://winbuild.ai/", "https://www.madwackd.com/"];
-  var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
-
-  /* Second line of defense; the server already filtered. */
-  function scrub(text) {
-    var t = String(text || "").normalize ? String(text || "").normalize("NFKC") : String(text || "");
-    t = t.replace(/[​-‏⁠-⁤﻿­]/g, "");
-    var w = t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" ");
-    var lt = t.toLowerCase().replace(/[0134578@$]/g, function (c) { return { "0": "o", "1": "l", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s" }[c]; })
-      .replace(/[^a-z0-9]+/g, " ").trim().split(" ");
-    var lists = [w, lt];
-    for (var k = 0; k < 2; k++) {
-      var ws = lists[k];
-      for (var i = 0; i < ws.length; i++) {
-        var cands = [ws[i], ws[i] + (ws[i + 1] || ""), ws[i] + (ws[i + 1] || "") + (ws[i + 2] || "")];
-        if (ws[i].length > 1 && ws[i].slice(-1) === "s") cands.push(ws[i].slice(0, -1));
-        for (var c = 0; c < cands.length; c++) if (BLOCK_HASH.indexOf(fnv(cands[c])) > -1) return SAFE;
-      }
-    }
-    if (/sk-[a-z0-9_\-]{12,}|\.run\.app|aiza[0-9a-z_\-]{20,}/i.test(t)) return SAFE;
-    return t;
-  }
-  function safeLink(href) { return PATHS.indexOf(href) > -1 || FAMILY.indexOf(href) > -1; }
-  if (typeof document === "undefined") { module.exports = { scrub: scrub, safeLink: safeLink }; return; }
-
-  var C = window.MW_CONFIG || {};
-  var API = String(C.apiBase || "").trim().replace(/\/+$/, "");
-  var TIER = String(window.MW_USER_TIER || "anon");
-  var history = [];
-  var busy = false;
+  var V = "20261106z";
+  var NO_NUDGE = /^\/(studio|studio-board|dashboard)\//;   /* app pages: never pop anything up */
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } }
   };
 
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text != null) e.textContent = text;
-    return e;
-  }
+  var LAMP =
+    '<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">' +
+    '<defs><linearGradient id="zgl-m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6A6482"/>' +
+    '<stop offset=".45" stop-color="#2E2A3C"/><stop offset="1" stop-color="#110F18"/></linearGradient>' +
+    '<radialGradient id="zgl-l" cx=".4" cy=".45" r=".6"><stop offset="0" stop-color="#fff"/>' +
+    '<stop offset=".45" stop-color="#FFF3C4"/><stop offset=".85" stop-color="#FFB648"/><stop offset="1" stop-color="#8A5A14"/></radialGradient></defs>' +
+    '<path d="M32 46v8M24 58l8-4 8 4" fill="none" stroke="#8A84A0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<path d="M21 39q0 9 11 9t11-9" fill="none" stroke="#7A7494" stroke-width="2.6" stroke-linecap="round"/>' +
+    '<g transform="rotate(35 32 36)">' +
+    '<rect x="22" y="27" width="24" height="18" rx="3" fill="url(#zgl-m)"/>' +
+    '<path d="M34 28.5v15M37 28.5v15M40 28.5v15M43 28.5v15" stroke="#0B0A10" stroke-width="1.2"/>' +
+    '<rect x="45" y="29.5" width="4" height="13" rx="1.6" fill="#1C1928"/>' +
+    '<rect x="18" y="25" width="5" height="22" rx="1.5" fill="#3A3550"/>' +
+    '<path d="M18.5 25.5 10 19.5l1.2-1.4 8.3 5.6zM18.5 46.5 10 52.5l1.2 1.4 8.3-5.6z" fill="#2A2638"/>' +
+    '<ellipse cx="19" cy="36" rx="2.7" ry="9.6" fill="url(#zgl-l)"/>' +
+    '<circle cx="32" cy="36" r="2.2" fill="#9A94B0"/></g></svg>';
 
-  /* ---------------- markup ---------------- */
-  var root = el("div", "zg");
+  var root = document.createElement("div");
+  root.className = "zgl";
   root.innerHTML =
-    '<button class="zg-fab" type="button" aria-expanded="false" aria-controls="zg-panel">' +
-    '<span class="zg-face" aria-hidden="true"></span><span class="zg-fab-t">Ask Producer Z</span></button>' +
-    '<section class="zg-panel" id="zg-panel" role="dialog" aria-label="Producer Z, your AI director" hidden>' +
-    '<header class="zg-head"><span class="zg-face" aria-hidden="true"></span>' +
-    '<div><strong>Producer Z</strong><small>Your AI director</small></div>' +
-    '<button class="zg-x" type="button" aria-label="Close">&times;</button></header>' +
-    '<div class="zg-log" aria-live="polite"></div>' +
-    '<div class="zg-quick"></div>' +
-    '<form class="zg-form"><label class="sr-only" for="zg-in">Ask Producer Z</label>' +
-    '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
-    '<button class="zg-send" type="submit">Send</button></form>' +
-    '<p class="zg-fine">Producer Z is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
-    "</section>";
+    '<div class="zgl-beam" aria-hidden="true"><i class="h"></i><i class="c"></i><i class="d"></i></div>' +
+    '<button class="zgl-btn" type="button" aria-expanded="false" aria-controls="zg-panel" ' +
+    'aria-label="Ask Producer Z, the AI director">' + LAMP + '<span class="zgl-glow"></span></button>' +
+    '<div class="zgl-bub" role="status" hidden><p>Psst. I\'m Producer Z, the AI director. Want a 30-second tour?</p>' +
+    '<button class="go" type="button">Tour</button><button class="no" type="button">Not now</button></div>';
+
+  var btn = root.querySelector(".zgl-btn"), bub = root.querySelector(".zgl-bub");
+  var loading = null;
+
+  function css(href) {
+    var l = document.createElement("link");
+    l.rel = "stylesheet"; l.href = href;
+    document.head.appendChild(l);
+  }
+  /* Loads the heavy half once. Resolves when window.MWZ is ready. */
+  function load() {
+    if (window.MWZ) return Promise.resolve(window.MWZ);
+    if (loading) return loading;
+    loading = new Promise(function (resolve, reject) {
+      css("/assets/guide-z.css?v=" + V);
+      var s = document.createElement("script");
+      s.src = "/assets/guide-z.js?v=" + V; s.async = true;
+      s.onload = function () { window.MWZ ? resolve(window.MWZ) : reject(); };
+      s.onerror = function () { loading = null; reject(); };
+      document.head.appendChild(s);
+    });
+    return loading;
+  }
+  function run(fn) {
+    btn.setAttribute("aria-busy", "true");
+    load().then(function (z) { btn.removeAttribute("aria-busy"); fn(z); })
+      .catch(function () { btn.removeAttribute("aria-busy"); location.href = "/producers/"; });
+  }
+  function hideBub(remember) { bub.hidden = true; if (remember) store.set("mw_z_toured", "1"); }
+
+  btn.addEventListener("click", function () { hideBub(true); run(function (z) { z.toggle(); }); });
+  /* Warm the cache when someone shows intent, so the first open feels instant. */
+  ["pointerenter", "focus", "touchstart"].forEach(function (ev) {
+    btn.addEventListener(ev, function () { load().catch(function () {}); }, { once: true, passive: true });
+  });
+  bub.querySelector(".go").addEventListener("click", function () { hideBub(true); run(function (z) { z.tour(0); }); });
+  bub.querySelector(".no").addEventListener("click", function () { hideBub(true); btn.focus(); });
+  window.addEventListener("mw:guide-open", function (e) { var t = e.detail && e.detail.topic; run(function (z) { z.open(t); }); });
+  window.addEventListener("mw:guide-tour", function () { run(function (z) { z.tour(0); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !bub.hidden) hideBub(false); });
+
+  window.__mwzLauncher = { root: root, button: btn, hideBubble: hideBub };
   document.body.appendChild(root);
 
-  var fab = root.querySelector(".zg-fab"), panel = root.querySelector(".zg-panel"),
-    log = root.querySelector(".zg-log"), quick = root.querySelector(".zg-quick"),
-    form = root.querySelector(".zg-form"), input = root.querySelector("#zg-in");
+  /* Dim the beam after a few seconds so it never competes with the page. */
+  setTimeout(function () { root.classList.add("is-dim"); }, 7000);
 
-  function open(topic) {
-    panel.hidden = false;
-    fab.setAttribute("aria-expanded", "true");
-    if (!log.childNodes.length) say("Hi, I'm Producer Z, your AI director. I know this whole site, and I'm here to get your video made. Want a 30-second tour, or tell me what you're making?",
-      [], ["Take the tour", "What does it cost?", "Make it for me"]);
-    if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
-    input.focus();
+  /* First visit only, never on app pages: a small teaser bubble (the panel never opens on its own). */
+  if (!store.get("mw_z_toured") && !NO_NUDGE.test(location.pathname)) {
+    setTimeout(function () { if (!root.classList.contains("is-open") && !document.querySelector("dialog[open]")) bub.hidden = false; }, 4000);
   }
-  function close() { panel.hidden = true; fab.setAttribute("aria-expanded", "false"); fab.focus(); }
-
-  function say(text, links, chips, who) {
-    var row = el("div", "zg-msg " + (who || "bot"));
-    row.appendChild(el("p", "", who === "you" ? text : scrub(text)));
-    (links || []).forEach(function (l) {
-      if (!safeLink(l.href)) return;
-      var a = el("a", "zg-btn", l.label);
-      a.href = l.href;
-      if (l.href.indexOf("http") === 0) { a.rel = "noopener"; a.target = "_blank"; }
-      row.appendChild(a);
-    });
-    if (who !== "you" && "speechSynthesis" in window) {
-      var sp = el("button", "zg-say", "Read aloud");
-      sp.type = "button";
-      sp.addEventListener("click", function () { speak(row.firstChild.textContent); });
-      row.appendChild(sp);
-    }
-    log.appendChild(row);
-    log.scrollTop = log.scrollHeight;
-    quick.textContent = "";
-    (chips || []).forEach(function (c) {
-      var b = el("button", "zg-chip", c);
-      b.type = "button";
-      b.addEventListener("click", function () { c === "Take the tour" ? tour(0) : send(c); });
-      quick.appendChild(b);
-    });
-  }
-
-  /* ---------------- voice: browser speech for everyone (free); studio voice for paid tiers ---------------- */
-  function speak(text) {
-    if (["pro", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
-      fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
-        Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text }) })
-        .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
-        .then(function (b) { var a = new Audio(URL.createObjectURL(b)); a.play(); })
-        .catch(function () { browserSpeak(text); });
-      return;
-    }
-    browserSpeak(text);
-  }
-  function browserSpeak(text) {
-    try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = 1.03; speechSynthesis.speak(u); } catch (e) { /* no speech */ }
-  }
-
-  /* ---------------- chat ---------------- */
-  function send(text) {
-    text = String(text || "").trim().slice(0, 800);
-    if (!text || busy) return;
-    say(text, [], [], "you");
-    history.push({ role: "user", text: text });
-    if (!API) { say("I'm warming up. Meanwhile: Test Drive is $5 for about two shots, or call 1-800-481-8638.", [{ href: "/pricing/", label: "Pricing" }]); return; }
-    busy = true;
-    var typing = el("div", "zg-msg bot zg-typing", "Producer Z is thinking...");
-    log.appendChild(typing);
-    var headers = { "Content-Type": "application/json" };
-    if (window.MW_ID_TOKEN) headers.Authorization = "Bearer " + window.MW_ID_TOKEN;
-    fetch(API + "/v2/guide/chat", { method: "POST", headers: headers,
-      body: JSON.stringify({ messages: history.slice(-8), page: location.pathname }) })
-      .then(function (r) { return r.json().catch(function () { return {}; }); })
-      .then(function (j) {
-        var reply = j.reply || SAFE;
-        history.push({ role: "assistant", text: reply });
-        say(reply, j.links || []);
-      })
-      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }]); })
-      .then(function () { busy = false; if (typing.parentNode) typing.parentNode.removeChild(typing); });
-  }
-
-  /* ---------------- first-visit tour ---------------- */
-  var STEPS = [
-    /* The site marks tour targets with data-tour="..." (see INTEGRATION.md); missing targets are skipped. */
-    { sel: "[data-tour='best-work']", optional: true, text: "Our best work: music videos made by our studio team." },
-    { sel: "[data-tour='creator-studio'], a[href='/creator-studio/']", text: "Free tools: hook writer, script fitter, captions and more. No account needed." },
-    { sel: "[data-tour='start'], a[href='/studio/']", text: "Make a video: the Studio shows the exact price before every render. Start with the $5 Test Drive." },
-    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Done-for-you starts at $149, or call 1-800-481-8638." },
-    { sel: ".zg-fab", text: "I'm always right here. Ask me anything." }
-  ];
-  var spot = el("div", "zg-spot"), tip = el("div", "zg-tip");
-  tip.setAttribute("role", "status");
-  function endTour() { spot.remove(); tip.remove(); store.set("mw_z_toured", "1"); }
-  function tour(i) {
-    if (i >= STEPS.length) { endTour(); open(); return; }
-    close();
-    var target = document.querySelector(STEPS[i].sel);
-    var visible = target && target.getBoundingClientRect().width > 0;
-    if (!visible && STEPS[i].optional) return tour(i + 1);
-    if (visible) target.scrollIntoView({ block: "center", behavior: "smooth" });
-    setTimeout(function () {
-      /* Hidden target (e.g. nav inside the phone menu): show the tip on its own, centred low on screen. */
-      var r = visible ? target.getBoundingClientRect() : { top: innerHeight - 200, bottom: innerHeight - 200, left: (innerWidth - 290) / 2, width: 0, height: 0 };
-      spot.style.cssText = visible ? "top:" + (r.top - 6) + "px;left:" + (r.left - 6) + "px;width:" + (r.width + 12) + "px;height:" + (r.height + 12) + "px" : "display:none";
-      tip.textContent = "";
-      tip.appendChild(el("p", "", STEPS[i].text));
-      var next = el("button", "zg-chip", i === STEPS.length - 1 ? "Done" : "Next"), skip = el("button", "zg-skip", "Skip tour");
-      next.type = skip.type = "button";
-      next.addEventListener("click", function () { tour(i + 1); });
-      skip.addEventListener("click", endTour);
-      tip.appendChild(next); tip.appendChild(skip);
-      var top = r.bottom + 14 + 140 > innerHeight ? Math.max(8, r.top - 150) : r.bottom + 14;
-      tip.style.top = top + "px";
-      tip.style.left = Math.min(Math.max(8, r.left), innerWidth - 300) + "px";
-      document.body.appendChild(spot); document.body.appendChild(tip);
-      next.focus();
-    }, 350);
-  }
-
-  /* ---------------- wiring ---------------- */
-  fab.addEventListener("click", function () { panel.hidden ? open() : close(); });
-  root.querySelector(".zg-x").addEventListener("click", close);
-  form.addEventListener("submit", function (e) { e.preventDefault(); var v = input.value; input.value = ""; send(v); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) close(); });
-  window.addEventListener("mw:guide-open", function (e) { open(e.detail && e.detail.topic); });
-  window.addEventListener("mw:guide-tour", function () { tour(0); });
-
-  /* Offer the tour once, gently, on a first visit (not on the studio app or dashboard). */
-  if (!store.get("mw_z_toured") && !/^\/(studio|dashboard)\//.test(location.pathname)) {
-    setTimeout(function () { if (panel.hidden && !document.querySelector("dialog[open]")) open(); }, 4000);
-  }
-
-  if (typeof module !== "undefined") module.exports = { scrub: scrub, safeLink: safeLink };
-  window.MWZ = { open: open, tour: tour, scrub: scrub };
+  /* Idle prefetch after load, on decent connections only. */
+  window.addEventListener("load", function () {
+    var c = navigator.connection;
+    if (c && (c.saveData || /2g/.test(c.effectiveType || ""))) return;
+    (window.requestIdleCallback || function (f) { setTimeout(f, 3000); })(function () { load().catch(function () {}); }, { timeout: 8000 });
+  });
 })();

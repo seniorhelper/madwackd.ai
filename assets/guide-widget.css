@@ -1,43 +1,42 @@
-/* Producer Z guide widget. Uses site.css tokens with fallbacks so it also works on its own. */
-.zg{--zg-ink:var(--ink,#15121F);--zg-scr:var(--screen,#15121F);--zg-scr2:var(--screen-2,#221D30);--zg-line:var(--screen-line,#3A3350);
-  --zg-txt:var(--screen-text,#F4F0FA);--zg-mut:var(--screen-muted,#B9B2C8);--zg-pink:var(--signal,#FF2E93);--zg-lime:var(--lime,#7ED321);--zg-cyan:var(--cyan,#00B8F0)}
-.zg-fab{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:10px;min-height:52px;padding:6px 18px 6px 6px;
-  border:0;border-radius:999px;background:var(--zg-scr);color:var(--zg-txt);font:600 15px/1 Inter,system-ui,sans-serif;cursor:pointer;
-  box-shadow:0 0 0 2px var(--zg-pink),0 10px 30px rgba(21,18,31,.35);transition:transform .2s}
-.zg-fab:hover{transform:translateY(-2px)}
-.zg-fab:focus-visible,.zg button:focus-visible,.zg a:focus-visible,.zg input:focus-visible,.zg-tip button:focus-visible{outline:3px solid var(--zg-lime);outline-offset:2px}
-/* Clay "Z" badge until the claymation character sheet is approved. Then add class .has-art and drop
-   /assets/img/producer-z-avatar.webp in place (see docs/PRODUCER-Z-CHARACTER.md). */
-.zg-face{position:relative;display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#FFD9A8 0,#FF8A00 45%,#C2410C 100%);
-  box-shadow:inset -3px -4px 6px rgba(0,0,0,.25),inset 3px 3px 5px rgba(255,255,255,.35),0 0 0 2px var(--zg-pink)}
-.zg-face::after{content:"Z";font:900 21px/1 Poppins,Inter,system-ui,sans-serif;color:#15121F;text-shadow:1px 1px 0 rgba(255,255,255,.4)}
-.zg.has-art .zg-face{background:#2E2840 url(/assets/img/producer-z-avatar.webp) center/cover}
-.zg.has-art .zg-face::after{content:none}
-.zg-panel{position:fixed;right:18px;bottom:84px;z-index:91;width:min(380px,calc(100vw - 32px));max-height:min(620px,calc(100vh - 110px));
-  display:flex;flex-direction:column;border-radius:18px;background:var(--zg-scr);color:var(--zg-txt);border:1px solid var(--zg-line);
-  box-shadow:0 20px 60px rgba(21,18,31,.45);font:15px/1.5 Inter,system-ui,sans-serif;overflow:hidden}
-.zg-panel[hidden]{display:none}
-.zg-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(90deg,var(--zg-scr2),var(--zg-scr));border-bottom:1px solid var(--zg-line)}
-.zg-head strong{display:block;color:#fff}.zg-head small{color:var(--zg-mut)}
-.zg-x{margin-left:auto;width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--zg-txt);font-size:26px;cursor:pointer}
-.zg-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.zg-msg{max-width:88%;padding:10px 12px;border-radius:14px;background:var(--zg-scr2)}
-.zg-msg p{margin:0 0 6px}.zg-msg p:last-child{margin:0}
-.zg-msg.you{align-self:flex-end;background:var(--zg-pink);color:#fff}
-.zg-typing{color:var(--zg-mut);font-style:italic}
-.zg-btn{display:inline-block;margin:6px 6px 0 0;padding:8px 12px;border-radius:10px;background:var(--zg-lime);color:var(--zg-ink);font-weight:600;text-decoration:none;min-height:36px}
-.zg-say{display:block;margin-top:6px;padding:4px 0;border:0;background:none;color:var(--zg-cyan);font:inherit;font-size:13px;cursor:pointer;min-height:32px}
-.zg-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px}
-.zg-chip,.zg-skip{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--zg-line);background:var(--zg-scr2);color:var(--zg-txt);font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
-.zg-chip:hover{border-color:var(--zg-pink)}
-.zg-form{display:flex;gap:8px;padding:12px 14px}
-.zg-form input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--zg-line);background:#0E0C15;color:#fff;font:inherit}
-.zg-send{min-height:44px;padding:0 16px;border:0;border-radius:10px;background:var(--zg-pink);color:#fff;font-weight:700;cursor:pointer}
-.zg-fine{margin:0;padding:0 14px 12px;color:var(--zg-mut);font-size:12px}
-.zg-spot{position:fixed;z-index:95;border-radius:14px;box-shadow:0 0 0 4px var(--signal,#FF2E93),0 0 0 9999px rgba(21,18,31,.55);pointer-events:none;transition:all .3s}
-.zg-tip{position:fixed;z-index:96;width:min(290px,calc(100vw - 16px));padding:14px;border-radius:14px;background:var(--screen,#15121F);color:var(--screen-text,#F4F0FA);font:15px/1.5 Inter,system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.zg-tip p{margin:0 0 10px}.zg-tip .zg-chip{background:var(--signal,#FF2E93);border-color:transparent;color:#fff;margin-right:8px}
-.zg-skip{background:transparent}
-@media (max-width:480px){.zg-fab-t{display:none}.zg-fab{padding:6px}.zg-panel{right:8px;left:8px;width:auto;bottom:76px}}
-@media (prefers-reduced-motion:reduce){.zg-fab,.zg-spot{transition:none}}
+/* Producer Z launcher: the closed state is a movie spotlight (64px). Everything else (chat panel, the
+   full-body character) lives in guide-z.css / guide-z.js and loads only when needed. Fixed position: no
+   layout shift. Respects prefers-reduced-motion. */
+.zgl{position:fixed;right:16px;bottom:16px;z-index:90;width:64px;height:64px;font:600 14px/1.2 Inter,system-ui,sans-serif}
+.zgl-btn{position:relative;z-index:2;display:block;width:64px;height:64px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle at 50% 40%,#2A2440 0,#15121F 70%);box-shadow:0 8px 24px rgba(21,18,31,.45),0 0 0 2px rgba(255,46,147,.85)}
+.zgl-btn svg{display:block;width:64px;height:64px;overflow:visible}
+.zgl-btn:focus-visible,.zgl-bub button:focus-visible{outline:3px solid #7ED321;outline-offset:3px}
+.zgl-btn:hover{box-shadow:0 10px 28px rgba(21,18,31,.5),0 0 0 2px #FFD60A}
+
+/* the beam: three stacked cones (haze, core, dust) aimed up-left from the lens */
+.zgl-beam{position:absolute;z-index:1;right:42px;bottom:35px;width:210px;height:96px;pointer-events:none;
+  transform-origin:100% 50%;transform:rotate(35deg);opacity:.9;transition:opacity .6s,transform .6s}
+.zgl-beam i{position:absolute;inset:0;display:block;clip-path:polygon(0 0,100% 46%,100% 54%,0 100%)}
+.zgl-beam .h{inset:-14px -4px -14px 0;background:linear-gradient(270deg,rgba(255,236,170,.55),rgba(255,214,120,.18) 55%,rgba(255,214,120,0));filter:blur(9px)}
+.zgl-beam .c{background:linear-gradient(270deg,rgba(255,252,236,.95),rgba(255,240,196,.45) 40%,rgba(255,226,150,.08) 85%,rgba(255,226,150,0));filter:blur(1.5px)}
+.zgl-beam .d{opacity:.7;background:
+  radial-gradient(1.4px 1.4px at 22% 38%,#fff 98%,transparent),radial-gradient(1px 1px at 40% 62%,#fff 98%,transparent),
+  radial-gradient(1.2px 1.2px at 58% 45%,#fff 98%,transparent),radial-gradient(1px 1px at 70% 55%,#fff 98%,transparent),
+  radial-gradient(1.6px 1.6px at 31% 70%,#fff 98%,transparent),radial-gradient(1px 1px at 12% 30%,#fff 98%,transparent);
+  background-size:120px 80px;animation:zgl-dust 9s linear infinite}
+.zgl-glow{position:absolute;z-index:3;left:10px;top:17px;width:22px;height:22px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,1) 0,rgba(255,244,200,.9) 30%,rgba(255,200,90,.35) 60%,rgba(255,200,90,0) 72%);
+  animation:zgl-flicker 4.2s ease-in-out infinite}
+.zgl.is-dim .zgl-beam{opacity:.45}
+.zgl:hover .zgl-beam,.zgl:focus-within .zgl-beam{opacity:1}
+.zgl.is-open .zgl-beam{opacity:0;transform:rotate(60deg)}
+.zgl.is-open .zgl-glow{opacity:.35;animation:none}
+
+/* first-visit teaser: small, never covers the page, never steals focus */
+.zgl-bub{position:absolute;right:72px;bottom:6px;z-index:3;width:max-content;max-width:min(250px,calc(100vw - 104px));padding:10px 12px;border-radius:14px 14px 4px 14px;
+  background:#15121F;color:#F4F0FA;box-shadow:0 10px 30px rgba(21,18,31,.4);border:1px solid #3A3350}
+.zgl-bub p{margin:0 0 8px}
+.zgl-bub button{min-height:36px;margin-right:6px;padding:0 12px;border-radius:999px;border:1px solid #3A3350;background:#221D30;color:#F4F0FA;font:600 13px Inter,system-ui,sans-serif;cursor:pointer}
+.zgl-bub .go{background:#FF2E93;border-color:#FF2E93;color:#fff}
+.zgl-bub[hidden]{display:none}
+
+@keyframes zgl-dust{to{background-position:-120px -24px}}
+@keyframes zgl-flicker{0%,100%{opacity:1}47%{opacity:.93}50%{opacity:.82}53%{opacity:.96}}
+@media (max-width:480px){.zgl{right:10px;bottom:10px}.zgl-beam{width:150px}}
+@media (prefers-reduced-motion:reduce){.zgl-beam .d,.zgl-glow{animation:none}.zgl-beam{transition:none}}
+@media print{.zgl{display:none}}
