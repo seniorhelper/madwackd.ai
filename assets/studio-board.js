@@ -192,6 +192,7 @@
           '<div class="sb-accents" role="group" aria-label="Accent color">' + ['gold', 'cyan', 'magenta', 'lime'].map(function (a) { return '<button data-accent="' + a + '" class="acc-' + a + '" aria-label="' + a + ' accent"></button>'; }).join('') + '</div>' +
           '<button id="sb-dock-btn" aria-haspopup="true" title="Hidden panels">Panels</button>' +
           '<button id="sb-ask" class="sb-ask" title="Ask Producer Z">Ask Producer Z</button>' +
+          '<span class="sb-acct" data-mw-account data-mw-btn="sb-acct-btn"></span>' +
         '</div>' +
       '</header>' +
       '<div id="sb-banner"></div>' +
@@ -204,6 +205,7 @@
     $$('[data-tr]').forEach(function (b) { b.addEventListener('click', function () { transport(b.dataset.tr); }); });
     $('#sb-preset').addEventListener('change', function (e) { S.board.layout = B.applyPreset(S.board.layout, e.target.value); changed(); renderGrid(); });
     $$('[data-accent]').forEach(function (b) { b.addEventListener('click', function () { S.board.theme = { accent: b.dataset.accent }; applyTheme(); changed(); }); });
+    if (root.MWAuth) root.MWAuth.paint();
     $('#sb-dock-btn').addEventListener('click', function () { var d = $('#sb-dock'); d.hidden = !d.hidden; renderDock(); });
     $('#sb-ask').addEventListener('click', function () {
       var ev = new CustomEvent('mw:guide-open', { detail: { context: 'studio-board', tier: S.tier } });

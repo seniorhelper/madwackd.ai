@@ -250,3 +250,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
   .sb-banner { margin: 10px 12px 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Account chip (filled by /assets/mw-auth.js) */
+.sb-acct { display: inline-flex; gap: 6px; align-items: center; min-width: 0; }
+.sb-acct .mw-acct-who { color: var(--ink3, #908fa8); font-size: 12px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-acct-btn { display: inline-flex; align-items: center; min-height: 24px; padding: 4px 10px; border-radius: 6px; border: 1px solid #3a3550; background: transparent; color: inherit; font: inherit; font-size: 12px; text-decoration: none; cursor: pointer; }
+.sb-acct-btn:hover, .sb-acct-btn:focus-visible { border-color: currentColor; }

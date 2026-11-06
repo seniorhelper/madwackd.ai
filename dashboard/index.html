@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com https://madwackd-studio.firebaseapp.com; form-action 'none'; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Creator Dashboard | Madwackd Studio</title>
 <meta name="description" content="Your Madwackd Studio creator dashboard: mix voice and music, add sounds, and edit video in your browser.">
@@ -27,6 +27,7 @@
     <input id="project-name" type="text" value="My first ad" maxlength="60" autocomplete="off"></label>
   <span id="plan-badge" class="plan-badge">Free</span>
   <a class="btn-top" href="/pricing/">Credits</a>
+  <span class="mw-acct" data-mw-account></span>
   <button id="ask-producer" class="btn-top btn-pink" type="button">Ask the Producer</button>
 </header>
 
@@ -176,8 +177,9 @@
 <script src="/assets/dash-core.js"></script>
 <script src="/assets/dash-audio.js"></script>
 <script src="/assets/dash-editor.js"></script>
-<script src="/assets/dashboard.js"></script>
-<script src="/assets/config.js" defer></script>
-<script src="/assets/guide-widget.js?v=20261106c" defer></script>
+<!-- Sign-in first (shared with /studio/), then the dashboard sees the right plan. -->
+<script src="/assets/config.js"></script>
+<script src="/assets/mw-auth.js"></script>
+<script src="/assets/mw-app-boot.js" data-mode="reload" data-load="/assets/dashboard.js /assets/guide-widget.js?v=20261106c"></script>
 </body>
 </html>

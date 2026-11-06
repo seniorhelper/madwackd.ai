@@ -176,3 +176,7 @@ progress { width: 200px; height: 14px; accent-color: var(--d-lime); }
 .dash-lock-cta,.dash-lock-alt{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;margin:4px;border-radius:10px;font-weight:700;text-decoration:none}
 .dash-lock-cta{background:var(--signal,#FF2E93);color:#fff}
 .dash-lock-alt{border:1px solid var(--screen-line,#3A3350);color:var(--screen-text,#F4F0FA)}
+
+/* Account chip (filled by /assets/mw-auth.js) */
+.mw-acct { display: inline-flex; gap: 8px; align-items: center; margin-left: auto; min-width: 0; }
+.mw-acct .mw-acct-who { color: #b9b6cc; font-size: 13px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

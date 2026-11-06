@@ -6,7 +6,7 @@
 <title>Studio Board | Madwackd Studio</title>
 <meta name="description" content="The Madwackd Studio board: storyboard, shot list, clip queue, mixer, edit timeline, social cutdowns and publishing in one place.">
 <meta name="robots" content="noindex">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app https://storage.googleapis.com; img-src 'self' data: blob:; media-src 'self' blob: https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://storage.googleapis.com; img-src 'self' data: blob:; media-src 'self' blob: https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com https://madwackd-studio.firebaseapp.com; form-action 'none'; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
@@ -19,14 +19,15 @@
   <noscript><p class="nojs">The Studio board needs JavaScript turned on.</p></noscript>
   <div class="sb-loading" aria-live="polite">Warming up the console…</div>
 </div>
+<!-- Sign-in first (shared with /studio/): sets MW_ID_TOKEN / MW_USER_TIER / MW_TURNSTILE, then boots the board. -->
+<script src="/assets/config.js" defer></script>
+<script src="/assets/mw-auth.js" defer></script>
+<script src="/assets/mw-app-boot.js" defer data-mode="board" data-load="/assets/guide-widget.js?v=20261106c"></script>
 <!-- Sound library from the Creator Dashboard (optional; the board works without it) -->
 <script src="/assets/dash-core.js" defer></script>
 <script src="/assets/dash-audio.js" defer></script>
 <script src="/assets/studio-core.js" defer></script>
 <script src="/assets/studio-media.js" defer></script>
 <script src="/assets/studio-board.js" defer></script>
-<!-- Producer Z (from the PRODUCER + STUDIO build). The board's "Ask Producer Z" button opens it. -->
-<script src="/assets/config.js" defer></script>
-<script src="/assets/guide-widget.js" defer></script>
 </body>
 </html>
