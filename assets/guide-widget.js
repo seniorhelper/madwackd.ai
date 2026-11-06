@@ -202,7 +202,7 @@
   window.addEventListener("mw:guide-tour", function () { tour(0); });
 
   /* Offer the tour once, gently, on a first visit (not on the studio app or dashboard). */
-  if (!store.get("mw_z_toured") && !/^\/(studio|studio-board|dashboard)\//.test(location.pathname)) {
+  if (!store.get("mw_z_toured") && !/^\/(studio|studio-board|dashboard|creator-dashboard-demo)\//.test(location.pathname)) {
     setTimeout(function () { if (panel.hidden && !document.querySelector("dialog[open]")) open(); }, 4000);
   }
 

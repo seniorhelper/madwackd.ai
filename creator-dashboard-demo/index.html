@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; media-src 'self'; frame-src 'none'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Custom Creator Dashboard Demo | Madwackd Studio</title>
+<meta name="description" content="A live demo of a creator dashboard built to your brand: your colors and logo, revenue and profit, reels and the Madwackd Studio tools in one place. Sample data.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#120F1A">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
+<link rel="stylesheet" href="/assets/creator-demo.css">
+<link rel="stylesheet" href="/assets/guide-widget.css?v=20261106c">
+</head>
+<body class="cd">
+<a class="cd-skip" href="#cd-main">Skip to the dashboard</a>
+
+<div class="cd-strip" role="note">
+  <p><b>Live demo.</b> A creator dashboard made to your brand. <strong>Nova Rae is a made-up creator and every number here is sample data</strong>, not real results or an earnings promise.</p>
+  <a class="cd-btn cd-btn-light" href="/early-access/#form">Want one for your brand? Book a call</a>
+</div>
+
+<header class="cd-top">
+  <div class="cd-id">
+    <span class="cd-logo" id="cd-logo" aria-hidden="true"><span id="cd-mono">NR</span><img id="cd-logo-img" alt="" hidden></span>
+    <div>
+      <p class="cd-name" id="cd-name">Nova Rae</p>
+      <p class="cd-handle" id="cd-handle">@novarae · music + lifestyle</p>
+    </div>
+  </div>
+  <nav class="cd-tabs" aria-label="Dashboard sections">
+    <a href="#money">Money</a><a href="#reels">Reels</a><a href="#tools">Tools</a><a href="#brand">Your brand</a>
+  </nav>
+  <span class="cd-sample cd-sample-lg" title="Every number on this page is sample data">Sample data</span>
+</header>
+
+<main id="cd-main" class="cd-main">
+
+  <section class="cd-panel cd-brand" id="brand" aria-labelledby="brand-h">
+    <h2 id="brand-h">Made to your brand</h2>
+    <p class="cd-sub">Try a look. Your real dashboard uses your logo, colors and name everywhere, including exports and end cards.</p>
+    <div class="cd-swatches" role="radiogroup" aria-label="Sample brand looks">
+      <button type="button" role="radio" aria-checked="true" data-brand="nova">Nova Rae</button>
+      <button type="button" role="radio" aria-checked="false" data-brand="basil">Basil &amp; Brine</button>
+      <button type="button" role="radio" aria-checked="false" data-brand="kilo">Kilo Kart</button>
+    </div>
+    <form class="cd-own" id="cd-own" novalidate>
+      <label>Your name <input id="cd-own-name" type="text" maxlength="32" autocomplete="off" placeholder="Your brand"></label>
+      <label>Brand color <input id="cd-own-color" type="color" value="#2ec4b6"></label>
+      <label class="cd-file">Logo <input id="cd-own-logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"></label>
+      <button type="submit" class="cd-btn">Use my brand</button>
+      <p class="cd-fine">Stays on this device. Nothing is uploaded.</p>
+    </form>
+  </section>
+
+  <section class="cd-kpis" id="money" aria-label="This month at a glance">
+    <div id="cd-kpis" class="cd-kpi-grid"></div>
+  </section>
+
+  <div class="cd-row">
+    <section class="cd-panel cd-chart" aria-labelledby="rev-h">
+      <div class="cd-panel-h"><h2 id="rev-h">Revenue by week</h2><span class="cd-sample">Sample</span></div>
+      <p class="cd-sub">Last 12 weeks, all sources. Hover or tab to a bar for the amount.</p>
+      <div id="cd-rev" class="cd-bars" role="img" aria-label="Bar chart of weekly revenue for the last 12 weeks, sample data. A table follows."></div>
+      <details class="cd-table"><summary>Show as a table</summary><table id="cd-rev-table"><caption>Weekly revenue (sample data)</caption><thead><tr><th scope="col">Week</th><th scope="col">Revenue</th></tr></thead><tbody></tbody></table></details>
+    </section>
+    <section class="cd-panel" aria-labelledby="src-h">
+      <div class="cd-panel-h"><h2 id="src-h">Where it came from</h2><span class="cd-sample">Sample</span></div>
+      <ul id="cd-src" class="cd-hbars"></ul>
+      <div class="cd-panel-h cd-mt"><h3>Costs this month</h3><span class="cd-sample">Sample</span></div>
+      <ul id="cd-cost" class="cd-lines"></ul>
+    </section>
+  </div>
+
+  <section class="cd-panel" id="reels" aria-labelledby="reels-h">
+    <div class="cd-panel-h"><h2 id="reels-h">Reels and videos</h2><span class="cd-sample">Sample</span></div>
+    <p class="cd-sub">Every post across platforms in one list, with views, watch-through and what it earned.</p>
+    <ul id="cd-reels" class="cd-reels"></ul>
+  </section>
+
+  <div class="cd-row">
+    <section class="cd-panel" aria-labelledby="deals-h">
+      <div class="cd-panel-h"><h2 id="deals-h">Brand deals</h2><span class="cd-sample">Sample</span></div>
+      <ul id="cd-deals" class="cd-lines"></ul>
+    </section>
+    <section class="cd-panel" aria-labelledby="next-h">
+      <div class="cd-panel-h"><h2 id="next-h">Coming up</h2><span class="cd-sample">Sample</span></div>
+      <ul id="cd-next" class="cd-lines"></ul>
+    </section>
+  </div>
+
+  <section class="cd-panel" id="tools" aria-labelledby="tools-h">
+    <h2 id="tools-h">Your tools, one place</h2>
+    <p class="cd-sub">The Madwackd Studio tools open from here, already set to your brand.</p>
+    <ul class="cd-tools">
+      <li><a href="/creator-studio/"><b>Creator Studio</b><span>Scripts, hooks and captions for your next post.</span></a></li>
+      <li><a href="/studio-board/"><b>Studio board</b><span>Storyboard, render, edit and cut for every platform.</span></a></li>
+      <li><a href="/dashboard/"><b>Creator Dashboard</b><span>Mix voice, music and sounds; trim and export.</span></a></li>
+      <li><button type="button" id="cd-z"><b>Producer Z</b><span>Your AI director. Ask what to post next.</span></button></li>
+    </ul>
+  </section>
+
+  <section class="cd-cta" aria-labelledby="cta-h">
+    <h2 id="cta-h">Want one for your brand?</h2>
+    <p>We build it around your channels, colors and the numbers you care about. Pricing is quoted on a short call.</p>
+    <div class="cd-cta-row"><a class="cd-btn" href="/early-access/#form">Book a call</a><a class="cd-btn cd-btn-ghost" href="tel:+18004818638">Call 1-800-481-8638</a></div>
+  </section>
+
+  <p class="cd-fine cd-foot">Demo only. Nova Rae, Basil &amp; Brine, Kilo Kart and every brand and number on this page are made up to show how the dashboard works. Thumbnails are Madwackd Studio sample stills. <a href="/">Madwackd Studio home</a></p>
+</main>
+
+<div id="cd-tip" class="cd-tip" role="status" aria-live="polite" hidden></div>
+<script src="/assets/creator-demo.js"></script>
+<script src="/assets/config.js" defer></script>
+<script src="/assets/guide-widget.js?v=20261106c" defer></script>
+</body>
+</html>
