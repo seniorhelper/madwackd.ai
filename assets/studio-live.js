@@ -91,7 +91,53 @@
       if (me.has_billing) { var p = document.createElement("button"); p.type = "button"; p.className = "btn btn-outline btn-sm"; p.textContent = "Manage billing"; p.addEventListener("click", portal); buy.appendChild(p); }
     }
     show("lv-buy-closed", !(cfg && cfg.stripe_enabled));
+    paintMeter();
+    loadVoices();
   }
+
+  /* ---------- credit meter + Boost ---------- */
+  function paintMeter() {
+    var m = me && me.meter;
+    if (!m) { show("lv-meter", false); return; }
+    show("lv-meter", true);
+    var pct = Math.max(4, Math.min(100, Math.round(100 * m.balance_credits / Math.max(1, m.low_threshold * 4))));
+    $("lv-meter-fill").style.width = pct + "%";
+    $("lv-meter").className = "lv-meter lv-" + m.state;
+    $("lv-boost").hidden = !m.boost;
+  }
+  $("lv-boost").addEventListener("click", function () {
+    var items = (me && me.meter && me.meter.boost_items) || ["pack_100"];
+    if (cfg && cfg.stripe_enabled) { checkout(items[1] || items[0]); }
+  });
+
+  /* ---------- voiceover ---------- */
+  var voicesLoaded = false;
+  function loadVoices() {
+    if (voicesLoaded) return;
+    api("GET", "/v2/voices").then(function (r) {
+      var sel = $("lv-vo-voice"); sel.innerHTML = "";
+      (r.voices || []).forEach(function (v) { var o = document.createElement("option"); o.value = v.id; o.textContent = v.name + " (" + v.style + ")"; sel.appendChild(o); });
+      voicesLoaded = true; show("lv-vo", (r.voices || []).length > 0);
+    }).catch(function () { show("lv-vo", false); });
+  }
+  function voBody(confirm) { return { voice_id: $("lv-vo-voice").value, text: $("lv-vo-text").value, confirm: !!confirm }; }
+  $("lv-vo-quote").addEventListener("click", function () {
+    $("lv-vo-msg").textContent = "Pricing...";
+    api("POST", "/v2/voiceover", voBody(false)).then(function (q) {
+      $("lv-vo-msg").textContent = q.credits + " credits for about " + q.seconds_estimate + " seconds of voice. You have " + q.balance_credits + " credits.";
+      $("lv-vo-go").hidden = false;
+    }).catch(function (e) { $("lv-vo-msg").textContent = e.message; $("lv-vo-go").hidden = true; });
+  });
+  $("lv-vo-text").addEventListener("input", function () { $("lv-vo-go").hidden = true; });
+  $("lv-vo-voice").addEventListener("change", function () { $("lv-vo-go").hidden = true; });
+  $("lv-vo-go").addEventListener("click", function () {
+    var btn = this; btn.disabled = true; $("lv-vo-msg").textContent = "Recording your narrator...";
+    api("POST", "/v2/voiceover", voBody(true)).then(function (r) {
+      $("lv-vo-msg").textContent = "Done. " + r.credits + " credits used.";
+      $("lv-vo-out").innerHTML = '<audio controls src="' + esc(r.signed_url) + '"></audio><p class="fine">Private link, expires soon. <a download href="' + esc(r.signed_url) + '">Download the MP3</a>.</p>';
+      $("lv-bal").textContent = r.balance_credits; btn.hidden = true;
+    }).catch(function (e) { $("lv-vo-msg").textContent = e.message; }).then(function () { btn.disabled = false; });
+  });
 
   /* ---------- Turnstile (only when a site key is set) ---------- */
   var tsReady = null;

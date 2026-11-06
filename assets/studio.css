@@ -99,3 +99,15 @@ label.radio input{width:18px;height:18px;margin-top:3px;flex:none}
 .st-head-right [hidden],.lv [hidden]{display:none!important}
 .st-head-right{flex-wrap:nowrap}
 .lv-head h1,.st-panel h1{letter-spacing:-.03em;line-height:1.1}
+
+/* credit meter + voiceover (Nov 6 2026) */
+.lv-meter{display:inline-flex;align-items:center;gap:10px;margin-left:12px;vertical-align:middle}
+.lv-meter-bar{display:inline-block;width:120px;height:10px;border-radius:6px;background:#e9e4f3;overflow:hidden;border:2px solid #15121F}
+.lv-meter-bar span{display:block;height:100%;background:#7ED321;transition:width .4s}
+.lv-meter.lv-low .lv-meter-bar span{background:#FFD60A}
+.lv-meter.lv-empty .lv-meter-bar span{background:#FF2E93}
+.lv-meter.lv-low .lv-meter-bar,.lv-meter.lv-empty .lv-meter-bar{animation:lvPulse 1.2s ease-in-out infinite}
+@keyframes lvPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,46,147,.0)}50%{box-shadow:0 0 0 6px rgba(255,214,10,.45)}}
+@media (prefers-reduced-motion:reduce){.lv-meter-bar{animation:none!important}}
+.lv-vo{margin:22px 0}
+.lv-vo audio{width:100%;margin-top:8px}

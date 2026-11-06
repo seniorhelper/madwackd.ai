@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/studio.css">
+<link rel="stylesheet" href="/assets/studio.css?v=20261106">
 </head>
 <body class="studio-body">
 <a class="skip" href="#main">Skip to content</a>
@@ -66,7 +66,7 @@
     <div id="lv-ready" hidden>
       <div class="lv-acct">
         <span>Signed in as <b id="lv-who"></b></span>
-        <span><b id="lv-bal">0</b> credits</span>
+        <span class="lv-cred"><b id="lv-bal">0</b> credits</span><span id="lv-meter" class="lv-meter" hidden><span class="lv-meter-bar"><span id="lv-meter-fill"></span></span><button class="btn btn-primary btn-sm" type="button" id="lv-boost">Boost</button></span>
         <button class="btn btn-outline btn-sm" type="button" data-signout>Sign out</button>
       </div>
       <p class="err" id="lv-locked" hidden>This account is paused for a safety review. Call 1-800-481-8638.</p>
@@ -99,6 +99,19 @@
         <div class="cta-row"><button class="btn btn-primary" type="button" id="lv-confirm">Confirm and render</button><button class="btn btn-outline" type="button" id="lv-cancel">Cancel</button></div>
       </div>
       <div id="lv-out" class="st-list"></div>
+      <div id="lv-vo" class="st-card lv-vo" hidden>
+        <h2 class="lv-h2">Voiceover</h2>
+        <p class="fine">One narrator for your whole video. Pick a voice, type the words, and see the price before anything is made.</p>
+        <div class="form">
+          <label for="lv-vo-voice">Voice</label>
+          <select id="lv-vo-voice"></select>
+          <label for="lv-vo-text">Script</label>
+          <textarea id="lv-vo-text" maxlength="1500" placeholder="Got an idea for a video? Just type it in."></textarea>
+        </div>
+        <div class="cta-row"><button class="btn btn-outline" type="button" id="lv-vo-quote">Get price</button><button class="btn btn-primary" type="button" id="lv-vo-go" hidden>Make voiceover</button></div>
+        <p id="lv-vo-msg" class="fine" aria-live="polite"></p>
+        <div id="lv-vo-out"></div>
+      </div>
       <h2 class="lv-h2">Your renders</h2>
       <div id="lv-jobs" class="st-takes"></div>
     </div>
@@ -277,6 +290,6 @@
 <script src="/assets/studio-mock.js" defer></script>
 <script src="/assets/studio.js" defer></script>
 <script src="/assets/config.js" defer></script>
-<script src="/assets/studio-live.js" defer></script>
+<script src="/assets/studio-live.js?v=20261106" defer></script>
 </body>
 </html>
