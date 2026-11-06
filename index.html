@@ -55,11 +55,14 @@
       <div class="cta-row"><a class="btn btn-primary" href="/early-access/">Get early access</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
     </div>
     <figure class="reel">
-      <video class="reel-vid" autoplay muted loop playsinline preload="auto" poster="/assets/media/showcase/reel-poster.jpg" width="1280" height="720" aria-label="Showreel: clips rendered in Madwackd Studio">
-        <source src="/assets/media/showcase/reel-640.mp4" type="video/mp4" media="(max-width: 700px)">
-        <source src="/assets/media/showcase/reel-1280.mp4" type="video/mp4">
+      <video class="reel-vid" id="spot" autoplay muted loop playsinline preload="auto" poster="/assets/media/showcase/commercial-poster.jpg" width="1280" height="720" aria-label="Madwackd Studio 27-second commercial">
+        <source src="/assets/media/showcase/commercial-480.mp4" type="video/mp4" media="(max-width: 700px)">
+        <source src="/assets/media/showcase/commercial-1280.mp4" type="video/mp4">
       </video>
-      <figcaption><span class="tally" aria-hidden="true"></span>Every shot here was rendered in Madwackd Studio. <a href="#showcase">See the clips</a></figcaption>
+      <button type="button" class="reel-sound" id="spot-sound" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="sw" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="mx" d="M16.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <span>Sound on</span></button>
+      <figcaption><span class="tally" aria-hidden="true"></span>Our 27-second spot. Every shot was rendered in Madwackd Studio. <a href="#showcase">See the clips</a></figcaption>
     </figure>
     <div class="monitor" data-monitor>
       <div class="mon-bar"><span><span class="tally" aria-hidden="true"></span><b>Quote panel</b></span><span>Interface preview</span></div>
@@ -348,6 +351,8 @@
 <script src="/assets/site.js" defer></script>
 <script src="/assets/fx.js" defer></script>
 <script src="/assets/play.js" defer></script>
-<script>(function(){var r=document.querySelector('.reel-vid');if(r&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){r.removeAttribute('autoplay');r.pause();}document.querySelectorAll('.show-card video').forEach(function(v){v.addEventListener('play',function(){document.querySelectorAll('.show-card video').forEach(function(o){if(o!==v)o.pause();});});});})();</script>
+
+
+<script src="/assets/home.js?v=20261106" defer></script>
 </body>
 </html>

@@ -111,3 +111,22 @@ label.radio input{width:18px;height:18px;margin-top:3px;flex:none}
 @media (prefers-reduced-motion:reduce){.lv-meter-bar{animation:none!important}}
 .lv-vo{margin:22px 0}
 .lv-vo audio{width:100%;margin-top:8px}
+
+/* Simple-instructions guide (Nov 6 2026) */
+.mw-guide-bar{max-width:1180px;margin:18px auto 0;padding:0 16px}
+.mw-guide-btn{display:inline-flex;align-items:center;gap:12px;font:600 1.05rem Inter,system-ui,sans-serif;color:#15121F;background:#fff;border:3px solid #15121F;border-radius:14px;padding:10px 18px 10px 12px;box-shadow:5px 5px 0 #FFD60A;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.mw-guide-btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #FFD60A}
+.mw-guide-btn svg{width:30px;height:30px;flex:none}
+.mw-guide{border:3px solid #15121F;border-radius:20px;padding:0;max-width:640px;width:calc(100% - 32px);box-shadow:10px 10px 0 #FF2E93;background:#FBF8FF;color:#15121F}
+.mw-guide::backdrop{background:rgba(21,18,31,.55)}
+.mw-guide-in{padding:28px 26px 24px;position:relative}
+.mw-guide h2{font:800 1.6rem Poppins,Inter,sans-serif;margin:0 40px 16px 0}
+.mw-guide-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border:2px solid #15121F;border-radius:10px;background:#fff;cursor:pointer;color:#15121F}
+.mw-guide-x svg{width:20px;height:20px}
+.mw-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.mw-steps li{display:flex;gap:14px;align-items:flex-start;background:#fff;border:2px solid #15121F;border-radius:14px;padding:12px 14px}
+.mw-steps b{display:block;font:700 1.02rem Poppins,Inter,sans-serif}
+.mw-steps span{color:#4a4560;font-size:.96rem}
+.mw-num{flex:none;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font:800 1.1rem Poppins,sans-serif;color:#15121F;background:var(--c);border:2px solid #15121F;box-shadow:3px 3px 0 #15121F}
+.mw-guide-tip{margin:16px 0 4px;padding:12px 14px;border-radius:12px;background:#15121F;color:#FBF8FF}
+.mw-guide-tip b{color:#FFD60A}
