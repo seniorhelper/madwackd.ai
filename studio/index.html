@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/assets/site.css?v=20261106c">
 <link rel="stylesheet" href="/assets/studio.css?v=20261106c">
 <link rel="stylesheet" href="/assets/producer.css?v=20261106">
+<link rel="stylesheet" href="/assets/guide-widget.css?v=20261106c">
 </head>
 <body class="studio-body">
 <a class="skip" href="#main">Skip to content</a>
@@ -51,7 +52,7 @@
 <section class="mwp" id="mwp" hidden aria-labelledby="mwp-title">
   <div class="mwp-head">
     <div>
-      <p class="mwp-kicker">AI Producer</p>
+      <p class="mwp-kicker">Producer Z</p>
       <h2 id="mwp-title">AI video, directed. Priced before it rolls.</h2>
       <p class="mwp-sub">Tell the Producer your idea. You get a script, a shot list and a credit estimate for every shot.</p>
     </div>
@@ -61,7 +62,7 @@
   <p id="mwp-note" class="mwp-note" role="status" hidden></p>
 
   <div id="mwp-off"><p class="mwp-fine"><b id="mwp-off-why">The Producer connects when the studio is live.</b></p></div>
-  <div id="mwp-signin" hidden><p class="mwp-fine">Sign in below to use the AI Producer.</p></div>
+  <div id="mwp-signin" hidden><p class="mwp-fine">Sign in below to use Producer Z.</p></div>
 
   <div id="mwp-ready" hidden>
     <div class="mwp-grid">
@@ -102,10 +103,10 @@
         <div><label for="mwp-h-phone">Phone (optional)</label><input id="mwp-h-phone" type="tel" maxlength="40" autocomplete="tel" placeholder="Best number"></div>
         <div><label for="mwp-h-package">Package</label>
           <select id="mwp-h-package">
-            <option value="ad_in_a_day">Ad in a Day ($149)</option>
-            <option value="launch_pack">Launch Pack ($449)</option>
-            <option value="monthly_ad_engine">Monthly Ad Engine ($899/mo)</option>
-            <option value="video_press_release">Video Press Release ($199)</option>
+            <option value="spot">Commercial spot (from $2,500)</option>
+            <option value="music_video">Music video (from $5,000)</option>
+            <option value="high_end_commercial">High-end commercial ($20,000 to $30,000+)</option>
+            <option value="masterclass">Producer Z Masterclass (from $3,000)</option>
             <option value="pro_finishing">Pro finishing (you render, we finish)</option>
             <option value="not_sure">Not sure yet</option>
           </select></div>
@@ -171,7 +172,7 @@
       <p class="err" id="lv-locked" hidden>This account is paused for a safety review. Call 1-800-481-8638.</p>
       <div class="lv-buy" id="lv-buy"></div>
       <p class="fine" id="lv-buy-closed">Buying credits opens soon.</p>
-      <p class="climate-badge"><svg class="leaf" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15"/><path d="M5 19l7-7"/></svg><span>1.5% of every purchase funds permanent carbon removal through Stripe Climate. <a href="/our-mission/">Our mission</a></span></p>
+      <p class="climate-badge"><svg class="leaf" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15"/><path d="M5 19l7-7"/></svg><span>We contribute 1.5% of our revenue to help advance permanent carbon removal, through Stripe Climate. <a href="/our-mission/">Our mission</a></span></p>
       <div class="lv-owner" id="lv-owner" hidden>
         <b>Owner tools</b>
         <div class="st-inline"><label for="lv-grant-n" class="sr">Credits</label><input id="lv-grant-n" type="number" min="1" max="5000" value="50"><button class="btn btn-outline btn-sm" type="button" id="lv-grant">Add owner test credits</button></div>
@@ -244,7 +245,7 @@
 
   <!-- 1. AI Producer -->
   <section class="st-panel" data-panel="producer">
-    <h2>AI Producer</h2>
+    <h2>Producer Z</h2>
     <p class="fine">Describe the video. You'll get a shot list and a budget. Nothing renders or charges until you approve a quote.</p>
     <form id="plan-form" class="form st-form" autocomplete="off">
       <label for="idea">Your idea</label>
@@ -356,7 +357,7 @@
     <div class="form st-form st-budget">
       <label for="cap">Project budget cap (credits)</label>
       <div class="st-inline"><input id="cap" type="number" min="0" step="10"><button class="btn btn-outline btn-sm" type="button" id="cap-save">Save cap</button></div>
-      <p class="fine">Credits cost $0.09 to $0.12 each, depending on your plan or pack. Prompts our safety check blocks cost nothing. Technical failures are refunded; safety-blocked videos aren't.</p>
+      <p class="fine">Credits cost $0.08 to $0.12 each, depending on your plan or pack. Prompts our safety check blocks cost nothing. Technical failures are refunded; safety-blocked videos aren't.</p>
     </div>
     <div class="cta-row" style="margin:14px 0"><button class="btn btn-outline" type="button" id="dl-csv">Download rights pack (CSV)</button><button class="btn btn-outline" type="button" id="dl-pdf">Download rights pack (PDF)</button></div>
     <div class="tbl-wrap"><table class="tbl" id="spend-tbl"><thead><tr><th>Time (UTC)</th><th>Event</th><th>Detail</th><th>Credits</th></tr></thead><tbody></tbody></table></div>
@@ -394,5 +395,6 @@
 <script src="/assets/producer.js?v=20261106" defer></script>
 
 <script src="/assets/guide.js?v=20261106" defer></script>
+<script src="/assets/guide-widget.js?v=20261106c" defer></script>
 </body>
 </html>

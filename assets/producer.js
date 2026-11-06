@@ -208,7 +208,7 @@
       if (c.price) h += '<p class="mwp-price">' + esc(c.price) + '</p>';
       if (c.packages) {
         h += '<ul class="mwp-pkgs">';
-        c.packages.forEach(function (p) { h += '<li><button type="button" class="mwp-pkg" data-pkg="' + esc(p.item) + '">' + esc(p.name) + ' <b>$' + esc(p.usd) + (p.monthly ? "/mo" : "") + '</b></button></li>'; });
+        c.packages.forEach(function (p) { h += '<li><button type="button" class="mwp-pkg" data-pkg="' + esc(p.item) + '">' + esc(p.name) + ' <b>' + (p.price ? esc(p.price) : '$' + esc(p.usd) + (p.monthly ? "/mo" : "")) + '</b></button></li>'; });
         h += '</ul>';
       }
       if (c.action === "render") h += '<button type="button" class="mwp-btn mwp-btn-ghost" data-diy>Render shot 1</button>';
@@ -281,7 +281,7 @@
     api("GET", "/v2/producer/history").then(function (h) {
       limits(h.limits);
       if (!window.__mwpChoices) window.__mwpChoices = h.choices;
-      if (h.producer && !h.producer.configured) { note("The AI Producer is switching on soon. You can still render shots below.", ""); }
+      if (h.producer && !h.producer.configured) { note("Producer Z is switching on soon. You can still render shots below.", ""); }
       var list = $("mwp-history");
       if (!h.plans || !h.plans.length) { list.innerHTML = '<p class="mwp-fine">Your plans show up here.</p>'; return; }
       list.innerHTML = h.plans.map(function (p, i) {

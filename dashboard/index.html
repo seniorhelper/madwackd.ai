@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Creator Dashboard | Madwackd Studio</title>
+<meta name="description" content="Your Madwackd Studio creator dashboard: mix voice and music, add sounds, and edit video in your browser.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#15121F">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
+<link rel="stylesheet" href="/assets/site.css?v=20261106c">
+<link rel="stylesheet" href="/assets/dashboard.css">
+<link rel="stylesheet" href="/assets/guide-widget.css?v=20261106c">
+</head>
+<body class="dash-body">
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.5A1.5 1.5 0 0 1 20 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19.5v-8A1.5 1.5 0 0 1 5.5 10H7Zm2 0h6V7a3 3 0 0 0-6 0v3Z" fill="currentColor"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="dash-top">
+  <a class="dash-brand" href="/" aria-label="Madwackd Studio home">Madwackd <b>Studio</b></a>
+  <label class="proj"><span class="sr-only">Project name</span>
+    <input id="project-name" type="text" value="My first ad" maxlength="60" autocomplete="off"></label>
+  <span id="plan-badge" class="plan-badge">Free</span>
+  <a class="btn-top" href="/pricing/">Credits</a>
+  <button id="ask-producer" class="btn-top btn-pink" type="button">Ask the Producer</button>
+</header>
+
+<main id="main" class="dash">
+<div class="alerts">
+  <div id="rec-indicator" class="rec-ind" role="status" hidden><span class="rec-dot" aria-hidden="true"></span> RECORDING <b id="rec-track">Voice</b> <span id="rec-time">0:00</span></div>
+  <div id="upgrade" class="upgrade" role="status" hidden>
+    <svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>
+    <span id="upgrade-text"></span>
+    <a id="upgrade-link" href="/pricing/">See plans</a>
+    <button id="upgrade-close" type="button" class="btn-mini" aria-label="Dismiss upgrade note">Dismiss</button>
+  </div>
+  <p id="status" class="status" role="status" aria-live="polite">Welcome. Pick a one-click start, or load a file.</p>
+
+</div>
+  <aside class="rail" aria-label="Project and plan">
+    <section class="card easy">
+      <h2>Easy start</h2>
+      <div class="presets">
+        <button type="button" class="btn-big" data-preset="voicemusic"><b>Voice + music ad</b><span>Voice up front, music underneath</span></button>
+        <button type="button" class="btn-big" data-preset="musiccut"><b>Music video cut</b><span>Cut clips to your song</span></button>
+      </div>
+      <div id="preset-hint" class="hint" hidden><h3 id="preset-title"></h3><ol id="preset-steps"></ol></div>
+    </section>
+    <section class="card plan">
+      <h2>Your plan</h2>
+      <ul id="plan-list" class="plan-list"></ul>
+      <a class="btn-top" href="/pricing/">See plans and credits</a>
+      <p class="muted small">Plan features shown here are for display. Limits are enforced on our servers.</p>
+    </section>
+  </aside>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Studio panels">
+    <button role="tab" id="tab-mixer" data-panel="mixer" aria-selected="true" aria-controls="panel-mixer" type="button">Mixer</button>
+    <button role="tab" id="tab-sounds" data-panel="sounds" aria-selected="false" aria-controls="panel-sounds" tabindex="-1" type="button">Sounds</button>
+    <button role="tab" id="tab-editor" data-panel="editor" aria-selected="false" aria-controls="panel-editor" tabindex="-1" type="button">Video</button>
+    <button role="tab" id="tab-voices" data-panel="voices" aria-selected="false" aria-controls="panel-voices" tabindex="-1" type="button">Voices</button>
+  </nav>
+
+  <div class="transport" role="group" aria-label="Playback">
+    <button id="t-play" class="btn-play" type="button" aria-pressed="false"><span class="lbl">Play</span></button>
+    <button id="t-stop" class="btn-top" type="button">Stop</button>
+    <span class="tc"><output id="t-time" aria-label="Playhead">0:00.0</output> / <span id="t-len">0:00.0</span></span>
+    <label class="seek"><span class="sr-only">Playhead position</span><input id="t-seek" type="range" min="0" max="0.1" step="0.1" value="0"></label>
+  </div>
+
+  <section class="panel p-mixer is-active" id="panel-mixer" role="tabpanel" aria-labelledby="tab-mixer">
+    <div class="card">
+      <div class="card-head"><h2>Voice mixer</h2>
+        <button id="duck-toggle" class="btn-toggle" type="button" aria-pressed="false"><svg class="ico lockico" aria-hidden="true"><use href="#i-lock"/></svg><span class="lbl">Auto-duck: off</span></button></div>
+      <ul id="tracks" class="tracks"></ul>
+      <button id="add-track" class="btn-top" type="button"><svg class="ico lockico" aria-hidden="true"><use href="#i-lock"/></svg><span class="lbl">Add track</span></button>
+      <div class="master">
+        <label class="ctl fader"><span>Master</span><input id="master-fader" type="range" min="0" max="1" step="0.01" value="0.909"></label>
+        <div class="meter" role="img" aria-label="Master level meter"><i id="master-fill"></i></div>
+      </div>
+      <div class="row-acts"><button id="export-wav" class="btn-big-solid" type="button" disabled>Export mix as WAV</button>
+        <a id="wav-link" class="dl" href="#" hidden>Download</a></div>
+    </div>
+  </section>
+
+  <section class="panel p-sounds" id="panel-sounds" role="tabpanel" aria-labelledby="tab-sounds">
+    <div class="card">
+      <div class="card-head"><h2>Sound library</h2></div>
+      <p class="muted small">Made in your browser. No files, no licensing. "Add at playhead" puts the sound on the SFX track.</p>
+      <ul id="sound-grid" class="sound-grid"></ul>
+    </div>
+  </section>
+
+  <section class="panel p-editor" id="panel-editor" role="tabpanel" aria-labelledby="tab-editor">
+    <div class="card">
+      <div class="card-head"><h2>Video editor</h2></div>
+      <div class="ed-grid">
+        <div class="ed-view">
+          <div class="screen"><canvas id="preview" width="720" height="405" aria-label="Video preview"></canvas></div>
+          <fieldset class="aspects"><legend>Shape</legend>
+            <label><input type="radio" name="aspect" value="9:16"> 9:16 tall</label>
+            <label><input type="radio" name="aspect" value="16:9" checked> 16:9 wide</label>
+            <label><input type="radio" name="aspect" value="1:1"> 1:1 square</label>
+          </fieldset>
+        </div>
+        <div class="ed-tools">
+          <div id="drop" class="drop"><label class="btn-big-solid">Add video clips<input id="file-video" class="sr-file" type="file" accept="video/mp4,video/webm,video/*" multiple></label><span class="muted small">or drop mp4 / webm files here</span></div>
+          <div id="timeline" class="timeline" aria-label="Clip timeline"></div>
+          <p id="ed-total" class="small muted"></p>
+          <p id="clip-info" class="small muted"></p>
+          <div class="trim">
+            <label>In (s) <input id="clip-in" type="number" min="0" step="0.1" disabled></label>
+            <label>Out (s) <input id="clip-out" type="number" min="0" step="0.1" disabled></label>
+          </div>
+          <div class="btn-row">
+            <button id="clip-left" class="btn-top" type="button" disabled>Move earlier</button>
+            <button id="clip-right" class="btn-top" type="button" disabled>Move later</button>
+            <button id="clip-split" class="btn-top" type="button" disabled>Split at playhead</button>
+            <button id="clip-del" class="btn-top" type="button" disabled>Delete clip</button>
+          </div>
+        </div>
+      </div>
+      <div class="ed-grid two">
+        <div>
+          <h3>Text on screen</h3>
+          <label class="blk">Text <input id="ov-text" type="text" maxlength="120" autocomplete="off"></label>
+          <div class="trim">
+            <label>Style <select id="ov-kind"><option value="title">Title</option><option value="caption" id="cap-opt">Caption</option></select></label>
+            <label>Position <select id="ov-pos"><option value="bottom">Bottom</option><option value="middle">Middle</option><option value="top">Top</option></select></label>
+            <label>From (s) <input id="ov-start" type="number" min="0" step="0.5" value="0"></label>
+            <label>To (s) <input id="ov-end" type="number" min="0" step="0.5" value="3"></label>
+          </div>
+          <button id="ov-add" class="btn-top" type="button">Add text</button>
+          <ul id="ov-list" class="chips-list"></ul>
+        </div>
+        <div id="brand-box" class="brand">
+          <h3><svg class="ico lockico" aria-hidden="true"><use href="#i-lock"/></svg> Brand kit</h3>
+          <label class="blk">Logo <input id="brand-logo" type="file" accept="image/*"></label>
+          <label class="blk">Brand color <input id="brand-color" type="color" value="#ff2e93"></label>
+          <p id="brand-note" class="muted small"></p>
+          <label class="chk"><input id="orig-sound" type="checkbox" checked> Keep original clip sound</label>
+        </div>
+      </div>
+      <div class="row-acts">
+        <button id="export-video" class="btn-big-solid" type="button">Export video</button>
+        <button id="export-cancel" class="btn-top" type="button" hidden>Cancel</button>
+        <progress id="export-progress" value="0" max="1" hidden aria-label="Export progress"></progress>
+        <a id="download" class="dl" href="#" hidden>Download</a>
+      </div>
+      <p id="export-note" class="muted small"></p>
+    </div>
+  </section>
+
+  <section class="panel p-voices" id="panel-voices" role="tabpanel" aria-labelledby="tab-voices">
+    <div class="card">
+      <div class="card-head"><h2>Studio voices</h2><span class="soon">Launching</span></div>
+      <label class="blk">What should the voice say? <textarea id="sv-text" rows="4" maxlength="600"></textarea></label>
+      <fieldset class="voicepick"><legend>Voice</legend>
+        <label><input type="radio" name="sv-voice" value="warm" checked> Warm narrator</label>
+        <label><input type="radio" name="sv-voice" value="bright"> Bright promo</label>
+        <label><input type="radio" name="sv-voice" value="deep"> Deep trailer</label>
+        <label><input type="radio" name="sv-voice" value="calm"> Calm explainer</label>
+      </fieldset>
+      <button id="sv-go" class="btn-big-solid" type="button">Generate voice</button>
+      <p id="sv-msg" class="small"></p>
+      <p id="sv-minutes" class="muted small"></p>
+    </div>
+  </section>
+</main>
+
+<script src="/assets/dash-core.js"></script>
+<script src="/assets/dash-audio.js"></script>
+<script src="/assets/dash-editor.js"></script>
+<script src="/assets/dashboard.js"></script>
+<script src="/assets/config.js" defer></script>
+<script src="/assets/guide-widget.js?v=20261106c" defer></script>
+</body>
+</html>

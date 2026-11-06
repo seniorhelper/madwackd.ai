@@ -8,8 +8,8 @@ Key facts:
 - Character Lock: an approved cast-sheet still starts every shot so faces stay consistent.
 - Voice: stock voices, uploaded voices and in-browser recording, with a consent check for custom voices.
 - Video model: third-party, generally available AI video models from a major cloud provider. Clips carry an invisible provenance mark.
-- Pricing: Test Drive $5 (50 credits, one per account). Plans: Starter $29/mo (300 credits), Pro $79/mo (900), Business $199/mo (2,200), Agency $499/mo (5,500), White-Label $999/mo (11,000, by application). Credit packs: $12/100, $55/500, $100/1,000, $450/5,000. Done for you: Ad in a Day $149, Launch Pack $449, Monthly Ad Engine $899/mo, Video Press Release $199. Human Producer packages (Junior, Senior, Executive) quoted per project.
-- Climate commitment: Madwackd Studio is enrolled in Stripe Climate; 1.5% of every purchase funds permanent carbon removal. Prepaid, priced-before-it-renders credits and spending caps avoid wasted compute. Details: https://www.madwackd.ai/our-mission/
+- Pricing: Free account $0. Plans: Starter $29/mo (300 credits, about 12 clips), Pro $79/mo (960 credits, about 40 clips), Studio $249/mo (2,880 credits, about 120 clips). A clip is one 8-second Fast shot at 720p with sound. Test Drive $5 (50 credits, one per account). Credit packs: $12/100, $55/500, $100/1,000, $450/5,000. Done for you (quoted on a call): commercial spots from $2,500, music videos from $5,000, high-end commercials $20,000 to $30,000+. Producer Z Masterclass from $3,000, Masterclass+ $6,000, Mentorship from $12,000 (education; results vary).
+- Climate commitment: Madwackd Studio contributes 1.5% of its revenue to help advance permanent carbon removal, through Stripe Climate. Prepaid, priced-before-it-renders credits and spending caps avoid wasted compute. Details: https://www.madwackd.ai/our-mission/
 - Contact: 1-800-481-8638, 1001 Bannock St #660, Denver, CO 80204. Parent studio: https://www.madwackd.com/
 
 ## Pages
@@ -24,3 +24,4 @@ Key facts:
 - [About](https://www.madwackd.ai/about/)
 - [Our mission](https://www.madwackd.ai/our-mission/)
 - Video Vault (https://www.madwackd.ai/vault/): real videos made in Madwackd Studio, filterable by ads, music, comedy and cinematic.
+- Creator Studio (free browser tools, no card): https://www.madwackd.ai/creator-studio/
