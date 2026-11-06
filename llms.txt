@@ -25,3 +25,19 @@ Key facts:
 - [Our mission](https://www.madwackd.ai/our-mission/)
 - Video Vault (https://www.madwackd.ai/vault/): real videos made in Madwackd Studio, filterable by ads, music, comedy and cinematic.
 - Creator Studio (free browser tools, no card): https://www.madwackd.ai/creator-studio/
+- [Founder's vision](https://www.madwackd.ai/vision/): founder Zach Wennstedt's goal of data centers that heat homes and grow food on their roofs. A vision, not an existing facility.
+
+## Producer's Corner (guides)
+- [Producer's Corner](https://www.madwackd.ai/producers-corner/): guides on video ads, commercial costs and AI music videos.
+- [How much does a commercial cost to make? (2026)](https://www.madwackd.ai/producers-corner/how-much-does-a-commercial-cost/): sourced production and airtime ranges, cost drivers, and where AI fits.
+- [How to make an AI music video: how we made ours](https://www.madwackd.ai/producers-corner/how-we-made-two-ai-music-videos/): the real process behind Tell Me Why and What Love Really Is.
+- [Video ads for small business: a 7-step guide](https://www.madwackd.ai/producers-corner/video-ads-for-small-business/): length, the 3-second hook, one offer, honest AI labels, a 25-second script.
+
+## Our best work
+- Tell Me Why (country music video, 4:19) and What Love Really Is (neon cartoon music video, 5:01). Written and produced by Zach Wennstedt. A Madwackd Studio production. These are custom productions (many shots, retakes and a human edit), not one-prompt clips. Watch: https://www.madwackd.ai/vault/
+
+## AI producer guide
+- Producer Z is Madwackd Studio's AI producer (an AI, and it says so). It knows the site, plans and prices and helps visitors plan a video. Chat button on every page.
+
+## Optional
+- [Full text of the guides](https://www.madwackd.ai/llms-full.txt)

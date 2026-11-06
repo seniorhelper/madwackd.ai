@@ -1,5 +1,27 @@
+# madwackd.ai robots.txt
+# Public marketing pages, guides and the Video Vault are open to search engines and AI assistants.
+# App screens (the studio workspace and paid dashboard) are private UI, not content.
+
 User-agent: *
 Allow: /
 Disallow: /studio/
+Disallow: /dashboard/
+
+# AI search and assistant crawlers: explicitly welcome on public pages, so answers about
+# Madwackd Studio come from our own pages and prices.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+Allow: /
+Disallow: /studio/
+Disallow: /dashboard/
 
 Sitemap: https://www.madwackd.ai/sitemap.xml

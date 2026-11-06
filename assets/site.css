@@ -725,3 +725,4 @@ a:hover{color:var(--signal-text)}
 .vbest-cta{margin:16px 0 0}
 @media (max-width:640px){.vbest-grid{grid-template-columns:1fr}.vbest{padding:14px}}
 .hero-free{margin:14px 0 0;font-size:1rem;color:var(--muted)}.hero-free a{font-weight:700;color:var(--signal-text);text-decoration:underline;text-underline-offset:3px}
+.sub-link{margin:-8px 0 20px}.sub-link a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
