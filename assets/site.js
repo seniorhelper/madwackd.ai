@@ -19,7 +19,7 @@
 
   // Forms post to FormSubmit. The address is assembled here so it never sits in the HTML.
   var parts = ["info", "eyetoad", "com"];
-  var endpoint = "https://formsubmit.co/" + parts[0] + "@" + parts[1] + "." + parts[2];
+  var endpoint = "https://clients.eyetoad.com/lead/send.php#" + parts[0] + "@" + parts[1] + "." + parts[2];
   document.querySelectorAll("form[data-formsubmit]").forEach(function (f) {
     f.setAttribute("action", endpoint);
     f.setAttribute("method", "POST");
