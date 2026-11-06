@@ -5,8 +5,8 @@
   var CREDIT_USD = 0.10;
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ""; localStorage.setItem(k, v); } catch (e) { return ""; } }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  /* Credits cost $0.08 (Business plan) to $0.12 (100-credit pack) each, so dollars show as a range. */
-  function money(c) { return "$" + (c * 0.08).toFixed(2) + " to $" + (c * 0.12).toFixed(2); }
+  /* Credits cost $0.09 (Agency plan) to $0.12 (100-credit pack) each, so dollars show as a range. */
+  function money(c) { return "$" + (c * 0.09).toFixed(2) + " to $" + (c * 0.12).toFixed(2); }
 
   /* ---------- connection ---------- */
   $("api").value = store("mws_api"); $("tok").value = store("mws_tok");

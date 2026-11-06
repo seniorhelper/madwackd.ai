@@ -243,7 +243,8 @@ section{padding:96px 0}
 .plan ul{padding-left:18px;margin:0 0 20px;flex:1}
 .plan li{margin-bottom:6px;font-size:.97rem}
 .packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:18px}
-.pack{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;min-width:0}
+.pack{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;min-width:0;display:flex;flex-direction:column}
+.pack>.btn{margin-top:auto;align-self:flex-start}
 .pack h3{margin:0 0 4px}.pack .price{font-size:1.6rem;font-weight:600;letter-spacing:-.03em;color:var(--ink);margin:0 0 6px}.pack p{margin:0 0 8px}
 
 .tbl{width:100%;border-collapse:collapse;background:#fff;font-size:.96rem;border-top:1px solid var(--ink)}

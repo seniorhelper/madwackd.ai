@@ -42,6 +42,22 @@
   }
 
   /* ---------- boot ---------- */
+  /* ---------- buy links from the pricing page: /studio/?buy=<item> ----------
+     The choice is kept through sign-in (email links reload the page), then sent to Stripe once. */
+  (function () {
+    var b = new URLSearchParams(location.search).get("buy");
+    if (b && /^[a-z0-9_]{2,40}$/.test(b)) { store("mw_buy", b); history.replaceState(null, "", location.pathname); }
+  })();
+  function pendingBuy() {
+    var item = store("mw_buy");
+    if (!item) return false;
+    store("mw_buy", null);
+    var hit = cfg && cfg.stripe_enabled && (cfg.catalog || []).filter(function (i) { return i.item === item && i.available; })[0];
+    if (!hit) { msg("That one isn't open for online checkout yet. Call 1-800-481-8638 and we'll set it up.", ""); return false; }
+    msg("Opening secure checkout for " + hit.name + "...", "ok");
+    checkout(hit.item);
+    return true;
+  }
   function boot() {
     if (!API || !FB.apiKey || !FB.projectId) { state("lv-off"); $("lv-off-why").textContent = "Live rendering isn't connected on this site yet."; return; }
     timeout(5000, fetch(API + "/v2/config").then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); }))
@@ -60,7 +76,7 @@
           auth.signInWithEmailLink(em, location.href).then(function () { store("mw_email_for_link", null); history.replaceState(null, "", location.pathname); }).catch(function (e) { msg(e.message, "bad"); });
         } else { msg("Type your email again and press Email me a link to finish signing in.", ""); }
       }
-      auth.onAuthStateChanged(function (u) { user = u; if (!u) { state("lv-signin"); return; } refreshMe(); });
+      auth.onAuthStateChanged(function (u) { user = u; if (!u) { state("lv-signin"); if (store("mw_buy")) msg("Sign in or create your free account to finish checkout. It takes a few seconds.", ""); return; } refreshMe(); });
     });
   }
 
@@ -68,7 +84,7 @@
     return api("GET", "/v2/me").then(function (m) {
       me = m;
       if (!m.signed_up) { state("lv-signup"); renderTurnstile("lv-ts-signup"); return; }
-      state("lv-ready"); paintMe(); loadJobs(); checkoutReturn();
+      state("lv-ready"); paintMe(); loadJobs(); checkoutReturn(); pendingBuy();
     }).catch(function (e) {
       if (e.code === "waitlist") { state("lv-wait"); $("lv-wait-msg").textContent = e.message; return; }
       if (e.code === "signed_out" || e.code === "bad_token") { state("lv-signin"); return; }
