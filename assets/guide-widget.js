@@ -157,7 +157,9 @@
     loadTurnstile().then(function (ts) {
       ts.render(slot, { sitekey: TS_KEY, theme: "dark", size: "flexible",
         callback: function (token) { if (box.parentNode) box.parentNode.removeChild(box); post(token); },
-        "error-callback": function () { if (box.parentNode) box.parentNode.removeChild(box); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); } });
+        "error-callback": function (code) { try { console.warn("human check error", code); } catch (e) { /* none */ }
+          if (box.parentNode) box.parentNode.removeChild(box);
+          say("The human check couldn't load here. Sign in (free) to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in free" }]); return true; } });
     }).catch(function () { if (box.parentNode) box.parentNode.removeChild(box); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); });
   }
 
@@ -184,7 +186,10 @@
     fetch(API + "/v2/guide/chat", { method: "POST", headers: headers, body: JSON.stringify(body) })
       .then(function (r) { status = r.status; return r.json().catch(function () { return {}; }); })
       .then(function (j) {
-        if (status === 403 && j.needs_check) { humanCheck(); return; }
+        if (status === 403 && j.needs_check) {
+          if (token) { say("That human check didn't go through. Sign in (free) to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in free" }]); return; }
+          humanCheck(); return;
+        }
         if (j.pass) sess.set("mw_z_pass", String(j.pass).slice(0, 64));
         var reply = j.reply || SAFE;
         history.push({ role: "assistant", text: reply });
