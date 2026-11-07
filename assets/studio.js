@@ -163,7 +163,7 @@
   function renderShots() {
     var box = $("shot-list"); if (!P) { box.innerHTML = '<p class="fine">Create a project to add shots.</p>'; return; }
     var shots = Object.values(P.shots).sort(function (a, b) { return a.n - b.n; });
-    box.innerHTML = shots.length ? "" : '<p class="fine">No shots yet. Add one above, or plan them with Producer Z.</p>';
+    box.innerHTML = shots.length ? "" : '<p class="fine">No shots yet. Add one above, or plan them with Madi.</p>';
     shots.forEach(function (sh) {
       var cur = sh.versions[sh.current - 1], prop = sh.versions.filter(function (v) { return v.status === "proposed" && v.v > sh.current; }).pop();
       var takes = Object.values(P.takes).filter(function (t) { return t.shot === sh.id; });

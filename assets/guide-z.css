@@ -1,4 +1,4 @@
-/* Producer Z: chat panel + full-body character. Loaded on demand by guide-widget.js. */
+/* Madi: chat panel + full-body character. Loaded on demand by guide-widget.js. */
 .zg{--zg-ink:var(--ink,#15121F);--zg-scr:var(--screen,#15121F);--zg-scr2:var(--screen-2,#221D30);--zg-line:var(--screen-line,#3A3350);
   --zg-txt:var(--screen-text,#F4F0FA);--zg-mut:var(--screen-muted,#B9B2C8);--zg-pink:var(--signal,#FF2E93);--zg-lime:var(--lime,#7ED321);--zg-cyan:var(--cyan,#00B8F0)}
 .zg-panel{position:fixed;right:16px;bottom:92px;z-index:91;width:min(380px,calc(100vw - 32px));max-height:min(640px,calc(100vh - 112px));
@@ -7,7 +7,7 @@
 .zg-panel[hidden]{display:none}
 .zg-panel button:focus-visible,.zg-panel a:focus-visible,.zg-panel input:focus-visible,.zg-tip button:focus-visible,.zg-solo:focus-visible{outline:3px solid var(--zg-lime);outline-offset:2px}
 
-/* the stage: Producer Z stands in a pool of light */
+/* the stage: Madi stands in a pool of light */
 .zg-stage{position:relative;display:flex;align-items:center;gap:10px;min-height:150px;padding:6px 8px 6px 6px;flex:none;
   background:#0B0A10;border-bottom:1px solid var(--zg-line);overflow:hidden}
 .zg-actor{position:relative;display:block;width:170px;height:156px;flex:none;padding:0;border:0;border-radius:12px;background:#0B0A10 url(/assets/z/z-hero.webp) center/cover;cursor:pointer;transition:transform .15s ease-out}

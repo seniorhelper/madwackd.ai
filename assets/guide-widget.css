@@ -1,4 +1,4 @@
-/* Producer Z launcher (loads with the page; small). Three states, all position:fixed (no layout shift):
+/* Madi launcher (loads with the page; small). Three states, all position:fixed (no layout shift):
    1. entrance card: the claymation director walks on with a speech bubble (once per visit, after page load)
    2. spotlight: a real movie-set spotlight in the corner until someone needs him
    3. chat panel: guide-z.css (lazy)

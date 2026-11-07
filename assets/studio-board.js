@@ -1,5 +1,5 @@
 /* Madwackd Studio Board: UI. Needs studio-core.js (MWBoard) and studio-media.js (MWMedia).
-   Optional on the page: dash-core.js + dash-audio.js (sound library), the Producer Z widget, and the site's
+   Optional on the page: dash-core.js + dash-audio.js (sound library), the Madi widget, and the site's
    sign-in setting window.MW_ID_TOKEN + window.MW_API_BASE (+ window.MW_TURNSTILE() for render checks). */
 (function (root) {
   'use strict';
@@ -191,7 +191,7 @@
           '<select id="sb-preset" aria-label="Board layout"><option value="everything">Layout: Everything</option><option value="director">Layout: Director</option><option value="music">Layout: Music</option><option value="social">Layout: Social</option><option value="automation">Layout: Automation</option><option value="custom" hidden>Layout: Custom</option></select>' +
           '<div class="sb-accents" role="group" aria-label="Accent color">' + ['gold', 'cyan', 'magenta', 'lime'].map(function (a) { return '<button data-accent="' + a + '" class="acc-' + a + '" aria-label="' + a + ' accent"></button>'; }).join('') + '</div>' +
           '<button id="sb-dock-btn" aria-haspopup="true" title="Hidden panels">Panels</button>' +
-          '<button id="sb-ask" class="sb-ask" title="Ask Producer Z">Ask Producer Z</button>' +
+          '<button id="sb-ask" class="sb-ask" title="Ask Madi">Ask Madi</button>' +
           '<span class="sb-acct" data-mw-account data-mw-btn="sb-acct-btn"></span>' +
         '</div>' +
       '</header>' +

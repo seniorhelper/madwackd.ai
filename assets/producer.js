@@ -281,7 +281,7 @@
     api("GET", "/v2/producer/history").then(function (h) {
       limits(h.limits);
       if (!window.__mwpChoices) window.__mwpChoices = h.choices;
-      if (h.producer && !h.producer.configured) { note("Producer Z is switching on soon. You can still render shots below.", ""); }
+      if (h.producer && !h.producer.configured) { note("Madi is switching on soon. You can still render shots below.", ""); }
       var list = $("mwp-history");
       if (!h.plans || !h.plans.length) { list.innerHTML = '<p class="mwp-fine">Your plans show up here.</p>'; return; }
       list.innerHTML = h.plans.map(function (p, i) {

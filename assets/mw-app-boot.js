@@ -15,7 +15,7 @@
       return p.then(function () {
         return new Promise(function (res) {
           var s = document.createElement('script'); s.src = src; s.async = false;
-          s.onload = res; s.onerror = res;   // one missing extra (e.g. Producer Z) must not stop the page
+          s.onload = res; s.onerror = res;   // one missing extra (e.g. Madi) must not stop the page
           document.body.appendChild(s);
         });
       });

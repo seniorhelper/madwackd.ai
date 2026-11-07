@@ -1,4 +1,4 @@
-/* Madwackd Studio - Producer Z, the AI director (full half: chat panel, full-body character, tour, read-aloud).
+/* Madwackd Studio - Madi, the AI director (full half: chat panel, full-body character, tour, read-aloud).
    Loaded on demand by /assets/guide-widget.js. Plain JS, no inline handlers (CSP script-src 'self').
    Renders replies with textContent only. Links are rebuilt from an allowlist. Needs /assets/config.js. */
 (function () {
@@ -13,8 +13,8 @@
   var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
     "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
     "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/", "/apply/", "/awards/", "/collaborate/",
-    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/"];
-  var FAMILY = ["https://www.madwackd.com/"];   /* our parent studio only: Producer Z refers to no other company */
+    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/", "/launch-pad/"];
+  var FAMILY = ["https://www.madwackd.com/"];   /* our parent studio only: the guide refers to no other company */
   var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
 
   /* Second line of defense; the server already filtered. */
@@ -46,6 +46,7 @@
   var TIER = String(window.MW_USER_TIER || "anon");
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var L = window.__mwzLauncher || null;
+  var NAME = String((L && L.name) || (window.MW_CONFIG && window.MW_CONFIG.guideName) || "Madi");
   var Z = "/assets/z/", ZV = "20261106v3";
   var history = [];
   var busy = false;
@@ -69,19 +70,19 @@
   var root = el("div", "zg");
   root.innerHTML =
     '<section class="zg-panel" id="zg-panel" role="dialog" aria-modal="false" aria-labelledby="zg-title" hidden>' +
-    '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="Producer Z: click for an action!">' +
+    '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="' + NAME + ': click for an action!">' +
     '<video muted playsinline preload="metadata" aria-hidden="true" poster="' + Z + 'z-hero.webp?v=' + ZV + '"></video>' +
     '<img class="zg-mouth" alt="" aria-hidden="true" hidden></button>' +
-    '<div class="zg-name"><strong id="zg-title">Producer Z</strong><small>Your AI director</small></div>' +
-    '<button class="zg-x" type="button" aria-label="Close Producer Z">&times;</button></header>' +
+    '<div class="zg-name"><strong id="zg-title">' + NAME + '</strong><small>Your AI director</small></div>' +
+    '<button class="zg-x" type="button" aria-label="Close ' + NAME + '">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="zg-quick"></div>' +
-    '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask Producer Z</label>' +
+    '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask ' + NAME + '</label>' +
     '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
-    '<button class="zg-mic" type="button" aria-pressed="false" aria-label="Talk to Producer Z" hidden>' +
+    '<button class="zg-mic" type="button" aria-pressed="false" aria-label="Talk to ' + NAME + '" hidden>' +
     '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg></button>' +
     '<button class="zg-send" type="submit">Send</button></form>' +
-    '<p class="zg-fine">Producer Z is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
+    '<p class="zg-fine">' + NAME + ' is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
     "</section>";
   (L ? L.root : document.body).appendChild(root);
 
@@ -95,12 +96,12 @@
     if (!isOpen()) {
       panel.hidden = false;
       if (L) L.root.classList.add("is-open");
-      if (launcher) { launcher.setAttribute("aria-expanded", "true"); launcher.setAttribute("aria-label", "Close Producer Z"); }
+      if (launcher) { launcher.setAttribute("aria-expanded", "true"); launcher.setAttribute("aria-label", "Close " + NAME); }
       wave();
       document.addEventListener("pointermove", look, { passive: true });
     }
     if (!log.childNodes.length && topic !== "help" && topic !== "dashboard") {
-      var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm Producer Z, your AI director. What are you making?", ["Take the tour", "What does it cost?"]];
+      var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm " + NAME + ", your AI director. What are you making?", ["Take the tour", "What does it cost?"]];
       say(g[0], [], g[1]);
     }
     if (topic === "help") say("Love it. What are you making, and who is it for? I'll plan it, price it, or hand it to our team.", [], ["An ad for my business", "A music video", "Something for social"]);
@@ -111,7 +112,7 @@
     if (!isOpen()) return;
     panel.hidden = true;
     if (L) L.root.classList.remove("is-open");
-    if (launcher) { launcher.setAttribute("aria-expanded", "false"); launcher.setAttribute("aria-label", "Ask Producer Z, the AI director"); launcher.focus(); }
+    if (launcher) { launcher.setAttribute("aria-expanded", "false"); launcher.setAttribute("aria-label", "Ask " + NAME + ", the AI director"); launcher.focus(); }
     document.removeEventListener("pointermove", look);
     rest();
   }
@@ -378,7 +379,7 @@
   function post(token) {
     busy = true;
     form.querySelector(".zg-send").disabled = true;
-    var typing = el("div", "zg-msg bot zg-typing", "Producer Z is thinking...");
+    var typing = el("div", "zg-msg bot zg-typing", NAME + " is thinking...");
     log.appendChild(typing); log.scrollTop = log.scrollHeight;
     play("clap");
     var headers = { "Content-Type": "application/json" };
@@ -462,7 +463,7 @@
     if (isOpen()) close();
   });
   if (!L) {   /* loaded on its own (no launcher): give it a plain button so it still works */
-    launcher = el("button", "zg-solo", "Ask Producer Z");
+    launcher = el("button", "zg-solo", "Ask " + NAME);
     launcher.type = "button";
     launcher.setAttribute("aria-controls", "zg-panel"); launcher.setAttribute("aria-expanded", "false");
     launcher.addEventListener("click", toggle);

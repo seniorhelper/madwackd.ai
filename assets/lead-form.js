@@ -1,7 +1,7 @@
 /* Lead form: sends inquiries to the Madwackd API (POST /v2/leads).
    Protections: Cloudflare Turnstile, a hidden honeypot field, a 3-second minimum fill time (the submit button stays
    off until then), and a JSON POST body so no personal details ever land in a URL, history or log line.
-   Used by any <form data-lead>. Producer Z's hand-off uses the same endpoint (see INTEGRATION.md). */
+   Used by any <form data-lead>. Madi's hand-off uses the same endpoint (see INTEGRATION.md). */
 (function () {
   "use strict";
   var C = window.MW_CONFIG || {};

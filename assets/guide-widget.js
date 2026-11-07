@@ -1,4 +1,4 @@
-/* Madwackd Studio - Producer Z launcher (small, loads with the page).
+/* Madwackd Studio - AI guide launcher (Madi) (small, loads with the page).
    Entrance: once per visit, after the page has loaded, the claymation director walks on with a speech bubble
    (tour or help). Click him to chat. Leave him be (or press X) and he turns into a movie-set spotlight in the
    corner until someone needs him. The spotlight flickers now and then, a few times per page at most.
@@ -8,7 +8,9 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261107r";
+  var V = "20261107m";
+  /* The guide's name, in one place (Zach, Nov 6: "Madi", she/her). MW_CONFIG.guideName can override it. */
+  var NAME = String((window.MW_CONFIG && window.MW_CONFIG.guideName) || "Madi");
   var A = "/assets/z/";
   var APP = /^\/(studio|studio-board|dashboard)\//;          /* app pages: never walk on, never nudge */
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,7 +21,7 @@
 
 
   /* Page-aware openers. [opener, chips]. Every page gets its own line; repeat visits in a session rotate to a
-     fresh line so Producer Z never greets the same way twice. */
+     fresh line so she never greets the same way twice. */
   var TOUR = "Take the tour";
   var GREET = {
     "/": ["Welcome to the studio! Want the 30-second tour, or tell me what you're making?", [TOUR, "What does it cost?", "Make it for me"]],
@@ -33,6 +35,7 @@
     "/apply/": ["Filling out a quote? Tell me the project in a sentence and I'll help you describe it so the team can price it fast.", ["Help me describe it", "What does it cost?"]],
     "/collaborate/": ["Got an idea to make together? Pitch me the one-sentence version and I'll help you shape it.", ["Help me pitch it", "How does it work?"]],
     "/awards/": ["Made something great in the studio? I can walk you through nominating it for Madwackd Picks.", ["How do I nominate?", "What do you judge?"]],
+    "/launch-pad/": ["Launching something? Tell me the brand or project in one sentence and I'll point you to the right tool, or help you book your free call with Zach.", ["Which tool fits me?", "Book a call with Zach", "What does it cost?"]],
     "/producers-corner/": ["Reading up? Ask me anything from the guides, or let's turn it into your video.", ["What does a commercial cost?", "Plan my first video"]],
     "/vision/": ["Big-ideas page! Ask me about the vision, or let's get back to making video.", ["Tell me the short version", "Make a video"]],
     "/vault/": ["Every clip in the Vault came out of this studio. Want to make one like it?", ["Make one like these", "What does it cost?"]],
@@ -41,7 +44,7 @@
     "/voice/": ["Voices! Want help picking a narrator for your video?", ["Help me pick a voice", "Can I use my own voice?"]],
     "/trust/": ["Questions about safety, consent or who owns what? Ask away, plain English.", ["Who owns my videos?", "Can I use a real person?"]],
     "/our-mission/": ["Fun fact: 1.5% of our revenue goes to carbon removal, and it's never added to your price. Want to make something?", ["Tell me more", "Make a video"]],
-    "/about/": ["Hi! I'm Producer Z, the studio's AI director. Want the tour, or tell me what you're making?", [TOUR, "Make it for me"]],
+    "/about/": ["Hi! I'm " + NAME + ", the studio's AI director. Want the tour, or tell me what you're making?", [TOUR, "Make it for me"]],
     "/early-access/": ["Joining early access? I can explain what you get while you're here.", ["What do I get?", "Can I start now?"]],
     "/refunds/": ["Reading the refund policy? I'll explain it in plain English; the page is the official word.", ["When do I get credits back?", "Can I cancel?"]],
     "/terms/": ["Fine print time. I can explain anything in plain English; the page is the official word.", ["Explain the basics"]],
@@ -54,7 +57,7 @@
     "Hey again! Want help with this page, or with your video?"];
   function greet(path) {
     var g = GREET[path] || (path.indexOf("/producers-corner/") === 0 ? GREET["/producers-corner/"] : null) ||
-      ["Hi, I'm Producer Z, your AI director. I'm here to get your video made. What are you making?", [TOUR, "What does it cost?", "Make it for me"]];
+      ["Hi, I'm " + NAME + ", your AI director. I'm here to get your video made. What are you making?", [TOUR, "What does it cost?", "Make it for me"]];
     if (sget(SS, "mw_z_said") === g[0]) {          /* the walk-on bubble just said it: follow up instead */
       sset(SS, "mw_z_said", "");
       return [FOLLOW[Math.floor(Math.random() * FOLLOW.length)], g[1]];
@@ -68,13 +71,13 @@
   root.className = "zgl";
   root.innerHTML =
     '<div class="zgl-beam" aria-hidden="true"><i class="h"></i><i class="c"></i><i class="d"></i></div>' +
-    '<button class="zgl-btn" type="button" aria-expanded="false" aria-controls="zg-panel" aria-label="Ask Producer Z, the AI director">' +
+    '<button class="zgl-btn" type="button" aria-expanded="false" aria-controls="zg-panel" aria-label="Ask ' + NAME + ', the AI director">' +
     '<img src="' + A + 'z-spot.webp?v=' + V + '" width="64" height="64" alt="" decoding="async"><span class="zgl-glow"></span></button>' +
-    '<div class="zgl-card" role="region" aria-label="Producer Z" hidden>' +
-    '<div class="zgl-say"><button class="zgl-x" type="button" aria-label="Close Producer Z">&times;</button>' +
+    '<div class="zgl-card" role="region" aria-label="' + NAME + '" hidden>' +
+    '<div class="zgl-say"><button class="zgl-x" type="button" aria-label="Close ' + NAME + '">&times;</button>' +
     '<p aria-live="polite"></p>' +
     '<button class="go" type="button">Take the 30-second tour</button><button class="help" type="button">Help me make a video</button></div>' +
-    '<button class="zgl-actor" type="button" aria-label="Chat with Producer Z"></button></div>';
+    '<button class="zgl-actor" type="button" aria-label="Chat with ' + NAME + '"></button></div>';
 
   var btn = root.querySelector(".zgl-btn"), card = root.querySelector(".zgl-card"), actor = root.querySelector(".zgl-actor");
   var loading = null, cardTimer = 0;
@@ -188,5 +191,6 @@
   }
   if (document.readyState === "complete") afterLoad(); else window.addEventListener("load", afterLoad);
   window.__mwzLauncher.showCard = showCard;
-  window.__mwzLauncher.greet = greet;   /* lets the tour or tests bring him back */
+  window.__mwzLauncher.greet = greet;
+  window.__mwzLauncher.name = NAME;
 })();
