@@ -1,0 +1,93 @@
+/* Madwackd owner dashboard (/owner/). Builds on the dashboard tokens in dashboard.css. */
+.own { max-width: 1200px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.own-state { margin: 40px auto; max-width: 560px; text-align: center; font-size: 18px; color: var(--d-muted); }
+.own-state.own-bad { color: #FF8A95; }
+.own-state.own-info { color: var(--d-text); }
+.own-card { background: var(--d-2); border: 1px solid var(--d-line); border-radius: 14px; padding: 16px; min-width: 0; }
+.own-warn { border-color: var(--d-yellow); background: #2A2416; }
+.own-warn ul { margin: 0 0 8px; padding-left: 20px; }
+.own-warn li { margin-bottom: 6px; }
+.own-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.own-head h2 { margin: 0; }
+.own-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+code { background: var(--d-3); padding: 1px 6px; border-radius: 6px; font-size: 13px; overflow-wrap: anywhere; }
+
+/* segmented buttons */
+.own-seg { display: inline-flex; flex-wrap: wrap; gap: 4px; background: var(--d-bg); border: 1px solid var(--d-line); border-radius: 10px; padding: 3px; }
+.own-seg button { background: transparent; color: var(--d-muted); border: 0; border-radius: 8px; padding: 7px 12px; font: 600 14px/1.2 inherit; font-family: inherit; cursor: pointer; min-height: 36px; }
+.own-seg button[aria-pressed="true"] { background: var(--d-3); color: var(--d-text); box-shadow: inset 0 0 0 1px var(--d-cyan); }
+
+/* KPI tiles */
+.own-kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.own-kpi { background: var(--d-bg); border: 1px solid var(--d-line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.own-kpi-label { color: var(--d-muted); font-size: 14px; font-weight: 600; }
+.own-kpi-value { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.own-kpi-sub { color: var(--d-muted); font-size: 13px; }
+.own-kpi-owner { border-style: dashed; }
+.own-kpi-owner .own-kpi-label::after { content: " (not sales)"; font-weight: 400; }
+.own-kpi-bad { border-color: #FF8A95; }
+
+/* meters */
+.own-meters { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.own-meter { display: flex; flex-direction: column; gap: 6px; }
+.own-meter-top { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 14px; }
+.own-meter-name { font-weight: 700; }
+.own-meter-val { font-variant-numeric: tabular-nums; }
+.own-bar { height: 10px; background: var(--d-bg); border: 1px solid var(--d-line); border-radius: 99px; overflow: hidden; }
+.own-bar-fill { display: block; height: 100%; width: 0; background: var(--d-lime); border-radius: 99px; }
+.own-meter-warm .own-bar-fill { background: var(--d-yellow); }
+.own-meter-hot .own-bar-fill { background: #FF4D5E; }
+.own-meter-hot .own-meter-val::after { content: " near cap"; font-weight: 700; color: #FF8A95; }
+
+/* tables */
+.own-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.own-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.own-table th, .own-table td { text-align: left; padding: 8px; border-bottom: 1px solid var(--d-line); vertical-align: top; }
+.own-table th { color: var(--d-muted); font-weight: 600; font-size: 13px; white-space: nowrap; }
+.own-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.own-table select { background: var(--d-3); color: var(--d-text); border: 1px solid var(--d-line); border-radius: 8px; padding: 6px 8px; font: inherit; min-height: 36px; }
+.own-nowrap { white-space: nowrap; }
+.own-who { min-width: 170px; max-width: 240px; overflow-wrap: anywhere; }
+.own-table td:nth-child(3) { min-width: 200px; }
+.own-who a { color: var(--d-cyan); }
+.own-detail { color: var(--d-muted); }
+.own-pos { color: var(--d-lime); }
+.own-neg { color: var(--d-text); }
+.own-tag { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 12px; font-weight: 700; border: 1px solid var(--d-line); white-space: nowrap; }
+.own-tag-purchase, .own-tag-order { border-color: var(--d-lime); color: var(--d-lime); }
+.own-tag-render, .own-tag-voiceover { border-color: var(--d-cyan); color: var(--d-cyan); }
+.own-tag-owner_grant { border-style: dashed; color: var(--d-muted); }
+.own-tag-refund { border-color: var(--d-yellow); color: var(--d-yellow); }
+.own-tag-billing_flag, .own-tier-hot { border-color: #FF8A95; color: #FF8A95; }
+.own-tier-warm { border-color: var(--d-yellow); color: var(--d-yellow); }
+.own-tier-low { color: var(--d-muted); }
+.own-deliv-sent { color: var(--d-lime); }
+.own-deliv-failed, .own-deliv-capped { color: #FF8A95; }
+.own-deliv-unconfigured, .own-deliv-off { color: var(--d-muted); }
+
+.own-details { margin-top: 12px; }
+.own-details summary { cursor: pointer; color: var(--d-cyan); font-weight: 600; min-height: 32px; padding: 4px 0; }
+
+/* forms */
+.own-form { display: grid; gap: 10px; }
+.own-form label { display: grid; gap: 4px; font-size: 14px; font-weight: 600; }
+.own-form input { background: var(--d-bg); color: var(--d-text); border: 1px solid var(--d-line); border-radius: 8px; padding: 10px; font: 400 16px/1.3 inherit; font-family: inherit; min-height: 44px; }
+.own-form button { justify-self: start; }
+
+.own-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.own-issues { margin: 12px 0 0; padding-left: 20px; color: #FF8A95; font-size: 14px; }
+
+@media (max-width: 800px) {
+  .own-two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .own { padding: 12px; gap: 12px; }
+  .own-card { padding: 12px; }
+  .dash-top { position: static; }
+  .own-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .own-meters { grid-template-columns: minmax(0, 1fr); }
+  .dash-top .mw-acct-who { max-width: 140px; }
+  .own-kpi-value { font-size: 22px; }
+  .own-seg { width: 100%; }
+  .own-seg button { flex: 1 1 auto; }
+}
