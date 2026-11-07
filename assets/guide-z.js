@@ -75,6 +75,7 @@
     '<button class="zg-x" type="button" aria-label="Close Producer Z">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="zg-quick"></div>' +
+    '<p class="zg-humanrow"><a class="zg-human" href="/support/#contact" data-human>Talk to a human</a></p>' +
     '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask Producer Z</label>' +
     '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
     '<button class="zg-send" type="submit">Send</button></form>' +
@@ -111,6 +112,18 @@
     rest();
   }
   function toggle() { isOpen() ? close() : open(); }
+
+  /* "Talk to a human": always visible, one click. Carries a short summary of this chat (no contact details) to the form. */
+  root.querySelector("[data-human]").addEventListener("click", function (e) {
+    var lines = history.slice(-8).map(function (m) { return (m.role === "user" ? "Visitor: " : "Producer Z: ") + String(m.text || "").slice(0, 220); });
+    session.set("mw_chat_summary", scrub(lines.join(" | ")).slice(0, 1400));
+    if (location.pathname.indexOf("/support") === 0) {
+      e.preventDefault();
+      var c = document.getElementById("contact");
+      if (c) { c.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); window.dispatchEvent(new Event("mw-chat-summary")); }
+      close();
+    }
+  });
 
   /* ---------------- the character: claymation clips (wave, talk, clap); leans toward the pointer ---------------- */
   var vid = actor.querySelector("video"), clip = "", talkTimer = 0, raf = 0, px = 0, py = 0;

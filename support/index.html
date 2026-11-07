@@ -50,8 +50,8 @@
     <div>
       <p class="kicker">Support</p>
       <h1>How can we <span class="hl">help?</span></h1>
-      <p class="sub">Quick answers below. Still stuck? Call or send a message and a real person will read it.</p>
-      <div class="cta-row"><a class="btn btn-primary" href="#contact">Send a message</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
+      <p class="sub">Producer Z, our AI guide (the chat button at the bottom right), can answer most questions right away. Want a person instead? Use "Talk to a human" any time. No bot turns required.</p>
+      <div class="cta-row"><a class="btn btn-primary" href="#contact" data-human-link>Talk to a human</a><a class="btn btn-outline" href="tel:+18004818638">Call 1-800-481-8638</a></div>
     </div>
   </div>
 </section>
@@ -93,10 +93,11 @@
         <div><label for="l-topic">Topic</label>
           <select id="l-topic" name="topic">
             <option>Billing</option><option>Credits</option><option>Refund request</option><option>Cancel my plan</option>
-            <option>Delete my account</option><option>Privacy request</option><option>Privacy appeal</option><option>Something else</option>
+            <option>Delete my account</option><option>Privacy request</option><option>Privacy appeal</option><option>Something isn't working</option><option>Something else</option>
           </select></div>
         <div><label for="l-phone">Phone (optional)</label><input id="l-phone" name="phone" type="tel" autocomplete="tel" maxlength="24"></div>
       </div>
+      <p class="fine" id="lead-chat-note" hidden>Your chat with Producer Z will be attached so you don't have to repeat yourself.</p>
       <label for="l-msg">How can we help?</label>
       <textarea id="l-msg" name="message" required minlength="5" maxlength="2500" placeholder="Please don't include card numbers or passwords."></textarea>
       <label class="check"><input type="checkbox" name="sms_consent" disabled> <span>By checking this box I agree to receive text messages from Madwackd Productions LLC about my inquiry at the number I gave. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of any purchase. See our <a href="/privacy/">Privacy Policy</a>.</span></label>
