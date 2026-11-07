@@ -12,9 +12,9 @@
   function fnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
   var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
     "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
-    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/"];
-  var FAMILY = ["https://www.eyetoad.com/", "https://www.searchconverts.com/", "https://doorhanger.ai/",
-    "https://donkley.ai/", "https://winbuild.ai/", "https://www.madwackd.com/"];
+    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/", "/apply/", "/awards/", "/collaborate/",
+    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/"];
+  var FAMILY = ["https://www.madwackd.com/"];   /* our parent studio only: Producer Z refers to no other company */
   var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
 
   /* Second line of defense; the server already filtered. */
@@ -96,8 +96,10 @@
       wave();
       document.addEventListener("pointermove", look, { passive: true });
     }
-    if (!log.childNodes.length) say("Hi, I'm Producer Z, your AI director. I know this whole site, and I'm here to get your video made. Want a 30-second tour, or tell me what you're making?",
-      [], ["Take the tour", "What does it cost?", "Make it for me"]);
+    if (!log.childNodes.length && topic !== "help" && topic !== "dashboard") {
+      var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm Producer Z, your AI director. What are you making?", ["Take the tour", "What does it cost?"]];
+      say(g[0], [], g[1]);
+    }
     if (topic === "help") say("Love it. What are you making, and who is it for? I'll plan it, price it, or hand it to our team.", [], ["An ad for my business", "A music video", "Something for social"]);
     if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
     input.focus();

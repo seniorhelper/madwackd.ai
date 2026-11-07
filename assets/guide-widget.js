@@ -8,7 +8,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261106v3";
+  var V = "20261107r";
   var A = "/assets/z/";
   var APP = /^\/(studio|studio-board|dashboard)\//;          /* app pages: never walk on, never nudge */
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -16,6 +16,53 @@
   function sget(s, k) { try { return s.getItem(k); } catch (e) { return null; } }
   function sset(s, k, v) { try { s.setItem(k, v); } catch (e) { /* private mode */ } }
   var LS = window.localStorage, SS = window.sessionStorage;
+
+
+  /* Page-aware openers. [opener, chips]. Every page gets its own line; repeat visits in a session rotate to a
+     fresh line so Producer Z never greets the same way twice. */
+  var TOUR = "Take the tour";
+  var GREET = {
+    "/": ["Welcome to the studio! Want the 30-second tour, or tell me what you're making?", [TOUR, "What does it cost?", "Make it for me"]],
+    "/pricing/": ["You're on Pricing. Tell me what you're making and I'll point you to the cheapest plan that fits. No upsell theater, promise.", ["Which plan fits me?", "What's a credit?", "Make it for me"]],
+    "/studio/": ["You're in the Studio, where the magic renders. Want help writing a shot that comes out right the first time?", ["Help me write a shot", "How do credits work?"]],
+    "/creator-studio/": ["Free tools, no account, nothing uploaded. Want a hand with a hook, a script or captions?", ["Write me a hook", "Fit my script to 8 seconds", "What's free vs paid?"]],
+    "/dashboard/": ["This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?", ["Help with my edit", "What's in my plan?"]],
+    "/creator-dashboard-demo/": ["You're on the Creator Dashboard. Want help making the most of it? I'm here for you!", ["What could mine do?", "How is it priced?", "Book a call"]],
+    "/studio-board/": ["The Studio board: our pro console for the Studio plan. Want a quick lap around what it's for?", ["What's on the board?", "Is Studio right for me?"]],
+    "/producers/": ["Want a real producer to run it start to finish? Tell me the video and I'll point you to the right package.", ["An ad for my business", "A music video", "A trailer or series"]],
+    "/apply/": ["Filling out a quote? Tell me the project in a sentence and I'll help you describe it so the team can price it fast.", ["Help me describe it", "What does it cost?"]],
+    "/collaborate/": ["Got an idea to make together? Pitch me the one-sentence version and I'll help you shape it.", ["Help me pitch it", "How does it work?"]],
+    "/awards/": ["Made something great in the studio? I can walk you through nominating it for Madwackd Picks.", ["How do I nominate?", "What do you judge?"]],
+    "/producers-corner/": ["Reading up? Ask me anything from the guides, or let's turn it into your video.", ["What does a commercial cost?", "Plan my first video"]],
+    "/vision/": ["Big-ideas page! Ask me about the vision, or let's get back to making video.", ["Tell me the short version", "Make a video"]],
+    "/vault/": ["Every clip in the Vault came out of this studio. Want to make one like it?", ["Make one like these", "What does it cost?"]],
+    "/features/": ["Shopping features? Ask me which ones are live and which are launching.", ["What's live today?", "Which plan has what?"]],
+    "/how-it-works/": ["Short version: describe it, see the price, render. Want to plan your first shot together?", ["Plan my first shot", "What does it cost?"]],
+    "/voice/": ["Voices! Want help picking a narrator for your video?", ["Help me pick a voice", "Can I use my own voice?"]],
+    "/trust/": ["Questions about safety, consent or who owns what? Ask away, plain English.", ["Who owns my videos?", "Can I use a real person?"]],
+    "/our-mission/": ["Fun fact: 1.5% of our revenue goes to carbon removal, and it's never added to your price. Want to make something?", ["Tell me more", "Make a video"]],
+    "/about/": ["Hi! I'm Producer Z, the studio's AI director. Want the tour, or tell me what you're making?", [TOUR, "Make it for me"]],
+    "/early-access/": ["Joining early access? I can explain what you get while you're here.", ["What do I get?", "Can I start now?"]],
+    "/refunds/": ["Reading the refund policy? I'll explain it in plain English; the page is the official word.", ["When do I get credits back?", "Can I cancel?"]],
+    "/terms/": ["Fine print time. I can explain anything in plain English; the page is the official word.", ["Explain the basics"]],
+    "/privacy/": ["Privacy questions? I'll explain in plain English; the page is the official word.", ["What do you collect?"]],
+    "/acceptable-use/": ["Wondering what you can and can't make here? Ask me.", ["Can I use a real person?", "What gets blocked?"]],
+    "/ai-disclosure/": ["Curious how we label AI content? Ask me anything.", ["How are videos labeled?"]]
+  };
+  var FOLLOW = ["Let's do it! What would you like to know?", "Action! Where do you want to start?", "Love it. Ask me anything, or pick one below."];
+  var AGAIN = ["Back for more? What can I help with on this page?", "Look who's back! What are we making?",
+    "Hey again! Want help with this page, or with your video?"];
+  function greet(path) {
+    var g = GREET[path] || (path.indexOf("/producers-corner/") === 0 ? GREET["/producers-corner/"] : null) ||
+      ["Hi, I'm Producer Z, your AI director. I'm here to get your video made. What are you making?", [TOUR, "What does it cost?", "Make it for me"]];
+    if (sget(SS, "mw_z_said") === g[0]) {          /* the walk-on bubble just said it: follow up instead */
+      sset(SS, "mw_z_said", "");
+      return [FOLLOW[Math.floor(Math.random() * FOLLOW.length)], g[1]];
+    }
+    var n = +(sget(SS, "mw_z_greets") || 0);
+    sset(SS, "mw_z_greets", String(n + 1));
+    return n === 0 ? g : [AGAIN[(n - 1) % AGAIN.length], g[1]];
+  }
 
   var root = document.createElement("div");
   root.className = "zgl";
@@ -25,7 +72,7 @@
     '<img src="' + A + 'z-spot.webp?v=' + V + '" width="64" height="64" alt="" decoding="async"><span class="zgl-glow"></span></button>' +
     '<div class="zgl-card" role="region" aria-label="Producer Z" hidden>' +
     '<div class="zgl-say"><button class="zgl-x" type="button" aria-label="Close Producer Z">&times;</button>' +
-    '<p aria-live="polite">Hi! I\'m Producer Z, your AI director. Want a 30-second tour, or help making something?</p>' +
+    '<p aria-live="polite"></p>' +
     '<button class="go" type="button">Take the 30-second tour</button><button class="help" type="button">Help me make a video</button></div>' +
     '<button class="zgl-actor" type="button" aria-label="Chat with Producer Z"></button></div>';
 
@@ -74,6 +121,10 @@
   function showCard() {
     if (root.classList.contains("is-open")) return;
     var poster = A + "z-hero.webp?v=" + V;
+    var line = (GREET[location.pathname] || GREET["/"])[0];
+    root.querySelector(".zgl-say p").textContent = line;
+    sset(SS, "mw_z_said", line);
+    sset(SS, "mw_z_greets", String(+(sget(SS, "mw_z_greets") || 0) + 1));
     var media;
     if (REDUCED) {
       media = document.createElement("img"); media.alt = ""; media.src = poster;
@@ -136,5 +187,6 @@
     if (!slow) (window.requestIdleCallback || function (f) { setTimeout(f, 3000); })(function () { load().catch(function () {}); }, { timeout: 9000 });
   }
   if (document.readyState === "complete") afterLoad(); else window.addEventListener("load", afterLoad);
-  window.__mwzLauncher.showCard = showCard;   /* lets the tour or tests bring him back */
+  window.__mwzLauncher.showCard = showCard;
+  window.__mwzLauncher.greet = greet;   /* lets the tour or tests bring him back */
 })();
