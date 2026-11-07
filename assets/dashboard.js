@@ -289,17 +289,36 @@
   showPanel('mixer'); setT(0); updateDuration(); rafId = root.requestAnimationFrame(loop);
   D.state = S; D.tierKey = tierKey;
 
-  /* Free plan: the dashboard is a paid feature, so free accounts see a locked preview. */
+  /* Subscribers only: Free and signed-out visitors get a preview of the paid dashboard instead of the tool.
+     Plan limits are also enforced on the server; this is the page-level lock. */
   if (!T.dashboard) {
     var main = $('main');
-    main.setAttribute('inert', ''); main.setAttribute('aria-hidden', 'true'); main.classList.add('is-preview');
-    var lock = doc.createElement('section'); lock.className = 'dash-lock'; lock.setAttribute('aria-labelledby', 'dash-lock-h');
-    var h = doc.createElement('h2'); h.id = 'dash-lock-h'; h.textContent = 'The Creator Dashboard is on paid plans';
-    var p = doc.createElement('p'); p.textContent = 'Mix voice and music, add sounds, cut your clips and export. Starter is $29/mo; Pro ($89/mo) adds auto-ducking, a brand kit and talking Madi.';
-    var a = doc.createElement('a'); a.className = 'dash-lock-cta'; a.href = '/pricing/'; a.textContent = 'See plans';
-    var b = doc.createElement('a'); b.className = 'dash-lock-alt'; b.href = '/creator-studio/'; b.textContent = 'Use the free tools';
-    var t = doc.createElement('p'); t.className = 'pay-trust'; t.textContent = 'Payments are processed securely by Stripe. We never see or store your full card number.';
-    lock.appendChild(h); lock.appendChild(p); lock.appendChild(a); lock.appendChild(b); lock.appendChild(t);
+    main.hidden = true; main.setAttribute('inert', ''); main.setAttribute('aria-hidden', 'true');
+    var signedIn = !!(root.MWAuth && root.MWAuth.state && root.MWAuth.state.user);
+    var lock = doc.createElement('section'); lock.className = 'dash-lock dash-lock-big'; lock.setAttribute('aria-labelledby', 'dash-lock-h');
+    lock.innerHTML =
+      '<p class="dash-lock-k">For Starter, Pro and Studio subscribers</p>' +
+      '<h1 id="dash-lock-h">Subscribers get <span>THIS</span>.</h1>' +
+      '<p class="dash-lock-lead">The Creator Dashboard: mix voice and music, drop in sounds, cut your clips and export, all in one place. ' +
+        (signedIn ? 'You are on the Free plan, so it is locked for now.' : 'Already a subscriber? <a href="/studio/?return=%2Fdashboard%2F#live">Sign in</a> to open it.') + '</p>' +
+      '<figure class="dash-lock-shot"><img src="/assets/img/creator-dashboard-pro.webp" width="1200" height="658" alt="The Creator Dashboard on the Pro plan: voice mixer with level and pan for each track, a sound library with Add at playhead buttons, and the plan panel showing unlimited tracks, all sounds, 1080p with no watermark, captions, auto-duck and brand kit." loading="eager">' +
+        '<figcaption>The real Creator Dashboard, as a Pro subscriber sees it.</figcaption></figure>' +
+      '<div class="dash-lock-cols"><div><h2>What you unlock</h2><ul class="dash-lock-list">' +
+        '<li>Voice mixer: level, pan, mute and solo on every track, plus recording</li>' +
+        '<li>The full sound library, made in your browser with no licensing</li>' +
+        '<li>Video editor: trim, split and reorder clips, text on screen, 9:16, 16:9 or 1:1</li>' +
+        '<li>Export at 1080p with no watermark, and burned-in captions</li>' +
+        '<li>Pro adds unlimited tracks, auto-duck and your brand kit</li>' +
+        '<li>Studio adds 3 team seats and multiple brand kits</li>' +
+        '<li><a href="/pro-studio/">Pro Creator Studio</a> on every paid plan: earnings goals, pitch room, publish kit, mailing list and tip jar</li>' +
+      '</ul></div><div class="dash-lock-plans"><h2>Pick your plan</h2>' +
+        '<a class="dash-lock-plan" href="/studio/?buy=starter"><b>Starter</b><span>$29/mo</span></a>' +
+        '<a class="dash-lock-plan hot" href="/studio/?buy=pro"><b>Pro</b><span>$89/mo</span><em>Most popular</em></a>' +
+        '<a class="dash-lock-plan" href="/studio/?buy=studio"><b>Studio</b><span>$299/mo</span></a>' +
+        '<p class="dash-lock-more"><a href="/pricing/">Compare every plan</a> &middot; <a href="/creator-studio/">Use the free tools</a></p>' +
+      '</div></div>' +
+      '<p class="dash-lock-new"><b>Always improving.</b> We add new features all the time, and subscribers get them as they launch on their plan.</p>' +
+      '<p class="pay-trust">Payments are processed securely by Stripe. We never see or store your full card number. Plans renew monthly until you cancel.</p>';
     main.parentNode.insertBefore(lock, main);
   }
 })(window);

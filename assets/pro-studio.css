@@ -206,3 +206,8 @@
 .pcs-up-k{font:700 .72rem/1 Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#FF7CC0!important;margin-bottom:10px!important}
 .pcs-up .btn-outline{background:transparent;color:#fff;border-color:#fff}
 @media (max-width:900px){.pcs-up-in{grid-template-columns:1fr;padding:22px}}
+/* free Creator Studio: real dashboard screenshot + always-improving note */
+.cs-real{margin:20px 0 24px;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:6px 7px 0 var(--ink);background:#0E0B15}
+.cs-real img{display:block;width:100%;height:auto}
+.cs-real figcaption{padding:10px 14px;font-weight:700;color:#F4F0FA;font-size:.9rem}
+.cs-new{margin:18px 0 6px;padding:12px 16px;border-radius:12px;background:#F4FDE4;border:2px solid var(--ink);color:var(--ink)}

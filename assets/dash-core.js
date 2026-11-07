@@ -6,8 +6,8 @@
   var TIERS = {
     free:       { key: 'free',       label: 'Free',        price: 0,   projects: 1,  tracks: 3,   sounds: 12,  maxSeconds: 60,  exportRes: 720,  watermark: true,  captions: false, autoDuck: false, brandKit: false, multiBrandKits: false, seats: 1,  studioVoiceMin: 0,   talkingProducer: false, dashboard: false },
     starter:    { key: 'starter',    label: 'Starter',     price: 29,  projects: 5,  tracks: 6,   sounds: INF, maxSeconds: 180, exportRes: 1080, watermark: false, captions: true,  autoDuck: false, brandKit: false, multiBrandKits: false, seats: 1,  studioVoiceMin: 0,   talkingProducer: false, dashboard: true },
-    pro:        { key: 'pro',        label: 'Pro',         price: 79,  projects: 25, tracks: INF, sounds: INF, maxSeconds: INF, exportRes: 1080, watermark: false, captions: true,  autoDuck: true,  brandKit: true,  multiBrandKits: false, seats: 1,  studioVoiceMin: 30,  talkingProducer: true, dashboard: true },
-    studio:     { key: 'studio',     label: 'Studio',      price: 249, projects: INF, tracks: INF, sounds: INF, maxSeconds: INF, exportRes: 1080, watermark: false, captions: true,  autoDuck: true,  brandKit: true,  multiBrandKits: true,  seats: 3,  studioVoiceMin: 90,  talkingProducer: true, dashboard: true }
+    pro:        { key: 'pro',        label: 'Pro',         price: 89,  projects: 25, tracks: INF, sounds: INF, maxSeconds: INF, exportRes: 1080, watermark: false, captions: true,  autoDuck: true,  brandKit: true,  multiBrandKits: false, seats: 1,  studioVoiceMin: 30,  talkingProducer: true, dashboard: true },
+    studio:     { key: 'studio',     label: 'Studio',      price: 299, projects: INF, tracks: INF, sounds: INF, maxSeconds: INF, exportRes: 1080, watermark: false, captions: true,  autoDuck: true,  brandKit: true,  multiBrandKits: true,  seats: 3,  studioVoiceMin: 90,  talkingProducer: true, dashboard: true }
   };
   var UPGRADE = {
     autoDuck: ['pro', 'Pro unlocks auto-ducking: your music dips under your voice automatically.'],
