@@ -736,3 +736,6 @@ a:hover{color:var(--signal-text)}
 .tv-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .tv-grid .best-card{margin:0}
 .tv-grid video{width:100%;height:auto;display:block;border-radius:12px;background:#000}
+
+/* footer/header candy logo: tilted cap must not clip */
+.candy-cap{overflow:visible;padding-top:.12em}
