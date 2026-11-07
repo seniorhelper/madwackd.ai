@@ -70,13 +70,16 @@
   root.innerHTML =
     '<section class="zg-panel" id="zg-panel" role="dialog" aria-modal="false" aria-labelledby="zg-title" hidden>' +
     '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="Producer Z: click for an action!">' +
-    '<video muted playsinline preload="metadata" aria-hidden="true" poster="' + Z + 'z-hero.webp?v=' + ZV + '"></video></button>' +
+    '<video muted playsinline preload="metadata" aria-hidden="true" poster="' + Z + 'z-hero.webp?v=' + ZV + '"></video>' +
+    '<img class="zg-mouth" alt="" aria-hidden="true" hidden></button>' +
     '<div class="zg-name"><strong id="zg-title">Producer Z</strong><small>Your AI director</small></div>' +
     '<button class="zg-x" type="button" aria-label="Close Producer Z">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="zg-quick"></div>' +
     '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask Producer Z</label>' +
     '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
+    '<button class="zg-mic" type="button" aria-pressed="false" aria-label="Talk to Producer Z" hidden>' +
+    '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg></button>' +
     '<button class="zg-send" type="submit">Send</button></form>' +
     '<p class="zg-fine">Producer Z is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
     "</section>";
@@ -176,20 +179,163 @@
   }
   function note(text) { var n = el("p", "zg-note", text); log.appendChild(n); log.scrollTop = log.scrollHeight; }
 
-  /* ---------------- voice: browser speech for everyone (free); studio voice for paid tiers ---------------- */
+  /* ---------------- voice: browser speech for everyone (free); studio voice + lip-sync for Pro/Studio ----------------
+     Lips: six clay mouth frames (/assets/z/mouth-<shape>.webp) laid over his still, switched on by MW_CONFIG.zLips.
+     Until then he uses the talking clip. */
+  var SHAPES = ["rest", "mbp", "fv", "a", "e", "o"], mouth = root.querySelector(".zg-mouth"), lipsReady = false, lipRaf = 0;
+  (function probeLips() {
+    if (REDUCED || !C.zLips) return;        /* set zLips: true in /assets/config.js once the mouth frames are uploaded */
+    var img = new Image();
+    img.onload = function () { lipsReady = true; SHAPES.forEach(function (s) { (new Image()).src = Z + "mouth-" + s + ".webp?v=" + ZV; }); };
+    img.src = Z + "mouth-rest.webp?v=" + ZV;
+  })();
+  function lipsOn() { if (vid) { vid.pause(); vid.style.visibility = "hidden"; } mouth.hidden = false; }
+  function lipsOff() { cancelAnimationFrame(lipRaf); mouth.hidden = true; if (vid) vid.style.visibility = ""; setMouth("rest"); }
+  function setMouth(s) { var src = Z + "mouth-" + s + ".webp?v=" + ZV; if (mouth.getAttribute("src") !== src) mouth.setAttribute("src", src); }
+  function lipSync(audio, mouths) {          /* mouths = [[seconds, shape], ...] from the API */
+    lipsOn();
+    var i = 0;
+    (function step() {
+      var now = audio.currentTime;
+      while (i + 1 < mouths.length && mouths[i + 1][0] <= now) i++;
+      setMouth(mouths[i] ? mouths[i][1] : "rest");
+      if (!audio.paused && !audio.ended) lipRaf = requestAnimationFrame(step);
+    })();
+    audio.addEventListener("ended", lipsOff, { once: true });
+    audio.addEventListener("pause", lipsOff, { once: true });
+  }
   function speak(text) {
     if (["pro", "studio", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
       fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
-        Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text }) })
-        .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
-        .then(function (b) { var a = new Audio(URL.createObjectURL(b)); a.play(); talk(text.length * 55); })
+        Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text, lips: true }) })
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (j) {
+          var bin = atob(j.audio_b64 || ""), buf = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+          var a = new Audio(URL.createObjectURL(new Blob([buf], { type: "audio/mpeg" })));
+          var pr = a.play();
+          if (pr && pr.catch) pr.catch(function () { browserSpeak(text); });
+          if (lipsReady && j.mouths && j.mouths.length) lipSync(a, j.mouths); else talk(text.length * 55);
+        })
         .catch(function () { browserSpeak(text); });
       return;
     }
     browserSpeak(text);
   }
+  function femaleVoice() {
+    var vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+    var en = vs.filter(function (v) { return /^en(-|_|$)/i.test(v.lang); });
+    var pick = en.filter(function (v) { return /female|samantha|zira|aria|jenny|ava|allison|susan|serena|victoria|karen|moira|tessa|fiona|libby|sonia|natasha/i.test(v.name); });
+    return pick[0] || null;
+  }
   function browserSpeak(text) {
-    try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = 1.03; speechSynthesis.speak(u); talk(text.length * 55); } catch (e) { /* no speech */ }
+    try {
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text), fv = femaleVoice();
+      if (fv) u.voice = fv;
+      u.rate = 1.03;
+      if (lipsReady) {                      /* no timing from the browser: open and close on each word */
+        var k = 0, cyc = ["a", "e", "o", "mbp", "e", "a"];
+        u.onstart = function () { lipsOn(); };
+        u.onboundary = function () { setMouth(cyc[k++ % cyc.length]); setTimeout(function () { setMouth("rest"); }, 140); };
+        u.onend = u.onerror = function () { lipsOff(); };
+      } else {
+        talk(text.length * 55);
+      }
+      speechSynthesis.speak(u);
+    } catch (e) { /* no speech */ }
+  }
+
+  /* ---------------- push to talk: the browser's own speech recognition (free; Chrome, Edge, Safari) ---------------- */
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition, mic = root.querySelector(".zg-mic"), rec = null;
+  if (SR && mic) {
+    mic.hidden = false;
+    mic.addEventListener("click", function () {
+      if (rec) { rec.stop(); return; }
+      try { speechSynthesis.cancel(); } catch (e) { /* none */ }
+      rec = new SR();
+      rec.lang = document.documentElement.lang || "en-US";
+      rec.interimResults = true; rec.maxAlternatives = 1;
+      var finalText = "";
+      mic.setAttribute("aria-pressed", "true"); mic.classList.add("is-on"); input.placeholder = "Listening...";
+      rec.onresult = function (ev) {
+        var interim = "";
+        for (var i = ev.resultIndex; i < ev.results.length; i++) {
+          if (ev.results[i].isFinal) finalText += ev.results[i][0].transcript; else interim += ev.results[i][0].transcript;
+        }
+        input.value = (finalText + interim).slice(0, 800);
+      };
+      rec.onerror = function () { /* denied or no speech: just stop */ };
+      rec.onend = function () {
+        mic.setAttribute("aria-pressed", "false"); mic.classList.remove("is-on"); input.placeholder = "Ask about prices, tools, your video...";
+        rec = null;
+        var said = (finalText || input.value).trim();
+        if (said) { input.value = ""; send(said, true); }
+      };
+      rec.start();
+    });
+  }
+
+  /* ---------------- lead capture: a real person calls back (human callback only) ---------------- */
+  var leadShown = false;
+  function offerLead(lf) {
+    if (leadShown || !API) return;
+    leadShown = true;
+    var b = el("button", "zg-chip zg-lead-go", "Have a producer reach out");
+    b.type = "button";
+    b.addEventListener("click", function () { b.remove(); leadForm(lf); });
+    log.appendChild(b); log.scrollTop = log.scrollHeight;
+  }
+  function leadForm(lf) {
+    var started = Date.now(), lastAsk = "";
+    for (var i = history.length - 1; i >= 0; i--) if (history[i].role === "user") { lastAsk = history[i].text; break; }
+    var f = el("form", "zg-lead");
+    f.setAttribute("aria-label", "Request a callback");
+    f.innerHTML =
+      '<p class="zg-lead-h">A real person on our team will reach out within one business day (Mountain time).</p>' +
+      '<label>Name<input name="name" autocomplete="name" required maxlength="120"></label>' +
+      '<label>Email<input name="email" type="email" autocomplete="email" required maxlength="254"></label>' +
+      '<label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="30"></label>' +
+      '<label>What is it?<select name="interest"><option value="spot">A commercial or ad</option><option value="music_video">A music video</option>' +
+      '<option value="high_end_commercial">A high-end commercial</option><option value="masterclass">The Masterclass</option>' +
+      '<option value="question">A question</option><option value="not_sure" selected>Not sure yet</option></select></label>' +
+      '<label>Budget<select name="budget"><option value="not_sure" selected>Not sure</option><option value="under_1000">Under $1,000</option>' +
+      '<option value="1000_2500">$1,000 to $2,500</option><option value="2500_5000">$2,500 to $5,000</option>' +
+      '<option value="5000_10000">$5,000 to $10,000</option><option value="10000_plus">$10,000 or more</option></select></label>' +
+      '<label>About the project<textarea name="message" rows="3" maxlength="3000" required></textarea></label>' +
+      '<label class="zg-consent"><input type="checkbox" name="sms_consent"> <span></span></label>' +
+      '<input class="zg-hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<div class="zg-ts"></div>' +
+      '<p class="zg-lead-fine">We use this only to reply about your request. <a href="/privacy/">Privacy policy</a>.</p>' +
+      '<button class="zg-send" type="submit">Send my request</button><p class="zg-lead-msg" role="status"></p>';
+    f.querySelector(".zg-consent span").textContent = (lf && lf.sms_consent_text) || "";
+    if (!(lf && lf.sms_consent_text)) f.querySelector(".zg-consent").remove();
+    f.querySelector("textarea").value = lastAsk;
+    log.appendChild(f); log.scrollTop = log.scrollHeight;
+    f.querySelector("input[name=name]").focus();
+    var token = "";
+    if (TS_KEY) loadTurnstile().then(function (ts) {
+      ts.render(f.querySelector(".zg-ts"), { sitekey: TS_KEY, theme: "dark", size: "flexible", callback: function (tk) { token = tk; } });
+    }).catch(function () { /* the server will say if the check is required */ });
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var msg = f.querySelector(".zg-lead-msg"), btn = f.querySelector(".zg-send");
+      if (TS_KEY && !token) { msg.textContent = "Please finish the quick human check first."; return; }
+      var d = new FormData(f), summary = history.filter(function (h) { return h.role === "user"; }).slice(-3)
+        .map(function (h) { return h.text; }).join(" / ").slice(0, 600);
+      var body = { name: d.get("name"), email: d.get("email"), phone: d.get("phone") || "", interest: d.get("interest"),
+        budget: d.get("budget"), message: d.get("message"), source: "producer_chat", chat_summary: summary,
+        sms_consent: !!d.get("sms_consent"), _honey: d.get("_honey") || "", _t: started, turnstile_token: token };
+      btn.disabled = true; msg.textContent = "Sending...";
+      fetch(API + "/v2/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (x) {
+          if (!x.ok) { msg.textContent = (x.j && x.j.message) || "That didn't send. Call 1-800-481-8638 instead."; btn.disabled = false; return; }
+          f.remove();
+          say("Got it! A real person on our team will reach out within one business day. Anything else while you wait?");
+        })
+        .catch(function () { msg.textContent = "That didn't send. Call 1-800-481-8638 instead."; btn.disabled = false; });
+    });
   }
 
   /* ---------------- human check (anonymous visitors, first model reply only) ---------------- */
@@ -219,7 +365,9 @@
   }
 
   /* ---------------- chat ---------------- */
-  function send(text) {
+  var spokenAsk = false;
+  function send(text, byVoice) {
+    spokenAsk = !!byVoice;
     text = String(text || "").trim().slice(0, 800);
     if (!text || busy) return;
     say(text, [], [], "you");
@@ -251,6 +399,8 @@
         var reply = j.reply || SAFE;
         history.push({ role: "assistant", text: reply });
         say(reply, j.links || []);
+        if (j.offer_lead && j.lead_form) offerLead(j.lead_form);
+        if (spokenAsk) speak(reply);
         if (typeof j.messages_left === "number" && j.messages_left > 0 && j.messages_left <= 2) {
           note(j.messages_left + (j.messages_left === 1 ? " free message" : " free messages") + " left today." +
             (TIER === "anon" ? " A free account gets more." : ""));

@@ -54,3 +54,24 @@
   .zg-spot{transition:none}
 }
 @media print{.zg{display:none}}
+/* talking lips: mouth frames sit over his still; tune these four numbers to the generated frames */
+.zg-mouth{position:absolute;left:41%;top:48%;width:20%;height:13%;object-fit:contain;pointer-events:none}
+.zg-mouth[hidden]{display:none}
+/* push to talk */
+.zg-mic{min-width:44px;min-height:44px;border:1px solid var(--zg-line);border-radius:10px;background:var(--zg-scr2);color:var(--zg-txt);cursor:pointer;display:grid;place-items:center}
+.zg-mic[hidden]{display:none}
+.zg-mic.is-on{background:var(--zg-pink);border-color:var(--zg-pink);color:#fff}
+@media (prefers-reduced-motion:no-preference){.zg-mic.is-on{animation:zg-pulse 1.2s ease-in-out infinite}}
+@keyframes zg-pulse{50%{box-shadow:0 0 0 6px rgba(255,46,147,.25)}}
+/* in-chat lead form */
+.zg-lead{display:grid;gap:8px;padding:12px;border-radius:14px;background:var(--zg-scr2);border:1px solid var(--zg-line)}
+.zg-lead label{display:grid;gap:4px;font-size:13px;color:var(--zg-mut)}
+.zg-lead input,.zg-lead select,.zg-lead textarea{min-height:40px;padding:6px 10px;border-radius:8px;border:1px solid var(--zg-line);background:#0E0C15;color:#fff;font:inherit;font-size:15px}
+.zg-lead textarea{min-height:64px;resize:vertical}
+.zg-lead .zg-consent{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.4}
+.zg-lead .zg-consent input{min-height:20px;width:20px;flex:none;margin-top:2px}
+.zg-lead-h{margin:0;color:var(--zg-txt)}.zg-lead-fine,.zg-lead-msg{margin:0;font-size:12px;color:var(--zg-mut)}
+.zg-lead-fine a{color:var(--zg-cyan)}
+.zg-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.zg-lead-go{align-self:flex-start;background:var(--zg-pink);border-color:var(--zg-pink);color:#fff}
+
