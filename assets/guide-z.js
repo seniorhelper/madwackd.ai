@@ -212,8 +212,8 @@
     loadTurnstile().then(function (ts) {
       ts.render(slot, { sitekey: TS_KEY, theme: "dark", size: "flexible",
         callback: function (token) { box.remove(); post(token); },
-        "error-callback": function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); } });
-    }).catch(function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); });
+        "error-callback": function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }, { href: "/support/", label: "Support" }]); } });
+    }).catch(function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }, { href: "/support/", label: "Support" }]); });
   }
 
   /* ---------------- chat ---------------- */
@@ -254,7 +254,7 @@
             (TIER === "anon" ? " A free account gets more." : ""));
         }
       })
-      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }]); })
+      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }, { href: "/support/", label: "Support" }]); })
       .then(function () {
         busy = false;
         form.querySelector(".zg-send").disabled = false;

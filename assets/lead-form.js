@@ -56,6 +56,7 @@
       var fd = new FormData(f), body = {};
       fd.forEach(function (v, k) { body[k] = typeof v === "string" ? v.trim() : v; });
       body.sms_consent = !!(sms && sms.checked);
+      if (body.topic) { body.message = "[" + body.topic + "] " + (body.message || ""); delete body.topic; }
       body._t = started;            // when the form was shown, checked again on the server
       body.turnstile_token = token;
       // Ad attribution comes from the landing URL only; the details typed in the form never go into a URL.

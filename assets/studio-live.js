@@ -130,8 +130,10 @@
         var b = document.createElement("button"); b.type = "button"; b.className = "btn btn-outline btn-sm";
         b.textContent = i.name + " $" + i.usd + (i.monthly ? "/mo" : "") + (i.credits ? " (" + i.credits.toLocaleString("en-US") + " credits)" : ""); b.addEventListener("click", function () { checkout(i.item); }); buy.appendChild(b);
       });
-      if (me.has_billing) { var p = document.createElement("button"); p.type = "button"; p.className = "btn btn-outline btn-sm"; p.textContent = "Manage billing"; p.addEventListener("click", portal); buy.appendChild(p); }
+      if (me.has_billing) { var p = document.createElement("button"); p.type = "button"; p.className = "btn btn-outline btn-sm"; p.textContent = "Manage billing / cancel plan"; p.addEventListener("click", portal); buy.appendChild(p); }
     }
+    var pb = $("lv-portal"); if (pb) { pb.hidden = !(cfg && cfg.stripe_enabled && me.has_billing); pb.onclick = portal; }
+    var cr = $("lv-del-credits"); if (cr) { cr.textContent = String(me.balance_credits || 0); $("lv-del-forfeit-wrap").hidden = !(me.balance_credits > 0); }
     show("lv-buy-closed", !(cfg && cfg.stripe_enabled));
     paintMeter();
     loadVoices();
@@ -223,6 +225,36 @@
       if (btn) { btn.textContent = "Resend in 60s"; var t = setInterval(function () { var l = Math.ceil((emailWait - Date.now()) / 1000); if (l <= 0) { clearInterval(t); btn.disabled = false; btn.textContent = "Continue with email"; } else btn.textContent = "Resend in " + l + "s"; }, 1000); }
     }).catch(function (e) { if (btn) btn.disabled = false; msg(authMsg(e), "bad"); });
   });
+  /* ---------- delete my account ---------- */
+  (function () {
+    var go = $("lv-del-go"), box = $("lv-del-confirm"), out = $("lv-del-msg");
+    if (!go || !box) return;
+    function note(t, bad) { out.textContent = t || ""; out.style.color = bad ? "#b3261e" : ""; }
+    box.addEventListener("input", function () { go.disabled = box.value.trim().toUpperCase() !== "DELETE MY ACCOUNT"; });
+    function send(retried) {
+      var body = { confirm: box.value.trim(), accept_forfeit: !!($("lv-del-forfeit") && $("lv-del-forfeit").checked) };
+      note("Deleting...");
+      return api("POST", "/v2/me/delete", body).then(function () {
+        note("Your account is deleted. Goodbye.");
+        try { if (auth) auth.signOut(); } catch (e) { /* ignore */ }
+        setTimeout(function () { location.href = "/"; }, 2500);
+      }).catch(function (e) {
+        if (e.code === "recent_signin_required" && !retried && user && user.providerData && user.providerData[0] && user.providerData[0].providerId === "google.com") {
+          note("Please confirm it's you in the pop-up.");
+          return user.reauthenticateWithPopup(new window.firebase.auth.GoogleAuthProvider()).then(function () { return user.getIdToken(true); }).then(function () { return send(true); })
+            .catch(function () { note("We couldn't confirm it's you. Please sign in again and retry.", true); });
+        }
+        if (e.code === "recent_signin_required") {
+          note("For your security, sign in again, then come straight back here and press Delete (within 10 minutes).", true);
+          try { if (auth) auth.signOut(); } catch (e2) { /* ignore */ }
+          return;
+        }
+        if (e.code === "credits_forfeit") { $("lv-del-forfeit-wrap").hidden = false; note("Please tick the box to confirm you understand the unused credits will be lost.", true); return; }
+        note(e.message || "That didn't work. Please try again or call 1-800-481-8638.", true);
+      });
+    }
+    go.addEventListener("click", function () { if (!go.disabled) send(false); });
+  })();
   [].forEach.call(document.querySelectorAll("[data-signout]"), function (b) { b.addEventListener("click", function () { if (auth) auth.signOut(); msg(""); }); });
 
   $("lv-signup-go").addEventListener("click", function () {
