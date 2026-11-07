@@ -292,12 +292,14 @@
     if (!quote) return;
     if (TS_KEY && !tsToken) { msg("Please finish the human check first.", "bad"); return; }
     $("lv-confirm").disabled = true;
-    api("POST", "/v2/renders", { quote_id: quote.quote_id, confirm: true, turnstile_token: useToken() }).then(function (j) {
+    var rbody = { quote_id: quote.quote_id, confirm: true, turnstile_token: useToken() };
+    var go = function () { return api("POST", "/v2/renders", rbody); };
+    (window.MWTakes ? window.MWTakes.run(api, go) : go()).then(function (j) {
       show("lv-quote", false); quote = null;
       if (j.balance_credits != null) { me.balance_credits = j.balance_credits; paintMe(); }
       msg("Rendering. This usually takes 1 to 3 minutes. You can leave this tab open.", "ok");
       watch(j.job_id); loadJobs();
-    }).catch(function (e) { msg(e.message, "bad"); $("lv-confirm").disabled = false; });
+    }).catch(function (e) { msg(e.code === "policy_declined" ? "No problem. Nothing was charged." : e.message, e.code === "policy_declined" ? "" : "bad"); $("lv-confirm").disabled = false; });
   });
 
   function watch(id) {
