@@ -85,7 +85,9 @@
   }
   function boot() {
     if (!API || !FB.apiKey || !FB.projectId) { state("lv-off"); $("lv-off-why").textContent = "Live rendering isn't connected on this site yet."; return; }
-    timeout(5000, fetch(API + "/v2/config").then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); }))
+    // The server can take ~10s to wake from idle, so allow 15s and retry once before showing an error.
+    function getCfg() { return timeout(15000, fetch(API + "/v2/config").then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })); }
+    getCfg().catch(function () { return new Promise(function (ok) { setTimeout(ok, 1500); }).then(getCfg); })
       .then(function (c) { cfg = c; return loadFirebase(); })
       .catch(function () { state("lv-off"); $("lv-off-why").textContent = "The studio server can't be reached right now."; });
   }
