@@ -5,7 +5,7 @@
 
   /* ---------- early-access placeholder pricing (same math as the studio mock) ---------- */
   var CREDIT_USD = 0.10;
-  var MODEL = { fast: { usd: 0.10, mult: 2.5, name: "Fast" }, quality: { usd: 0.40, mult: 2.25, name: "Quality" } };
+  var MODEL = { fast: { usd: 0.10, mult: 3.0, name: "Fast" }, quality: { usd: 0.40, mult: 2.75, name: "Quality" } };
   function credits(model, secs, takes) {
     var m = MODEL[model];
     return Math.ceil(Math.round(m.usd * secs * takes * m.mult / CREDIT_USD * 1e6) / 1e6);
