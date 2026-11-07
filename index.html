@@ -27,6 +27,7 @@
 <meta name="twitter:image" content="https://www.madwackd.ai/assets/og-image.jpg">
 <link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
 <link rel="stylesheet" href="/assets/site.css?v=20261107f">
+<link rel="stylesheet" href="/assets/pro-studio.css?v=20261107a">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.madwackd.ai/#org", "name": "Madwackd Studio", "url": "https://www.madwackd.ai/", "logo": "https://www.madwackd.ai/assets/icon-512.png", "telephone": "1-800-481-8638", "parentOrganization": {"@type": "Organization", "name": "Madwackd Productions", "url": "https://www.madwackd.com/"}, "address": {"@type": "PostalAddress", "streetAddress": "1001 Bannock St #660", "addressLocality": "Denver", "addressRegion": "CO", "postalCode": "80204", "addressCountry": "US"}, "areaServed": "Worldwide", "contactPoint": {"@type": "ContactPoint", "telephone": "1-800-481-8638", "contactType": "sales", "areaServed": "Worldwide", "availableLanguage": "English"}, "founder": {"@id": "https://www.madwackd.ai/vision/#zach"}}, {"@type": "SoftwareApplication", "@id": "https://www.madwackd.ai/#app", "name": "Madwackd Studio", "applicationCategory": "MultimediaApplication", "applicationSubCategory": "AI video generator with voice", "operatingSystem": "Web browser", "url": "https://www.madwackd.ai/", "publisher": {"@id": "https://www.madwackd.ai/#org"}, "description": "AI video studio with real human producers. Turn ideas into finished video with voice: ads, trailers, music videos, explainers and social clips, with a price estimate before every render.", "featureList": ["Price estimate before every render", "Per-project budget cap", "Director's notes with versioned prompts", "Character Lock for consistent faces", "Stock, uploaded and recorded voices", "Timeline export in 9:16 and 16:9", "Rights pack per project", "Low-cost low-res preview before full renders"], "offers": {"@type": "Offer", "price": "5", "priceCurrency": "USD", "description": "Test Drive: 50 credits"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is Madwackd Studio?", "acceptedAnswer": {"@type": "Answer", "text": "An AI video studio that turns an idea into a finished video with voice: ads, trailers, music videos, explainers and social clips. You see the price before every render, keep characters consistent from shot to shot, and download a rights pack for every project."}}, {"@type": "Question", "name": "How do I know what a render will cost?", "acceptedAnswer": {"@type": "Answer", "text": "Every render starts with a quote: seconds times model times takes, in credits. You confirm it before anything is spent, each project has a budget cap. Prompts our safety check blocks cost nothing, and if the video engine hits a technical error and makes no video, the credits come back automatically."}}, {"@type": "Question", "name": "What if I don't like a shot?", "acceptedAnswer": {"@type": "Answer", "text": "Takes you don't like aren't refunded, so start with a low-cost, low-res 4-second preview before the full render. Fix the direction with director's notes and another cheap preview, then render the full shot."}}, {"@type": "Question", "name": "Can the video have a voice?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Pick one of our studio narrator voices, type the script, and see the price before it's made. Custom voices are coming, and they'll need a consent check: your own voice, or written permission from the speaker."}}, {"@type": "Question", "name": "Can a person produce it for me?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hire a Madwackd producer: Junior, Senior or Executive packages, from a single social ad to a full trailer. See human producers."}}]}, {"@type": "WebSite", "@id": "https://www.madwackd.ai/#website", "url": "https://www.madwackd.ai/", "name": "Madwackd Studio", "publisher": {"@id": "https://www.madwackd.ai/#org"}, "inLanguage": "en-US"}, {"@type": "Person", "@id": "https://www.madwackd.ai/vision/#zach", "name": "Zach Wennstedt", "jobTitle": "Founder", "url": "https://www.madwackd.ai/vision/", "worksFor": {"@type": "Organization", "name": "Madwackd Productions", "url": "https://www.madwackd.com/"}}, {"@type": "VideoObject", "@id": "https://www.madwackd.ai/#video-tell-me-why", "name": "Tell Me Why (music video)", "description": "Country music video. Written and produced by Zach Wennstedt. A Madwackd Studio production.", "thumbnailUrl": "https://www.madwackd.ai/assets/media/showcase/tell-me-why.jpg", "contentUrl": "https://www.madwackd.ai/assets/media/showcase/tell-me-why-720.mp4", "uploadDate": "2026-11-06T12:00:00-07:00", "duration": "PT4M19S", "genre": "Country", "creator": {"@id": "https://www.madwackd.ai/vision/#zach"}, "productionCompany": {"@id": "https://www.madwackd.ai/#org"}}, {"@type": "VideoObject", "@id": "https://www.madwackd.ai/#video-what-love-really-is", "name": "What Love Really Is (music video)", "description": "Neon cartoon music video: a blue neon moon and a pink neon star on rainy 1980s brick walls. Written and produced by Zach Wennstedt. A Madwackd Studio production.", "thumbnailUrl": "https://www.madwackd.ai/assets/media/showcase/what-love-really-is.jpg", "contentUrl": "https://www.madwackd.ai/assets/media/showcase/what-love-really-is-720.mp4", "uploadDate": "2026-11-06T12:00:00-07:00", "duration": "PT5M1S", "creator": {"@id": "https://www.madwackd.ai/vision/#zach"}, "productionCompany": {"@id": "https://www.madwackd.ai/#org"}}]}</script>
 <link rel="stylesheet" href="/assets/guide-widget.css?v=20261107m">
 <script src="/assets/ga.js" defer></script>
@@ -45,12 +46,29 @@
   </div>
 </header>
 <main id="main">
+<section class="pcs-hero hero-v2" aria-labelledby="pcs-home-h">
+  <div class="wrap">
+    <div class="pcs-hero-head">
+      <div>
+        <p class="hero-status"><span class="tally" aria-hidden="true"></span><span>New: Pro Creator Studio, included with every paid plan</span></p>
+        <h1 id="pcs-home-h">The ultimate video tool.<br><span class="hl">Now with your own studio.</span></h1>
+        <p class="sub">Make AI video with voice, then run the business side from one console: earnings goals, pitches, posting to 8 platforms, your mailing list and a tip jar. Try it below. Every dial works.</p>
+        <div class="cta-row"><a class="btn btn-primary" href="/pro-studio/">Open Pro Creator Studio</a><a class="btn btn-outline" href="/studio/?buy=test_drive">Start for $5</a></div>
+      </div>
+      <ul class="pcs-pills" aria-label="What is inside">
+        <li>Earnings goal meter</li><li>Pitch room</li><li>Publish kit, 8 platforms</li><li>Mailing list</li><li>Tip jar, 0% cut</li><li>Free generators</li><li>Launch pad</li><li>Expert access</li>
+      </ul>
+    </div>
+    <div id="pcs" class="pcs" data-variant="hero"><div class="pcs-fallback"><p><b>Pro Creator Studio</b> is an interactive demo that needs JavaScript. <a href="/pro-studio/">Read what it does</a>.</p></div></div>
+    <p class="pcs-fine">Live demo with sample numbers; nothing you type here is saved. Included with Starter, Pro and Studio plans. Tips go straight to creators' own payment accounts and Madwackd takes 0%. <a href="/pro-studio/">How it works</a></p>
+  </div>
+</section>
 <section class="hero hero-v2">
   <div class="wrap">
     <div class="hero-top">
       <div class="hero-main">
         <p class="hero-status"><span class="tally" aria-hidden="true"></span><span>AI video studio + real human producers</span></p>
-        <h1>The ultimate video tool.<br><span class="hl">AI power. Real producers.</span></h1>
+        <h2 class="hero-h">AI video power.<br><span class="hl">Real producers.</span></h2>
         <div class="hero-row">
           <p class="sub">Type an idea, see the price, get TV-quality video with voice. Or hand it to a pro.</p>
           <div class="cta-row"><a class="btn btn-primary" href="/studio/?buy=test_drive">Start for $5</a><a class="btn btn-outline" href="tel:+18004818638">Call a producer</a></div>
@@ -285,5 +303,6 @@
 <script src="/assets/home.js?v=20261106" defer></script>
 <script src="/assets/config.js" defer></script>
 <script src="/assets/guide-widget.js?v=20261107m" defer></script>
+<script src="/assets/pro-studio.js?v=20261107a" defer></script>
 </body>
 </html>
