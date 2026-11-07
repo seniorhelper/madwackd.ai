@@ -1,0 +1,56 @@
+/* Producer Z: chat panel + full-body character. Loaded on demand by guide-widget.js. */
+.zg{--zg-ink:var(--ink,#15121F);--zg-scr:var(--screen,#15121F);--zg-scr2:var(--screen-2,#221D30);--zg-line:var(--screen-line,#3A3350);
+  --zg-txt:var(--screen-text,#F4F0FA);--zg-mut:var(--screen-muted,#B9B2C8);--zg-pink:var(--signal,#FF2E93);--zg-lime:var(--lime,#7ED321);--zg-cyan:var(--cyan,#00B8F0)}
+.zg-panel{position:fixed;right:16px;bottom:92px;z-index:91;width:min(380px,calc(100vw - 32px));max-height:min(640px,calc(100vh - 112px));
+  display:flex;flex-direction:column;border-radius:18px;background:var(--zg-scr);color:var(--zg-txt);border:1px solid var(--zg-line);
+  box-shadow:0 20px 60px rgba(21,18,31,.45);font:15px/1.5 Inter,system-ui,sans-serif;overflow:hidden;margin:0;padding:0;text-align:left}
+.zg-panel[hidden]{display:none}
+.zg-panel button:focus-visible,.zg-panel a:focus-visible,.zg-panel input:focus-visible,.zg-tip button:focus-visible,.zg-solo:focus-visible{outline:3px solid var(--zg-lime);outline-offset:2px}
+
+/* the stage: Producer Z stands in a pool of light */
+.zg-stage{position:relative;display:flex;align-items:center;gap:10px;min-height:150px;padding:6px 8px 6px 6px;flex:none;
+  background:#0B0A10;border-bottom:1px solid var(--zg-line);overflow:hidden}
+.zg-actor{position:relative;display:block;width:170px;height:156px;flex:none;padding:0;border:0;border-radius:12px;background:#0B0A10 url(/assets/z/z-hero.webp) center/cover;cursor:pointer;transition:transform .15s ease-out}
+.zg-actor video{display:block;width:100%;height:100%;object-fit:cover;border-radius:12px;
+  -webkit-mask-image:radial-gradient(ellipse 60% 64% at 50% 46%,#000 72%,transparent 100%);mask-image:radial-gradient(ellipse 60% 64% at 50% 46%,#000 72%,transparent 100%)}
+.zg-actor{background:none}
+.zg-name{flex:1;padding-bottom:8px}
+.zg-name strong{display:block;color:#fff;font-size:17px}.zg-name small{color:var(--zg-mut)}
+.zg-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:var(--zg-txt);font-size:26px;cursor:pointer}
+.zg-x:hover{background:rgba(255,255,255,.08)}
+
+.zg-log{flex:1;min-height:120px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.zg-msg{max-width:88%;padding:10px 12px;border-radius:14px;background:var(--zg-scr2)}
+.zg-msg p{margin:0 0 6px}.zg-msg p:last-child{margin:0}
+.zg-msg.you{align-self:flex-end;background:var(--zg-pink);color:#fff}
+.zg-typing{color:var(--zg-mut);font-style:italic}
+.zg-note{margin:0;color:var(--zg-mut);font-size:13px}
+.zg-check{padding:10px 12px;border-radius:14px;background:var(--zg-scr2)}.zg-check p{margin:0 0 8px}
+.zg-btn{display:inline-block;margin:6px 6px 0 0;padding:8px 12px;border-radius:10px;background:var(--zg-lime);color:var(--zg-ink);font-weight:600;text-decoration:none;min-height:36px}
+.zg-say{display:block;margin-top:6px;padding:4px 0;border:0;background:none;color:var(--zg-cyan);font:inherit;font-size:13px;cursor:pointer;min-height:32px}
+.zg-quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px}
+.zg-chip,.zg-skip{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--zg-line);background:var(--zg-scr2);color:var(--zg-txt);font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+.zg-chip:hover{border-color:var(--zg-pink)}
+.zg-form{display:flex;gap:8px;padding:12px 14px}
+.zg-form input{flex:1;min-width:0;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--zg-line);background:#0E0C15;color:#fff;font:inherit}
+.zg-send{min-height:44px;padding:0 16px;border:0;border-radius:10px;background:var(--zg-pink);color:#fff;font-weight:700;cursor:pointer}
+.zg-send:disabled{opacity:.6;cursor:wait}
+.zg-fine{margin:0;padding:0 14px 12px;color:var(--zg-mut);font-size:12px}
+.zg-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.zg-solo{position:fixed;right:16px;bottom:16px;z-index:90;min-height:48px;padding:0 18px;border:0;border-radius:999px;background:#15121F;color:#fff;font:600 15px Inter,system-ui,sans-serif;box-shadow:0 0 0 2px #FF2E93}
+
+/* tour */
+.zg-spot{position:fixed;z-index:95;border-radius:14px;box-shadow:0 0 0 4px var(--signal,#FF2E93),0 0 0 9999px rgba(21,18,31,.55);pointer-events:none;transition:all .3s}
+.zg-tip{position:fixed;z-index:96;width:min(290px,calc(100vw - 16px));padding:14px;border-radius:14px;background:var(--screen,#15121F);color:var(--screen-text,#F4F0FA);font:15px/1.5 Inter,system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.zg-tip p{margin:0 0 10px}.zg-tip .zg-chip{background:var(--signal,#FF2E93);border-color:transparent;color:#fff;margin-right:8px}
+.zg-skip{background:transparent}
+
+@media (max-width:480px){
+  .zg-panel{right:8px;left:8px;width:auto;bottom:84px;max-height:calc(100vh - 100px)}
+  .zg-stage{min-height:122px}.zg-actor{width:132px;height:121px}
+}
+@media (prefers-reduced-motion:reduce){
+  .zg-actor{transition:none}
+  .zg-spot{transition:none}
+}
+@media print{.zg{display:none}}

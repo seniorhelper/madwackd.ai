@@ -1,255 +1,140 @@
-/* Madwackd Studio - Producer Z, the producer guide. Chat panel, first-visit tour, read-aloud.
-   Plain JS, no inline handlers (CSP script-src 'self'). Needs /assets/config.js (MW_CONFIG.apiBase).
-   Renders replies with textContent only. Links are rebuilt from an allowlist. */
+/* Madwackd Studio - Producer Z launcher (small, loads with the page).
+   Entrance: once per visit, after the page has loaded, the claymation director walks on with a speech bubble
+   (tour or help). Click him to chat. Leave him be (or press X) and he turns into a movie-set spotlight in the
+   corner until someone needs him. The spotlight flickers now and then, a few times per page at most.
+   The chat panel (guide-z.js + guide-z.css) loads only on first use or at idle.
+   Plain JS, no inline handlers (CSP script-src 'self'). Same-origin files only. */
 (function () {
   "use strict";
+  if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  /* Blocked names are stored only as 32-bit FNV-1a hashes, so page source names no one. Source of truth:
-     guide/mw_guide/guardrails.py (server); regenerate with tools/hash_terms.py. */
-  var BLOCK_HASH = [0x8dd413bc,0x660dbe6f,0xb0d11833,0xede616c3,0xadaad958,0x1cd93fd7,0xf2362cc1,0x08fb8333,
-    0x36cb88ff,0xd7ac1a8d,0x9da4e586,0x77305731,0x90e14d8e,0x292d430a,0xe1fc8517,0x463bef82,0x172be6ba,0xdcd757fc,
-    0x8ccc3104,0x945367a7,0xeb7609fa,0x91ef7b40,0x796a932e,0xfa5219e8,0x7b009f24,0xb9d61633,0xc0729580];
-  function fnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
-  var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
-    "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
-    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/"];
-  var FAMILY = ["https://www.eyetoad.com/", "https://www.searchconverts.com/", "https://doorhanger.ai/",
-    "https://donkley.ai/", "https://winbuild.ai/", "https://www.madwackd.com/"];
-  var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
+  var V = "20261106v3";
+  var A = "/assets/z/";
+  var APP = /^\/(studio|studio-board|dashboard)\//;          /* app pages: never walk on, never nudge */
+  var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CARD_MS = 14000;                                        /* how long he waits before becoming the spotlight */
+  function sget(s, k) { try { return s.getItem(k); } catch (e) { return null; } }
+  function sset(s, k, v) { try { s.setItem(k, v); } catch (e) { /* private mode */ } }
+  var LS = window.localStorage, SS = window.sessionStorage;
 
-  /* Second line of defense; the server already filtered. */
-  function scrub(text) {
-    var t = String(text || "").normalize ? String(text || "").normalize("NFKC") : String(text || "");
-    t = t.replace(/[​-‏⁠-⁤﻿­]/g, "");
-    var w = t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().split(" ");
-    var lt = t.toLowerCase().replace(/[0134578@$]/g, function (c) { return { "0": "o", "1": "l", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s" }[c]; })
-      .replace(/[^a-z0-9]+/g, " ").trim().split(" ");
-    var lists = [w, lt];
-    for (var k = 0; k < 2; k++) {
-      var ws = lists[k];
-      for (var i = 0; i < ws.length; i++) {
-        var cands = [ws[i], ws[i] + (ws[i + 1] || ""), ws[i] + (ws[i + 1] || "") + (ws[i + 2] || "")];
-        if (ws[i].length > 1 && ws[i].slice(-1) === "s") cands.push(ws[i].slice(0, -1));
-        for (var c = 0; c < cands.length; c++) if (BLOCK_HASH.indexOf(fnv(cands[c])) > -1) return SAFE;
-      }
-    }
-    if (/sk-[a-z0-9_\-]{12,}|\.run\.app|aiza[0-9a-z_\-]{20,}/i.test(t)) return SAFE;
-    return t;
-  }
-  function safeLink(href) { return PATHS.indexOf(href) > -1 || FAMILY.indexOf(href) > -1; }
-  if (typeof document === "undefined") { module.exports = { scrub: scrub, safeLink: safeLink }; return; }
-
-  var C = window.MW_CONFIG || {};
-  var API = String(C.apiBase || "").trim().replace(/\/+$/, "");
-  var TIER = String(window.MW_USER_TIER || "anon");
-  var history = [];
-  var busy = false;
-  var store = {
-    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } }
-  };
-
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text != null) e.textContent = text;
-    return e;
-  }
-
-  /* ---------------- markup ---------------- */
-  var root = el("div", "zg");
+  var root = document.createElement("div");
+  root.className = "zgl";
   root.innerHTML =
-    '<button class="zg-fab" type="button" aria-expanded="false" aria-controls="zg-panel">' +
-    '<span class="zg-face" aria-hidden="true"></span><span class="zg-fab-t">Ask Producer Z</span></button>' +
-    '<section class="zg-panel" id="zg-panel" role="dialog" aria-label="Producer Z, your AI director" hidden>' +
-    '<header class="zg-head"><span class="zg-face" aria-hidden="true"></span>' +
-    '<div><strong>Producer Z</strong><small>Your AI director</small></div>' +
-    '<button class="zg-x" type="button" aria-label="Close">&times;</button></header>' +
-    '<div class="zg-log" aria-live="polite"></div>' +
-    '<div class="zg-quick"></div>' +
-    '<form class="zg-form"><label class="sr-only" for="zg-in">Ask Producer Z</label>' +
-    '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
-    '<button class="zg-send" type="submit">Send</button></form>' +
-    '<p class="zg-fine">Producer Z is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
-    "</section>";
-  document.body.appendChild(root);
+    '<div class="zgl-beam" aria-hidden="true"><i class="h"></i><i class="c"></i><i class="d"></i></div>' +
+    '<button class="zgl-btn" type="button" aria-expanded="false" aria-controls="zg-panel" aria-label="Ask Producer Z, the AI director">' +
+    '<img src="' + A + 'z-spot.webp?v=' + V + '" width="64" height="64" alt="" decoding="async"><span class="zgl-glow"></span></button>' +
+    '<div class="zgl-card" role="region" aria-label="Producer Z" hidden>' +
+    '<div class="zgl-say"><button class="zgl-x" type="button" aria-label="Close Producer Z">&times;</button>' +
+    '<p aria-live="polite">Hi! I\'m Producer Z, your AI director. Want a 30-second tour, or help making something?</p>' +
+    '<button class="go" type="button">Take the 30-second tour</button><button class="help" type="button">Help me make a video</button></div>' +
+    '<button class="zgl-actor" type="button" aria-label="Chat with Producer Z"></button></div>';
 
-  var fab = root.querySelector(".zg-fab"), panel = root.querySelector(".zg-panel"),
-    log = root.querySelector(".zg-log"), quick = root.querySelector(".zg-quick"),
-    form = root.querySelector(".zg-form"), input = root.querySelector("#zg-in");
+  var btn = root.querySelector(".zgl-btn"), card = root.querySelector(".zgl-card"), actor = root.querySelector(".zgl-actor");
+  var loading = null, cardTimer = 0;
 
-  function open(topic) {
-    panel.hidden = false;
-    fab.setAttribute("aria-expanded", "true");
-    if (!log.childNodes.length) say("Hi, I'm Producer Z, your AI director. I know this whole site, and I'm here to get your video made. Want a 30-second tour, or tell me what you're making?",
-      [], ["Take the tour", "What does it cost?", "Make it for me"]);
-    if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
-    input.focus();
-  }
-  function close() { panel.hidden = true; fab.setAttribute("aria-expanded", "false"); fab.focus(); }
-
-  function say(text, links, chips, who) {
-    var row = el("div", "zg-msg " + (who || "bot"));
-    row.appendChild(el("p", "", who === "you" ? text : scrub(text)));
-    (links || []).forEach(function (l) {
-      if (!safeLink(l.href)) return;
-      var a = el("a", "zg-btn", l.label);
-      a.href = l.href;
-      if (l.href.indexOf("http") === 0) { a.rel = "noopener"; a.target = "_blank"; }
-      row.appendChild(a);
-    });
-    if (who !== "you" && "speechSynthesis" in window) {
-      var sp = el("button", "zg-say", "Read aloud");
-      sp.type = "button";
-      sp.addEventListener("click", function () { speak(row.firstChild.textContent); });
-      row.appendChild(sp);
-    }
-    log.appendChild(row);
-    log.scrollTop = log.scrollHeight;
-    quick.textContent = "";
-    (chips || []).forEach(function (c) {
-      var b = el("button", "zg-chip", c);
-      b.type = "button";
-      b.addEventListener("click", function () { c === "Take the tour" ? tour(0) : send(c); });
-      quick.appendChild(b);
-    });
-  }
-
-  /* ---------------- voice: browser speech for everyone (free); studio voice for paid tiers ---------------- */
-  function speak(text) {
-    if (["pro", "studio", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
-      fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
-        Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text }) })
-        .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
-        .then(function (b) { var a = new Audio(URL.createObjectURL(b)); a.play(); })
-        .catch(function () { browserSpeak(text); });
-      return;
-    }
-    browserSpeak(text);
-  }
-  function browserSpeak(text) {
-    try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = 1.03; speechSynthesis.speak(u); } catch (e) { /* no speech */ }
-  }
-
-  /* ---------------- chat ---------------- */
-  /* ---------------- human check (anonymous visitors, first AI reply only) ---------------- */
-  var TS_KEY = String(((window.MW_CONFIG || {}).turnstileSiteKey) || "").trim();
-  var sess = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
-               set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* private mode */ } } };
-  var tsLoad = null;
-  function loadTurnstile() {
-    tsLoad = tsLoad || new Promise(function (ok, bad) {
+  /* ---------- lazy chat panel ---------- */
+  function load() {
+    if (window.MWZ) return Promise.resolve(window.MWZ);
+    if (loading) return loading;
+    loading = new Promise(function (resolve, reject) {
+      var l = document.createElement("link");
+      l.rel = "stylesheet"; l.href = "/assets/guide-z.css?v=" + V;
+      document.head.appendChild(l);
       var s = document.createElement("script");
-      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true;
-      s.onload = function () { window.turnstile ? ok(window.turnstile) : bad(); };
-      s.onerror = function () { tsLoad = null; bad(); };
+      s.src = "/assets/guide-z.js?v=" + V; s.async = true;
+      s.onload = function () { window.MWZ ? resolve(window.MWZ) : reject(); };
+      s.onerror = function () { loading = null; reject(); };
       document.head.appendChild(s);
     });
-    return tsLoad;
+    return loading;
   }
-  function humanCheck() {
-    if (!TS_KEY) { say("Sign in to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in" }]); return; }
-    var box = el("div", "zg-msg bot zg-check");
-    box.appendChild(el("p", "", "Quick human check: tick the box below and I'll answer right away."));
-    var slot = el("div", "");
-    box.appendChild(slot);
-    log.appendChild(box); log.scrollTop = log.scrollHeight;
-    loadTurnstile().then(function (ts) {
-      ts.render(slot, { sitekey: TS_KEY, theme: "dark", size: "flexible",
-        callback: function (token) { if (box.parentNode) box.parentNode.removeChild(box); post(token); },
-        "error-callback": function (code) { try { console.warn("human check error", code); } catch (e) { /* none */ }
-          if (box.parentNode) box.parentNode.removeChild(box);
-          say("The human check couldn't load here. Sign in (free) to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in free" }]); return true; } });
-    }).catch(function () { if (box.parentNode) box.parentNode.removeChild(box); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); });
+  function run(fn) {
+    btn.setAttribute("aria-busy", "true");
+    load().then(function (z) { btn.removeAttribute("aria-busy"); fn(z); })
+      .catch(function () { btn.removeAttribute("aria-busy"); location.href = "/producers/"; });
   }
 
-  /* ---------------- chat ---------------- */
-  function send(text) {
-    text = String(text || "").trim().slice(0, 800);
-    if (!text || busy) return;
-    say(text, [], [], "you");
-    history.push({ role: "user", text: text });
-    if (!API) { say("I'm warming up. Meanwhile: Test Drive is $5 for about two shots, or call 1-800-481-8638.", [{ href: "/pricing/", label: "Pricing" }]); return; }
-    post("");
+  /* ---------- entrance card -> spotlight ---------- */
+  function toSpotlight(remember) {
+    clearTimeout(cardTimer);
+    if (remember) sset(SS, "mw_z_card", "done");
+    if (card.hidden) return;
+    var finish = function () {
+      card.hidden = true; card.classList.remove("is-in", "is-out");
+      var v = actor.querySelector("video"); if (v) v.pause();
+      root.classList.remove("is-card");
+      if (!REDUCED) { root.classList.add("is-on"); setTimeout(function () { root.classList.remove("is-on"); }, 1300); }
+    };
+    if (REDUCED) return finish();
+    card.classList.add("is-out");
+    setTimeout(finish, 480);
   }
-  function post(token) {
-    busy = true;
-    var typing = el("div", "zg-msg bot zg-typing", "Producer Z is thinking...");
-    log.appendChild(typing);
-    var headers = { "Content-Type": "application/json" };
-    if (window.MW_ID_TOKEN) headers.Authorization = "Bearer " + window.MW_ID_TOKEN;
-    var body = { messages: history.slice(-8), page: location.pathname };
-    var pass = sess.get("mw_z_pass");
-    if (pass) body.pass = pass;
-    if (token) body.turnstile_token = token;
-    var status = 0;
-    fetch(API + "/v2/guide/chat", { method: "POST", headers: headers, body: JSON.stringify(body) })
-      .then(function (r) { status = r.status; return r.json().catch(function () { return {}; }); })
-      .then(function (j) {
-        if (status === 403 && j.needs_check) {
-          if (token) { say("That human check didn't go through. Sign in (free) to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in free" }]); return; }
-          humanCheck(); return;
-        }
-        if (j.pass) sess.set("mw_z_pass", String(j.pass).slice(0, 64));
-        var reply = j.reply || SAFE;
-        history.push({ role: "assistant", text: reply });
-        say(reply, j.links || []);
-      })
-      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }]); })
-      .then(function () { busy = false; if (typing.parentNode) typing.parentNode.removeChild(typing); });
-  }
+  function engage(fn) { toSpotlight(true); run(fn); }
 
-  /* ---------------- first-visit tour ---------------- */
-  var STEPS = [
-    /* The site marks tour targets with data-tour="..." (see INTEGRATION.md); missing targets are skipped. */
-    { sel: "[data-tour='best-work']", optional: true, text: "Our best work: music videos made by our studio team." },
-    { sel: "[data-tour='creator-studio'], a[href='/creator-studio/']", text: "Free tools: hook writer, script fitter, captions and more. No account needed." },
-    { sel: "[data-tour='start'], a[href='/studio/']", text: "Make a video: the Studio shows the exact price before every render. Start with the $5 Test Drive." },
-    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes it for you: commercial spots from $2,500. Or call 1-800-481-8638." },
-    { sel: ".zg-fab", text: "I'm always right here. Ask me anything." }
-  ];
-  var spot = el("div", "zg-spot"), tip = el("div", "zg-tip");
-  tip.setAttribute("role", "status");
-  function endTour() { spot.remove(); tip.remove(); store.set("mw_z_toured", "1"); }
-  function tour(i) {
-    if (i >= STEPS.length) { endTour(); open(); return; }
-    close();
-    var target = document.querySelector(STEPS[i].sel);
-    var visible = target && target.getBoundingClientRect().width > 0;
-    if (!visible && STEPS[i].optional) return tour(i + 1);
-    if (visible) target.scrollIntoView({ block: "center", behavior: "smooth" });
-    setTimeout(function () {
-      /* Hidden target (e.g. nav inside the phone menu): show the tip on its own, centred low on screen. */
-      var r = visible ? target.getBoundingClientRect() : { top: innerHeight - 200, bottom: innerHeight - 200, left: (innerWidth - 290) / 2, width: 0, height: 0 };
-      spot.style.cssText = visible ? "top:" + (r.top - 6) + "px;left:" + (r.left - 6) + "px;width:" + (r.width + 12) + "px;height:" + (r.height + 12) + "px" : "display:none";
-      tip.textContent = "";
-      tip.appendChild(el("p", "", STEPS[i].text));
-      var next = el("button", "zg-chip", i === STEPS.length - 1 ? "Done" : "Next"), skip = el("button", "zg-skip", "Skip tour");
-      next.type = skip.type = "button";
-      next.addEventListener("click", function () { tour(i + 1); });
-      skip.addEventListener("click", endTour);
-      tip.appendChild(next); tip.appendChild(skip);
-      var top = r.bottom + 14 + 140 > innerHeight ? Math.max(8, r.top - 150) : r.bottom + 14;
-      tip.style.top = top + "px";
-      tip.style.left = Math.min(Math.max(8, r.left), innerWidth - 300) + "px";
-      document.body.appendChild(spot); document.body.appendChild(tip);
-      next.focus();
-    }, 350);
+  function showCard() {
+    if (root.classList.contains("is-open")) return;
+    var poster = A + "z-hero.webp?v=" + V;
+    var media;
+    if (REDUCED) {
+      media = document.createElement("img"); media.alt = ""; media.src = poster;
+    } else {
+      media = document.createElement("video");
+      media.muted = true; media.playsInline = true; media.setAttribute("playsinline", ""); media.preload = "auto"; media.poster = poster;
+      media.innerHTML = '<source src="' + A + 'z-wave.mp4?v=' + V + '" type="video/mp4">';
+    }
+    media.setAttribute("aria-hidden", "true");
+    actor.appendChild(media);
+    var img = new Image();
+    img.onload = function () {           /* only walk on once his picture is ready: no empty box */
+      root.classList.add("is-card");
+      card.hidden = false;
+      card.classList.add("is-in");
+      if (media.play) { var p = media.play(); if (p && p.catch) p.catch(function () {}); }
+      cardTimer = setTimeout(function () { toSpotlight(true); }, CARD_MS);
+    };
+    img.src = poster;
+  }
+  /* pause the countdown while someone is reading or hovering */
+  ["pointerenter", "focusin"].forEach(function (ev) { card.addEventListener(ev, function () { clearTimeout(cardTimer); }); });
+  card.addEventListener("pointerleave", function () { if (!card.hidden) cardTimer = setTimeout(function () { toSpotlight(true); }, 6000); });
+
+  root.querySelector(".zgl-x").addEventListener("click", function () { toSpotlight(true); btn.focus(); });
+  actor.addEventListener("click", function () { engage(function (z) { z.open(); }); });
+  root.querySelector(".go").addEventListener("click", function () { sset(LS, "mw_z_toured", "1"); engage(function (z) { z.tour(0); }); });
+  root.querySelector(".help").addEventListener("click", function () { engage(function (z) { z.open("help"); }); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !card.hidden) toSpotlight(true); });
+
+  /* ---------- spotlight ---------- */
+  btn.addEventListener("click", function () { toSpotlight(true); run(function (z) { z.toggle(); }); });
+  ["pointerenter", "focus", "touchstart"].forEach(function (ev) {
+    btn.addEventListener(ev, function () { load().catch(function () {}); }, { once: true, passive: true });
+  });
+  window.addEventListener("mw:guide-open", function (e) { var t = e.detail && e.detail.topic; engage(function (z) { z.open(t); }); });
+  window.addEventListener("mw:guide-tour", function () { engage(function (z) { z.tour(0); }); });
+
+  /* rare flicker to catch the eye: first after ~25 s, then every 40-70 s, at most 3 times, never while busy */
+  var flickers = 0;
+  function flicker() {
+    if (REDUCED || flickers >= 3) return;
+    if (!document.hidden && card.hidden && !root.classList.contains("is-open")) {
+      flickers++;
+      root.classList.add("is-flicker");
+      setTimeout(function () { root.classList.remove("is-flicker"); }, 1150);
+    }
+    setTimeout(flicker, 40000 + Math.random() * 30000);
   }
 
-  /* ---------------- wiring ---------------- */
-  fab.addEventListener("click", function () { panel.hidden ? open() : close(); });
-  root.querySelector(".zg-x").addEventListener("click", close);
-  form.addEventListener("submit", function (e) { e.preventDefault(); var v = input.value; input.value = ""; send(v); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) close(); });
-  window.addEventListener("mw:guide-open", function (e) { open(e.detail && e.detail.topic); });
-  window.addEventListener("mw:guide-tour", function () { tour(0); });
+  window.__mwzLauncher = { root: root, button: btn, hideBubble: function () { toSpotlight(true); } };
+  document.body.appendChild(root);
+  setTimeout(function () { root.classList.add("is-dim"); }, 8000);
+  setTimeout(flicker, 25000);
 
-  /* Offer the tour once, gently, on a first visit (not on the studio app or dashboard). */
-  if (!store.get("mw_z_toured") && !/^\/(studio|studio-board|dashboard|creator-dashboard-demo)\//.test(location.pathname)) {
-    setTimeout(function () { if (panel.hidden && !document.querySelector("dialog[open]")) open(); }, 4000);
+  /* Walk on once per visit, after load, never on app pages or tiny screens in landscape. */
+  function afterLoad() {
+    var c = navigator.connection, slow = c && (c.saveData || /2g/.test(c.effectiveType || ""));
+    if (!APP.test(location.pathname) && !sget(SS, "mw_z_card") && innerHeight > 420 && !slow) setTimeout(showCard, 1800);
+    if (!slow) (window.requestIdleCallback || function (f) { setTimeout(f, 3000); })(function () { load().catch(function () {}); }, { timeout: 9000 });
   }
-
-  if (typeof module !== "undefined") module.exports = { scrub: scrub, safeLink: safeLink };
-  window.MWZ = { open: open, tour: tour, scrub: scrub };
+  if (document.readyState === "complete") afterLoad(); else window.addEventListener("load", afterLoad);
+  window.__mwzLauncher.showCard = showCard;   /* lets the tour or tests bring him back */
 })();
