@@ -12,8 +12,10 @@
   function fnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
   var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
     "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
-    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/"];
-  var FAMILY = ["https://www.eyetoad.com/", "https://www.searchconverts.com/", "https://doorhanger.ai/",
+    "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/", "/apply/", "/awards/", "/collaborate/",
+    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/"];
+  var FAMILY = ["https://www.eyetoad.com/", "https://www.searchconverts.com/", "https://www.eyetoad.com/contact/",
+    "https://www.searchconverts.com/contact/", "https://doorhanger.ai/",
     "https://donkley.ai/", "https://winbuild.ai/", "https://www.madwackd.com/"];
   var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
 

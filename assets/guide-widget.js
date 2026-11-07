@@ -8,7 +8,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261106v3";
+  var V = "20261107r";
   var A = "/assets/z/";
   var APP = /^\/(studio|studio-board|dashboard)\//;          /* app pages: never walk on, never nudge */
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
