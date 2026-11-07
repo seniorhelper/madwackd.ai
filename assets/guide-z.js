@@ -77,6 +77,7 @@
     '<button class="zg-x" type="button" aria-label="Close ' + NAME + '">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="zg-quick"></div>' +
+    '<p class="zg-humanrow"><a class="zg-human" href="/support/#contact" data-human>Talk to a human</a></p>' +
     '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask ' + NAME + '</label>' +
     '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
     '<button class="zg-mic" type="button" aria-pressed="false" aria-label="Talk to ' + NAME + '" hidden>' +
@@ -117,6 +118,18 @@
     rest();
   }
   function toggle() { isOpen() ? close() : open(); }
+
+  /* "Talk to a human": always visible, one click. Carries a short summary of this chat (no contact details) to the form. */
+  root.querySelector("[data-human]").addEventListener("click", function (e) {
+    var lines = history.slice(-8).map(function (m) { return (m.role === "user" ? "Visitor: " : NAME + ": ") + String(m.text || "").slice(0, 220); });
+    session.set("mw_chat_summary", scrub(lines.join(" | ")).slice(0, 1400));
+    if (location.pathname.indexOf("/support") === 0) {
+      e.preventDefault();
+      var c = document.getElementById("contact");
+      if (c) { c.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); window.dispatchEvent(new Event("mw-chat-summary")); }
+      close();
+    }
+  });
 
   /* ---------------- the character: claymation clips (wave, talk, clap); leans toward the pointer ---------------- */
   var vid = actor.querySelector("video"), clip = "", talkTimer = 0, raf = 0, px = 0, py = 0;
@@ -361,8 +374,8 @@
     loadTurnstile().then(function (ts) {
       ts.render(slot, { sitekey: TS_KEY, theme: "dark", size: "flexible",
         callback: function (token) { box.remove(); post(token); },
-        "error-callback": function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); } });
-    }).catch(function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }]); });
+        "error-callback": function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }, { href: "/support/", label: "Support" }]); } });
+    }).catch(function () { box.remove(); say(SAFE, [{ href: "/producers/", label: "Talk to a producer" }, { href: "/support/", label: "Support" }]); });
   }
 
   /* ---------------- chat ---------------- */
@@ -407,7 +420,7 @@
             (TIER === "anon" ? " A free account gets more." : ""));
         }
       })
-      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }]); })
+      .catch(function () { say(SAFE, [{ href: "/pricing/", label: "Pricing" }, { href: "/support/", label: "Support" }]); })
       .then(function () {
         busy = false;
         form.querySelector(".zg-send").disabled = false;

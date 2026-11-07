@@ -44,6 +44,9 @@
         });
       }).catch(function () { say("The human check could not load. Please call us instead.", "bad"); });
     }
+    var attached = document.getElementById("lead-chat-note");
+    function showAttached() { var has = ""; try { has = sessionStorage.getItem("mw_chat_summary") || ""; } catch (e) { /* ignore */ } if (attached) { attached.hidden = !has; } }
+    showAttached(); window.addEventListener("mw-chat-summary", showAttached);
     if (sms && phone) {   // a text-consent box only makes sense with a phone number
       phone.addEventListener("input", function () { sms.disabled = !phone.value.trim(); if (sms.disabled) { sms.checked = false; } });
       sms.disabled = !phone.value.trim();
@@ -56,6 +59,14 @@
       var fd = new FormData(f), body = {};
       fd.forEach(function (v, k) { body[k] = typeof v === "string" ? v.trim() : v; });
       body.sms_consent = !!(sms && sms.checked);
+      if (body.topic) {
+        var TOPIC_CAT = { "Billing": "billing", "Credits": "billing", "Refund request": "billing", "Cancel my plan": "billing",
+          "Delete my account": "account", "Privacy request": "account", "Privacy appeal": "account", "Something isn't working": "bug" };
+        body.category = TOPIC_CAT[body.topic] || "other";
+        body.message = "[" + body.topic + "] " + (body.message || ""); delete body.topic;
+      }
+      var cs = ""; try { cs = sessionStorage.getItem("mw_chat_summary") || ""; } catch (e0) { /* private mode */ }
+      if (cs) { body.chat_summary = cs.slice(0, 1400); }   // what the visitor and Madi already said; no contact details
       body._t = started;            // when the form was shown, checked again on the server
       body.turnstile_token = token;
       // Ad attribution comes from the landing URL only; the details typed in the form never go into a URL.
@@ -69,6 +80,7 @@
         .then(function (x) {
           if (x.ok) {
             f.reset(); f.hidden = true;
+            try { sessionStorage.removeItem("mw_chat_summary"); } catch (e1) { /* ignore */ }
             var done = document.getElementById("lead-done"); if (done) { done.hidden = false; done.focus(); }
             return;
           }

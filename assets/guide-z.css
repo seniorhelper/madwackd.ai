@@ -75,3 +75,5 @@
 .zg-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .zg-lead-go{align-self:flex-start;background:var(--zg-pink);border-color:var(--zg-pink);color:#fff}
 
+
+.zg-humanrow{margin:6px 14px 2px;text-align:center}.zg-human{display:block;padding:9px 12px;border:2px solid currentColor;border-radius:999px;font-weight:700;font-size:.9rem;text-decoration:none;color:inherit}.zg-human:hover,.zg-human:focus-visible{text-decoration:underline}

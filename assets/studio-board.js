@@ -477,13 +477,14 @@
           .catch(function (e) { toast(e.message, 'bad'); });
       });
       on('[data-render]', function () {
-        var msg = 'This render uses ' + q.credits + ' credits' + (q.range ? ' (about $' + q.range[0] + ' to $' + q.range[1] + ' of plan value)' : '') + '. Credits are refunded automatically if the render fails.';
+        var msg = 'This render uses ' + q.credits + ' credits' + (q.range ? ' (about $' + q.range[0] + ' to $' + q.range[1] + ' of plan value)' : '') + '. Like a film shoot, it can take a few takes: a take you don\'t like isn\'t refunded, but if the engine errors and makes no video, your credits come back automatically.';
         confirmBox('Render ' + q.label + '?', msg, 'Render').then(function (ok) {
           if (!ok) return;
           Promise.resolve(root.MW_TURNSTILE ? root.MW_TURNSTILE() : '').then(function (tt) {
-            return api('POST', '/v2/renders', { quote_id: q.quote, confirm: true, turnstile_token: tt || '' });
+            var go = function () { return api('POST', '/v2/renders', { quote_id: q.quote, confirm: true, turnstile_token: tt || '' }); };
+            return root.MWTakes ? root.MWTakes.run(api, go) : go();
           }).then(function (j) { q.job = j.job_id || j.id; q.status = 'running'; S.jobs[q.job] = j; commit(['queue']); pollJobs(); renderTop(); })
-            .catch(function (e) { toast(e.code === 'insufficient_credits' ? 'Not enough credits. Top up from the credit meter.' : e.message, 'bad'); });
+            .catch(function (e) { if (e.code !== 'policy_declined') toast(e.code === 'insufficient_credits' ? 'Not enough credits. Top up from the credit meter.' : e.message, 'bad'); });
         });
       });
       on('[data-add]', function () { addJobToTimeline(q); });
