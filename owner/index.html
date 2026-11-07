@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com; frame-src https://madwackd-studio.firebaseapp.com; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Owner | Madwackd Studio</title>
+<meta name="theme-color" content="#15121F">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
+<link rel="stylesheet" href="/assets/dashboard.css">
+<link rel="stylesheet" href="/assets/owner.css?v=20261106b">
+</head>
+<body class="dash-body own-body">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="dash-top">
+  <a class="dash-brand" href="/" aria-label="Madwackd Studio home">Madwackd <b>Owner</b></a>
+  <span id="own-updated" class="muted small" aria-live="polite"></span>
+  <button id="own-refresh" class="btn-top" type="button" hidden>Refresh</button>
+  <span class="mw-acct" data-mw-account></span>
+</header>
+
+<main id="main" class="own">
+  <p id="own-state" class="own-state" role="status">Checking your sign-in…</p>
+
+  <div id="own-app" hidden>
+    <section id="own-setup" class="own-card own-warn" hidden aria-labelledby="setup-h">
+      <h2 id="setup-h">Alerts need setting up</h2>
+      <ul id="setup-list"></ul>
+      <p class="small muted">Steps: <code>docs/OWNER-DASHBOARD.md</code> in the API repo. Everything there is free.</p>
+    </section>
+
+    <section class="own-card" aria-labelledby="money-h">
+      <div class="own-head">
+        <h2 id="money-h">Money and activity</h2>
+        <div class="own-seg" role="group" aria-label="Time window">
+          <button type="button" data-win="today" aria-pressed="true">Today</button>
+          <button type="button" data-win="7d" aria-pressed="false">7 days</button>
+          <button type="button" data-win="30d" aria-pressed="false">30 days</button>
+        </div>
+      </div>
+      <div id="kpis" class="own-kpis"></div>
+      <p id="win-note" class="small muted"></p>
+    </section>
+
+    <section class="own-card" aria-labelledby="spend-h">
+      <h2 id="spend-h">Spend vs caps (today, UTC)</h2>
+      <div id="meters" class="own-meters"></div>
+      <details class="own-details">
+        <summary>Google video spend, last 14 days</summary>
+        <div class="own-scroll"><table class="own-table" id="spend-days"><caption class="sr-only">Google video spend by day</caption>
+          <thead><tr><th scope="col">Day (UTC)</th><th scope="col" class="num">Spend</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </section>
+
+    <section class="own-card" aria-labelledby="feed-h">
+      <div class="own-head">
+        <h2 id="feed-h">Recent transactions</h2>
+        <div class="own-seg" role="group" aria-label="Filter transactions">
+          <button type="button" data-feed="all" aria-pressed="true">All</button>
+          <button type="button" data-feed="sales" aria-pressed="false">Sales</button>
+          <button type="button" data-feed="renders" aria-pressed="false">Renders</button>
+          <button type="button" data-feed="owner" aria-pressed="false">Owner credits</button>
+          <button type="button" data-feed="problems" aria-pressed="false">Problems</button>
+        </div>
+      </div>
+      <div class="own-scroll"><table class="own-table" id="feed"><caption class="sr-only">Recent transactions, newest first</caption>
+        <thead><tr><th scope="col">When</th><th scope="col">Who</th><th scope="col">What</th><th scope="col" class="num">Credits</th><th scope="col" class="num">Money</th></tr></thead>
+        <tbody></tbody></table></div>
+      <p id="feed-empty" class="muted small" hidden>Nothing in the last 30 days for this filter.</p>
+    </section>
+
+    <section class="own-card" aria-labelledby="leads-h">
+      <div class="own-head">
+        <h2 id="leads-h">Leads</h2>
+        <span id="leads-counts" class="muted small"></span>
+      </div>
+      <div class="own-scroll"><table class="own-table" id="leads"><caption class="sr-only">Leads, new and hottest first</caption>
+        <thead><tr><th scope="col">When</th><th scope="col">Tier</th><th scope="col">Name and contact</th><th scope="col">Wants</th><th scope="col">Status</th></tr></thead>
+        <tbody></tbody></table></div>
+      <p id="leads-empty" class="muted small" hidden>No leads yet.</p>
+    </section>
+
+    <div class="own-two">
+      <section class="own-card" aria-labelledby="grant-h">
+        <h2 id="grant-h">Owner test credits</h2>
+        <p class="small muted">For your own owner test accounts only. Not a sale: these never count as revenue, and the server refuses them for customers.</p>
+        <form id="grant-form" class="own-form" novalidate>
+          <label>Owner account email <input id="grant-email" type="email" autocomplete="off" required maxlength="254"></label>
+          <label>Credits (1 to 5,000) <input id="grant-credits" type="number" min="1" max="5000" step="1" value="100" required></label>
+          <label>Reason <input id="grant-reason" type="text" maxlength="200" value="owner test" required></label>
+          <button class="btn-top btn-pink" type="submit">Give owner test credits</button>
+          <p id="grant-msg" class="small" role="status"></p>
+        </form>
+      </section>
+
+      <section class="own-card" aria-labelledby="alerts-h">
+        <h2 id="alerts-h">Alerts to you</h2>
+        <p id="alert-channels" class="small"></p>
+        <button id="send-summary" class="btn-top" type="button">Send test daily summary</button>
+        <p id="summary-msg" class="small" role="status"></p>
+        <details class="own-details">
+          <summary>Recent alerts and whether they went out</summary>
+          <div class="own-scroll"><table class="own-table" id="alerts"><caption class="sr-only">Recent owner alerts</caption>
+            <thead><tr><th scope="col">When</th><th scope="col">Event</th><th scope="col">Who</th><th scope="col">Delivery</th></tr></thead>
+            <tbody></tbody></table></div>
+        </details>
+      </section>
+    </div>
+
+    <section class="own-card" aria-labelledby="links-h">
+      <h2 id="links-h">Quick links</h2>
+      <ul id="links" class="own-links"></ul>
+      <ul id="issues" class="own-issues" hidden></ul>
+    </section>
+  </div>
+</main>
+
+<script src="/assets/config.js"></script>
+<script src="/assets/mw-auth.js?v=20261106o"></script>
+<script src="/assets/owner.js?v=20261106b"></script>
+</body>
+</html>
