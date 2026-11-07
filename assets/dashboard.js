@@ -295,7 +295,7 @@
     main.setAttribute('inert', ''); main.setAttribute('aria-hidden', 'true'); main.classList.add('is-preview');
     var lock = doc.createElement('section'); lock.className = 'dash-lock'; lock.setAttribute('aria-labelledby', 'dash-lock-h');
     var h = doc.createElement('h2'); h.id = 'dash-lock-h'; h.textContent = 'The Creator Dashboard is on paid plans';
-    var p = doc.createElement('p'); p.textContent = 'Mix voice and music, add sounds, cut your clips and export. Starter is $29/mo; Pro ($79/mo) adds auto-ducking, a brand kit and talking Producer Z.';
+    var p = doc.createElement('p'); p.textContent = 'Mix voice and music, add sounds, cut your clips and export. Starter is $29/mo; Pro ($89/mo) adds auto-ducking, a brand kit and talking Producer Z.';
     var a = doc.createElement('a'); a.className = 'dash-lock-cta'; a.href = '/pricing/'; a.textContent = 'See plans';
     var b = doc.createElement('a'); b.className = 'dash-lock-alt'; b.href = '/creator-studio/'; b.textContent = 'Use the free tools';
     var t = doc.createElement('p'); t.className = 'pay-trust'; t.textContent = 'Payments are processed securely by Stripe. We never see or store your full card number.';

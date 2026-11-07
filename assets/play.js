@@ -11,8 +11,8 @@
     return Math.ceil(Math.round(m.usd * secs * takes * m.mult / CREDIT_USD * 1e6) / 1e6);
   }
   var PREVIEW = credits("fast", 4, 1); // a 4-second, low-res preview
-  /* Credits cost about $0.08 (Studio plan) to $0.12 (100-credit pack) each, so dollars show as a range. */
-  function money(c) { return "$" + (c * 0.08).toFixed(2) + " to $" + (c * 0.12).toFixed(2); }
+  /* Credits cost about $0.10 (Pro plan) to $0.14 (100-credit pack) each, so dollars show as a range. */
+  function money(c) { return "$" + (c * 0.10).toFixed(2) + " to $" + (c * 0.14).toFixed(2); }
   function tween(from, to, ms, fn, done) {
     if (RM.matches || ms <= 0) { fn(to); if (done) done(); return; }
     var t0 = performance.now();
