@@ -5,8 +5,8 @@
   var WORDS_PER_SEC = 2.5;
   var SHOT_SECONDS = 8;
   var SHOT_WORDS = WORDS_PER_SEC * SHOT_SECONDS; // 20
-  var CREDITS = { fast720: 20, fast1080: 24, top: 72 };
-  var PRICE_MIN = 0.09, PRICE_MAX = 0.12;
+  var CREDITS = { fast720: 24, fast1080: 29, top: 88 };
+  var PRICE_MIN = 0.08, PRICE_MAX = 0.12;
 
   /* ---------- 1. Hook writer ---------- */
   var BIZ = {
