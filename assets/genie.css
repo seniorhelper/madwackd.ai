@@ -351,3 +351,19 @@
   .genie-hero::before{opacity:1;transition:none}
   .genie-hero.lit::before,.wish textarea.glow{animation:none!important}
 }
+
+.plan-wait{margin:0;padding:22px 28px;font-family:var(--head);font-weight:700;color:var(--ink)}
+.plan-studio{margin:0 0 6px;font-family:var(--head);font-weight:800;font-size:1.3rem;color:var(--ink)}
+.plan-opening{margin:0 0 16px;font-size:1.02rem;color:var(--text)}
+.plan-extra{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 14px}
+.plan-extra>div{background:var(--bone);border:2px solid var(--line);border-radius:12px;padding:14px 16px}
+.plan-extra h3{font-size:.95rem;margin:0 0 8px}
+.plan-extra ul{margin:0;padding-left:18px;font-size:.93rem;line-height:1.45}
+.plan-extra li{margin-bottom:4px}
+.plan-extra b{color:var(--ink)}
+.plan-service{margin:0 0 14px;padding:12px 14px;background:#FFF9E0;border:2px solid var(--yellow);border-radius:12px;font-size:.95rem}
+.plan-refused{margin:12px 0 0;font-size:1rem}
+@media (max-width:640px){.plan-extra{grid-template-columns:1fr}}
+
+/* the hidden attribute must win over display rules on buttons/links */
+.genie-intake [hidden],.genie-hero [hidden],.zrig [hidden]{display:none!important}

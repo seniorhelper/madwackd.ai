@@ -13,7 +13,7 @@
   var FB = C.firebase || {};
   var TS_KEY = String(C.turnstileSiteKey || '').trim();
   var FB_VER = '10.12.2';
-  var PLAN_TIER = { starter: 'starter', pro: 'pro', studio: 'studio', business: 'studio', agency: 'studio', white_label: 'studio', whitelabel: 'studio' };
+  var PLAN_TIER = { starter: 'starter', pro: 'pro', studio: 'studio', creators_beta: 'studio', business: 'studio', agency: 'studio', white_label: 'studio', whitelabel: 'studio' };
   var LIVE_STATUS = ['', 'active', 'trialing', 'past_due'];
 
   var state = { user: null, email: '', tier: 'free', boardTier: 'anon', known: false };

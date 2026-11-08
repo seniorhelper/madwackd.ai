@@ -154,6 +154,22 @@
   function setHidden(el, v) { if (el) el.hidden = !!v; }
   function has(t, re) { return re.test(t); }
 
+  function apiBase() { var C = window.MW_CONFIG || {}; return String(C.apiBase || "").replace(/\/+$/, ""); }
+  function detectPlatforms(wish) {
+    var t = " " + wish.toLowerCase() + " ", out = [];
+    [["tiktok", /tiktok|tik tok/], ["youtube", /youtube|shorts|yt\b/], ["instagram", /instagram|insta\b|\big\b|reels/], ["facebook", /facebook|\bfb\b/],
+     ["x", /twitter|\bx\b|tweet/], ["linkedin", /linkedin/], ["twitch", /twitch/], ["podcast", /podcast|spotify|episode/], ["allofus", /allofus/]]
+      .forEach(function (p) { if (p[1].test(t)) out.push(p[0]); });
+    return out.slice(0, 6);
+  }
+  function fromModel(r, wish) {
+    var items = (r.items || []).map(function (it) {
+      return { t: String(it.block || "") + (it.feature ? ": " + it.feature : ""), w: String(it.function || ""), s: String(it.status || "").toLowerCase() === "included" ? "Included" : "Rolling out" };
+    });
+    var text = items.map(function (it, i) { return (i + 1) + ". " + it.t + " [" + it.s + "]: " + it.w; }).join("\n");
+    return { wish: wish, items: items, text: text, model: true, studio: r.studio_name || "", opening: r.opening || "", team: r.team || [], week: r.first_week || [],
+             service: r.service_fit || "", plan_id: r.plan_id || "", start: (r.actions && r.actions.start) || "", refused: !!r.refused, refusal: r.refusal_line || "" };
+  }
   function buildPlan(wish) {
     var t = " " + wish.toLowerCase() + " ";
     var plats = [];
@@ -209,8 +225,28 @@
       var st = document.createElement("span"); st.className = "state" + (it.s === "Included" ? "" : " soon"); st.textContent = it.s;
       li.appendChild(d); li.appendChild(st); ol.appendChild(li);
     });
+    var studioEl = document.getElementById("plan-studio"), openEl = document.getElementById("plan-opening"), extra = document.getElementById("plan-extra");
+    var svc = document.getElementById("plan-service"), src = document.getElementById("plan-source"), chk = document.getElementById("plan-checkout");
+    var refusedEl = document.getElementById("plan-refused"), actions = document.getElementById("plan-actions");
+    setHidden(document.getElementById("plan-wait"), true);
+    if (plan.model) {
+      studioEl.textContent = plan.studio; setHidden(studioEl, !plan.studio);
+      openEl.textContent = plan.refused ? plan.refusal : plan.opening; setHidden(openEl, !(plan.opening || plan.refusal));
+      var team = document.getElementById("plan-team"), week = document.getElementById("plan-week"); team.textContent = ""; week.textContent = "";
+      plan.team.forEach(function (m) { var li = document.createElement("li"); var b = document.createElement("b"); b.textContent = m.role + ": "; li.appendChild(b); li.appendChild(document.createTextNode(m.does || "")); team.appendChild(li); });
+      plan.week.forEach(function (w) { var li = document.createElement("li"); li.textContent = w; week.appendChild(li); });
+      setHidden(extra, plan.refused || (!plan.team.length && !plan.week.length));
+      svc.textContent = plan.service ? "This one wants a producer: " + plan.service + ". Tell Genie Start and your producer quotes it." : ""; setHidden(svc, !plan.service);
+      src.textContent = "Written by Genie from your words. A human producer checks every line before it counts. Included means it works in the studio today; rolling out means the piece is being wired now. Results vary and depend on many factors.";
+      if (chk) { if (plan.start) { chk.setAttribute("href", plan.start); setHidden(chk, false); } else { setHidden(chk, true); } }
+      setHidden(refusedEl, !plan.refused); setHidden(actions, plan.refused); setHidden(ol, plan.refused);
+    } else {
+      setHidden(studioEl, true); setHidden(openEl, true); setHidden(extra, true); setHidden(svc, true); setHidden(refusedEl, true); setHidden(actions, false); setHidden(ol, false);
+      if (chk) setHidden(chk, true);
+      src.textContent = "Your starter plan, built in your browser from your words; Genie refines it with you. Included means it works in the studio today. Rolling out means the piece is being wired now; your producer covers it by hand until then. Results vary and depend on many factors.";
+    }
     setHidden(card, false); setHidden(planBody, false); setHidden(f, true); setHidden(done, true);
-    lset("mw_genie_plan", JSON.stringify({ wish: plan.wish, at: Date.now() }));
+    lset("mw_genie_plan", JSON.stringify({ wish: plan.wish, plan_id: plan.plan_id || "", at: Date.now() }));
     window.dispatchEvent(new CustomEvent("mw:genie-plan"));
     if (scroll) { card.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); }
     var h = card.querySelector("h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
@@ -230,7 +266,7 @@
       if (wish.length < 10) { note(document.getElementById("wish-note"), "Give Genie a sentence or two: what you make, where you post, what a great month looks like.", true); wishBox.focus(); return; }
       if (wishForm.querySelector('input[name="_honey"]').value) { return; }
       note(document.getElementById("wish-note"), "", false);
-      renderPlan(buildPlan(wish), true);
+      askGenie(wish);
       /* save the wish itself (no contact details yet) so no dream is lost if they leave before Start / Think */
       if (Date.now() - shown >= MIN_MS && !wishForm.getAttribute("data-sent")) {
         wishForm.setAttribute("data-sent", "1");
@@ -238,6 +274,36 @@
         fetch(LEAD_URL, { method: "POST", mode: "no-cors", body: wb, credentials: "omit", referrerPolicy: "strict-origin-when-cross-origin" }).catch(function () { /* the Start / Think step sends it again */ });
       }
     });
+
+    /* The API writes the plan when it is reachable (6 s budget); otherwise the starter plan, built here, exactly as before. */
+    var asking = false;
+    function askGenie(wish) {
+      if (asking) return;
+      var API = apiBase();
+      if (!API || !("AbortController" in window)) { renderPlan(buildPlan(wish), true); return; }
+      asking = true;
+      setHidden(card, false); setHidden(planBody, true); setHidden(f, true); setHidden(done, true); setHidden(document.getElementById("plan-wait"), false);
+      card.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
+      var ac = new AbortController(), tm = setTimeout(function () { ac.abort(); }, 6000);
+      fetch(API + "/v2/wish", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "omit", signal: ac.signal,
+        body: JSON.stringify({ wish: wish.slice(0, 600), platforms: detectPlatforms(wish), city: "", goal: "", _honey: "", _t: shown }) })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (r) {
+          clearTimeout(tm); asking = false;
+          if (r && r.plan_id && r.source !== "starter" && (r.items || r.refused)) renderPlan(fromModel(r, wish), true);
+          else renderPlan(buildPlan(wish), true);
+        })
+        .catch(function () { clearTimeout(tm); asking = false; renderPlan(buildPlan(wish), true); });
+    }
+    /* a parked plan opened from its signed link: /custom-creator-studio/?plan=wp_...&sig=... */
+    (function () {
+      var q = new URLSearchParams(location.search), pid = q.get("plan"), sig = q.get("sig"), API = apiBase();
+      if (!pid || !sig || !API || !/^wp_[A-Za-z0-9]+$/.test(pid)) return;
+      fetch(API + "/v2/wish/" + encodeURIComponent(pid) + "?sig=" + encodeURIComponent(sig), { credentials: "omit" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (r) { if (r && r.plan_id) { wishBox.value = r.wish || wishBox.value; renderPlan(fromModel(r, r.wish || ""), true); } })
+        .catch(function () { /* the saved plan is also on this device */ });
+    })();
 
     /* a saved plan from an earlier visit (this device only) */
     var saved = null; try { saved = JSON.parse(lget("mw_genie_plan") || "null"); } catch (e) { saved = null; }
@@ -253,6 +319,7 @@
       f.querySelector('input[name="intent"]').value = mode;
       f.querySelector('input[name="dream"]').value = current.wish;
       f.querySelector('input[name="plan"]').value = current.text.slice(0, 4000);
+      f.querySelector('input[name="plan_id"]').value = current.plan_id || "";
       f.querySelector('input[name="_subject"]').value = "Genie " + mode.toUpperCase() + ": Custom Creator Studio (madwackd.ai)";
       var plat = document.getElementById("g-platform"), nm = document.getElementById("g-name");
       plat.required = (mode === "start"); nm.required = (mode === "start");
@@ -277,7 +344,14 @@
       var first = name ? ", " + name.split(/\s+/)[0] : "";
       done.querySelectorAll(".done-name").forEach(function (el) { el.textContent = first; });
       done.querySelectorAll(".done-email").forEach(function (el) { el.textContent = email || "your email"; });
-      if (email) lset("mw_genie_plan", JSON.stringify({ wish: current ? current.wish : "", email: email, intent: mode, at: Date.now() }));
+      if (email) lset("mw_genie_plan", JSON.stringify({ wish: current ? current.wish : "", email: email, intent: mode, plan_id: current && current.plan_id || "", at: Date.now() }));
+      if (mode === "think" && current && current.plan_id && apiBase()) {   /* the server keeps the parked plan and its signed link */
+        fetch(apiBase() + "/v2/wish/" + encodeURIComponent(current.plan_id) + "/park", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "omit",
+          body: JSON.stringify({ email: email, name: name }) })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (r) { if (r && r.link) { try { var sv = JSON.parse(lget("mw_genie_plan") || "{}"); sv.link = r.link; lset("mw_genie_plan", JSON.stringify(sv)); } catch (e) { /* ignore */ } } })
+          .catch(function () { /* the lead-server copy already went out */ });
+      }
       done.setAttribute("tabindex", "-1"); done.focus();
       card.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
     }

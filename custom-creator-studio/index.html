@@ -144,15 +144,25 @@
           <p>Built from your own words, in your browser, in the time it took to read them. Genie refines it with you, and a human producer checks every line before it counts.</p>
         </div>
       </div>
+      <p class="plan-wait" id="plan-wait" hidden>Genie is reading that&hellip;</p>
       <div class="plan-body" id="plan-body">
+        <p class="plan-studio" id="plan-studio" hidden></p>
         <p class="plan-echo">&ldquo;<span id="plan-wish"></span>&rdquo;</p>
+        <p class="plan-opening" id="plan-opening" hidden></p>
         <ol class="plan-list" id="plan-list"></ol>
-        <p class="plan-fine">Included means it works in the studio today. Rolling out means the piece is being wired now; your producer covers it by hand until then. Results vary and depend on many factors.</p>
-        <div class="plan-actions">
+        <div class="plan-extra" id="plan-extra" hidden>
+          <div><h3>Your production team</h3><ul id="plan-team"></ul></div>
+          <div><h3>Your first week</h3><ul id="plan-week"></ul></div>
+        </div>
+        <p class="plan-service" id="plan-service" hidden></p>
+        <p class="plan-fine" id="plan-source">Your starter plan, built in your browser from your words; Genie refines it with you. Included means it works in the studio today. Rolling out means the piece is being wired now; your producer covers it by hand until then. Results vary and depend on many factors.</p>
+        <div class="plan-actions" id="plan-actions">
           <button type="button" class="btn btn-primary" id="plan-start">Start</button>
+          <a class="btn btn-primary" id="plan-checkout" href="#" hidden>Start now: secure checkout</a>
           <button type="button" class="btn btn-outline" id="plan-think">Think about it</button>
           <button type="button" class="genie-ask" id="plan-redo">Change my dream</button>
         </div>
+        <p class="plan-refused" id="plan-refused" hidden>That one is outside what the studio makes. The <a href="/creator-studio/">free Creator Studio tools</a> are open to everyone, and <button type="button" class="genie-ask" data-ask-z>Producer Z</button> can point you somewhere useful.</p>
       </div>
       <form class="genie-form" id="genie-form" action="https://clients.eyetoad.com/lead/send.php" method="post" novalidate hidden data-mode="start">
         <p class="form-lead" id="form-lead"></p>
@@ -163,6 +173,7 @@
         <input type="hidden" name="intent" value="start">
         <input type="hidden" name="dream" value="">
         <input type="hidden" name="plan" value="">
+        <input type="hidden" name="plan_id" value="">
         <input type="hidden" name="_loadtime" value="">
         <input type="hidden" name="_next" value="">
         <label class="hp" for="g-honey" aria-hidden="true">Leave this empty<input id="g-honey" type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
