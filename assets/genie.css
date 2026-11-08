@@ -56,6 +56,7 @@
 .stage-tabs button::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot)}
 .stage-tabs button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .stage-cap{font-size:.86rem;color:var(--muted);margin:10px 0 0;line-height:1.45}
+.stage-cap-s{display:none;font-size:.8rem;color:var(--muted);margin:6px 0 0;line-height:1.4}
 
 /* ---- Genie intake ---- */
 .genie-intake{margin-top:40px;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:6px 7px 0 var(--ink);padding:0;overflow:hidden;position:relative}
@@ -309,3 +310,15 @@
 @media (max-width:640px){
   .genie-copy .sub{display:none}
 }
+
+@media (max-width:900px){
+  .stage-cap{display:none}.stage-cap-s{display:block}
+  .stage-frame{aspect-ratio:16/9}
+  .genie-copy .hero-status{display:none}
+  .genie-copy h1{margin-top:4px}
+}
+@media (max-width:380px){.wish textarea{min-height:84px}.genie-line{font-size:.98rem}.genie-copy h1{font-size:1.85rem}}
+
+.beta-badge{display:inline-block;vertical-align:middle;font-family:var(--head);font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--yellow);border:2px solid var(--ink);color:var(--ink);margin-right:6px}
+.kicker .beta-badge{margin-left:8px}
+.beta-what{background:#FFF9E0;border:2px solid var(--yellow);border-radius:var(--radius);padding:12px 14px;font-size:.93rem;line-height:1.5;margin:0 0 12px}

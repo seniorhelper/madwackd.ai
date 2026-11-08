@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://clients.eyetoad.com https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' data:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://challenges.cloudflare.com; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'; frame-src https://challenges.cloudflare.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://clients.eyetoad.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://www.googletagmanager.com https://challenges.cloudflare.com; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Custom Creator Studio: Tell Genie. Poof. | Madwackd</title>
 <meta name="description" content="Tell Genie what you make. Your own creator dashboard and AI production team, live in minutes and polished by a human producer. Founding Creator rate $99 a month.">
@@ -29,9 +29,9 @@
 <link rel="preload" href="/assets/fonts/inter-400-700-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/img/genie/dash-nova.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
-<link rel="stylesheet" href="/assets/site.css?v=20261106t">
+<link rel="stylesheet" href="/assets/site.css?v=20261107f">
 <link rel="stylesheet" href="/assets/genie.css?v=20261108">
-<link rel="stylesheet" href="/assets/guide-widget.css?v=20261106v3">
+<link rel="stylesheet" href="/assets/guide-widget.css?v=20261107m">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.madwackd.ai/custom-creator-studio/#page","url":"https://www.madwackd.ai/custom-creator-studio/","name":"Custom Creator Studio","isPartOf":{"@id":"https://www.madwackd.ai/#website"},"about":{"@id":"https://www.madwackd.ai/custom-creator-studio/#product"},"inLanguage":"en-US"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.madwackd.ai/"},{"@type":"ListItem","position":2,"name":"Custom Creator Studio","item":"https://www.madwackd.ai/custom-creator-studio/"}]},{"@type":"Product","@id":"https://www.madwackd.ai/custom-creator-studio/#product","name":"Madwackd Custom Creator Studio","description":"A personalized creator dashboard and AI production team built around your channel, with every Madwackd studio tool inside and a human producer pass.","brand":{"@type":"Brand","name":"Madwackd Studio"},"image":"https://www.madwackd.ai/assets/og-image.jpg","url":"https://www.madwackd.ai/custom-creator-studio/","offers":{"@type":"Offer","name":"Founding Creator","price":"99","priceCurrency":"USD","url":"https://www.madwackd.ai/custom-creator-studio/#offer","availability":"https://schema.org/PreOrder","description":"$99 a month for the first 12 months, then the regular price (today $299 a month). Billed monthly, renews until you cancel, cancel anytime, 14-day money-back on the first payment.","priceSpecification":{"@type":"UnitPriceSpecification","price":"99","priceCurrency":"USD","billingDuration":"P1M","unitText":"month"}}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a credit, and what is a clip?","acceptedAnswer":{"@type":"Answer","text":"Credits pay for render time. A clip is one 8-second AI video shot. Every render shows its exact credit price before you confirm, and if the video engine hits a technical error and makes no video, the credits come back automatically."}},{"@type":"Question","name":"What happens after the 12 months?","acceptedAnswer":{"@type":"Answer","text":"From month 13 your plan renews at the regular price, today $299 a month, with the regular 2,880-credit allowance. We email you 30 days before that change, and you can cancel anytime in one click."}},{"@type":"Question","name":"How do I cancel?","acceptedAnswer":{"@type":"Answer","text":"In one click in your account, anytime. Your plan runs to the end of the month you paid for. The first payment has a 14-day money-back guarantee."}},{"@type":"Question","name":"What does the human producer actually do?","acceptedAnswer":{"@type":"Answer","text":"A real producer reviews your dashboard within one business day: brand kit, tone, links and the plan Genie drafted, then approves it or fixes it. The producer also drafts your press release from your answers for your approval."}},{"@type":"Question","name":"Who owns what I make?","acceptedAnswer":{"@type":"Answer","text":"You do. Every project comes with a rights pack. AI-generated clips carry an AI label, as our AI disclosure explains."}},{"@type":"Question","name":"Does it post to my socials for me?","acceptedAnswer":{"@type":"Answer","text":"Today you cut, caption and export for TikTok, Reels, Shorts, YouTube, Instagram, X, LinkedIn and allofus.one from one panel and share with one tap. Direct posting rolls out platform by platform as each approves our app."}}]}]}</script>
 </head>
 <body>
@@ -67,7 +67,7 @@
           <input type="hidden" name="_next" value="">
           <label class="hp" for="w-honey" aria-hidden="true">Leave this empty<input id="w-honey" type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
           <div class="notice genie-note" id="wish-note" role="status" aria-live="polite"></div>
-          <div class="start-row"><button class="btn btn-primary btn-start" type="submit">START</button><p class="price-line"><b>$99 a month</b>, Founding Creator. Locked 12 months, then $299. Cancel anytime. <a href="#offer">Full terms</a></p></div>
+          <div class="start-row"><button class="btn btn-primary btn-start" type="submit">START</button><p class="price-line"><span class="beta-badge">Founding Creator beta</span> <b>$99 a month</b>, locked 12 months, then $299. Cancel anytime. <a href="#offer">Full terms</a></p></div>
           <p class="fine">START shows your studio, itemized, then you choose Start or Think about it. No video is generated here and nothing is charged. A human producer polishes your studio within one business day.</p>
         </form>
         <ul class="glance" aria-label="What you get">
@@ -118,20 +118,21 @@
           </svg>
           <div class="stage-scan" aria-hidden="true"></div>
           <div class="poofer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="stage-bubble" aria-hidden="true"><img src="/assets/z/z-hero.webp?v=20261106v3" width="56" height="56" alt="" decoding="async"><p></p></div>
+          <div class="stage-bubble" aria-hidden="true"><img src="/assets/z/z-hero.webp?v=20261107m" width="56" height="56" alt="" decoding="async"><p></p></div>
         </div>
         <ul class="stage-tabs" aria-label="Sample looks">
           <li><button type="button" aria-pressed="true" style="--dot:#A77BFF">Music</button></li>
           <li><button type="button" aria-pressed="false" style="--dot:#3FBF7F">Cooking</button></li>
           <li><button type="button" aria-pressed="false" style="--dot:#FF9A3D">Fitness</button></li>
         </ul>
+        <p class="stage-cap-s">Sample dashboard: made-up brands and numbers, not results. <a href="/creator-dashboard-demo/">Live demo</a>.</p>
         <p class="stage-cap">Three scenes: a gray storyboard, a painted frame from our own music video Tell Me Why, then a sample dashboard. The brands, names and every number shown are made up to show the layout, not results or an earnings promise. Results vary and depend on many factors. <a href="/creator-dashboard-demo/">Open the live demo</a>.</p>
       </div>
     </div>
 
     <div class="genie-intake" id="genie" hidden>
       <div class="intake-head">
-        <img src="/assets/z/z-hero.webp?v=20261106v3" width="64" height="64" alt="" decoding="async">
+        <img src="/assets/z/z-hero.webp?v=20261107m" width="64" height="64" alt="" decoding="async">
         <div>
           <h2>Your studio, itemized</h2>
           <p>Built from your own words, in your browser, in the time it took to read them. Genie refines it with you, and a human producer checks every line before it counts.</p>
@@ -180,7 +181,7 @@
           <p>Here is exactly what happens next:</p>
           <ol>
             <li>Nothing is charged. Your dream and your starter plan are with the studio.</li>
-            <li>A real producer reads them and replies by email within one business day with your founding-rate checkout link ($99 a month for 12 months, then $299; cancel anytime).</li>
+            <li>A real producer reads them and replies by email within one business day with your "Founding Creator (beta)" checkout link ($99 a month for 12 months, then $299; cancel anytime).</li>
             <li>Meanwhile the free tools are open: <a href="/creator-studio/">Creator Studio</a> for scripts, hooks and captions, and the <a href="/creator-dashboard-demo/">live demo</a> to poke around.</li>
           </ol>
           <div class="cta-row"><a class="btn btn-primary" href="/creator-studio/">Open the free Creator Studio</a><button type="button" class="btn btn-outline" data-ask-z>Ask Producer Z a question</button></div>
@@ -206,7 +207,7 @@
     </ol>
     <div class="genie-intake example" id="example" aria-labelledby="ex-h">
       <div class="intake-head">
-        <img src="/assets/z/z-hero.webp?v=20261106v3" width="64" height="64" alt="" decoding="async">
+        <img src="/assets/z/z-hero.webp?v=20261107m" width="64" height="64" alt="" decoding="async">
         <div>
           <h2 id="ex-h">Example: a home-cooking channel, itemized</h2>
           <p>Built by the same Genie logic on this page from one sample wish. Yours is built from your words. <a href="#wish">Try yours</a>.</p>
@@ -250,7 +251,7 @@
   <div class="wrap">
     <div class="sec-head"><div><p class="kicker">Your production team</p><h2 id="team-h">An AI production team, plus a real producer.</h2></div><p>Each one is described by what it does today. None of them replaces you or runs your channel for you.</p></div>
     <figure class="z-stage">
-      <video class="z-clay" muted loop playsinline preload="none" width="360" height="330" poster="/assets/z/z-hero.webp?v=20261106v3" data-src="/assets/z/z-wave.mp4?v=20261106v3b" aria-label="Producer Z, the claymation clapperboard director, waving"></video>
+      <video class="z-clay" muted loop playsinline preload="none" width="360" height="330" poster="/assets/z/z-hero.webp?v=20261107m" data-src="/assets/z/z-wave.mp4?v=20261107m" aria-label="Producer Z, the claymation clapperboard director, waving"></video>
       <figcaption><b>This is Producer Z.</b> The same claymation director who guides the studio, the studio board and this page. <button type="button" class="genie-ask" data-ask-z>Say hi</button> and he answers, out loud if you like.</figcaption>
     </figure>
     <ul class="team">
@@ -267,13 +268,14 @@
   <div class="wrap">
     <div class="offer">
       <div>
-        <p class="kicker">Founding Creator offer</p>
+        <p class="kicker">Founding Creator offer <span class="beta-badge">Beta</span></p>
         <h2 id="offer-h">Founding Creator: $99 a month for your first 12 months.</h2>
         <p class="price">$99<small>/month</small></p>
         <p class="reg">Regular price $299 a month.</p>
         <p>Includes every studio tool, your personalized dashboard and production team, a human producer pass, 120 Fast render credits a month (about five 8-second clips; more with credit packs from $14), 3 Talking Z minutes, one published press release and a Creator Spotlight on madwackd.ai.</p>
         <div class="cta-row"><a class="btn btn-primary" href="#wish">Join the Founding Creator list</a><a class="btn btn-outline" href="/pricing/">Compare all plans</a></div>
-        <p class="fine">Checkout opens from your producer's email, on Stripe. You confirm the terms below with a required checkbox before anything is charged.</p>
+        <p class="beta-what"><b>What beta means:</b> the full studio and your personalized dashboard, a smaller render allowance (120 Fast credits a month; packs add more), and a direct line to a human producer who reviews your studio within one business day. The founding rate is a beta price: it closes when the beta closes, and everyone on the list hears from us before that happens. No countdowns, no pressure.</p>
+        <p class="fine">Checkout opens from your producer's email, on Stripe, as the "Founding Creator (beta)" plan. You confirm the terms below with a required checkbox before anything is charged.</p>
       </div>
       <div class="billing">
         <h3>How billing works</h3>
@@ -377,6 +379,7 @@
       <div>
         <h4>Studio</h4>
         <ul>
+          <li><a href="/launch-pad/">Launch Pad</a></li>
           <li><a href="/custom-creator-studio/">Custom Creator Studio</a></li>
           <li><a href="/vault/">Video Vault</a></li>
           <li><a href="/features/">Features</a></li>
@@ -417,6 +420,6 @@
 <script src="/assets/site.js" defer></script>
 <script src="/assets/genie.js?v=20261108" defer></script>
 <script src="/assets/config.js" defer></script>
-<script src="/assets/guide-widget.js?v=20261106v3" defer></script>
+<script src="/assets/guide-widget.js?v=20261107m" defer></script>
 </body>
 </html>

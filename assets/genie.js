@@ -352,6 +352,18 @@
     window.addEventListener("scroll", function () { sy = Math.min(window.scrollY, 600); queue(); }, { passive: true });
   }
 
+  /* ---------------- analytics, deferred: after the first interaction or 5 s, whichever comes first ---------------- */
+  (function () {
+    var done = false;
+    function loadGa() {
+      if (done) return; done = true;
+      ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (ev) { window.removeEventListener(ev, loadGa); });
+      var sc = document.createElement("script"); sc.src = "/assets/ga.js"; sc.async = true; document.head.appendChild(sc);
+    }
+    ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (ev) { window.addEventListener(ev, loadGa, { passive: true, once: true }); });
+    setTimeout(loadGa, 5000);
+  })();
+
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 })();
