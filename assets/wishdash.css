@@ -65,7 +65,7 @@
 .gstage.s-holo .gs-holo{animation:holoUp 1.4s cubic-bezier(.2,.7,.2,1) forwards;pointer-events:auto}
 @keyframes holoUp{0%{opacity:0;transform:perspective(900px) translateY(120px) rotateX(55deg) scale(.7)}60%{opacity:1}100%{opacity:1;transform:perspective(900px) translateY(0) rotateX(6deg) scale(1)}}
 .gs-holo .wd{border-color:rgba(0,184,240,.45);box-shadow:0 0 0 1px rgba(0,184,240,.25),0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(0,184,240,.25)}
-.gs-holo .wd::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 2px,transparent 2px 5px);mix-blend-mode:overlay;z-index:4}
+.gs-holo .wd::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 2px,transparent 2px 5px);z-index:4}
 .gs-holo .wd-mini .wd-grid{grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 12px}
 .gs-holo .wd-mini .wd-week{grid-template-columns:repeat(4,1fr)}
 .gs-holo .wd-mini .wd-week div:nth-child(n+5),.gs-holo .wd-mini .wd-card.pub,.gs-holo .wd-mini .wd-kit,.gs-holo .wd-mini .wd-pr{display:none}
@@ -73,7 +73,7 @@
 .gs-holo .wd-mini{font-size:.74rem}
 .gs-holo .wd-lock{padding:10px}
 .gs-holo .wd-lock p{font-size:.82rem}.gs-holo .wd-unlock{padding:10px 16px;font-size:.82rem}
-.gs-holo-beam{position:absolute;left:50%;bottom:-6%;width:70%;height:40%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(0,184,240,0),rgba(0,184,240,.35));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;mix-blend-mode:screen;pointer-events:none;filter:blur(2px)}
+.gs-holo-beam{position:absolute;left:50%;bottom:-6%;width:70%;height:40%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(0,184,240,0),rgba(0,184,240,.35));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;pointer-events:none;filter:blur(2px)}
 .gstage.s-holo .gs-holo-beam{animation:fadeIn .8s ease forwards}
 @media (max-width:1100px){.wd-grid{grid-template-columns:1fr 1fr}.wd-week{grid-template-columns:repeat(7,1fr)}}
 @media (max-width:900px){.gs-holo,.gs-holo-beam{display:none}}

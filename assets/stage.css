@@ -41,7 +41,7 @@
 .gstage.s-lights .gs-foot{animation:fadeIn .9s ease forwards}
 .gs-foot i{width:60px;height:14px;border-radius:50%;background:radial-gradient(ellipse at 50% 100%,rgba(255,224,160,.85),rgba(255,200,120,.25) 50%,transparent 72%);filter:blur(1px)}
 /* beams */
-.gs-beam{top:-40%;width:34vw;max-width:520px;height:150%;transform-origin:50% 0;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 50% 0%,rgba(255,240,205,.5) 0%,rgba(255,236,200,.12) 32%,rgba(255,236,200,0) 60%);pointer-events:none}
+.gs-beam{top:-40%;width:34vw;max-width:520px;height:150%;transform-origin:50% 0;opacity:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,240,205,.5) 0%,rgba(255,236,200,.12) 32%,rgba(255,236,200,0) 60%);pointer-events:none}
 .gs-beam.l{left:4%;transform:rotate(-26deg)}.gs-beam.r{right:4%;transform:rotate(26deg)}
 .gstage.s-lights .gs-beam.l{animation:beamL 7s ease-in-out .2s infinite alternate;opacity:1}
 .gstage.s-lights .gs-beam.r{animation:beamR 7s ease-in-out .6s infinite alternate;opacity:1}
@@ -67,7 +67,7 @@
 /* fx canvas and the Genie orb */
 .gs-fx{inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 .gs-orb{left:50%;top:38%;width:0;height:0;z-index:4;pointer-events:none}
-.gs-orb i{position:absolute;left:-90px;top:-90px;width:180px;height:180px;border-radius:50%;opacity:0;background:radial-gradient(circle,#fff 0 8%,#ffd6ef 22%,rgba(255,46,147,.55) 45%,rgba(139,61,255,.3) 62%,rgba(0,184,240,0) 75%);filter:blur(2px);mix-blend-mode:screen}
+.gs-orb i{position:absolute;left:-90px;top:-90px;width:180px;height:180px;border-radius:50%;opacity:0;background:radial-gradient(circle,#fff 0 8%,#ffd6ef 22%,rgba(255,46,147,.55) 45%,rgba(139,61,255,.3) 62%,rgba(0,184,240,0) 75%);filter:blur(2px);}
 .gstage.s-genie .gs-orb i{animation:orb 2.2s ease-in-out forwards}
 @keyframes orb{0%{opacity:0;transform:scale(.2) translateY(120px)}35%{opacity:1;transform:scale(1) translateY(0)}75%{opacity:1;transform:scale(1.15)}100%{opacity:0;transform:scale(2.4)}}
 .gs-poof{left:50%;top:36%;z-index:7;transform:translate(-50%,-50%) scale(.6);opacity:0;font-family:Poppins,Inter,sans-serif;font-weight:800;font-size:clamp(2.6rem,7vw,6rem);letter-spacing:-.03em;background:linear-gradient(90deg,#FF2E93,#FF8A00,#FFD60A,#8B3DFF);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(255,46,147,.6));pointer-events:none}
@@ -89,7 +89,7 @@
 .gs-z-say p{margin:0;font:700 .98rem/1.3 Poppins,Inter,sans-serif;color:#15121F}
 /* the console panel over the stage */
 .gs-wrap{position:relative;z-index:8;max-width:1240px;margin:0 auto;padding:0 32px}
-.gs-panel{max-width:600px;margin:0;padding:26px 28px;border-radius:20px;background:rgba(12,10,20,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);position:relative}
+.gs-panel{max-width:600px;margin:0;padding:26px 28px;border-radius:20px;background:rgba(12,10,20,.78);border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);position:relative}
 .gs-panel::before{content:"";position:absolute;inset:-1px;border-radius:21px;padding:1px;background:linear-gradient(135deg,rgba(255,46,147,.9),rgba(139,61,255,.6) 45%,rgba(0,184,240,.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
 .gs-kicker{display:flex;align-items:center;gap:10px;font:700 .72rem/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#B9B2C8;margin:0 0 12px}
 .gs-kicker i{width:8px;height:8px;border-radius:50%;background:#7ED321;box-shadow:0 0 10px #7ED321;animation:livepulse 2s ease-in-out infinite}
@@ -176,7 +176,7 @@
 @media (min-width:901px){.gs-floor{background-image:url(/assets/img/stage/floor-wood.webp)}}
 
 /* follow-spot: a soft pool of light that tracks whatever is happening (Z, the Genie, then the START box) */
-.gs-spot{--sx:50%;--sy:60%;left:0;top:0;width:40vmin;height:40vmin;max-width:520px;max-height:520px;border-radius:50%;pointer-events:none;z-index:3;opacity:0;mix-blend-mode:screen;background:radial-gradient(circle,rgba(255,243,214,.62) 0%,rgba(255,232,188,.26) 38%,rgba(255,225,170,.08) 58%,rgba(255,225,170,0) 70%);transform:translate(-50%,-50%) translate(var(--sx),var(--sy));transition:transform 1.1s cubic-bezier(.4,0,.2,1),opacity .7s ease;will-change:transform}
+.gs-spot{--sx:50%;--sy:60%;left:0;top:0;width:40vmin;height:40vmin;max-width:520px;max-height:520px;border-radius:50%;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(circle,rgba(255,243,214,.62) 0%,rgba(255,232,188,.26) 38%,rgba(255,225,170,.08) 58%,rgba(255,225,170,0) 70%);transform:translate(-50%,-50%) translate(var(--sx),var(--sy));transition:transform 1.1s cubic-bezier(.4,0,.2,1),opacity .7s ease;will-change:transform}
 .gs-spot::before{content:"";position:absolute;left:50%;bottom:50%;width:18%;height:300%;transform-origin:50% 100%;transform:translateX(-50%) rotate(var(--sr,0deg));background:linear-gradient(180deg,rgba(255,240,205,0) 0%,rgba(255,240,205,.08) 55%,rgba(255,240,205,.22) 100%);filter:blur(6px)}
 .gstage.s-spot .gs-spot{opacity:1}
 @media (prefers-reduced-motion:reduce){.gs-spot{transition:none;display:none}}
@@ -187,11 +187,11 @@
   linear-gradient(180deg,rgba(0,0,0,.45) 0,rgba(0,0,0,.05) 12%,rgba(0,0,0,0) 40%,rgba(0,0,0,.08) 75%,rgba(0,0,0,.5) 100%),
   linear-gradient(115deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.07) 48%,rgba(255,255,255,0) 60%),
   repeating-linear-gradient(90deg,rgba(0,0,0,.55) 0 5px,rgba(0,0,0,.22) 5px 16px,rgba(255,255,255,0) 16px 30px,rgba(255,255,255,.13) 30px 40px,rgba(255,255,255,.03) 40px 52px,rgba(0,0,0,.18) 52px 66px,rgba(0,0,0,.5) 66px 72px),
-  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='400'><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='.012 .35' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/></filter><rect width='120' height='400' filter='url(%23v)'/></svg>"),
+  repeating-linear-gradient(176deg,rgba(255,255,255,.035) 0 3px,rgba(0,0,0,.05) 3px 6px),
   linear-gradient(90deg,#4a0618,#7d1030 40%,#5a0a20 70%,#8a1434);
-  background-size:auto,auto,72px 100%,120px 400px,auto;background-blend-mode:normal,screen,normal,soft-light,normal;
+  background-size:auto,auto,72px 100%,auto,auto;
   box-shadow:0 0 80px rgba(0,0,0,.75), inset 0 -40px 60px rgba(0,0,0,.35)}
-.gs-curtain::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");background-size:160px 160px;mix-blend-mode:overlay;opacity:.35}
+.gs-curtain::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 2px,transparent 2px 9px),repeating-linear-gradient(180deg,rgba(0,0,0,.06) 0 1px,transparent 1px 7px);opacity:.6}
 .gs-curtain::before{content:"";position:absolute;top:0;bottom:0;width:26px;background:repeating-linear-gradient(180deg,#f0cf79 0 7px,#b8862e 7px 10px,#f7df9a 10px 14px,#9c6f22 14px 18px);opacity:.95;box-shadow:0 0 18px rgba(0,0,0,.6)}
 .gs-curtain.l::before{right:-6px;border-right:2px solid #5c3e10}
 .gs-curtain.r::before{left:-6px;border-left:2px solid #5c3e10}
@@ -202,8 +202,7 @@
 .gs-valance{background:
   linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,0) 40%,rgba(0,0,0,.35)),
   repeating-linear-gradient(90deg,rgba(0,0,0,.5) 0 6px,rgba(0,0,0,.15) 6px 18px,rgba(255,255,255,.1) 18px 30px,rgba(0,0,0,.15) 30px 44px,rgba(0,0,0,.5) 44px 52px),
-  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='400'><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='.012 .35' numOctaves='3' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/></filter><rect width='120' height='400' filter='url(%23v)'/></svg>"),
-  linear-gradient(90deg,#4a0618,#7d1030 50%,#4a0618);background-size:auto,52px 100%,120px 400px,auto;background-blend-mode:normal,normal,soft-light,normal}
+  linear-gradient(90deg,#4a0618,#7d1030 50%,#4a0618);background-size:auto,52px 100%,auto;}
 .gs-valance::after{height:14px;background:
   radial-gradient(circle at 50% 100%,#f7df9a 0 3px,rgba(247,223,154,0) 4px) 0 0/14px 14px repeat-x,
   linear-gradient(90deg,#b8862e,#f7df9a,#b8862e)}
@@ -227,9 +226,9 @@
   radial-gradient(6% 60% at 60% 0%,rgba(255,236,190,.45),transparent 70%),
   radial-gradient(6% 60% at 75% 0%,rgba(255,236,190,.45),transparent 70%),
   radial-gradient(6% 60% at 90% 0%,rgba(255,236,190,.45),transparent 70%);
-  opacity:0;mix-blend-mode:screen}
+  opacity:0;}
 .gstage.s-lights .gs-floor .spec{animation:fadeIn 1.4s ease .4s forwards}
-.gs-floor .grain{position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");background-size:160px 160px;mix-blend-mode:overlay;opacity:.25;pointer-events:none}
+.gs-floor .grain{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 13px),repeating-linear-gradient(180deg,rgba(0,0,0,.12) 0 1px,transparent 1px 9px);opacity:.5;pointer-events:none}
 /* footlights: bulbs plus their glow */
 .gs-foot i{position:relative;width:64px;height:16px;background:radial-gradient(ellipse at 50% 100%,rgba(255,230,170,.95),rgba(255,205,130,.35) 45%,transparent 72%);filter:blur(1.2px)}
 .gs-foot i::after{content:"";position:absolute;left:50%;bottom:-3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#fff6dc;box-shadow:0 0 10px 3px rgba(255,236,190,.9)}
@@ -237,7 +236,7 @@
 .gs-beam{background:
   radial-gradient(ellipse at 50% 0%,rgba(255,240,205,.55) 0%,rgba(255,236,200,.14) 30%,rgba(255,236,200,0) 58%),
   linear-gradient(180deg,rgba(255,240,205,.08),rgba(255,240,205,0) 70%);filter:blur(.5px)}
-.gs-haze{left:0;right:0;top:0;height:60%;pointer-events:none;z-index:3;mix-blend-mode:screen;opacity:0;background:radial-gradient(60% 70% at 50% 0%,rgba(255,228,180,.18),rgba(255,228,180,0) 70%)}
+.gs-haze{left:0;right:0;top:0;height:60%;pointer-events:none;z-index:3;opacity:0;background:radial-gradient(60% 70% at 50% 0%,rgba(255,228,180,.18),rgba(255,228,180,0) 70%)}
 .gstage.s-lights .gs-haze{animation:fadeIn 2s ease .3s forwards}
 /* Z's shadow on the boards */
 .gs-z-shadow{position:absolute;left:50%;bottom:-10px;width:150px;height:28px;margin-left:-75px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.6),rgba(0,0,0,0) 70%);filter:blur(3px);opacity:0;z-index:-1}
@@ -246,3 +245,52 @@
 /* console panel: a touch of depth */
 .gs-panel{box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 60px rgba(255,46,147,.08),inset 0 1px 0 rgba(255,255,255,.1)}
 @media (prefers-reduced-motion:reduce){.gs-floor .spec,.gs-haze{animation:none!important;opacity:1}}
+
+/* ===== the show plays alone; the console stays small until the finale (or Skip) ===== */
+.gstage{justify-content:flex-end;padding-top:0;padding-bottom:28px}
+.gs-wrap{width:100%}
+.gs-panel{transition:max-width .6s cubic-bezier(.3,.7,.2,1),padding .4s}
+.gstage:not(.s-console) .gs-panel{max-width:460px;padding:16px 18px 14px}
+.gstage:not(.s-console) .gs-panel .gs-kicker,.gstage:not(.s-console) .gs-panel .gs-line,.gstage:not(.s-console) .gs-panel .gs-modes,.gstage:not(.s-console) .gs-panel .gcon label,.gstage:not(.s-console) .gs-panel .gcon textarea,.gstage:not(.s-console) .gs-panel .gcon-meta,.gstage:not(.s-console) .gs-panel .genie-note{display:none}
+.gstage:not(.s-console) .gs-panel .gs-h1{font-size:clamp(1.4rem,2.2vw,1.9rem);margin:0 0 10px}
+.gstage:not(.s-console) .gcon-row{margin:0}
+.gstage:not(.s-console) .gcon .btn-start{min-height:46px;padding:0 22px;font-size:.95rem}
+.gs-skip{position:absolute;right:max(16px,calc((100% - 1240px)/2 + 32px));top:18px;z-index:9;font:700 .8rem/1 Inter,sans-serif;color:#fff;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:9px 14px;cursor:pointer;}
+.gs-skip:hover{background:rgba(255,255,255,.14)}
+.gstage.s-console .gs-skip{display:none}
+.gs-foot-row{margin-top:10px}
+/* a bigger Genie: a swirling ring around the orb and the word */
+.gs-orb i{width:260px;height:260px;left:-130px;top:-130px}
+.gs-orb::after{content:"";position:absolute;left:-150px;top:-150px;width:300px;height:300px;border-radius:50%;opacity:0;background:conic-gradient(from 0deg,rgba(255,46,147,0),rgba(255,46,147,.7) 25%,rgba(255,214,10,0) 40%,rgba(0,184,240,.6) 65%,rgba(139,61,255,0) 80%,rgba(255,46,147,0));-webkit-mask:radial-gradient(circle,transparent 58%,#000 60%,#000 70%,transparent 72%);mask:radial-gradient(circle,transparent 58%,#000 60%,#000 70%,transparent 72%);filter:blur(1px)}
+.gstage.s-genie .gs-orb::after{animation:ring 2.2s linear forwards}
+@keyframes ring{0%{opacity:0;transform:rotate(0) scale(.4)}25%{opacity:1}80%{opacity:1;transform:rotate(540deg) scale(1.1)}100%{opacity:0;transform:rotate(720deg) scale(2)}}
+.gs-genie-word{position:absolute;left:50%;top:22%;transform:translate(-50%,-50%) scale(.7);opacity:0;z-index:7;pointer-events:none;font:800 clamp(1.4rem,3.4vw,2.6rem)/1 Poppins,Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(0,184,240,.9),0 0 40px rgba(255,46,147,.7)}
+.gstage.s-genie .gs-genie-word{animation:genieWord 2.4s ease-out forwards}
+@keyframes genieWord{0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-70%) scale(1.15)}}
+/* painted backdrop: real paint from Tell Me Why under the brushes */
+.gs-sky svg image,.gs-paint svg image{opacity:0}
+.gstage.s-paint .gs-sky svg image{opacity:1}
+.gs-paint{transform:translate3d(calc(var(--px)*-5px),calc(var(--py)*-2px),-200px) scale(1.24)}
+.gstage.s-trees .gs-paint svg image{opacity:1}
+.gstage.s-trees .gs-paint .brush path{animation:brush 1s cubic-bezier(.4,0,.2,1) forwards}
+.gstage.s-hills .gs-hills svg path{opacity:.85}
+/* cheaper pulses: opacity rings instead of animated shadows */
+.wd-unlock{animation:none;position:relative}
+.wd-unlock::after{content:"";position:absolute;inset:-6px;border-radius:16px;border:2px solid rgba(255,214,10,.7);opacity:0;animation:ringPulse 2.4s ease-out infinite}
+@keyframes ringPulse{0%{opacity:.8;transform:scale(.96)}100%{opacity:0;transform:scale(1.12)}}
+.gs-holo{filter:none}
+@media (max-width:900px){
+  .gstage{padding-top:260px}
+  .gstage:not(.s-console) .gs-panel{max-width:none;padding:18px 16px}
+  .gstage:not(.s-console) .gs-panel .gs-line,.gstage:not(.s-console) .gs-panel .gcon label,.gstage:not(.s-console) .gs-panel .gcon textarea,.gstage:not(.s-console) .gs-panel .gcon-meta{display:block}
+  .gstage:not(.s-console) .gs-panel .gs-h1{font-size:clamp(1.8rem,7.6vw,2.3rem)}
+  .gs-skip{top:210px;right:12px}
+  .gs-genie-word{font-size:1.2rem;top:30%}
+  .gs-orb i{width:140px;height:140px;left:-70px;top:-70px}.gs-orb::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){.gs-orb::after,.gs-genie-word,.wd-unlock::after{animation:none!important;display:none}}
+
+/* no blend modes or backdrop filters anywhere on the stage: plain alpha compositing only */
+.gs-beam,.gs-haze,.gs-spot,.bloom,.gs-floor .spec,.gs-orb i,.gs-orb::after,.gs-holo-beam,.gs-floor .grain,.gs-curtain::after{mix-blend-mode:normal}
+.gs-panel,.gs-skip{backdrop-filter:none;-webkit-backdrop-filter:none}
+.gs-panel{background:rgba(12,10,20,.9)}

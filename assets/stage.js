@@ -141,12 +141,17 @@
   window.addEventListener("mw:genie-plan", function () { zClap("Nice. Your studio, itemized, is right below. Start, or think about it; nothing is charged."); });
 
   /* ---------------- the show ---------------- */
+  var skipBtn = stage.querySelector(".gs-skip");
+  function console_(on) { cls("s-console", !!on); }
+  var seen = false; try { seen = sessionStorage.getItem("mw_show_seen") === "1"; } catch (e) { seen = false; }
+  if (seen || window.innerWidth <= 900) console_(true);        /* phones: the panel sits under the stage, nothing to hide */
+  if (skipBtn) skipBtn.addEventListener("click", function () { clearAll(); finale(); console_(true); fxStart(); if (!zOn) zEnter(); try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } });
   function reset() {
     spotOff();
     ["s-lights", "s-open", "s-say", "s-genie", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, false); });
     if (onair) onair.classList.remove("on");
   }
-  function finale() { ["s-lights", "s-open", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, true); }); if (onair) onair.classList.add("on"); played = true; playing = false; }
+  function finale() { ["s-lights", "s-open", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, true); }); if (onair) onair.classList.add("on"); played = true; playing = false; console_(true); }
   function play() {
     if (playing) return; playing = true; clearAll(); reset();
     fxStart();
@@ -176,6 +181,7 @@
     later(function () {                                                          /* the dream dashboard rises from the boards */
       cls("s-holo", true); var h = stage.querySelector(".gs-holo"); if (h) { spotOnEl(h, 0); var o = orbPoint(); smoke(o.x, o.y + 60, 40); }
     }, 15200);
+    later(function () { console_(true); try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } }, 16400);   /* now the console opens */
   }
   if (replayBtn) replayBtn.addEventListener("click", function () { playing = false; cls("s-genie", false); play(); });
 
