@@ -199,8 +199,20 @@
         (variant === 'hero' ? '<a href="/pro-studio/">Open the full studio</a> or <a href="/pricing/">see plans</a>.' : '<a href="/pricing/">See plans</a>' + (tier === 'anon' ? ' or <a href="/studio/?return=%2Fpro-studio%2F#live">sign in</a>.' : '.'));
     }
     paintOnAir();
+    helloFlash();
   }
-  var timerRunning = false;
+  var timerRunning = false, flashed = false;
+  /* First paint only: the On Air light comes on for a moment, then goes off, so people notice it is there. */
+  function helloFlash() {
+    if (flashed) return; flashed = true;
+    var el = document.getElementById('pcs-onair');
+    if (!el || el.classList.contains('is-on')) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setTimeout(function () {
+      el.classList.add('is-on');
+      setTimeout(function () { el.classList.remove('is-on'); paintOnAir(); }, 1500);
+    }, 700);
+  }
   function paintOnAir() {
     var hit = monthTotal() >= (Number(S.goal) || 1);
     var el = document.getElementById('pcs-onair');

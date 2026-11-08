@@ -5,6 +5,7 @@
 (function () {
   "use strict";
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var FINE = window.matchMedia && matchMedia("(pointer: fine)").matches;
   var LOOKS = [
     { key: "music", dream: "a music channel that pays the rent", img: "/assets/img/genie/dash-nova.webp", paint: "/assets/img/genie/paint-a.webp", alt: "Sample creator dashboard for a music creator: brand header, this-month tiles and a revenue-by-week chart, all marked sample." },
     { key: "food", dream: "a cooking channel with a line out the door", img: "/assets/img/genie/dash-basil.webp", paint: "/assets/img/genie/paint-b.webp", alt: "Sample creator dashboard for a home-cooking creator in green, every number marked sample." },
@@ -57,13 +58,14 @@
     /* scene 3: a second pass of strokes paints the live dashboard over the painting */
     function paintDash(then) {
       frame.classList.add("s2");
-      timer = setTimeout(function () { frame.classList.add("painted"); if (then) then(); }, 2000);
+      timer = setTimeout(function () { frame.classList.add("painted"); window.dispatchEvent(new CustomEvent("mw:genie-painted")); if (then) then(); }, 2000);
     }
     function showFinal(i) {   /* reduced motion or a tab click: no typing, no poof */
       clearTimeout(timer); clearTimeout(typing); timer = 0; typing = 0;
       setLook(i);
       frame.classList.remove("fade");
       frame.classList.add("s1", "s2", "painted");
+      window.dispatchEvent(new CustomEvent("mw:genie-painted"));
     }
     function clearTimers() { clearTimeout(timer); clearTimeout(typing); timer = 0; typing = 0; }
     function cycle() {
@@ -209,6 +211,7 @@
     });
     setHidden(card, false); setHidden(planBody, false); setHidden(f, true); setHidden(done, true);
     lset("mw_genie_plan", JSON.stringify({ wish: plan.wish, at: Date.now() }));
+    window.dispatchEvent(new CustomEvent("mw:genie-plan"));
     if (scroll) { card.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" }); }
     var h = card.querySelector("h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
   }
@@ -320,6 +323,51 @@
     });
   }
 
+  /* ---------------- Producer Z rig: real clay clips, transforms only, desktop only ----------------
+     Enters after the first painted dashboard: walks in, flicks the studio light on, points at the wish box,
+     claps when a plan appears, idles with a small bob. Clicking him opens the real Producer Z chat. */
+  var ZV = "20261107m";
+  var zrig = document.getElementById("zrig"), zvid = zrig && zrig.querySelector(".zrig-vid"), zsay = zrig && zrig.querySelector(".zrig-say");
+  var zOn = false, zTimer = 0;
+  function zClip(name, loop) {
+    if (!zvid) return;
+    zvid.loop = !!loop;
+    zvid.setAttribute("src", "/assets/z/" + name + ".mp4?v=" + ZV);
+    var p = zvid.play(); if (p && p.catch) p.catch(function () { /* poster stays */ });
+  }
+  function zSpeak(text, ms) {
+    if (!zsay) return;
+    zsay.querySelector("p").textContent = text; zsay.hidden = false;
+    requestAnimationFrame(function () { zsay.classList.add("show"); });
+    clearTimeout(zTimer);
+    if (ms) zTimer = setTimeout(function () { zsay.classList.remove("show"); setTimeout(function () { zsay.hidden = true; }, 300); }, ms);
+  }
+  function zEnter() {
+    if (zOn || !zrig || REDUCED || !FINE || window.innerWidth <= 900) return;
+    zOn = true; zrig.hidden = false;
+    /* one Z at a time: the launcher's walk-on card steps aside and becomes the corner spotlight */
+    if (window.__mwzLauncher && window.__mwzLauncher.hideBubble) { try { window.__mwzLauncher.hideBubble(true); } catch (e) { /* ignore */ } }
+    zClip("z-wave", true);
+    zrig.classList.add("in");
+    setTimeout(function () { if (hero) hero.classList.add("lit"); }, 1500);          /* flicks the studio light on */
+    setTimeout(function () {
+      zSpeak("Hi, I'm Producer Z. Type what you dream of, right over there \u2196 and press START.", 7000);
+      if (wishBox) { wishBox.classList.add("glow"); setTimeout(function () { wishBox.classList.remove("glow"); }, 2600); }
+    }, 2300);
+    setTimeout(function () { zrig.classList.remove("in"); zrig.classList.add("idle"); zvid.pause(); }, 9000);
+  }
+  function zPlan() {
+    if (!zOn || !zrig) return;
+    zrig.classList.remove("idle"); zrig.classList.add("clap");
+    zClip("z-clap", false);
+    zSpeak("Nice. Your studio, itemized, is right below. Start, or think about it; nothing is charged.", 8000);
+    setTimeout(function () { zrig.classList.remove("clap"); zrig.classList.add("idle"); }, 1600);
+  }
+  if (zvid) zvid.addEventListener("ended", function () { zrig.classList.add("idle"); });
+  /* enter once the first dashboard is painted (hooked below), or as a fallback 9 s after idle start */
+  window.addEventListener("mw:genie-painted", function () { zEnter(); }, { once: true });
+  window.addEventListener("mw:genie-plan", function () { zPlan(); });
+
   /* ---------------- Producer Z clay clip: loads and plays only when on screen ---------------- */
   var clay = document.querySelector(".z-clay");
   if (clay && !REDUCED && "IntersectionObserver" in window) {
@@ -332,7 +380,6 @@
   }
 
   /* ---------------- gentle 3D tilt + parallax (desktop pointers only, transform only) ---------------- */
-  var FINE = window.matchMedia && matchMedia("(pointer: fine)").matches;
   if (!REDUCED && FINE && hero && frame) {
     document.documentElement.classList.add("tilt-on");
     var rafId = 0, px = 0, py = 0, sy = 0;

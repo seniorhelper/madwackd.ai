@@ -357,3 +357,25 @@ These are goals, not claims. As Madwackd grows, I want to:
 Life and the environment before profits. That's our goal, and that's my vision. If you're working on any piece of this, a city, a builder, a grower, an engineer, I want to hear from you. Call us at 1-800-481-8638 (https://www.madwackd.aitel:+18004818638).
 
 Zach WennstedtFounder, Madwackd Productions
+
+# Custom Creator Studio: tell Genie what you make (https://www.madwackd.ai/custom-creator-studio/)
+
+A personalized creator dashboard and AI production team built around one creator's channel, with every Madwackd studio tool inside and a human producer pass. Visitors type what they dream of making; the page itemizes the studio they would get (brand kit, content calendar, hook and caption starters, per-platform cutdowns and one-tap share, render credits, Producer Z with a voice, a published press release and a Creator Spotlight, a human producer pass), then they choose START (join the Founding Creator list) or THINK ABOUT IT (the plan is kept under their email).
+
+## What is the Founding Creator offer?
+$99 a month for the first 12 months, then the regular price (today $299 a month). Billed monthly, renews until cancelled, cancel anytime in one click, 14-day money-back on the first payment. Includes every studio tool, the personalized dashboard and production team, a human producer pass, 120 Fast render credits a month (about five 8-second clips; credit packs from $14), 3 Talking Z minutes, one published press release and a Creator Spotlight on madwackd.ai. It is a beta price: the full studio with a smaller render allowance and a direct line to a human producer.
+
+## What is a credit, and what is a clip?
+Credits pay for render time. A clip is one 8-second AI video shot. Every render shows its exact credit price before you confirm; technical failures are refunded automatically.
+
+## Does it post to my socials for me?
+Not yet. Today you cut, caption and export for TikTok, Reels, Shorts, YouTube, Instagram, X, LinkedIn and allofus.one from one panel and share with one tap. Direct posting rolls out platform by platform as each approves the Madwackd app.
+
+## What does the human producer do?
+A real producer reviews the dashboard within one business day: brand kit, tone, links and the plan, then approves or fixes it, and drafts the press release for the creator's approval.
+
+## Who owns the work? Are AI clips labeled?
+The creator owns their projects; every project comes with a rights pack. AI-generated clips carry an AI label.
+
+## Other tiers
+Free Creator Studio tools ($0); Starter $29 and Pro $89 plans; Custom Creator Studio (Studio tier, $299 regular); Genie Production Team $499 (4,800 credits, 3 brand kits, same-day producer pass plus a monthly 30-minute call); done-for-you production from $2,500.

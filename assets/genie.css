@@ -322,3 +322,32 @@
 .beta-badge{display:inline-block;vertical-align:middle;font-family:var(--head);font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--yellow);border:2px solid var(--ink);color:var(--ink);margin-right:6px}
 .kicker .beta-badge{margin-left:8px}
 .beta-what{background:#FFF9E0;border:2px solid var(--yellow);border-radius:var(--radius);padding:12px 14px;font-size:.93rem;line-height:1.5;margin:0 0 12px}
+
+/* ---- Producer Z rig: walks in under the stage, flicks the light on, points at the wish box, claps for the plan ---- */
+.genie-stage{position:relative}
+.zrig{position:absolute;left:0;top:100%;margin-top:14px;display:flex;align-items:flex-end;gap:12px;z-index:3;pointer-events:none}
+.zrig-actor{pointer-events:auto;width:112px;height:112px;border-radius:50%;border:3px solid var(--ink);background:#F3EEFB;padding:0;overflow:hidden;cursor:pointer;box-shadow:4px 5px 0 var(--ink);transform:translateX(320px) rotate(6deg);opacity:0;will-change:transform}
+.zrig-actor:hover{box-shadow:5px 6px 0 var(--ink)}
+.zrig-vid{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
+.zrig.in .zrig-actor{animation:zwalk 1.5s cubic-bezier(.3,.7,.3,1) forwards}
+@keyframes zwalk{0%{transform:translateX(320px) rotate(6deg);opacity:0}8%{opacity:1}20%{transform:translateX(256px) translateY(-8px) rotate(-3deg)}40%{transform:translateX(192px) translateY(0) rotate(3deg)}60%{transform:translateX(128px) translateY(-8px) rotate(-3deg)}80%{transform:translateX(64px) translateY(0) rotate(3deg)}100%{transform:translateX(0) translateY(0) rotate(0);opacity:1}}
+.zrig.idle .zrig-actor{animation:zidle 6s ease-in-out infinite}
+@keyframes zidle{0%,100%{transform:translateY(0) rotate(0)}10%{transform:translateY(-5px) rotate(-2deg)}20%{transform:translateY(0) rotate(0)}}
+.zrig.clap .zrig-actor{animation:zclap .5s ease-in-out 3}
+@keyframes zclap{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px) rotate(-3deg)}}
+.zrig-say{pointer-events:auto;max-width:300px;background:#fff;border:3px solid var(--ink);border-radius:14px 14px 14px 4px;padding:10px 14px;box-shadow:3px 4px 0 var(--ink);transform:translateY(6px);opacity:0;transition:opacity .25s,transform .25s var(--ease)}
+.zrig-say.show{opacity:1;transform:none}
+.zrig-say p{margin:0;font-family:var(--head);font-weight:700;font-size:.98rem;line-height:1.3;color:var(--ink)}
+/* the studio light: the hero glow is dim until Z flicks it on */
+.genie-hero::before{opacity:.35;transition:opacity .4s}
+.genie-hero.lit::before{opacity:1;animation:zflick .7s steps(1,end) 1}
+@keyframes zflick{0%{opacity:.35}25%{opacity:1}40%{opacity:.4}55%{opacity:1}70%{opacity:.5}100%{opacity:1}}
+/* pointing at the wish box */
+.wish textarea.glow{animation:wishglow 1.2s ease-in-out 2}
+@keyframes wishglow{0%,100%{box-shadow:4px 5px 0 var(--ink)}50%{box-shadow:4px 5px 0 var(--ink),0 0 0 6px rgba(255,46,147,.35)}}
+@media (max-width:900px){.zrig{display:none}}
+@media (prefers-reduced-motion:reduce){
+  .zrig{display:none}
+  .genie-hero::before{opacity:1;transition:none}
+  .genie-hero.lit::before,.wish textarea.glow{animation:none!important}
+}
