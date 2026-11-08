@@ -2,7 +2,7 @@
    a brass lamp and a claymation Genie, painted set pieces that fly in from the wings and the fly loft, a sunrise, and the
    console as the curtain call. Shared by the home page and /custom-creator-studio/. Transforms, opacity and plain alpha
    only (no blend modes, no backdrop filters). Pointer parallax through --px / --py. Everything still under reduced motion. */
-.gstage{--px:0;--py:0;--gold:#e8b85a;--gold-2:#b8862e;--gold-3:#f7df9a;--velvet:none;--boards:url(/assets/img/stage/floor-wood.webp);--boards-size:640px 93px;position:relative;overflow:hidden;background:#07060b;color:#F4F0FA;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 28px}
+.gstage{--px:0;--py:0;--gold:#e8b85a;--gold-2:#b8862e;--gold-3:#f7df9a;--velvet:url(/assets/img/stage/genie/velvet-tile.webp);--boards:url(/assets/img/stage/genie/boards-tile.webp);--boards-size:512px 256px;position:relative;overflow:hidden;background:#07060b;color:#F4F0FA;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 28px}
 @media (min-width:901px){.gstage{min-height:max(880px,calc(100vh - 150px))}}
 .gs-scene{position:absolute;inset:0;perspective:1200px;perspective-origin:50% 40%;overflow:hidden}
 .gs-scene>*{position:absolute}
@@ -89,26 +89,27 @@
 @keyframes cardOut{0%{opacity:1;transform:translate(-50%,-50%) translateZ(0)}100%{opacity:0;transform:translate(-50%,-50%) translateZ(300px) translateY(-60px)}}
 @keyframes chipIn{to{opacity:1;transform:none}}
 /* ---------- scene 2: the lamp and the Genie ---------- */
-.gs-lamp{left:38%;bottom:17%;width:clamp(120px,15vw,220px);z-index:6;transform:translateX(-180%) translateY(0);opacity:0;pointer-events:none;transform-origin:50% 100%}
+.gs-lamp{left:44%;bottom:17%;width:clamp(110px,13vw,190px);z-index:6;transform:translateX(-180%) translateY(0);opacity:0;pointer-events:none;transform-origin:50% 100%}
 .gs-lamp img{display:block;width:100%;height:auto}
 .gs-lamp .lamp-sh{position:absolute;left:10%;right:10%;bottom:-6px;height:16px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.65),rgba(0,0,0,0) 70%);filter:blur(3px)}
 .gstage.s-lamp.has-lamp .gs-lamp{animation:lampIn 1.3s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes lampIn{0%{opacity:0;transform:translateX(-180%) rotate(-8deg)}30%{opacity:1}70%{transform:translateX(4%) rotate(2deg)}100%{opacity:1;transform:translateX(0) rotate(0)}}
-.gs-genie{position:absolute;left:50%;bottom:62%;width:230%;transform:translateX(-50%) translateY(40%) scale(.1);transform-origin:50% 100%;opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s ease;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.gs-genie{position:absolute;left:-189.9%;bottom:30.4%;width:384.7%;transform:translateY(40%) scale(.1);transform-origin:50% 95%;opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s ease;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
 .gs-genie img{display:block;width:100%;height:auto}
-.gstage.s-g1 .gs-genie{opacity:1;transform:translateX(-50%) translateY(10%) scale(.55)}
-.gstage.s-g2 .gs-genie{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
-.gstage.s-g3 .gs-genie{opacity:1;transform:translateX(-50%) translateY(-4%) scale(1.04)}
-.gstage.s-g4 .gs-genie{opacity:0;transform:translateX(-50%) translateY(-30%) scale(1.3);transition:transform 1.2s ease-in,opacity 1s ease-in}
+.gstage.s-g1 .gs-genie{opacity:1;transform:translateY(6%) scale(.6)}
+.gstage.s-g2 .gs-genie{opacity:1;transform:translateY(0) scale(1)}
+.gstage.s-g3 .gs-genie{opacity:1;transform:translateY(-3%) scale(1.03)}
+.gstage.s-g4 .gs-genie{opacity:0;transform:translateY(-30%) scale(1.25);transition:transform 1.2s ease-in,opacity 1s ease-in}
 .gstage.s-g2 .gs-genie,.gstage.s-g3 .gs-genie{animation:genieBob 3.2s ease-in-out .9s infinite}
 @keyframes genieBob{0%,100%{margin-bottom:0}50%{margin-bottom:12px}}
-.gs-poof{left:50%;top:34%;z-index:7;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;font:800 clamp(1.1rem,2.6vw,2rem)/1 Poppins,Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(0,184,240,.9),0 0 40px rgba(255,46,147,.7)}
+.gs-poof{left:44%;top:22%;z-index:7;transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;font:800 clamp(1.1rem,2.6vw,2rem)/1 Poppins,Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(0,184,240,.9),0 0 40px rgba(255,46,147,.7)}
 .gstage.s-g2 .gs-poof{animation:poofWord 2s ease-out forwards}
 @keyframes poofWord{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}25%{opacity:1;transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-80%) scale(1.1)}}
 /* ---------- scene 3: painted set pieces, far to near. Each stands on the boards as a flat and arrives from the fly loft or the wings ---------- */
 .gs-flat{left:-6%;right:-6%;top:-4%;height:74%;transform-style:preserve-3d;pointer-events:none}
 .gs-flat img,.gs-flat svg{position:absolute;inset:0;width:100%;height:100%}
-.gs-flat img{object-fit:cover}
+.gs-flat img{object-fit:cover;object-position:50% 100%}
+.gs-f-sky img{opacity:.001}
 .gs-f-sky{transform:translate3d(calc(var(--px)*-14px),calc(var(--py)*-6px),-420px) scale(1.5)}
 .gs-f-sky img{object-position:50% 100%}
 .gs-f-hills{transform:translate3d(calc(var(--px)*-7px),calc(var(--py)*-3px),-260px) scale(1.3)}
@@ -214,7 +215,8 @@
   .gs-card{top:40%;width:86%;font-size:clamp(1.25rem,6vw,1.7rem)}
   .gs-card small{font-size:.9rem;margin-top:8px}
   .gs-card .chips span{font-size:.66rem;padding:6px 9px}
-  .gs-lamp{left:30%;bottom:16%;width:96px}
+  .gs-lamp{left:40%;bottom:16%;width:68px}
+  .gs-poof{left:40%}
   .gs-poof{font-size:1rem;top:28%}
   .gs-f-ground{display:none}
   .gs-sun{top:30%}.gs-sun .disc{left:-50px;top:-50px;width:100px;height:100px}.gs-sun .rays{left:-240px;top:-240px;width:480px;height:480px}

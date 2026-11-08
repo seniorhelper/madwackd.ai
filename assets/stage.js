@@ -102,7 +102,7 @@
     return { x: r.left - f.left + r.width * (fx_ == null ? .5 : fx_), y: r.top - f.top + r.height * (fy == null ? .5 : fy) };
   }
   function zPoint() { return at(stage.querySelector(".gs-z-actor"), .15, .45); }
-  function spout() { return at(lamp, .78, .28); }   /* the lamp's spout */
+  function spout() { return at(lamp && lamp.querySelector("img.lamp"), .03, .48); }   /* the lamp's spout */
 
   /* ---------------- follow-spot ---------------- */
   var spot = stage.querySelector(".gs-spot"), scene = stage.querySelector(".gs-scene");
