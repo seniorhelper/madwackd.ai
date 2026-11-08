@@ -294,3 +294,7 @@
 .gs-beam,.gs-haze,.gs-spot,.bloom,.gs-floor .spec,.gs-orb i,.gs-orb::after,.gs-holo-beam,.gs-floor .grain,.gs-curtain::after{mix-blend-mode:normal}
 .gs-panel,.gs-skip{backdrop-filter:none;-webkit-backdrop-filter:none}
 .gs-panel{background:rgba(12,10,20,.9)}
+
+/* the finished painting is painted at load under the scrim (the page's largest paint happens early, not at the finale) */
+.gs-base{position:absolute;inset:0;width:100%;height:76%;top:-6%;object-fit:cover;object-position:50% 40%;z-index:0;opacity:.001}
+.gstage.s-done .gs-base{opacity:1;transition:opacity 1s}
