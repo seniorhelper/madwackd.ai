@@ -379,3 +379,519 @@ The creator owns their projects; every project comes with a rights pack. AI-gene
 
 ## Other tiers
 Free Creator Studio tools ($0); Starter $29 and Pro $89 plans; Custom Creator Studio (Studio tier, $299 regular); Genie Production Team $499 (4,800 credits, 3 brand kits, same-day producer pass plus a monthly 30-minute call); done-for-you production from $2,500.
+
+---
+
+# ElevenLabs vs Madwackd Studio (2026): Voice Platform or Video Studio?
+URL: https://www.madwackd.ai/compare/elevenlabs/
+Updated: 2026-11-08
+
+Short answer: ElevenLabs is a voice platform. You get audio: text to speech, cloned voices, dubbing, music, sound effects and voice agents, and an image and video product that runs on other companies' video models. Madwackd Studio is a video studio with the voiceover built in: you get a finished clip, you see the credit price before every render, and a human producer is one phone call away. If you need audio files, pick ElevenLabs. If you need a finished video with a voice and a price you can see first, that is what Madwackd Studio is for.
+
+This page is written by the founder of Madwackd Studio, so read it knowing that. Every ElevenLabs fact below comes from elevenlabs.io as it read on November 8, 2026, with no claims beyond what their own pages say. ElevenLabs is a trademark of its owner; we use the name only to identify their product. Prices change; check both pricing pages before you buy.
+
+## What each one actually is
+
+ElevenLabs describes itself around voice: text to speech with 17,500+ voices in 90+ languages (their numbers), voice cloning and voice design, dubbing, speech to text, music, sound effects, a voice-agent platform and an API. Its home page also lists an "Image & Video" product that uses third-party video models. Plans are sold as monthly credits that roughly equal minutes of audio.
+
+Madwackd Studio is an AI video studio from a Denver production company. You describe a shot, the studio shows the credit estimate (seconds x model x takes) before anything renders, you approve it, and the clip comes back with sound. Voiceovers come from a curated set of stock voice styles inside the same project. Real producers run whole projects for people who would rather not do it themselves, and nine free Creator Studio tools run in your browser with no account.
+
+## Side by side
+
+What you care about | ElevenLabs (elevenlabs.io, Nov 8, 2026) | Madwackd Studio | 
+
+What comes out | Audio files; images and video through its Image & Video product | Finished video clips with voice, exported for social and web | 
+
+Price before the job | Monthly credits per plan; no per-job quote described | Credit estimate shown before every render; a budget cap on every project | 
+
+Cheapest way to try | Free plan, 10,000 credits a month (about 10 minutes of audio) | Free Creator Studio tools, no card; $5 Test Drive, 50 credits, one per account | 
+
+Commercial use | Commercial license listed from the Starter plan ($6/mo) up | See the terms of service and acceptable use | 
+
+Voice choice | 17,500+ voices, 90+ languages (their claim) | A curated set of styles: narrator, trailer, upbeat promo, friendly neighbor, documentary | 
+
+Your own voice | Voice cloning and voice design, live | Not offered today; stock styles only. Any custom voice would need a consent check first | 
+
+Consent and rights paper trail | Cloning policies on their site | Consent step before any custom voice; wording, time and a fingerprint of the sample go into the project's rights pack | 
+
+A human you can call | Contact Sales for Enterprise | Producers at 1-800-481-8638; done-for-you spots from $2,500 | 
+
+If the render fails | Not stated on the pricing page | Technical failures with no video refund credits automatically | 
+
+Content labels | See their site | Every clip carries an invisible provenance mark | 
+
+## Where ElevenLabs is bigger
+
+If your job is audio, ElevenLabs has more of everything: more voices, more languages, voice cloning you can use today, dubbing, a developer API and a voice-agent product. Podcasters, app builders, audiobook narrators and anyone building a phone agent should start there. Madwackd Studio does not try to be a general text-to-speech service, and we are still in early access.
+
+## Where Madwackd Studio is different
+
+- The voice is attached to a finished video. You never export audio from one tool and line it up in another. Shot, voiceover and export live in one project.
+
+- You see the price first. Every render shows its credit estimate before you confirm, and each project has a spending cap. Prepaid credits mean the balance never goes below zero.
+
+- People, not just plans. A junior, senior or executive producer can run the whole thing, quoted up front. Commercial spots start at $2,500, music videos at $5,000.
+
+- Consent first. No custom voice is made until you confirm it is your own voice or you hold written permission, and that consent is stored with the project.
+
+- Free tools before any money. The Creator Studio hook writer, script fitter, caption maker and six more run on your device with no sign-up.
+
+## Pricing side by side
+
+Both from the public pricing pages. ElevenLabs credits roughly equal minutes of audio; Madwackd credits pay for render time, and a clip is one 8-second Fast shot at 720p with sound.
+
+ElevenLabs (monthly) | Madwackd Studio (monthly or one-time) | 
+
+Free: $0, 10,000 credits | Free account and Creator Studio tools: $0 | 
+
+Starter: $6, 30,000 credits | Test Drive: $5 one time, 50 credits | 
+
+Creator: $22, 121,000 credits | Starter: $29, 250 credits (about 10 clips) | 
+
+Pro: $99, 600,000 credits | Pro: $89, 900 credits (about 37 clips) | 
+
+Scale: $299, 1.8M credits | Studio: $299, 2,880 credits (about 120 clips) | 
+
+Business: $990, 6M credits | Credit packs: $14 for 100 up to $515 for 5,000; done-for-you from $2,500 | 
+
+Full Madwackd details, including what is and is not refunded, are on the pricing page. These are the prices you pay today; results vary by project.
+
+## Which one should you pick?
+
+- You need narration for a podcast, audiobook, app or phone agent. ElevenLabs. Madwackd does not sell standalone audio.
+
+- You need a 15 to 30 second ad or social clip with a voice, and you want to know the cost before you start. Madwackd Studio. Fit your script with the free script fitter, then run a $5 Test Drive.
+
+- You want someone to make the whole thing. Madwackd producers, quoted up front. ElevenLabs does not list a done-for-you service.
+
+- You already have a cloned voice you love. Keep using it where its license allows. For Madwackd videos, use the stock styles; custom voices are not offered today.
+
+## Questions people ask
+
+### Is Madwackd Studio an ElevenLabs alternative?
+
+Only if you need a finished video. ElevenLabs is a voice platform: text to speech, voice cloning, dubbing, music and voice agents, plus an image and video product on third-party models. Madwackd Studio is a video studio with the voiceover built in, a credit quote before every render and human producers you can call. If you need audio files for a podcast, an app or a voice agent, ElevenLabs is the better fit.
+
+### Can I use a voiceover I made in ElevenLabs inside Madwackd Studio?
+
+Madwackd Studio's voice layer is built around its own stock voice styles and consent-checked custom voices, so we do not advertise importing third-party voice files. If you have audio you must keep, call a producer and we will tell you honestly whether it fits the project. Any audio you bring is subject to its own license terms.
+
+### Does Madwackd Studio clone voices?
+
+Not today. Stock voice styles (narrator, trailer, upbeat promo, friendly neighbor, documentary) are live, and no real person's voice is cloned. Any custom voice, when it is offered, needs a consent check: your own voice, or written permission from the speaker. We never make voices of celebrities or public figures.
+
+### What does it cost to try each one?
+
+ElevenLabs lists a Free plan with 10,000 credits a month (about 10 minutes of audio) and a Starter plan at $6 a month, checked on elevenlabs.io/pricing on November 8, 2026. Madwackd Studio has free Creator Studio tools with no card, and a $5 Test Drive with 50 credits, about two 8-second shots at 720p, one per account.
+
+### Does ElevenLabs make video?
+
+Its site lists an Image & Video product that runs on third-party video models, alongside its voice products. It does not describe a per-job price quote before a render, human producers or a done-for-you service. Check elevenlabs.io for current features; this page reflects November 8, 2026.
+
+Try it for $5. One Test Drive, about two shots with sound, price shown before each one. Or call 1-800-481-8638 and a producer plans it with you. Start for $5
+
+---
+
+# How to Add an AI Voiceover to a Video (2026): A Producer's Guide
+URL: https://www.madwackd.ai/producers-corner/ai-voiceover-for-video/
+Updated: 2026-11-08
+
+Short answer: write the script for the ear, pick a voice style that matches the job, lock the picture before you generate the final voice, fix pronunciation in the script, place the voice under the video and duck the music, check the license and the AI label, then export per platform. You can do it with a separate text-to-speech tool and an editor, or in one studio that puts the voice on the video and shows you the price before it renders.
+
+Most "add an AI voiceover" guides are three clicks inside one app. Those clicks are the easy part. What decides whether the voiceover sounds like a person or a GPS is the script, the timing and the mix, and those are the same whatever tool you use. This is how our producers do it, in the order we do it.
+
+## Three ways to add an AI voiceover
+
+Way | How it works | Good for | Watch out for | 
+
+Text-to-speech tool + your editor | Generate an audio file, import it, line it up on the timeline | Long narration, podcasts, when you already edit | Timing drift when the picture changes; license terms on free tiers | 
+
+All-in-one video editor | Type the script inside the editor, it drops the voice on the track | Quick social clips from your own footage | Voice quality varies; exports may carry watermarks on free plans | 
+
+Video studio with voice built in | Describe the shot, add the voiceover in the same project, see the credit price, render | Ads, trailers and music videos made from scratch | You pay for render time, so plan the script first | 
+
+Madwackd Studio is the third kind. The steps below work for all three.
+
+## How to add an AI voiceover to a video, step by step
+
+### 1. Write for the ear, not the page
+
+Short sentences. One idea each. Contractions. Read it out loud with a timer: a normal narration pace is roughly 150 words a minute, so a 25-second ad holds about 60 words and an 8-second shot about 20. If you run out of breath, the voice will sound rushed too. The free script fitter in our Creator Studio splits your script into 8-second shots and shows the credit estimate before you spend anything.
+
+### 2. Pick the voice style for the job
+
+Match the voice to the promise. A documentary read sells trust; a trailer read sells scale; a friendly-neighbor read sells a local service; an upbeat promo read sells a deal. Madwackd's stock styles are exactly those five: narrator, trailer, upbeat promo, friendly neighbor and documentary. Generate a test line in two styles and play them to someone who did not write the script.
+
+### 3. Lock the picture first
+
+Change a shot after the voice is done and every line lands late. Finish the cut, or in a studio workflow finish the shot list, then generate the final voice. Rough voice for timing is fine; final voice comes last.
+
+### 4. Generate, listen, fix the script
+
+Most "robotic" problems live in the script, not the voice. Spell numbers the way you say them ("twenty twenty-six"), break acronyms with spaces or periods, and respell brand names phonetically if the voice stumbles. Add a comma where you want a breath. Regenerate only the line you changed.
+
+### 5. Place it and mix it
+
+Voice on its own track, music underneath and ducked so the words stay clear, sound effects where the picture needs them. Most people scroll with the sound off, so add captions as well; the caption maker exports SRT and VTT for free.
+
+### 6. Check the license and the label
+
+Free tiers of voice tools often exclude commercial use, which includes ads and monetized channels. Read the plan before you publish. Ad platforms also ask you to label realistic AI-generated content; some have a setting for it. Madwackd puts an invisible provenance mark on every clip, and any custom voice goes through a consent check first.
+
+### 7. Export for each place it will play
+
+9:16 for Reels, Shorts and TikTok, 16:9 for YouTube and your site. Keep faces and text out of the areas the apps cover; the free safe-zone checker shows where those are.
+
+## Text to speech for YouTube videos: what's different
+
+Longer scripts, so pace matters more. Break a 10-minute script into sections and generate each one, so a late change does not mean regenerating everything. Use one voice for the whole channel so returning viewers recognize it. Faceless channels live or die on the script; a good voice cannot save a flat one. YouTube allows synthetic narration, and its policies on repetitive content still apply, so check the current rules before you build a channel on it.
+
+## What does an AI voiceover for a video cost?
+
+With a standalone voice tool, you pay for audio minutes on a monthly plan and then still need something to make the video. With Madwackd Studio the voice is part of the clip: a Fast 720p shot with sound is about 24 credits, and credits cost $0.10 to $0.14 each depending on plan or pack, so one 8-second shot with voice runs roughly $2.40 to $3.40. The exact quote shows before you confirm, every time. A $5 Test Drive gets you about two shots; plans start at $29 a month. If you would rather hand it off, a producer-made spot starts at $2,500. Full details on the pricing page; results vary by project.
+
+## Mistakes we see most
+
+- Generating the final voice before the cut is locked. Every change after that costs a regeneration.
+
+- One long paragraph. Voices breathe at punctuation. Give them some.
+
+- Using a free voice in a paid ad. Check the license.
+
+- Music louder than the words. Duck it.
+
+- No captions. Most feeds start muted.
+
+## Questions people ask
+
+### Can ChatGPT do voiceovers?
+
+Chat assistants can talk to you, but a video voiceover needs an audio file you can place on a timeline, or a studio that puts the voice on the video for you. Use a text-to-speech tool that exports audio, or a video studio with voice built in. Check the tool's license before using the result in anything you sell or advertise.
+
+### How do I add a voiceover onto a video?
+
+Write the script for the ear, lock your picture edit, generate the voice, listen and fix pronunciation, then place the audio under the video and duck the music beneath it. In Madwackd Studio the voice is added inside the same project as the shot, and the credit price shows before anything renders.
+
+### How can I add an AI voiceover to a video for free?
+
+Several tools have free tiers, and most of them do not include a commercial license, so a free voice is fine for a personal clip and not for an ad. Madwackd's free Creator Studio tools help you write hooks, fit your script to 8-second shots and make captions with no account; the render itself needs credits, from a $5 Test Drive.
+
+### How long should a voiceover script be?
+
+Plan on roughly 150 spoken words a minute at a normal narration pace, so a 25-second ad holds about 60 words and an 8-second shot holds about 20. Read it out loud with a timer; a script that reads well on paper is often too long when spoken.
+
+### Do I have to say a video uses an AI voice?
+
+Ad platforms ask you to label realistic AI-generated content, and some have a setting for it in their ads tools. Madwackd Studio puts an invisible provenance mark on every clip. Check the current rules of the platform you publish on.
+
+Want the voice and the video in one go? Paste your script into the free script fitter to see the shots and the estimate, then start for $5. Or ask Madi, our AI producer (the chat button on every page). She is an AI, and she says so.
+
+---
+
+# AI Voiceover for Video Ads: Cost, Rights and the AI Label (2026)
+URL: https://www.madwackd.ai/producers-corner/ai-voiceover-for-ads/
+Updated: 2026-11-08
+
+Short answer: an AI voiceover works in a video ad when the voice style matches the offer, the script is written to be spoken, the plan you generate it on includes commercial use, and you switch on the platform's AI label where the rules ask for it. The voice is the cheap part. A finished 25-second ad with voice costs about $10 to $14 in render credits in Madwackd Studio, quoted before anything renders, or from $2,500 made for you by a producer.
+
+Most pages about "AI voiceover for ads" are written by voice platforms, so they end where the audio file ends. An ad is not an audio file. This guide covers the whole job: picking the voice, writing the read, the rights, the labels each platform requires, and the price of the finished ad. Platform rules below were checked on their own help pages on November 8, 2026 and do change.
+
+## Which voice style for which ad?
+
+Ad | Voice style | Why | 
+
+Local service (plumber, dentist, painter) | Friendly neighbor | You are asking someone to let you into their house. Warm beats slick. | 
+
+Sale, launch, event | Upbeat promo | Energy carries a short offer with a deadline. | 
+
+Product explainer, B2B | Narrator | Clear and even; lets the picture do the selling. | 
+
+Brand film, nonprofit, testimonial-style | Documentary | Slower, lower, trusted. | 
+
+Trailer, game, drop | Trailer | Scale and tension in six seconds. | 
+
+Those five are the stock styles in Madwackd Studio. Whatever tool you use, generate the first line in two styles and play both to someone who did not write the script. They will tell you in one second.
+
+## A 25-second ad script with voice direction
+
+Voice direction is the part most AI-voice guides skip. The same words read three ways are three different ads.
+
+Time | Line (about 60 words total) | Direction | 
+
+0 to 3 s | The question your customer is already asking | Conversational, slightly up at the end. No announcer voice yet. | 
+
+3 to 12 s | What you do, in one sentence | Steady, confident, a touch slower. One breath after the sentence. | 
+
+12 to 20 s | The real result or proof (no invented reviews) | Warm. If it is a number, say it the way people say it out loud. | 
+
+20 to 25 s | The offer and the exact next step | Clear and a little brighter. Phone number or web address also on screen. | 
+
+A normal read runs about 150 words a minute, so 60 words fits 25 seconds with room to breathe. Paste yours into the free script fitter to see how it splits into 8-second shots and what the render would cost.
+
+## Commercial rights, in plain words
+
+A voice you are allowed to use in a personal clip is not always a voice you are allowed to use in an ad. Free tiers on voice platforms commonly exclude commercial use. As one example, ElevenLabs lists a commercial license from its $6-a-month Starter plan up, not on its Free plan, as of November 8, 2026. Read the plan page of whatever you use before the ad goes live, and keep a copy of the license terms with the ad. Madwackd's terms are on the terms of service and acceptable use pages, and every project keeps a rights pack with prompts, versions, consents and receipts.
+
+## The AI label: what each platform requires
+
+### TikTok
+
+Ads Manager has a toggle, "This ad contains AI-generated content". TikTok's help page says it applies when all three conditions are met: it is a TikTok ad, it is not a Spark Ad, and the content "includes image, video, or audio that is either completely AI-generated or significantly modified by AI" (TikTok Ads help). An AI voiceover is audio, so turn it on. Spark Ads follow the organic Community Guidelines label instead. Once submitted, the toggle cannot be removed unless the creative changes.
+
+### Meta (Facebook and Instagram)
+
+For ads about social issues, elections or politics, Meta requires advertisers to disclose photorealistic video or realistic-sounding audio created or edited with generative AI in defined cases, such as depicting a real person saying something they did not say (Meta ad standards). For organic posts, Meta's misinformation policy requires people to disclose realistic-sounding audio that was digitally created or altered. For ads generally, Meta announced that from June 1, 2026 it runs automated detection on ad media and applies an "AI info" label in the About this ad menu with no advertiser action required (Meta newsroom). A plain product ad with an AI narrator is not banned; a realistic fake person or event is where the rules bite.
+
+### YouTube
+
+YouTube requires creators to disclose, through the AI use setting at upload, realistic content generated or meaningfully altered with AI. Its help page lists "cloning one's own voice to create voice overs or dubs" among minor uses that do not need disclosure, and says disclosing "won't limit a video's audience or impact its eligibility to earn money" (YouTube Help). When in doubt, disclose; the label costs nothing and a missed one can.
+
+Madwackd Studio puts an invisible provenance mark on every clip it renders, which supports these labels but does not replace the platform's own toggle. Switch the toggle on yourself.
+
+## What does the finished ad cost?
+
+With a voice-only tool, the voice is a monthly audio plan and the video is a separate bill. In Madwackd Studio the voice is part of the shot. A Fast 720p shot with sound is about 24 credits; a 25-second ad is about four shots, so roughly 96 credits, or $9.60 to $13.44 at $0.10 to $0.14 a credit, before retakes. The exact quote shows before you confirm, every time, and each project has a budget cap. A $5 Test Drive buys about two shots. Plans start at $29 a month. If you would rather hand it off, a producer-made spot starts at $2,500 with script, shots, stock voiceover, 9:16 and 16:9 exports and a revision round. Details on the pricing page; results vary by project.
+
+## Mistakes that get AI-voiced ads ignored or pulled
+
+- Announcer voice on a neighborly offer. Match the style to the promise.
+
+- A free-tier voice in a paid ad. Check the commercial license first.
+
+- Skipping the AI toggle on TikTok. It is a condition of the ad, not a suggestion.
+
+- A fake customer voice. Invented testimonials can break FTC rules, and a cloned real person without consent can break state voice laws. Use real customers with permission, or none.
+
+- Numbers written for the page. "$1,299" reads badly; "twelve ninety-nine" reads like a person.
+
+## Questions people ask
+
+### Can I use an AI voiceover in a TikTok ad?
+
+Yes. TikTok Ads Manager has a toggle, "This ad contains AI-generated content", for ads whose image, video or audio is completely AI-generated or significantly modified by AI. Spark Ads are excluded from the toggle and follow the organic AI-content rules instead. Once submitted, the toggle cannot be unselected unless the creative changes. Checked on TikTok's help page on November 8, 2026.
+
+### Do I have to disclose an AI voiceover in a Facebook or Instagram ad?
+
+For ads about social issues, elections or politics, Meta requires advertisers to disclose photorealistic video or realistic-sounding audio that was created or edited with generative AI in certain cases. For other ads, Meta said that from June 1, 2026 it runs automated detection on ad media and adds an "AI info" label in the About this ad menu, with no advertiser action required. Rules change, so check Meta's current ad standards.
+
+### Does YouTube require a label for an AI voiceover?
+
+YouTube requires disclosure, through the AI use setting at upload, for realistic content that was generated or meaningfully altered with AI. Its help page lists cloning your own voice for voiceovers as a minor use that does not need disclosure, and says disclosing alone does not affect a video's eligibility to earn money. Check the current policy; this reflects November 8, 2026.
+
+### How much does an AI voiceover for an ad cost?
+
+On a voice-only platform you pay for audio minutes on a monthly plan, from free tiers that usually exclude commercial use up to creator plans around $22 a month, then you still need to make the video. In Madwackd Studio the voice is part of the clip: a 25-second ad is about four 8-second Fast 720p shots at about 24 credits each, roughly $9.60 to $13.44 before retakes at $0.10 to $0.14 a credit, and the exact quote shows before you confirm. A producer-made spot starts at $2,500.
+
+### Can I use a celebrity or a famous voice in my ad?
+
+No. Several US states now treat a person's voice as protected, including Tennessee, Illinois and California, and the FTC has proposed extending its impersonation rule to individuals. Madwackd Studio never makes voices of celebrities or public figures, and any custom voice needs the speaker's written consent.
+
+Make the ad, not just the audio. Fit your script for free, see the credit quote, then start for $5. Or call 1-800-481-8638 and a producer makes it for you. Madi, our AI producer, can draft the script with you from the chat button on any page. She is an AI, and she says so.
+
+---
+
+# How Much Does an AI Voiceover Cost? AI vs Voice Actor (2026)
+URL: https://www.madwackd.ai/producers-corner/ai-voiceover-cost/
+Updated: 2026-11-08
+
+Short answer: an AI voiceover on a voice platform costs from $0 (free tiers, usually without commercial rights) to about $22 a month for creator plans with over 100 minutes of audio, prices checked November 8, 2026. A human voice actor runs about $100 to $500 for a 15 to 60 second commercial on a 2026 marketplace guide, and union TV work starts at a session fee of about $502 plus usage. In Madwackd Studio the voice is part of the video: an 8-second shot with voice is about 24 credits, $2.40 to $3.40, and the exact quote shows before you render.
+
+"How much does an AI voiceover cost" has three honest answers, because there are three different things you can buy: minutes of audio from a voice platform, a human performance priced by usage, or a finished video with the voice already in it. This guide prices all three with sources and dates, then shows when the human is worth the money.
+
+## What you are actually paying for
+
+Option | You pay for | You still need | Typical price | 
+
+Voice platform | Minutes or characters of audio per month | A video, an editor, a commercial-use plan | $0 to $22/mo for creator tiers; $99 and up for pro tiers | 
+
+Human voice actor | A performance, priced by length and where it airs | Casting, direction, a studio or home-studio file, the video | $100 to $500 per short commercial (marketplace); union session about $502 + usage | 
+
+Video studio with voice built in | Render time for the finished shot, voice included | A script and a few retakes | About 24 credits ($2.40 to $3.40) per 8-second Fast 720p shot, quoted first | 
+
+## AI voice platform pricing (dated)
+
+Platforms sell audio in credits that roughly equal minutes. As the most-searched example, ElevenLabs listed these on its pricing page on November 8, 2026: Free $0 for 10,000 credits (about 10 minutes, no commercial license listed); Starter $6 for 30,000; Creator $22 for 121,000; Pro $99 for 600,000; Scale $299 for 1.8 million; Business $990 for 6 million, with a commercial license from Starter up. Other platforms are in the same shape: a free tier without commercial rights, a creator tier in the tens of dollars, pro tiers around a hundred. Two costs hide behind the plan price: regenerations count against your minutes, and the video is a separate tool and a separate bill.
+
+## Human voice actor rates
+
+Human rates are set by usage, not by the minute: the same 30-second read costs more on national TV than on your own website. Numbers you can check:
+
+- A marketplace pricing guide dated March 31, 2026 lists commercials (15 to 60 seconds) at $100 to $500 per project, explainer and corporate narration at $150 to $800, e-learning at $0.10 to $0.50 a word or $20 to $100 per finished minute, and union talent at $2,000 and up per project (Twine, 2026; a freelance marketplace, unattributed ranges).
+
+- A working union voice actor's rate page lists SAG-AFTRA baselines of about $502 session fee plus usage for TV commercials and about $282 plus usage for radio (D.C. Douglas; undated, "general guides").
+
+- The non-union reference most actors quote is the GVAA Rate Guide, which is behind a sign-up and not reproduced here. Expect usage tiers: web-only, local, regional, national.
+
+Budget realistically: a good non-union read for a web ad is a few hundred dollars; a national TV campaign with a known voice is thousands plus residuals. Traditional production costs around the voice are in our guide to how much a commercial costs.
+
+## The Madwackd math
+
+Madwackd Studio does not sell voice by the minute. You prepay credits ($0.10 to $0.14 each depending on plan or pack), and each render shows its estimate (seconds x model x takes) before you confirm. A Fast 720p 8-second shot with sound is about 24 credits.
+
+What | Shots | Credits (about) | Dollars (about) | 
+
+One 8-second clip with voice | 1 | 24 | $2.40 to $3.40 | 
+
+25 to 30 second ad | 4 | 96 | $9.60 to $13.44 | 
+
+60-second spot | 8 | 192 | $19.20 to $26.88 | 
+
+$5 Test Drive | about 2 | 50 | $5, one per account | 
+
+Those are first-take numbers. Real projects take retakes, so our producers plan two to three takes per shot; the studio's cheap 4-second preview exists for exactly that. Plans run $29, $89 and $299 a month; credit packs from $14. A producer-made spot starts at $2,500 and a music video at $5,000, quoted up front. Full list on the pricing page; results vary by project.
+
+## When a human voice is worth it
+
+- The voice is the brand. A recurring spokesperson, a sound people recognize.
+
+- Real emotion carries the ad. Grief, comedy timing, a laugh that lands.
+
+- Broadcast and big media. Usage terms, union rules and station standards are built for human talent.
+
+- You need someone to direct. A good actor fixes a weak script in the booth.
+
+For most short social ads, explainers and tests, an AI voice in the right style does the job, and the money is better spent on more versions and more testing.
+
+## Hidden costs to budget for either way
+
+- Commercial license. Free voices usually are not free for ads.
+
+- Regenerations and retakes. Both AI minutes and human sessions get used up by changes. Lock the script first.
+
+- Music and sound. Licensed music is its own line item.
+
+- Editing time. Yours or someone's. A built-in studio removes the line-up step.
+
+- Consent paperwork. Any custom or cloned voice needs written permission; see our consent guide.
+
+## Questions people ask
+
+### Is an AI voiceover cheaper than a voice actor?
+
+Per minute of audio, yes, by a wide margin: creator plans on voice platforms run from free to about $22 a month for over 100 minutes, while a 2026 marketplace guide puts a human-read 15 to 60 second commercial at $100 to $500 and a union TV session fee at about $502 plus usage. The gap narrows once you count the video, editing and licensing you still need around the voice.
+
+### How much does an AI voiceover cost per minute?
+
+On ElevenLabs, checked November 8, 2026, the Creator plan is $22 a month for about 121 minutes, roughly 18 cents a minute if you use it all; the Free plan gives about 10 minutes with no commercial license. Madwackd Studio does not sell voice by the minute: the voice is part of an 8-second video shot that costs about 24 credits, $2.40 to $3.40, with the quote shown before you render.
+
+### Are free AI voices free for commercial use?
+
+Usually not. Free tiers on voice platforms commonly exclude commercial use, which includes ads and monetized channels. Read the plan page and keep a copy of the terms with the project.
+
+### What does a 30-second AI voiceover cost?
+
+On a voice platform, 30 seconds is a fraction of any paid plan, so the real cost is the monthly plan and the video you still have to make. In Madwackd Studio a 30-second clip with voice is about four 8-second Fast 720p shots, roughly 96 credits or $9.60 to $13.44 before retakes, quoted before you confirm. A producer-made 30-second spot starts at $2,500.
+
+### Does Madwackd Studio charge per minute of voice?
+
+No. You buy render credits, every render shows its credit estimate before you confirm, each project has a budget cap, and technical failures with no video refund credits automatically. Prepaid credits mean the balance never goes below zero.
+
+See your price before you spend it. Paste your script into the free script fitter for a credit estimate, then start for $5. For a human quote, call 1-800-481-8638.
+
+---
+
+# Voice Cloning Consent: What You Need Before You Clone a Voice (2026)
+URL: https://www.madwackd.ai/producers-corner/voice-cloning-consent/
+Updated: 2026-11-08
+
+Short answer: before you clone anyone's voice, get written permission from that person that names the exact uses, the time period and whether they can take it back. Your own voice needs only your own record. Several US states now protect a person's voice by law, including Tennessee, Illinois and California, and the FTC has proposed extending its impersonation rule to individuals. Never clone a celebrity, a public figure or a dead person's voice without the rights holder's consent. This is general information from a video studio, not legal advice.
+
+We wrote this because consent is a hard rule in Madwackd Studio: no custom voice is made until the speaker's permission is confirmed, and that confirmation lives in the project's rights pack. Here is what that permission should look like, what the law says as of November 8, 2026, and a checklist you can copy.
+
+## What counts as consent?
+
+A verbal "sure" is not consent you can rely on. Consent you can show someone later has five parts:
+
+- Who. The speaker's name and signature, and a statement that the voice is theirs.
+
+- What for. The specific uses: which videos, which channels, whether ads are included, whether the clone can say new words or only re-record a script.
+
+- How long. A time period, and what happens to the voice model and the sample when it ends.
+
+- Take-backs. Whether the speaker can revoke it, and how.
+
+- Money. Any payment, or a clear statement that there is none.
+
+California's AB 2602 sets a useful bar even outside California: a contract provision for a digital replica of a performer's voice or likeness is enforceable only if it describes the intended uses with reasonable specificity, or the performer was represented by counsel or a union (Covington, Sept 2024). "Any use, forever" is exactly the clause the law was written against.
+
+## The laws that now protect a voice
+
+This is not a complete list, and the details are for a lawyer. These are the ones a creator or a small business should know exist.
+
+Law | What it does | Source | 
+
+Tennessee, ELVIS Act (HB 2091), enacted March 2024 | Adds voice to the state's right of publicity; prohibits knowingly distributing an unauthorized digital replica, and reaches tools whose primary purpose is making them | Covington | 
+
+Illinois, HB 4875, signed August 2024 | Amends the Right of Publicity Act: no knowingly distributing a sound recording or audiovisual work that contains an unauthorized digital replica of a person's voice, image or likeness | IPWatchdog | 
+
+California, AB 2602 and AB 1836, signed September 17, 2024 | AB 2602: digital replica contract terms must specify uses and the performer must be represented. AB 1836: no commercial digital replicas of deceased performers without the estate's consent | Governor of California | 
+
+Federal, FTC impersonation rule, February 2024 | Final rule on impersonating government and businesses; a supplemental proposal would extend it to impersonating individuals, citing AI voice cloning | FTC | 
+
+Federal, NO FAKES Act (proposed) | Would create a federal right over your own digital replica; introduced in the Senate July 31, 2024 and not law as of this writing | Covington | 
+
+Other states have passed or are moving on similar bills. If your business or your speaker is in a state not listed, assume a similar rule exists and get consent anyway. It costs a page of paper.
+
+## Who you can never clone
+
+- Celebrities and public figures, including politicians, with or without a disclaimer.
+
+- Deceased people, without the estate's written consent (California's AB 1836 is explicit).
+
+- Anyone, to make them say something they did not say in a realistic way. Platforms treat that as manipulated media and the laws above treat it as an unauthorized replica.
+
+- A customer or employee from a recording you happen to have. Having the audio is not having the permission.
+
+## What the platforms ask for
+
+Separate from the law, the places you publish have rules. YouTube requires disclosure of realistic AI-generated or altered content through its AI use setting, lists cloning your own voice for voiceovers as a minor use that needs no disclosure, and may penalize creators who consistently fail to disclose (YouTube Help). TikTok's Ads Manager requires its AI-generated content toggle on ads whose audio is completely AI-generated or significantly modified by AI (TikTok Ads help). Meta requires disclosure of realistic-sounding altered audio in organic posts and in social-issue, election and political ads (Meta policy). The label rules for ads are in our AI voiceover for ads guide.
+
+## How Madwackd Studio handles it
+
+Today the studio's voiceovers come from stock voice styles, so no one's real voice is cloned. Any custom voice, when it is offered, goes through the consent step first: you confirm it is your own voice or that you hold written permission from the speaker, and you name them. The wording, the time and a fingerprint of the sample go into the project's rights pack, which you can download as CSV or PDF alongside prompts, versions, model IDs and receipts. We never make voices of celebrities or public figures. Details on the Voice and Trust and safety pages.
+
+## Consent checklist you can copy
+
+- Speaker's full name and signature, with the date.
+
+- "This is my voice" statement, or the speaker's authority to grant rights to it.
+
+- Exact uses: project names, channels, ads yes or no, new words yes or no.
+
+- Territory, if it matters to you.
+
+- Time period and what happens to the model and sample afterwards.
+
+- Revocation: whether, how, and how fast you will stop.
+
+- Payment, or none.
+
+- A copy of the sample recording, with its date.
+
+- Who holds the file and where (your rights pack, your contracts folder).
+
+- A line that the speaker is over 18, or a parent or guardian's signature.
+
+## Questions people ask
+
+### Is it legal to clone my own voice?
+
+Cloning your own voice for your own videos is the clear case: you are the speaker and you consent. YouTube even lists cloning your own voice for voiceovers as a minor use that needs no disclosure. Keep a record that it is your voice, and read the platform's terms on what it may do with your sample. This is general information, not legal advice.
+
+### Can I clone a celebrity voice for a parody or a joke?
+
+Do not. Tennessee's ELVIS Act, Illinois' HB 4875 and California's digital replica laws now treat a person's voice as protected, and parody is not a safe harbor you should bet an ad on. Madwackd Studio never makes voices of celebrities or public figures.
+
+### Do I need consent to clone an employee's or a client's voice?
+
+Yes, in writing, naming the uses, the time period and whether it can be revoked. California's AB 2602 requires that contracts for digital replicas describe the intended uses with reasonable specificity. Treat that as the standard everywhere.
+
+### What should a voice consent form include?
+
+The speaker's name and signature, a statement that it is their voice, the exact uses (which videos, which channels, ads or not), the time period, whether it can be revoked and how, any payment, and a copy of the sample. Madwackd Studio stores the consent wording, time and a fingerprint of the sample in the project's rights pack.
+
+### What can I do if someone clones my voice without permission?
+
+Document it, report it to the platform where it appears (YouTube, TikTok and Meta all take reports on synthetic media), and talk to a lawyer about your state's right-of-publicity or digital replica law. The FTC's impersonation rule covers businesses and government today and the agency has proposed extending it to individuals.
+
+Want a voice without the paperwork? The stock styles need no consent form, and the price shows before every render. Start for $5, or call 1-800-481-8638.
