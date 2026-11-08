@@ -1,0 +1,30 @@
+/* Dashboard ladder: the "Three dashboards" comparison on /pricing/ and the plan-limits table on /pro-studio/.
+   Plain table on desktop; each row stacks into a labeled card under 760px (td::before reads data-label). */
+.dash-cmp-wrap{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.dash-cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:.95rem;line-height:1.5}
+.dash-cmp th,.dash-cmp td{padding:14px 16px;text-align:left;vertical-align:top;border-top:1px solid var(--line);min-width:0}
+.dash-cmp thead th{border-top:0;background:var(--bone);font-weight:600;color:var(--ink);font-size:1rem}
+.dash-cmp thead th:first-child{color:var(--muted);font-weight:500;font-size:.86rem}
+.dash-cmp tbody th{font-weight:600;color:var(--ink);width:17%}
+.dash-cmp td{color:var(--text)}
+.dash-cmp td b{color:var(--ink);font-weight:600}
+.dash-cmp td .btn{margin-top:2px}
+.dash-cmp .here,.ladder-strip .here{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--cyan-text);margin-left:8px;vertical-align:middle}
+.dash-cmp .tag-roll{display:inline-block;font-size:.76rem;font-weight:550;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.dash-fine{margin-top:14px}
+.ladder-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.ladder-strip .card{display:flex;flex-direction:column;gap:6px}
+.ladder-strip .card .kicker{margin-bottom:4px}
+.ladder-strip .card .btn{align-self:flex-start;margin-top:auto}
+.ladder-strip .card.is-here{border-color:var(--cyan);box-shadow:inset 0 0 0 1px var(--cyan)}
+@media (max-width:980px){.ladder-strip{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .dash-cmp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .dash-cmp,.dash-cmp tbody,.dash-cmp tr,.dash-cmp th,.dash-cmp td{display:block;width:auto}
+  .dash-cmp tr{border-top:1px solid var(--line);padding-bottom:6px}
+  .dash-cmp tr:first-child{border-top:0}
+  .dash-cmp tbody th{background:var(--bone);border-top:0;padding:10px 16px;width:auto}
+  .dash-cmp td{border-top:0;padding:8px 16px}
+  .dash-cmp td::before{content:attr(data-label);display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:2px}
+}
+.dash-sub{margin-top:34px}

@@ -151,3 +151,7 @@ img { max-width: 100%; display: block; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media (forced-colors: active) { .cd-bar-fill, .cd-hb-f { background: CanvasText; } .cd-sample { border-style: solid; } }
+
+/* ladder note under the CTA */
+.cd-ladder { margin-top: 14px; text-align: center; }
+.cd-ladder a { color: var(--cd-ink); }

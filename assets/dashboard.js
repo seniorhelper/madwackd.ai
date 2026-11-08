@@ -205,7 +205,7 @@
 
   /* ---------- studio voices (stub; no network) ---------- */
   function requestStudioVoice(text, voiceId) {
-    return Promise.resolve({ ok: false, status: 'launching', message: 'Studio voices are launching soon. Nothing was generated and nothing was used from your plan.' });
+    return Promise.resolve({ ok: false, status: 'launching', message: 'Studio voices are rolling out. Nothing was generated and nothing was used from your plan.' });
   }
   D.requestStudioVoice = requestStudioVoice;
   $('sv-go').addEventListener('click', function () {
@@ -258,7 +258,7 @@
     row('Export size', true, T.exportRes + 'p' + (T.watermark ? ', watermark' : ', no watermark'));
     row('Burned-in captions', T.captions); row('Auto-duck', T.autoDuck); row('Brand kit', T.brandKit, T.multiBrandKits ? 'Multiple kits' : '');
     row('Projects', true, inf(T.projects)); if (T.seats > 1) row('Team seats', true, String(T.seats));
-    row('Studio voice minutes', T.studioVoiceMin > 0, T.studioVoiceMin > 0 ? T.studioVoiceMin + ' / mo (when launched)' : '');
+    row('Studio voice minutes', T.studioVoiceMin > 0, T.studioVoiceMin > 0 ? T.studioVoiceMin + ' / mo (rolling out)' : '');
   }
   function applyTier() {
     $('plan-badge').textContent = T.label + (T.price ? ' $' + T.price + '/mo' : '');
@@ -269,7 +269,7 @@
     $('cap-opt').textContent = T.captions ? 'Caption (burned in)' : 'Caption (locked - Starter+)';
     var ex = D.exportSettings(tierKey, 'AUTO');
     $('export-note').textContent = 'Your plan exports ' + T.exportRes + 'p' + (T.watermark ? ' with a small Madwackd Studio watermark' : ' with no watermark') + (isFinite(T.maxSeconds) ? ', up to ' + T.maxSeconds + ' seconds.' : ', any length.');
-    $('sv-minutes').textContent = T.studioVoiceMin > 0 ? 'Your plan includes ' + T.studioVoiceMin + ' studio voice minutes per month once they launch.' : 'Studio voice minutes start on Pro.';
+    $('sv-minutes').textContent = T.studioVoiceMin > 0 ? 'Your plan includes ' + T.studioVoiceMin + ' studio voice minutes per month as they roll out.' : 'Studio voice minutes start on Pro.';
     planList();
   }
   $('brand-logo').addEventListener('click', function (e) { if (!T.brandKit) { e.preventDefault(); upgrade('brandKit'); } });
