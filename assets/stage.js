@@ -143,10 +143,10 @@
   /* ---------------- the show ---------------- */
   function reset() {
     spotOff();
-    ["s-lights", "s-open", "s-say", "s-genie", "s-paint", "s-hills", "s-trees", "s-ground", "s-done"].forEach(function (c) { cls(c, false); });
+    ["s-lights", "s-open", "s-say", "s-genie", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, false); });
     if (onair) onair.classList.remove("on");
   }
-  function finale() { ["s-lights", "s-open", "s-paint", "s-hills", "s-trees", "s-ground", "s-done"].forEach(function (c) { cls(c, true); }); if (onair) onair.classList.add("on"); played = true; playing = false; }
+  function finale() { ["s-lights", "s-open", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, true); }); if (onair) onair.classList.add("on"); played = true; playing = false; }
   function play() {
     if (playing) return; playing = true; clearAll(); reset();
     fxStart();
@@ -173,6 +173,9 @@
       later(function () { spotOnEl(stage.querySelector(".gs-z-actor"), 10); }, 6500);
       if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
     }, 14200);
+    later(function () {                                                          /* the dream dashboard rises from the boards */
+      cls("s-holo", true); var h = stage.querySelector(".gs-holo"); if (h) { spotOnEl(h, 0); var o = orbPoint(); smoke(o.x, o.y + 60, 40); }
+    }, 15200);
   }
   if (replayBtn) replayBtn.addEventListener("click", function () { playing = false; cls("s-genie", false); play(); });
 
@@ -208,6 +211,15 @@
     }, { passive: true });
     stage.addEventListener("pointerleave", function () { stage.style.setProperty("--px", "0"); stage.style.setProperty("--py", "0"); });
   }
+
+  /* "Unlock: build yours now" goes to the console and focuses it */
+  document.querySelectorAll(".wd-unlock").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (!wish) return; e.preventDefault();
+      wish.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+      setTimeout(function () { wish.focus(); wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }, 500);
+    });
+  });
 
   /* ---------------- console form on pages other than the Genie page: carry the wish over ---------------- */
   var form = document.getElementById("wish-form");
