@@ -45,7 +45,7 @@
   background:#15121F;border:1px solid #3A3350;box-shadow:0 12px 32px rgba(10,8,16,.4)}
 .zgl-say p{margin:0 0 10px;font-weight:500}
 .zgl-say .go,.zgl-say .help{display:block;width:100%;min-height:40px;margin-top:6px;padding:0 12px;border-radius:999px;border:1px solid #3A3350;background:#221D30;color:#F4F0FA;cursor:pointer;text-align:left}
-.zgl-say .go{background:#FF2E93;border-color:#FF2E93;color:#fff}
+.zgl-say .go{background:#FF2E93;border-color:#FF2E93;color:#15121F;font-weight:700}
 .zgl-x{position:absolute;top:-12px;right:-12px;width:32px;height:32px;padding:0;border:1px solid #3A3350;border-radius:50%;background:#15121F;color:#fff;font-size:20px;line-height:1;cursor:pointer}
 .zgl-x::after{content:"";position:absolute;inset:-6px}          /* 44px touch target */
 .zgl-card.is-in .zgl-actor{animation:zgl-walkon .7s cubic-bezier(.2,1.2,.4,1) both}

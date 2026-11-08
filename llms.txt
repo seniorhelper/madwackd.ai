@@ -14,6 +14,7 @@ Key facts:
 
 ## Pages
 - [Home](https://www.madwackd.ai/)
+- [Choose your dashboard](https://www.madwackd.ai/choose/): three questions (what do you want it to be, what tools do you need in one, what do you want to spend) that route to the Free dash ($0, /creator-studio/), the Pro dash (included with Starter $29, Pro $89 and Studio $299 a month, /pro-studio/) or the Dream-it dash (the Genie, Founding Creator $99 a month for 12 months then $299, /custom-creator-studio/). Plain links, no quiz logic.
 - [Features](https://www.madwackd.ai/features/)
 - [How it works](https://www.madwackd.ai/how-it-works/)
 - [Voice](https://www.madwackd.ai/voice/)

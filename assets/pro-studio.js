@@ -254,7 +254,7 @@
     stopTimerIfLeaving();
     ({ earn: pEarn, pitch: pPitch, publish: pPublish, mail: pMail, tips: pTips, market: pMarket, expert: pExpert, custom: pCustom }[active] || pEarn)(bay);
   }
-  function head(title, sub, extra) { return '<div class="pcs-h"><h3>' + title + '</h3>' + (extra || '') + '<p>' + sub + '</p></div>'; }
+  function head(title, sub, extra) { return '<div class="pcs-h"><h2>' + title + '</h2>' + (extra || '') + '<p>' + sub + '</p></div>'; }
   function sampleTag() { return mode === 'demo' ? ' <span class="pcs-sample">Sample</span>' : ''; }
 
   /* ---------- knob ---------- */
