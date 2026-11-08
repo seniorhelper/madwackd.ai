@@ -85,6 +85,23 @@
   }
   function orbPoint() { var o = stage.querySelector(".gs-orb"), f = fx.getBoundingClientRect(), r = o.getBoundingClientRect(); return { x: r.left - f.left, y: r.top - f.top }; }
 
+  /* ---------------- follow-spot ---------------- */
+  var spot = stage.querySelector(".gs-spot"), scene = stage.querySelector(".gs-scene");
+  function spotTo(x, y) {   /* x, y in scene pixels */
+    if (!spot || !scene) return;
+    var r = scene.getBoundingClientRect();
+    x = Math.max(0, Math.min(r.width, x)); y = Math.max(0, Math.min(r.height, y));
+    var ang = Math.atan2(x - r.width / 2, Math.max(1, y)) * -180 / Math.PI;   /* cone leans from the top centre toward the target */
+    spot.style.setProperty("--sx", x.toFixed(0) + "px"); spot.style.setProperty("--sy", y.toFixed(0) + "px"); spot.style.setProperty("--sr", ang.toFixed(1) + "deg");
+    cls("s-spot", true);
+  }
+  function spotOnEl(el, dy) {
+    if (!el || !scene) return;
+    var r = el.getBoundingClientRect(), s = scene.getBoundingClientRect();
+    spotTo(r.left - s.left + r.width / 2, r.top - s.top + r.height / 2 + (dy || 0));
+  }
+  function spotOff() { cls("s-spot", false); }
+
   /* ---------------- Producer Z ---------------- */
   function zClip(name, loop) {
     if (!zVid) return; zVid.loop = !!loop;
@@ -101,6 +118,7 @@
     zOn = true; zWrap.hidden = false;
     if (window.__mwzLauncher && window.__mwzLauncher.hideBubble) { try { window.__mwzLauncher.hideBubble(true); } catch (e) { /* ignore */ } }
     zClip("z-wave", true); cls("s-z", true);
+    later(function () { spotOnEl(stage.querySelector(".gs-z-actor"), 10); }, 900);
     later(function () { cls("s-z", false); cls("s-zidle", true); if (zVid) zVid.pause(); }, 7000);
   }
   function zClap(text) {
@@ -110,11 +128,18 @@
     later(function () { cls("s-zclap", false); cls("s-zidle", true); }, 1600);
   }
   var actor = stage.querySelector(".gs-z-actor");
-  if (actor) actor.addEventListener("click", function () { window.dispatchEvent(new CustomEvent("mw:guide-open", { detail: { topic: "help", context: "genie-stage" } })); });
+  var lastLine = "Hi, I'm Producer Z. Tell me what you dream of and I'll show you.";
+  var _zSpeak = zSpeak; zSpeak = function (t, ms) { lastLine = t; _zSpeak(t, ms); };
+  if (actor) actor.addEventListener("click", function () {
+    try { if ("speechSynthesis" in window) { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(lastLine); u.rate = 1.03; speechSynthesis.speak(u); } } catch (e) { /* no speech */ }
+    spotOnEl(actor, 10);
+    window.dispatchEvent(new CustomEvent("mw:guide-open", { detail: { topic: "help", context: "genie-stage" } }));
+  });
   window.addEventListener("mw:genie-plan", function () { zClap("Nice. Your studio, itemized, is right below. Start, or think about it; nothing is charged."); });
 
   /* ---------------- the show ---------------- */
   function reset() {
+    spotOff();
     ["s-lights", "s-open", "s-say", "s-genie", "s-paint", "s-hills", "s-trees", "s-ground", "s-done"].forEach(function (c) { cls(c, false); });
     if (onair) onair.classList.remove("on");
   }
@@ -132,7 +157,7 @@
     later(function () {                                                          /* the Genie: smoke rises from the megaphone */
       var z = zPoint(); smoke(z.x, z.y, 70);
       later(function () { var o = orbPoint(); smoke(o.x, o.y, 50); }, 500);
-      cls("s-genie", true);
+      cls("s-genie", true); spotOnEl(stage.querySelector(".gs-orb"), 0);
     }, 8200);
     later(function () { var o = orbPoint(); sparks(o.x, o.y, 140); }, 10200);    /* poof: it leaves in sparks */
     later(function () { cls("s-paint", true); }, 10300);                        /* the backdrop paints: sky */
@@ -141,6 +166,8 @@
     later(function () { cls("s-ground", true); var z = zPoint(); sparks(z.x, z.y + 20, 40); }, 12800);   /* foreground */
     later(function () { cls("s-done", true); if (onair) onair.classList.add("on"); played = true; playing = false;
       if (zOn) zSpeak("Your turn. Type it right there, then press START.", 6000);
+      if (wish) spotOnEl(wish, 0);
+      later(function () { spotOnEl(stage.querySelector(".gs-z-actor"), 10); }, 6500);
       if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
     }, 14200);
   }
