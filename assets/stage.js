@@ -1,12 +1,13 @@
-/* Genie stage: scene timeline, canvas effects (dust, smoke, sparks), Producer Z on the boards, pointer parallax.
-   Plain JS, no libraries, no inline handlers. Shared by the home page and /custom-creator-studio/.
-   Nothing here spends money or sends anything: the console form's submit is handled by genie.js on the Genie page,
-   or, on other pages, carried to the Genie page in sessionStorage. */
+/* Genie stage v3: the show's timeline, canvas effects (dust, smoke, sparks), Producer Z, the lamp and the Genie, the painted
+   set pieces, pointer parallax, and the example dashboard's creator / business switch. Plain JS, no libraries, no inline handlers.
+   Shared by the home page and /custom-creator-studio/. Nothing here spends money or sends anything: the console form's submit
+   is handled by genie.js on the Genie page, or, on other pages, carried to the Genie page in sessionStorage. */
 (function () {
   "use strict";
   var stage = document.getElementById("gstage");
   if (!stage) return;
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SMALL = window.innerWidth <= 900;
   /* the Producer Z launcher's walk-on card never covers the stage: Z is already on it */
   try { sessionStorage.setItem("mw_z_card", "done"); } catch (e) { /* private mode */ }
   (function hush(n) { if (window.__mwzLauncher && window.__mwzLauncher.hideBubble) { try { window.__mwzLauncher.hideBubble(true); } catch (e) { /* ignore */ } } else if (n > 0) { setTimeout(function () { hush(n - 1); }, 400); } })(25);
@@ -15,15 +16,28 @@
   var onair = stage.querySelector(".gs-onair"), replayBtn = stage.querySelector(".gs-replay");
   var zWrap = stage.querySelector(".gs-z"), zVid = stage.querySelector(".gs-z-actor video"), zSay = stage.querySelector(".gs-z-say");
   var fx = stage.querySelector(".gs-fx"), wish = document.getElementById("wish");
+  var lamp = stage.querySelector(".gs-lamp"), genieImg = stage.querySelector(".gs-genie img");
   var timers = [], playing = false, played = false, inView = false, zOn = false, sayTimer = 0;
-  var DREAMS = ["a cooking channel with a line out the door", "a music channel that pays the rent", "a fitness channel people actually finish", "a podcast people actually finish"];
+  var SCENES = ["s-lights", "s-open", "s-c1", "s-c1out", "s-c2", "s-c2out", "s-lamp", "s-g1", "s-g2", "s-g3", "s-g4", "s-sky", "s-sun", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"];
+  var END = ["s-lights", "s-open", "s-lamp", "s-g4", "s-sky", "s-sun", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"];
 
   function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
   function clearAll() { timers.forEach(clearTimeout); timers = []; }
   function cls(name, on) { stage.classList.toggle(name, !!on); }
 
+  /* ---------------- the Genie's poses (claymation stills, swapped on cue) ---------------- */
+  var POSES = [];
+  try { POSES = JSON.parse(genieImg && genieImg.getAttribute("data-poses") || "[]"); } catch (e) { POSES = []; }
+  var posesReady = false;
+  /* the lamp and Genie only appear when their art is really there (a missing file never leaves a hole in the show) */
+  var lampImg = lamp && lamp.querySelector("img.lamp");
+  function artCheck() { if (lampImg && lampImg.complete && lampImg.naturalWidth > 0) cls("has-lamp", true); }
+  if (lampImg) { lampImg.addEventListener("load", artCheck); artCheck(); }
+  function preloadPoses() { if (posesReady || !POSES.length) return; posesReady = true; POSES.forEach(function (src) { var im = new Image(); im.decoding = "async"; im.src = src; }); }
+  function pose(i) { if (genieImg && POSES[i]) genieImg.setAttribute("src", POSES[i]); }
+
   /* ---------------- canvas: dust motes always (while on screen), smoke and sparks on cue ---------------- */
-  var ctx = fx && fx.getContext ? fx.getContext("2d") : null, W = 0, H = 0, DPR = 1, parts = [], raf = 0, lastT = 0, fxOn = false;
+  var ctx = fx && fx.getContext ? fx.getContext("2d") : null, W = 0, H = 0, DPR = 1, parts = [], raf = 0, lastT = 0, fxOn = false, gold = false;
   function size() {
     if (!fx) return;
     var r = fx.getBoundingClientRect(); DPR = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -33,10 +47,11 @@
   function dust(n) {
     for (var i = 0; i < n; i++) parts.push({ k: "dust", x: Math.random() * W, y: Math.random() * H * .8, vx: (Math.random() - .5) * 6, vy: -4 - Math.random() * 8, r: .6 + Math.random() * 1.6, a: .15 + Math.random() * .35, life: 1e9, t: 0 });
   }
-  function smoke(x, y, n) {
+  function smoke(x, y, n, hues) {
+    hues = hues || [320, 265];
     for (var i = 0; i < n; i++) {
       var ang = Math.random() * Math.PI * 2, sp = 10 + Math.random() * 40;
-      parts.push({ k: "smoke", x: x + (Math.random() - .5) * 16, y: y + (Math.random() - .5) * 16, vx: Math.cos(ang) * sp * .35, vy: -40 - Math.random() * 70, r: 10 + Math.random() * 22, a: .18 + Math.random() * .22, life: 1.8 + Math.random() * 1.6, t: 0, hue: Math.random() < .5 ? 320 : 265 });
+      parts.push({ k: "smoke", x: x + (Math.random() - .5) * 16, y: y + (Math.random() - .5) * 16, vx: Math.cos(ang) * sp * .35, vy: -40 - Math.random() * 70, r: 10 + Math.random() * 22, a: .18 + Math.random() * .22, life: 1.8 + Math.random() * 1.6, t: 0, hue: hues[i % hues.length] });
     }
   }
   function sparks(x, y, n) {
@@ -57,7 +72,7 @@
         p.x += p.vx * dt; p.y += p.vy * dt; p.vx += (Math.random() - .5) * 2;
         if (p.y < -5) { p.y = H * .8; p.x = Math.random() * W; }
         if (p.x < -5) p.x = W + 5; if (p.x > W + 5) p.x = -5;
-        ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.t * 2 + p.r)); ctx.fillStyle = "#ffe9b8";
+        ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.t * 2 + p.r)); ctx.fillStyle = gold ? "#ffd27a" : "#ffe9b8";
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
         alive.push(p);
       } else if (p.k === "smoke") {
@@ -81,21 +96,21 @@
   }
   function fxStart() { if (!ctx || REDUCED) return; fxOn = true; size(); if (!parts.some(function (p) { return p.k === "dust"; })) dust(W > 900 ? 70 : 36); if (!raf) raf = requestAnimationFrame(step); }
   function fxStop() { fxOn = false; if (raf) cancelAnimationFrame(raf); raf = 0; if (ctx) ctx.clearRect(0, 0, W, H); }
-  function zPoint() { /* where Z's megaphone is, in canvas pixels */
-    var a = stage.querySelector(".gs-z-actor"); if (!a || !fx) return { x: W * .5, y: H * .45 };
-    var r = a.getBoundingClientRect(), f = fx.getBoundingClientRect();
-    return { x: r.left - f.left + r.width * .15, y: r.top - f.top + r.height * .45 };
+  function at(el, fx_, fy) { /* a point on an element, in canvas pixels */
+    if (!el || !fx) return { x: W * .5, y: H * .45 };
+    var r = el.getBoundingClientRect(), f = fx.getBoundingClientRect();
+    return { x: r.left - f.left + r.width * (fx_ == null ? .5 : fx_), y: r.top - f.top + r.height * (fy == null ? .5 : fy) };
   }
-  function orbPoint() { var o = stage.querySelector(".gs-orb"), f = fx.getBoundingClientRect(), r = o.getBoundingClientRect(); return { x: r.left - f.left, y: r.top - f.top }; }
+  function zPoint() { return at(stage.querySelector(".gs-z-actor"), .15, .45); }
+  function spout() { return at(lamp, .78, .28); }   /* the lamp's spout */
 
   /* ---------------- follow-spot ---------------- */
   var spot = stage.querySelector(".gs-spot"), scene = stage.querySelector(".gs-scene");
-  function spotTo(x, y) {   /* x, y in scene pixels */
+  function spotTo(x, y) {
     if (!spot || !scene) return;
     var r = scene.getBoundingClientRect();
     x = Math.max(0, Math.min(r.width, x)); y = Math.max(0, Math.min(r.height, y));
-    var ang = Math.atan2(x - r.width / 2, Math.max(1, y)) * -180 / Math.PI;   /* cone leans from the top centre toward the target */
-    spot.style.setProperty("--sx", x.toFixed(0) + "px"); spot.style.setProperty("--sy", y.toFixed(0) + "px"); spot.style.setProperty("--sr", ang.toFixed(1) + "deg");
+    spot.style.setProperty("--sx", x.toFixed(0) + "px"); spot.style.setProperty("--sy", y.toFixed(0) + "px");
     cls("s-spot", true);
   }
   function spotOnEl(el, dy) {
@@ -111,7 +126,9 @@
     zVid.setAttribute("src", "/assets/z/" + name + ".mp4?v=" + ZV);
     var p = zVid.play(); if (p && p.catch) p.catch(function () { /* poster stays */ });
   }
+  var lastLine = "Hi, I'm Producer Z. Tell me what you want your studio to be and I'll show you.";
   function zSpeak(text, ms) {
+    lastLine = text;
     if (!zSay) return; zSay.querySelector("p").textContent = text; zSay.hidden = false;
     requestAnimationFrame(function () { zSay.classList.add("show"); });
     clearTimeout(sayTimer); if (ms) sayTimer = setTimeout(function () { zSay.classList.remove("show"); }, ms);
@@ -131,8 +148,6 @@
     later(function () { cls("s-zclap", false); cls("s-zidle", true); }, 1600);
   }
   var actor = stage.querySelector(".gs-z-actor");
-  var lastLine = "Hi, I'm Producer Z. Tell me what you dream of and I'll show you.";
-  var _zSpeak = zSpeak; zSpeak = function (t, ms) { lastLine = t; _zSpeak(t, ms); };
   if (actor) actor.addEventListener("click", function () {
     try { if ("speechSynthesis" in window) { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(lastLine); u.rate = 1.03; speechSynthesis.speak(u); } } catch (e) { /* no speech */ }
     spotOnEl(actor, 10);
@@ -144,46 +159,51 @@
   var skipBtn = stage.querySelector(".gs-skip");
   function console_(on) { cls("s-console", !!on); }
   var seen = false; try { seen = sessionStorage.getItem("mw_show_seen") === "1"; } catch (e) { seen = false; }
-  if (seen || window.innerWidth <= 900) console_(true);        /* phones: the panel sits under the stage, nothing to hide */
-  if (skipBtn) skipBtn.addEventListener("click", function () { clearAll(); finale(); console_(true); fxStart(); if (!zOn) zEnter(); try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } });
-  function reset() {
-    spotOff();
-    ["s-lights", "s-open", "s-say", "s-genie", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, false); });
-    if (onair) onair.classList.remove("on");
-  }
-  function finale() { ["s-lights", "s-open", "s-paint", "s-hills", "s-trees", "s-ground", "s-done", "s-holo"].forEach(function (c) { cls(c, true); }); if (onair) onair.classList.add("on"); played = true; playing = false; console_(true); }
+  if (seen || SMALL) console_(true);        /* phones: the panel sits under the stage, nothing to hide */
+  function markSeen() { try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } }
+  if (skipBtn) skipBtn.addEventListener("click", function () { clearAll(); finale(); fxStart(); if (!zOn) zEnter(); markSeen(); });
+  function reset() { spotOff(); SCENES.forEach(function (c) { cls(c, false); }); gold = false; pose(0); if (onair) onair.classList.remove("on"); }
+  function finale() { END.forEach(function (c) { cls(c, true); }); pose(POSES.length - 1); gold = true; if (onair) onair.classList.add("on"); played = true; playing = false; console_(true); }
   function play() {
     if (playing) return; playing = true; clearAll(); reset();
-    fxStart();
-    later(function () { if (onair) onair.classList.add("on"); }, 900);        /* On Air: on for a second so people notice */
-    later(function () { if (onair) onair.classList.remove("on"); }, 2400);
-    later(function () { cls("s-lights", true); }, 600);                         /* footlights and beams */
-    later(function () { cls("s-open", true); }, 1100);                          /* curtains part */
-    later(function () { zEnter(); }, 2600);                                     /* Z walks on */
-    later(function () { zSpeak("Tell me what you dream of. I'll show you.", 3200); }, 4300);
-    later(function () { zSpeak("I dream of " + DREAMS[Math.floor(Math.random() * DREAMS.length)] + "…", 3400); }, 6200);
-    later(function () {                                                          /* the Genie: smoke rises from the megaphone */
-      var z = zPoint(); smoke(z.x, z.y, 70);
-      later(function () { var o = orbPoint(); smoke(o.x, o.y, 50); }, 500);
-      cls("s-genie", true); spotOnEl(stage.querySelector(".gs-orb"), 0);
-    }, 8200);
-    later(function () { var o = orbPoint(); sparks(o.x, o.y, 140); }, 10200);    /* poof: it leaves in sparks */
-    later(function () { cls("s-paint", true); }, 10300);                        /* the backdrop paints: sky */
-    later(function () { cls("s-hills", true); }, 11300);                        /* hills */
-    later(function () { cls("s-trees", true); }, 12100);                        /* trees */
-    later(function () { cls("s-ground", true); var z = zPoint(); sparks(z.x, z.y + 20, 40); }, 12800);   /* foreground */
-    later(function () { cls("s-done", true); if (onair) onair.classList.add("on"); played = true; playing = false;
-      if (zOn) zSpeak("Your turn. Type it right there, then press START.", 6000);
-      if (wish) spotOnEl(wish, 0);
+    fxStart(); preloadPoses();
+    var t = SMALL ? .8 : 1;                                                     /* phones get a brisker show */
+    function T(fn, ms) { later(fn, Math.round(ms * t)); }
+    /* act 0: lights, On Air, curtains */
+    T(function () { cls("s-lights", true); }, 600);
+    T(function () { if (onair) onair.classList.add("on"); }, 900);
+    T(function () { cls("s-open", true); }, 1100);
+    T(function () { if (onair) onair.classList.remove("on"); }, 2400);
+    T(function () { zEnter(); }, 2600);
+    /* act 1: the $5 test drive and the tools */
+    T(function () { cls("s-c1", true); zSpeak("Five bucks. Try all of it.", 2600); var c = stage.querySelector(".gs-card.c1"); spotOnEl(c, 0); }, 3600);
+    T(function () { cls("s-c1out", true); }, 6200);
+    T(function () { cls("s-c2", true); zSpeak("Pro production tools for marketing your business. One place.", 3200); var c = stage.querySelector(".gs-card.c2"); spotOnEl(c, 0); }, 6900);
+    T(function () { cls("s-c2out", true); }, 10400);
+    /* act 2: the lamp and the Genie */
+    T(function () { cls("s-lamp", true); pose(0); spotOnEl(lamp, -20); }, 10900);
+    T(function () { var s = spout(); smoke(s.x, s.y, 50); pose(0); }, 12000);
+    T(function () { var s = spout(); smoke(s.x, s.y - 20, 70); pose(1); cls("s-g1", true); zSpeak("Meet the Genie.", 2200); }, 12500);
+    T(function () { var s = spout(); sparks(s.x, s.y - 60, 90); pose(2); cls("s-g2", true); spotOnEl(stage.querySelector(".gs-genie"), 0); }, 13400);
+    T(function () { zSpeak("Tell it what you want your studio to be. It builds it.", 3400); }, 14000);
+    T(function () { pose(3); cls("s-g3", true); }, 15600);
+    /* act 3: the Genie points, the scene paints itself in pieces, the sun comes up */
+    T(function () { cls("s-sky", true); var g = at(stage.querySelector(".gs-genie"), .5, .3); sparks(g.x, g.y, 40); }, 16000);
+    T(function () { cls("s-sun", true); gold = true; }, 17200);
+    T(function () { cls("s-hills", true); var p = at(stage.querySelector(".gs-f-hills"), .3, .9); sparks(p.x, p.y, 40); }, 17600);
+    T(function () { cls("s-trees", true); var p = at(stage.querySelector(".gs-f-trees"), .7, .9); sparks(p.x, p.y, 40); }, 18500);
+    T(function () { cls("s-ground", true); var z = zPoint(); sparks(z.x, z.y + 20, 40); }, 19300);
+    T(function () { pose(4); cls("s-g4", true); var g = at(stage.querySelector(".gs-genie"), .5, .5); sparks(g.x, g.y, 120); smoke(g.x, g.y, 30, [45, 320]); }, 20200);
+    /* curtain call: the console */
+    T(function () { cls("s-done", true); if (onair) onair.classList.add("on"); played = true; playing = false;
+      if (zOn) zSpeak("Your turn. What do you want it to be?", 6000);
+      if (wish) { spotOnEl(wish, 0); wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
       later(function () { spotOnEl(stage.querySelector(".gs-z-actor"), 10); }, 6500);
-      if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
-    }, 14200);
-    later(function () {                                                          /* the dream dashboard rises from the boards */
-      cls("s-holo", true); var h = stage.querySelector(".gs-holo"); if (h) { spotOnEl(h, 0); var o = orbPoint(); smoke(o.x, o.y + 60, 40); }
-    }, 15200);
-    later(function () { console_(true); try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } }, 16400);   /* now the console opens */
+    }, 21000);
+    T(function () { cls("s-holo", true); var h = stage.querySelector(".gs-holo"); if (h) { spotOnEl(h, 0); var p = at(h, .5, 1); smoke(p.x, p.y, 40, [190, 265]); } }, 21800);
+    T(function () { console_(true); markSeen(); }, 22800);
   }
-  if (replayBtn) replayBtn.addEventListener("click", function () { playing = false; cls("s-genie", false); play(); });
+  if (replayBtn) replayBtn.addEventListener("click", function () { playing = false; play(); });
 
   if (REDUCED) {
     finale(); if (zWrap) zWrap.hidden = false;
@@ -206,7 +226,7 @@
     window.addEventListener("resize", function () { if (fxOn) size(); }, { passive: true });
   }
 
-  /* ---------------- parallax: pointer moves the layers in depth ---------------- */
+  /* ---------------- parallax: pointer moves the set pieces in depth ---------------- */
   if (!REDUCED && FINE) {
     var rafP = 0, px = 0, py = 0;
     stage.addEventListener("pointermove", function (e) {
@@ -217,6 +237,18 @@
     }, { passive: true });
     stage.addEventListener("pointerleave", function () { stage.style.setProperty("--px", "0"); stage.style.setProperty("--py", "0"); });
   }
+
+  /* ---------------- example dashboards: creator / business switch (sample data only) ---------------- */
+  document.querySelectorAll(".wd").forEach(function (wd) {
+    var btns = wd.querySelectorAll(".wd-mode button"); if (!btns.length) return;
+    function setMode(m) {
+      wd.setAttribute("data-mode", m);
+      btns.forEach(function (b) { var on = b.getAttribute("data-mode") === m; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
+      wd.querySelectorAll("[data-c]").forEach(function (el) { el.textContent = el.getAttribute(m === "business" ? "data-b" : "data-c"); });
+      wd.querySelectorAll("[data-cbg]").forEach(function (el) { el.style.background = el.getAttribute(m === "business" ? "data-bbg" : "data-cbg"); });
+    }
+    btns.forEach(function (b) { b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); }); });
+  });
 
   /* "Unlock: build yours now" goes to the console and focuses it */
   document.querySelectorAll(".wd-unlock").forEach(function (a) {
