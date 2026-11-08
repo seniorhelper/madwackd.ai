@@ -60,7 +60,6 @@
       warmPaint();
       later(function () { if (onair) onair.classList.add("on"); }, 1200);       /* On Air: on for a second so people notice */
       later(function () { if (onair) onair.classList.remove("on"); }, 2700);
-      later(function () { zEnter(); }, 1800);                                   /* Z walks in under the light (desktop) */
       later(function () {                                                        /* scene 2: the dream, spoken */
         frame.classList.add("say");
         type("I dream of " + DREAMS[Math.floor(Math.random() * DREAMS.length)] + "\u2026", function () {
@@ -262,6 +261,13 @@
         })
         .catch(function () { clearTimeout(tm); asking = false; renderPlan(buildPlan(wish), true); });
     }
+    /* a wish carried over from the home page console */
+    (function () {
+      if (!/[?&]go=1/.test(location.search)) return;
+      var carried = ""; try { carried = sessionStorage.getItem("mw_wish") || ""; sessionStorage.removeItem("mw_wish"); } catch (e) { carried = ""; }
+      if (carried.length >= 10) { wishBox.value = carried; setTimeout(function () { askGenie(carried); }, 600); }
+    })();
+
     /* a parked plan opened from its signed link: /custom-creator-studio/?plan=wp_...&sig=... */
     (function () {
       var q = new URLSearchParams(location.search), pid = q.get("plan"), sig = q.get("sig"), API = apiBase();
@@ -364,49 +370,6 @@
     });
   }
 
-  /* ---------------- Producer Z rig: real clay clips, transforms only, desktop only ----------------
-     Enters after the first painted dashboard: walks in, flicks the studio light on, points at the wish box,
-     claps when a plan appears, idles with a small bob. Clicking him opens the real Producer Z chat. */
-  var ZV = "20261107m";
-  var zrig = document.getElementById("zrig"), zvid = zrig && zrig.querySelector(".zrig-vid"), zsay = zrig && zrig.querySelector(".zrig-say");
-  var zOn = false, zTimer = 0;
-  function zClip(name, loop) {
-    if (!zvid) return;
-    zvid.loop = !!loop;
-    zvid.setAttribute("src", "/assets/z/" + name + ".mp4?v=" + ZV);
-    var p = zvid.play(); if (p && p.catch) p.catch(function () { /* poster stays */ });
-  }
-  function zSpeak(text, ms) {
-    if (!zsay) return;
-    zsay.querySelector("p").textContent = text; zsay.hidden = false;
-    requestAnimationFrame(function () { zsay.classList.add("show"); });
-    clearTimeout(zTimer);
-    if (ms) zTimer = setTimeout(function () { zsay.classList.remove("show"); setTimeout(function () { zsay.hidden = true; }, 300); }, ms);
-  }
-  function zEnter() {
-    if (zOn || !zrig || REDUCED || !FINE || window.innerWidth <= 900) return;
-    zOn = true; zrig.hidden = false;
-    /* one Z at a time: the launcher's walk-on card steps aside and becomes the corner spotlight */
-    if (window.__mwzLauncher && window.__mwzLauncher.hideBubble) { try { window.__mwzLauncher.hideBubble(true); } catch (e) { /* ignore */ } }
-    zClip("z-wave", true);
-    zrig.classList.add("in");
-    setTimeout(function () { if (hero) hero.classList.add("lit"); }, 1500);          /* flicks the studio light on */
-    setTimeout(function () {
-      zSpeak("Hi, I'm Producer Z. Tell me what you dream of, right over there \u2196 then press START.", 7000);
-      if (wishBox) { wishBox.classList.add("glow"); setTimeout(function () { wishBox.classList.remove("glow"); }, 2600); }
-    }, 2300);
-    setTimeout(function () { zrig.classList.remove("in"); zrig.classList.add("idle"); zvid.pause(); }, 9000);
-  }
-  function zPlan() {
-    if (!zOn || !zrig) return;
-    zrig.classList.remove("idle"); zrig.classList.add("clap");
-    zClip("z-clap", false);
-    zSpeak("Nice. Your studio, itemized, is right below. Start, or think about it; nothing is charged.", 8000);
-    setTimeout(function () { zrig.classList.remove("clap"); zrig.classList.add("idle"); }, 1600);
-  }
-  if (zvid) zvid.addEventListener("ended", function () { zrig.classList.add("idle"); });
-  window.addEventListener("mw:genie-plan", function () { zPlan(); });
-
   /* ---------------- Producer Z clay clip: loads and plays only when on screen ---------------- */
   var clay = document.querySelector(".z-clay");
   if (clay && !REDUCED && "IntersectionObserver" in window) {
@@ -419,7 +382,7 @@
   }
 
   /* ---------------- gentle 3D tilt + parallax (desktop pointers only, transform only) ---------------- */
-  if (!REDUCED && FINE && hero && frame) {
+  if (!REDUCED && FINE && hero && frame && clay) {
     document.documentElement.classList.add("tilt-on");
     var rafId = 0, px = 0, py = 0, sy = 0;
     function apply() {
