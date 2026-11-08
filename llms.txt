@@ -25,6 +25,7 @@ Key facts:
 - [Our mission](https://www.madwackd.ai/our-mission/)
 - Video Vault (https://www.madwackd.ai/vault/): real videos made in Madwackd Studio, filterable by ads, music, comedy and cinematic.
 - Creator Studio (free browser tools, no card): https://www.madwackd.ai/creator-studio/
+- Custom Creator Studio (tell Genie what you make; a personalized creator dashboard and AI production team, Founding Creator $99/mo for 12 months then $299, cancel anytime): https://www.madwackd.ai/custom-creator-studio/
 - [Founder's vision](https://www.madwackd.ai/vision/): founder Zach Wennstedt's goal of data centers that heat homes and grow food on their roofs. A vision, not an existing facility.
 - [Launch Pad](https://www.madwackd.ai/launch-pad/): every Madwackd tool for launching a brand or project in one place (free Creator Studio, $5 Test Drive, dashboards, producers, Masterclass), plus a free call with founder Zach Wennstedt.
 - [Collaborate](https://www.madwackd.ai/collaborate/): open invitation to studios, tech companies, small businesses, creators and everyday people to make video with us. Form goes to a real person.
