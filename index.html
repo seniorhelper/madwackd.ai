@@ -57,7 +57,9 @@
     <div class="gs-layer gs-trees"><svg viewBox="0 0 1200 760" preserveAspectRatio="none"><defs><mask id="gsMaskTrees" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="760"><g class="brush" stroke-width="110"><path pathLength="1" d="M-120 30 C 300 -49, 700 109, 1320 20"/><path pathLength="1" d="M1320 178 C 900 274, 450 82, -120 188"/><path pathLength="1" d="M-120 326 C 300 273, 700 379, 1320 316"/><path pathLength="1" d="M1320 474 C 900 544, 450 404, -120 484"/><path pathLength="1" d="M-120 622 C 300 535, 700 709, 1320 612"/><path pathLength="1" d="M1320 770 C 900 814, 450 726, -120 780"/></g></mask></defs><g mask="url(#gsMaskTrees)" filter="url(#gsPaint)" fill="#2d2a2f"><path d="M80 700 L80 560 L60 560 L95 470 L80 470 L120 390 L160 470 L145 470 L180 560 L160 560 L160 700 Z"/><path d="M230 700 L230 600 L205 600 L240 520 L225 520 L262 440 L300 520 L285 520 L320 600 L295 600 L295 700 Z"/><path d="M980 700 L980 570 L955 570 L995 470 L980 470 L1020 380 L1062 470 L1047 470 L1085 570 L1060 570 L1060 700 Z"/><path d="M1110 700 L1110 610 L1090 610 L1120 540 L1108 540 L1140 470 L1172 540 L1160 540 L1190 610 L1170 610 L1170 700 Z"/><ellipse cx="560" cy="650" rx="60" ry="14" opacity=".5"/><ellipse cx="760" cy="662" rx="80" ry="16" opacity=".5"/></g></svg></div>
     <div class="gs-layer gs-ground"><img src="/assets/img/stage/ground-paint.webp" srcset="/assets/img/stage/ground-paint-480.webp 480w, /assets/img/stage/ground-paint.webp 1400w" sizes="(max-width: 900px) 1px, 1700px" width="1400" height="317" alt="" fetchpriority="high" decoding="async"></div>
     <div class="gs-layer gs-scrim"><svg viewBox="0 0 1200 760" preserveAspectRatio="none"><defs><mask id="gsMaskScrim" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="760"><rect width="1200" height="760" fill="#fff"/><g class="brush" stroke="#000" stroke-width="170"><path pathLength="1" d="M-120 30 C 300 -15, 700 75, 1320 20"/><path pathLength="1" d="M1320 153 C 900 215, 450 91, -120 163"/><path pathLength="1" d="M-120 276 C 300 197, 700 355, 1320 266"/><path pathLength="1" d="M1320 400 C 900 496, 450 304, -120 410"/><path pathLength="1" d="M-120 523 C 300 470, 700 576, 1320 513"/><path pathLength="1" d="M1320 646 C 900 716, 450 576, -120 656"/><path pathLength="1" d="M-120 770 C 300 683, 700 857, 1320 760"/></g></mask></defs><rect width="1200" height="760" fill="#07060b" mask="url(#gsMaskScrim)"/></svg></div>
-    <div class="gs-floor"></div>
+    <div class="gs-floor"><span class="spec"></span><span class="grain"></span></div>
+    <div class="gs-cshadow"></div>
+    <div class="gs-haze"></div>
     <div class="gs-beam l"></div><div class="gs-beam r"></div>
     <div class="gs-foot"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="gs-spot" aria-hidden="true"></div>
@@ -69,7 +71,8 @@
     <span class="gs-onair">On air</span>
   </div>
   <div class="gs-z" hidden>
-      <button type="button" class="gs-z-actor" aria-label="Chat with Producer Z, the AI director"><video muted playsinline preload="none" width="360" height="330" poster="/assets/z/z-hero.webp?v=20261107m" aria-hidden="true"></video></button>
+      <span class="gs-z-shadow" aria-hidden="true"></span>
+    <button type="button" class="gs-z-actor" aria-label="Chat with Producer Z, the AI director"><video muted playsinline preload="none" width="360" height="330" poster="/assets/z/z-hero.webp?v=20261107m" aria-hidden="true"></video></button>
       <div class="gs-z-say" role="status" aria-live="polite" hidden><p></p></div>
     </div>
   <div class="gs-wrap">
@@ -95,7 +98,7 @@
         <label class="hp" for="w-honey" aria-hidden="true">Leave this empty<input id="w-honey" type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
         <div class="notice genie-note" id="wish-note" role="status" aria-live="polite"></div>
         <div class="gcon-row"><button class="btn-start" type="submit">START</button><a class="gcon-test" href="/studio/?buy=test_drive">or test drive the studio for $5</a></div>
-        <p class="gcon-meta"><span class="beta-badge">Founding Creator beta</span> <b>$99 a month</b>, locked 12 months, then $299. Cancel anytime. 1.5% of every dollar goes to carbon removal. <a href="/custom-creator-studio/#offer">Full terms</a></p>
+        <p class="gcon-meta"><span class="beta-badge">Founding Creator beta</span> <b>$99 a month</b>, locked 12 months, then $299. Cancel anytime. First 100 founding creators or through Nov 22, 2026, whichever comes first. <a href="/custom-creator-studio/#offer">Full terms</a></p>
       </form>
     </div>
   </div>

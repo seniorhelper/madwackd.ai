@@ -7,6 +7,9 @@
   var stage = document.getElementById("gstage");
   if (!stage) return;
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* the Producer Z launcher's walk-on card never covers the stage: Z is already on it */
+  try { sessionStorage.setItem("mw_z_card", "done"); } catch (e) { /* private mode */ }
+  (function hush(n) { if (window.__mwzLauncher && window.__mwzLauncher.hideBubble) { try { window.__mwzLauncher.hideBubble(true); } catch (e) { /* ignore */ } } else if (n > 0) { setTimeout(function () { hush(n - 1); }, 400); } })(25);
   var FINE = window.matchMedia && matchMedia("(pointer: fine)").matches;
   var ZV = stage.getAttribute("data-zv") || "";
   var onair = stage.querySelector(".gs-onair"), replayBtn = stage.querySelector(".gs-replay");
