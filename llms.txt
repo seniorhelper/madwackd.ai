@@ -32,8 +32,12 @@ Key facts:
 - [Madwackd Picks](https://www.madwackd.ai/awards/): monthly creator picks chosen by our team. No paid placement, free to enter, opt-in only. No picks announced yet.
 - Founder site: https://zacharytyewennstedt.com/
 
+## Compare
+- [ElevenLabs vs Madwackd Studio (2026)](https://www.madwackd.ai/compare/elevenlabs/): honest comparison for video makers. ElevenLabs is a voice platform (audio, cloning, dubbing, agents, image and video on third-party models); Madwackd is a video studio with voice built in, a credit quote before every render, human producers, a $5 Test Drive and a consent check for custom voices. Facts checked on elevenlabs.io on 2026-11-08.
+
 ## Producer's Corner (guides)
-- [Producer's Corner](https://www.madwackd.ai/producers-corner/): guides on video ads, commercial costs, AI music videos and the Custom Creator Studio.
+- [Producer's Corner](https://www.madwackd.ai/producers-corner/): guides on video ads, AI voiceovers, commercial costs, AI music videos and the Custom Creator Studio.
+- [How to add an AI voiceover to a video (2026)](https://www.madwackd.ai/producers-corner/ai-voiceover-for-video/): 7 producer steps (write for the ear, voice style, lock the picture, fix pronunciation, mix, rights and labels, export), three ways to do it, what it costs.
 - [How the Custom Creator Studio works: tell the Genie, poof, your studio](https://www.madwackd.ai/producers-corner/how-the-custom-creator-studio-works/): what you get, what a credit is, what the human producer does, what the $99 Founding Creator beta means, who owns the work, how AI clips are labeled.
 - [How much does a commercial cost to make? (2026)](https://www.madwackd.ai/producers-corner/how-much-does-a-commercial-cost/): sourced production and airtime ranges, cost drivers, and where AI fits.
 - [How to make an AI music video: how we made ours](https://www.madwackd.ai/producers-corner/how-we-made-two-ai-music-videos/): the real process behind Tell Me Why and What Love Really Is.
