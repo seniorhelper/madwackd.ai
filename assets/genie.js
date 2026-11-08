@@ -12,36 +12,25 @@
     { key: "fitness", dream: "a fitness channel people actually finish", img: "/assets/img/genie/dash-kilo.webp", paint: "/assets/img/genie/paint-c.webp", alt: "Sample creator dashboard for a fitness creator in orange, every number marked sample." }
   ];
 
-  /* ---------------- hero ---------------- */
+  /* ---------------- hero: dark studio -> Z speaks the dream -> poof -> three paint layers -> hold ---------------- */
+  var DREAMS = ["a music channel that pays the rent", "a cooking channel with a line out the door", "a fitness channel people actually finish", "a podcast people actually finish"];
   var hero = document.querySelector(".genie-hero");
   var frame = document.getElementById("stage-frame");
   if (hero && frame) {
     var bubble = frame.querySelector(".stage-bubble p");
     var poofer = frame.querySelector(".poofer");
     var poofWord = document.querySelector(".genie-line .poof");
-    var imgs = frame.querySelectorAll(".stage-svg image");
-    var tabs = document.querySelectorAll(".stage-tabs button");
-    var cur = 0, timer = 0, typing = 0, rounds = 0, inView = false, manual = false;
-
-    function setLook(i) {
-      cur = i;
-      hero.setAttribute("data-look", LOOKS[i].key);
-      for (var k = 0; k < imgs.length; k++) {
-        var src = imgs[k].classList.contains("paint") ? LOOKS[i].paint : LOOKS[i].img;
-        imgs[k].setAttribute("href", src);
-        imgs[k].setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", src);
-      }
-      frame.setAttribute("aria-label", LOOKS[i].alt);
-      for (var t = 0; t < tabs.length; t++) tabs[t].setAttribute("aria-pressed", t === i ? "true" : "false");
-      var nxt = new Image(); nxt.src = LOOKS[(i + 1) % LOOKS.length].img;   /* warm the next look */
-      var nxp = new Image(); nxp.src = LOOKS[(i + 1) % LOOKS.length].paint;
-    }
+    var onair = document.getElementById("stage-onair");
+    var replay = document.getElementById("stage-replay");
+    var timers = [], typing = 0, playing = false, played = false, inView = false;
+    function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+    function clearAll() { timers.forEach(clearTimeout); timers = []; clearTimeout(typing); }
     function type(text, done) {
       var i = 0; bubble.textContent = "";
       var tn = document.createTextNode(""), cursor = document.createElement("span"); cursor.className = "cur";
       bubble.appendChild(tn); bubble.appendChild(cursor);
       (function step() {
-        if (i <= text.length) { tn.nodeValue = text.slice(0, i); i += 2; typing = setTimeout(step, 56); }   /* two characters a step: half the layouts */
+        if (i <= text.length) { tn.nodeValue = text.slice(0, i); i += 2; typing = setTimeout(step, 56); }
         else { done(); }
       })();
     }
@@ -49,86 +38,64 @@
       poofer.classList.remove("go"); void poofer.offsetWidth; poofer.classList.add("go");
       if (poofWord) { poofWord.classList.remove("pop"); void poofWord.offsetWidth; poofWord.classList.add("pop"); }
     }
-    /* scene 2: brush strokes paint the Tell Me Why frame over the gray storyboard */
-    function paintScene(then) {
-      frame.classList.remove("fade", "painted", "s2");
-      frame.classList.add("s1");
-      timer = setTimeout(then, 1900);
+    /* the painting files are not requested until the show starts, so first paint never waits on them */
+    function setSources() {
+      frame.querySelectorAll(".stage-svg image[data-href]").forEach(function (im) {
+        var u = im.getAttribute("data-href"); im.setAttribute("href", u); im.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", u); im.removeAttribute("data-href");
+      });
     }
-    /* scene 3: a second pass of strokes paints the live dashboard over the painting */
-    function paintDash(then) {
-      frame.classList.add("s2");
-      timer = setTimeout(function () { frame.classList.add("painted"); window.dispatchEvent(new CustomEvent("mw:genie-painted")); if (then) then(); }, 2000);
-    }
-    function showFinal(i) {   /* reduced motion or a tab click: no typing, no poof */
-      clearTimeout(timer); clearTimeout(typing); timer = 0; typing = 0;
-      setLook(i);
-      frame.classList.remove("fade");
-      frame.classList.add("s1", "s2", "painted");
+    function warmPaint() { setSources(); }
+    function showFinal() {
+      clearAll(); playing = false; played = true; setSources();
+      frame.className = "stage-frame fb-canvas l1 l2 l3 painted";
+      if (onair) onair.classList.add("on");
       window.dispatchEvent(new CustomEvent("mw:genie-painted"));
     }
-    function clearTimers() { clearTimeout(timer); clearTimeout(typing); timer = 0; typing = 0; }
-    function cycle() {
-      if (!active || manual) return;
-      frame.classList.add("fade");
-      frame.classList.remove("s1", "s2", "painted");
-      setLook(cur);
-      timer = setTimeout(function () {
-        frame.classList.remove("fade");
-        type("I dream of " + LOOKS[cur].dream + "…", function () {
-          timer = setTimeout(function () {
+    function play() {
+      if (playing) return;
+      playing = true; clearAll();
+      frame.className = "stage-frame fb-canvas dark";            /* scene 1: the dark studio */
+      if (onair) onair.classList.remove("on");
+      bubble.textContent = "";
+      warmPaint();
+      later(function () { if (onair) onair.classList.add("on"); }, 1200);       /* On Air: on for a second so people notice */
+      later(function () { if (onair) onair.classList.remove("on"); }, 2700);
+      later(function () { zEnter(); }, 1800);                                   /* Z walks in under the light (desktop) */
+      later(function () {                                                        /* scene 2: the dream, spoken */
+        frame.classList.add("say");
+        type("I dream of " + DREAMS[Math.floor(Math.random() * DREAMS.length)] + "\u2026", function () {
+          later(function () {
             poof();
-            timer = setTimeout(function () {
-              paintScene(function () {
-                poof();
-                timer = setTimeout(function () {
-                  paintDash(function () {
-                    timer = setTimeout(function () {
-                      cur = (cur + 1) % LOOKS.length;
-                      if (cur === 0) rounds++;
-                      if (rounds >= 2) { active = false; finished = true; cur = LOOKS.length - 1; setLook(cur); frame.classList.add("s1", "s2", "painted"); return; }
-                      cycle();
-                    }, 3200);
-                  });
-                }, 350);
-              });
-            }, 450);
+            later(function () { frame.classList.remove("say"); frame.classList.add("l1"); }, 350);     /* layer 1: gold sky wash */
+            later(function () { frame.classList.add("l2"); }, 1150);                                  /* layer 2: the painted landscape */
+            later(function () { frame.classList.add("l3"); }, 2050);                                  /* layer 3: the riders, flecks, bloom */
+            later(function () {
+              frame.classList.add("painted"); playing = false; played = true;
+              if (onair) onair.classList.add("on");
+              window.dispatchEvent(new CustomEvent("mw:genie-painted"));
+            }, 3900);
           }, 500);
         });
-      }, 420);
+      }, 3200);
     }
-    var active = false, finished = false;
-    function start() { if (active || finished || manual) return; active = true; cycle(); }
-    function stop() { if (!active) return; active = false; clearTimers(); }
-    for (var t = 0; t < tabs.length; t++) {
-      (function (idx) {
-        tabs[idx].addEventListener("click", function () { manual = true; stop(); showFinal(idx); });
-      })(t);
-    }
+    if (replay) replay.addEventListener("click", function () { playing = false; play(); });
     if (REDUCED) {
-      showFinal(0);
+      showFinal();
     } else {
-      setLook(0);
-      bubble.textContent = "";
-      setTimeout(function () { var w = new Image(); w.src = LOOKS[0].paint; }, 900);   /* the painted frame arrives before scene 2 needs it */
-      document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else if (inView) start(); });
-      /* Start only once the page is idle after load, so the sequence never competes with first paint or input. */
-      var warm = false;
+      frame.className = "stage-frame fb-canvas dark";
       function whenIdle(fn) {
-        var go = function () { if ("requestIdleCallback" in window) requestIdleCallback(fn, { timeout: 2500 }); else setTimeout(fn, 1200); };
-        if (document.readyState === "complete") setTimeout(go, 1600); else window.addEventListener("load", function () { setTimeout(go, 1600); });
+        var go = function () { if ("requestIdleCallback" in window) requestIdleCallback(fn, { timeout: 800 }); else setTimeout(fn, 500); };
+        if (document.readyState === "complete") setTimeout(go, 400); else window.addEventListener("load", function () { setTimeout(go, 400); });
       }
       whenIdle(function () {
-        warm = true;
         if ("IntersectionObserver" in window) {
           new IntersectionObserver(function (en) {
             inView = en[0].isIntersecting;
-            if (inView) start(); else stop();
-          }, { threshold: .25 }).observe(frame);
-        } else {
-          start();
-        }
+            if (inView && !played && !playing) play();
+          }, { threshold: .2 }).observe(frame);
+        } else { play(); }
       });
+      document.addEventListener("visibilitychange", function () { if (document.hidden && playing) { clearAll(); playing = false; } else if (!document.hidden && !played && !playing && inView) play(); });
     }
   }
 
@@ -204,7 +171,7 @@
       { t: "120 Fast render credits a month", w: "About five 8-second AI clips on the Founding plan, each priced before you confirm. Credit packs from $14 when you want more.", s: "Included" },
       { t: "Producer Z, with a voice", w: "Ask what to post next or what a shot costs; 3 Talking Z minutes a month on the Founding plan.", s: "Included" }
     ];
-    if (wantsSales) items.push({ t: "A place to send buyers", w: "A storefront path for " + topic + ": allofus.one brand page today, and a World VR Mall storefront or landing page quoted separately when you want it.", s: "Included" });
+    if (wantsSales) items.push({ t: "A place to send buyers", w: "A place to send buyers for " + topic + ": an allofus.one brand page today, and a landing page or shop page quoted separately when you want it.", s: "Included" });
     else if (wantsClients) items.push({ t: "Clients from your channel", w: "Your posts link to a page people and AI answers can read; free AI-search tools from Denver SEO, and done-for-you help quoted separately.", s: "Included" });
     else if (wantsAudience) items.push({ t: "A home for your audience", w: "An allofus.one brand page the algorithm can't take away, linked from every export.", s: "Included" });
     if (wantsIncome) items.push({ t: "Numbers you can trust", w: "Log or import views and revenue by source next to what you posted. Never sample data shown as yours.", s: "Rolling out" });
@@ -425,7 +392,7 @@
     zrig.classList.add("in");
     setTimeout(function () { if (hero) hero.classList.add("lit"); }, 1500);          /* flicks the studio light on */
     setTimeout(function () {
-      zSpeak("Hi, I'm Producer Z. Type what you dream of, right over there \u2196 and press START.", 7000);
+      zSpeak("Hi, I'm Producer Z. Tell me what you dream of, right over there \u2196 then press START.", 7000);
       if (wishBox) { wishBox.classList.add("glow"); setTimeout(function () { wishBox.classList.remove("glow"); }, 2600); }
     }, 2300);
     setTimeout(function () { zrig.classList.remove("in"); zrig.classList.add("idle"); zvid.pause(); }, 9000);
@@ -438,8 +405,6 @@
     setTimeout(function () { zrig.classList.remove("clap"); zrig.classList.add("idle"); }, 1600);
   }
   if (zvid) zvid.addEventListener("ended", function () { zrig.classList.add("idle"); });
-  /* enter once the first dashboard is painted (hooked below), or as a fallback 9 s after idle start */
-  window.addEventListener("mw:genie-painted", function () { zEnter(); }, { once: true });
   window.addEventListener("mw:genie-plan", function () { zPlan(); });
 
   /* ---------------- Producer Z clay clip: loads and plays only when on screen ---------------- */
@@ -459,7 +424,7 @@
     var rafId = 0, px = 0, py = 0, sy = 0;
     function apply() {
       rafId = 0;
-      frame.style.transform = "perspective(1400px) rotateX(" + (-py * 4).toFixed(2) + "deg) rotateY(" + (px * 6).toFixed(2) + "deg) translate3d(0," + (sy * -0.04).toFixed(1) + "px,0)";
+      /* full-bleed canvas stays put; only Z parallaxes */
       if (clay) clay.style.transform = "translate3d(" + (px * 8).toFixed(1) + "px," + (py * 6).toFixed(1) + "px,0) rotate(" + (px * 2).toFixed(2) + "deg)";
     }
     function queue() { if (!rafId) rafId = requestAnimationFrame(apply); }

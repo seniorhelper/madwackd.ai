@@ -18,20 +18,10 @@
 
 /* ---- the stage ---- */
 .genie-stage{min-width:0}
-.stage-frame{position:relative;aspect-ratio:1200/750;border-radius:16px;overflow:hidden;background:#EDE8F5;border:3px solid var(--ink);box-shadow:6px 7px 0 var(--ink)}
-.stage-wire{position:absolute;inset:0;padding:5% 4%;display:grid;grid-template-rows:auto 1fr 1fr;gap:4%;opacity:1;transition:opacity .4s}
-.stage-wire i{display:block;background:#D9D2E6;border-radius:8px}
-.stage-wire .w1{height:9%}
-.stage-wire .w2,.stage-wire .w3{display:grid;grid-template-columns:repeat(3,1fr);gap:4%}
-.stage-wire .w2 i,.stage-wire .w3 i{height:100%}
 .stage-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stage-svg image{opacity:0}
 .stage-svg .brush path{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
 @keyframes brush{to{stroke-dashoffset:0}}
-.stage-frame.painted .stage-svg image.plain{opacity:1;transition:opacity .3s}
-.stage-frame.painted .stage-svg image.masked{opacity:0}
-.stage-frame.fade .stage-svg image{opacity:0!important;transition:opacity .35s}
-.stage-frame.painted .stage-wire{opacity:0}
 /* Producer Z bubble */
 .stage-bubble{position:absolute;left:4%;bottom:6%;max-width:72%;display:flex;align-items:flex-end;gap:10px;z-index:2;transition:opacity .3s,transform .3s var(--ease)}
 .stage-bubble img{width:56px;height:56px;object-fit:cover;object-position:50% 20%;border-radius:50%;border:3px solid var(--ink);background:#fff;flex:none}
@@ -51,10 +41,6 @@
 .poofer.go i:nth-child(7){--dx:0px;--dy:0px;transform:scale(.4)}
 @keyframes puff{0%{opacity:0;transform:translate(0,0) scale(.3)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(2.1)}}
 /* tabs + caption */
-.stage-tabs{display:flex;gap:8px;margin:16px 0 0;padding:0;list-style:none;flex-wrap:wrap}
-.stage-tabs button{font:inherit;font-weight:700;font-size:.9rem;padding:8px 14px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:40px}
-.stage-tabs button::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot)}
-.stage-tabs button[aria-pressed="true"]{background:var(--ink);color:#fff}
 .stage-cap{font-size:.86rem;color:var(--muted);margin:10px 0 0;line-height:1.45}
 .stage-cap-s{display:none;font-size:.8rem;color:var(--muted);margin:6px 0 0;line-height:1.4}
 
@@ -182,8 +168,6 @@
 .z-stage{margin:0 0 28px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:18px 22px}
 .z-clay{width:180px;height:165px;border-radius:12px;object-fit:cover;background:#F3EEFB;border:3px solid var(--ink);box-shadow:4px 5px 0 var(--ink);will-change:transform}
 .z-stage figcaption{font-size:1rem;line-height:1.5}
-.stage-frame{transform:translateZ(0)}
-.tilt-on .stage-frame{transition:transform .25s var(--ease)}
 .tilt-on .z-clay{transition:transform .25s var(--ease)}
 /* ---- built-in resources ---- */
 .res{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0}
@@ -246,21 +230,12 @@
 .ho-incl{margin:0;font-size:.92rem;color:var(--text);line-height:1.5}
 .btn-start{min-width:200px;font-size:1.15rem;letter-spacing:.06em;min-height:56px}
 /* ---- three-scene stage: storyboard -> painting -> dashboard ---- */
-.stage-wire i{background:#E4DEEE;border:2px dashed #BDB4CF;box-sizing:border-box}
-.stage-frame.s1 .stage-svg .brush-a path,.stage-frame.s2 .stage-svg .brush-b path{animation:brush .8s cubic-bezier(.4,0,.2,1) forwards}
 .stage-svg .brush path:nth-child(2){animation-delay:.16s}
 .stage-svg .brush path:nth-child(3){animation-delay:.32s}
 .stage-svg .brush path:nth-child(4){animation-delay:.48s}
 .stage-svg .brush path:nth-child(5){animation-delay:.64s}
 .stage-svg .brush path:nth-child(6){animation-delay:.8s}
 .stage-svg .brush path:nth-child(7){animation-delay:.96s}
-.stage-frame.s1 .stage-svg image.paint{opacity:1}
-.stage-frame.s2 .stage-svg image.masked{opacity:1}
-.stage-frame.painted .stage-svg image.masked,.stage-frame.painted .stage-svg image.paint{opacity:0}
-.stage-frame.s1 .stage-bubble,.stage-frame.s2 .stage-bubble{opacity:0;transform:translateY(8px);pointer-events:none}
-.stage-scan{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(90deg,rgba(0,184,240,0) 0%,rgba(0,184,240,.28) 45%,rgba(255,255,255,.55) 50%,rgba(0,184,240,.28) 55%,rgba(0,184,240,0) 100%);transform:translateX(-100%);z-index:2}
-.stage-frame.s2 .stage-scan{animation:scan 1.3s ease-out .15s}
-@keyframes scan{0%{opacity:0;transform:translateX(-100%)}15%{opacity:1}100%{opacity:0;transform:translateX(100%)}}
 @media (prefers-reduced-motion:reduce){
   .stage-frame.s1 .stage-svg .brush-a path,.stage-frame.s2 .stage-svg .brush-b path,.stage-frame.s2 .stage-scan{animation:none!important}
 }
@@ -367,3 +342,108 @@
 
 /* the hidden attribute must win over display rules on buttons/links */
 .genie-intake [hidden],.genie-hero [hidden],.zrig [hidden]{display:none!important}
+
+/* ===== Full-bleed painting hero: dark studio -> Z speaks the dream -> poof -> three paint layers -> hold ===== */
+.genie-hero.fb{position:relative;overflow:hidden;min-height:calc(100vh - 150px);display:flex;flex-direction:column;justify-content:center;padding:56px 0 24px;background:#0b0912}
+.genie-hero.fb::before{display:none}
+.fb-canvas{position:absolute;inset:0;z-index:0;background:#0b0912;overflow:hidden}
+.stage-dark{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 115%,#241a30 0%,#0b0912 62%);transition:opacity 1.4s ease}
+.stage-dark .spot{position:absolute;left:50%;top:-30%;width:70vw;max-width:1100px;height:160%;transform-origin:50% 0;transform:translateX(-50%) rotate(-28deg);opacity:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,236,200,.55) 0%,rgba(255,236,200,.14) 32%,rgba(255,236,200,0) 58%);will-change:transform,opacity}
+.stage-frame.dark .stage-dark .spot{animation:spot 2s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes spot{0%{opacity:0;transform:translateX(-50%) rotate(-28deg)}35%{opacity:1;transform:translateX(-50%) rotate(16deg)}70%{transform:translateX(-50%) rotate(-6deg)}100%{opacity:.95;transform:translateX(-50%) rotate(2deg)}}
+.stage-dark .grain{position:absolute;inset:0;background-image:repeating-radial-gradient(circle at 23% 37%,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);opacity:.7;mix-blend-mode:screen}
+.stage-dark .onair{position:absolute;left:4%;top:8%;font:800 .78rem/1 Poppins,Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;border:2px solid #4a1020;border-radius:6px;color:#7a2a3a;background:#1a0b10}
+.stage-dark .onair.on{color:#fff;background:#d4113d;border-color:#ff5577;box-shadow:0 0 22px #ff1f4f,inset 0 0 8px rgba(255,255,255,.35);animation:onairFlick .6s steps(1,end) 1}
+@keyframes onairFlick{0%{opacity:.2}30%{opacity:1}45%{opacity:.3}60%{opacity:1}75%{opacity:.5}100%{opacity:1}}
+.stage-frame.painted .stage-dark{opacity:0}
+.stage-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage-svg .wash,.stage-svg image{opacity:0}
+.stage-svg .brush path{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.stage-frame.l1 .stage-svg .wash{opacity:1}
+.stage-frame.l2 .stage-svg image.paint-b{opacity:1}
+.stage-frame.l3 .stage-svg image.paint-a{opacity:1}
+.stage-frame.painted .stage-svg image.plain{opacity:1;transition:opacity .4s}
+.stage-frame.painted .stage-svg .wash,.stage-frame.painted .stage-svg image.paint-b,.stage-frame.painted .stage-svg image.paint-a{opacity:0}
+.stage-frame.l1 .stage-svg .brush-a path{animation:brush 1.1s cubic-bezier(.4,0,.2,1) forwards}
+.stage-frame.l2 .stage-svg .brush-b path{animation:brush .9s cubic-bezier(.4,0,.2,1) forwards}
+.stage-frame.l3 .stage-svg .brush-c path{animation:brush .8s cubic-bezier(.4,0,.2,1) forwards}
+.stage-svg .brush path:nth-child(2){animation-delay:.12s}.stage-svg .brush path:nth-child(3){animation-delay:.24s}.stage-svg .brush path:nth-child(4){animation-delay:.36s}
+.stage-svg .brush path:nth-child(5){animation-delay:.48s}.stage-svg .brush path:nth-child(6){animation-delay:.6s}.stage-svg .brush path:nth-child(7){animation-delay:.72s}
+.stage-svg .brush path:nth-child(8){animation-delay:.84s}.stage-svg .brush path:nth-child(9){animation-delay:.96s}.stage-svg .brush path:nth-child(10){animation-delay:1.08s}
+.bloom{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at 62% 38%,rgba(255,228,150,.85) 0%,rgba(255,200,120,.35) 28%,rgba(255,200,120,0) 60%);mix-blend-mode:screen;z-index:1}
+.stage-frame.l3 .bloom{animation:bloom 2s ease-out forwards}
+@keyframes bloom{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+.flecks{position:absolute;left:60%;top:42%;width:0;height:0;pointer-events:none;z-index:2}
+.flecks i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;opacity:0;background:#FFD60A}
+.flecks i:nth-child(3n){background:#FF2E93}.flecks i:nth-child(3n+1){background:#FF8A00}.flecks i:nth-child(4n){background:#7ED321;width:8px;height:8px}.flecks i:nth-child(5n){background:#00B8F0}
+.stage-frame.l3 .flecks i{animation:fleck 1.5s cubic-bezier(.2,.7,.2,1) forwards}
+.flecks i:nth-child(1){--fx:-320px;--fy:-180px}.flecks i:nth-child(2){--fx:280px;--fy:-220px;animation-delay:.05s}.flecks i:nth-child(3){--fx:-420px;--fy:60px;animation-delay:.1s}.flecks i:nth-child(4){--fx:380px;--fy:120px;animation-delay:.03s}
+.flecks i:nth-child(5){--fx:-120px;--fy:-300px;animation-delay:.08s}.flecks i:nth-child(6){--fx:160px;--fy:260px;animation-delay:.12s}.flecks i:nth-child(7){--fx:-260px;--fy:240px;animation-delay:.02s}.flecks i:nth-child(8){--fx:460px;--fy:-80px;animation-delay:.15s}
+.flecks i:nth-child(9){--fx:-520px;--fy:-60px;animation-delay:.07s}.flecks i:nth-child(10){--fx:60px;--fy:-340px;animation-delay:.11s}.flecks i:nth-child(11){--fx:220px;--fy:-20px;animation-delay:.18s}.flecks i:nth-child(12){--fx:-60px;--fy:300px;animation-delay:.09s}
+.flecks i:nth-child(13){--fx:520px;--fy:200px;animation-delay:.14s}.flecks i:nth-child(14){--fx:-380px;--fy:-280px;animation-delay:.2s}
+@keyframes fleck{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--fx),var(--fy)) scale(1.6) rotate(240deg)}}
+.genie-hero.fb .poofer{left:62%;top:40%}
+.genie-hero.fb .stage-bubble{position:absolute;left:auto;right:4%;bottom:auto;top:11%;max-width:min(44%,520px);align-items:flex-start;display:flex;gap:10px;z-index:2;transition:opacity .3s,transform .3s var(--ease)}
+.genie-hero.fb .stage-bubble img{width:64px;height:64px;border-radius:50%;border:3px solid var(--ink);background:#fff;flex:none;object-fit:cover;object-position:50% 20%}
+.genie-hero.fb .stage-bubble p{font-size:clamp(1rem,1.6vw,1.3rem);padding:14px 18px;border-radius:16px 16px 16px 4px;min-height:2.9em}
+.stage-frame.l1 .stage-bubble,.stage-frame.l2 .stage-bubble,.stage-frame.l3 .stage-bubble,.stage-frame.painted .stage-bubble{opacity:0;transform:translateY(8px);pointer-events:none}
+.stage-frame.dark .stage-bubble{opacity:0}
+.stage-frame.say .stage-bubble{opacity:1}
+.genie-hero.fb .genie-grid{position:relative;z-index:2;grid-template-columns:minmax(0,640px);gap:0}
+.genie-copy.panel{background:rgba(251,248,255,.94);border:3px solid var(--ink);border-radius:20px;padding:30px 32px;box-shadow:7px 8px 0 var(--ink)}
+.genie-copy.panel .hero-status{margin-bottom:12px}
+.genie-copy.panel h1{font-size:clamp(2.4rem,4.6vw,4.2rem)}
+.genie-copy.panel .glance{margin-top:16px}
+.fb-foot{position:relative;z-index:2;display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap}
+.fb-foot .stage-cap{display:block;margin:0;max-width:560px;background:rgba(255,255,255,.9);border:2px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.8rem;color:var(--text)}
+.fb-foot .btn-sm{background:rgba(255,255,255,.9)}
+.genie-hero.fb .zrig{position:absolute;left:auto;right:4%;bottom:6%;top:auto;margin:0;flex-direction:row-reverse;z-index:3}
+.genie-hero.fb .zrig-say{border-radius:14px 14px 4px 14px}
+.genie-hero.fb .zrig-actor{transform:translateX(420px) rotate(6deg)}
+.genie-sec.steps-sec{padding-top:40px}
+.genie-sec.steps-sec .genie-intake{margin:0 0 32px}
+@media (max-width:900px){
+  .genie-hero.fb{min-height:0;padding:200px 0 18px;justify-content:flex-start}
+  .genie-hero.fb .stage-bubble{top:54px;right:16px;left:16px;max-width:none;align-items:flex-end}
+  .genie-hero.fb .stage-bubble img{width:44px;height:44px}
+  .genie-hero.fb .stage-bubble p{font-size:.95rem;padding:10px 12px}
+  .genie-hero.fb .poofer{left:50%;top:100px}
+  .flecks{left:50%;top:100px}
+  .stage-dark .spot{width:160vw}
+  .genie-copy.panel{padding:18px 16px;box-shadow:4px 5px 0 var(--ink)}
+  .genie-copy.panel h1{font-size:clamp(1.85rem,8vw,2.4rem);margin-top:0}
+  .fb-foot{justify-content:flex-start;margin-top:10px}
+  .fb-foot .stage-cap{font-size:.74rem}
+}
+@media (max-width:380px){.genie-hero.fb{padding-top:170px}}
+@media (prefers-reduced-motion:reduce){
+  .stage-dark .spot,.stage-dark .onair.on,.bloom,.flecks i,.stage-svg .brush path{animation:none!important}
+  .stage-frame .stage-svg image.plain{opacity:1!important;transition:none}
+  .stage-frame .stage-dark,.stage-frame .stage-bubble{opacity:0!important}
+}
+
+.choose{margin:-6px 0 16px;font-size:.98rem;color:var(--text)}
+.choose b{color:var(--ink)}
+.btn-test{min-height:56px}
+.res{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1040px){.res{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.start-row .btn-test{width:100%}.choose{font-size:.92rem;margin-bottom:10px}}
+@media (max-width:640px){.res{grid-template-columns:1fr}}
+@media (max-width:380px){.choose{display:none}}
+/* desktop fold: panel hugs the left, tighter type so START sits above the fold at 1440x900 */
+.genie-hero.fb{padding:36px 0 20px}
+.genie-hero.fb .genie-grid{justify-content:start}
+.genie-copy.panel{padding:24px 28px}
+.genie-copy.panel .hero-status{display:none}
+.genie-copy.panel h1{font-size:clamp(2.1rem,3.6vw,3.4rem);margin-bottom:10px}
+.genie-copy.panel .genie-line{font-size:clamp(1.02rem,1.45vw,1.25rem);margin-bottom:10px}
+.genie-copy.panel .wish textarea{min-height:84px}
+.genie-copy.panel .choose{margin-bottom:12px}
+/* film grain removed: a full-viewport repeating gradient cost first paint on phones */
+.stage-dark .grain{display:none}
+
+/* the finished painting sits at the bottom from first paint (it is the LCP), under the dark stage, under the layers */
+.plain-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;z-index:0}
+.stage-dark{z-index:1}
+.stage-svg{z-index:2}
+.stage-frame.painted .stage-svg{opacity:0;transition:opacity .5s .2s}
