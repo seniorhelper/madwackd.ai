@@ -4,11 +4,11 @@ const assert = require('node:assert');
 globalThis.MW_CONFIG = { apiBase: 'https://api.example.test' };
 const L = require('../assets/launch-button.js');
 
-test('everything is coming soon until the server says ready', () => {
+test('the launch button is unavailable until the server says ready', () => {
   assert.ok(L.lights(null).every((l) => l.state === 'coming_soon' && l.tone === 'off'));
   const c = L.canLaunch({ signedIn: true, status: { state: 'coming_soon' }, jobId: 'j', caption: 'hi', platforms: ['youtube'] });
   assert.equal(c.ok, false);
-  assert.match(c.why, /Coming soon/);
+  assert.match(c.why, /Not switched on/);
 });
 
 test('lights follow the server states', () => {

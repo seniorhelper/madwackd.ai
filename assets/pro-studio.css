@@ -299,3 +299,4 @@
 .pcs-biglaunch{font-size:1.15rem;padding:16px 28px;min-height:56px}
 .pcs-biglaunch:disabled,.pcs-lbtns .pcs-b:disabled{opacity:.55;cursor:not-allowed}
 .pcs-lstat{display:flex;gap:14px;flex-wrap:wrap;font-size:.84rem;padding:4px 0}.pcs-lstat b{min-width:96px}
+.pcs-launchcard[hidden]{display:none}

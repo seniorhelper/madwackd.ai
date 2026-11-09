@@ -107,7 +107,7 @@
 
   /* ---------------- Genie: wish -> starter plan -> Start / Think about it ----------------
      The plan is built here, in the browser, from the visitor's own words. No model call, no video, no fake wait.
-     Every item maps to something the studio does today (Included) or is wiring now (Rolling out). */
+     Every item maps to something the studio does today (Included). */
   var LEAD_URL = "https://clients.eyetoad.com/lead/send.php";
   var MIN_MS = 3000, shown = Date.now();
   var wishForm = document.getElementById("wish-form"), wishBox = document.getElementById("wish");
@@ -129,8 +129,8 @@
     return out.slice(0, 6);
   }
   function fromModel(r, wish) {
-    var items = (r.items || []).map(function (it) {
-      return { t: String(it.block || "") + (it.feature ? ": " + it.feature : ""), w: String(it.function || ""), s: String(it.status || "").toLowerCase() === "included" ? "Included" : "Rolling out" };
+    var items = (r.items || []).filter(function (it) { return String(it.status || "").toLowerCase() === "included"; }).map(function (it) {
+      return { t: String(it.block || "") + (it.feature ? ": " + it.feature : ""), w: String(it.function || ""), s: String(it.status || "").toLowerCase() === "included" ? "Included" : "Included" };
     });
     var text = items.map(function (it, i) { return (i + 1) + ". " + it.t + " [" + it.s + "]: " + it.w; }).join("\n");
     return { wish: wish, items: items, text: text, model: true, studio: r.studio_name || "", opening: r.opening || "", team: r.team || [], week: r.first_week || [],
@@ -164,7 +164,6 @@
     var cadence = has(t, /daily|every day/) ? "a daily rhythm" : has(t, /every week|weekly|a week/) ? "a weekly rhythm" : has(t, /month/) ? "a monthly rhythm" : "a rhythm you can actually keep";
     var items = [
       { t: "Your brand on everything", w: "Your name, logo and colors on your dashboard, and on exports and end cards as your producer sets them up.", s: "Included" },
-      { t: "A 30-day calendar for " + platText, w: "Drafted around " + cadence + ", with each post moving from idea to cut to exported to posted.", s: "Rolling out" },
       { t: "Hook, script and caption starters for " + topic, w: "Five openers and script starters from Creator Studio, plus caption templates inside each platform's limits.", s: "Included" },
       { t: "Cut once, export for " + platText, w: "One cut becomes the version each platform wants, from the studio board, with one-tap share from your phone.", s: "Included" },
       { t: "120 Fast render credits a month", w: "About five 8-second AI clips on the Founding plan, each priced before you confirm. Credit packs from $14 when you want more.", s: "Included" },
@@ -173,7 +172,6 @@
     if (wantsSales) items.push({ t: "A place to send buyers", w: "A place to send buyers for " + topic + ": an allofus.one brand page today, and a landing page or shop page quoted separately when you want it.", s: "Included" });
     else if (wantsClients) items.push({ t: "Clients from your channel", w: "Your posts link to a page people and AI answers can read; free AI-search tools from Denver SEO, and done-for-you help quoted separately.", s: "Included" });
     else if (wantsAudience) items.push({ t: "A home for your audience", w: "An allofus.one brand page the algorithm can't take away, linked from every export.", s: "Included" });
-    if (wantsIncome) items.push({ t: "Numbers you can trust", w: "Log or import views and revenue by source next to what you posted. Never sample data shown as yours.", s: "Rolling out" });
     items.push({ t: "One published press release and a Creator Spotlight", w: "We draft the release from your words; you approve every line; we publish it on our distribution network and feature you on madwackd.ai.", s: "Included" });
     var text = items.map(function (it, i) { return (i + 1) + ". " + it.t + " [" + it.s + "]: " + it.w; }).join("\n");
     return { wish: wish, items: items, text: text };
@@ -202,13 +200,13 @@
       plan.week.forEach(function (w) { var li = document.createElement("li"); li.textContent = w; week.appendChild(li); });
       setHidden(extra, plan.refused || (!plan.team.length && !plan.week.length));
       svc.textContent = plan.service ? "This one wants a producer: " + plan.service + ". Tell Genie Start and your producer quotes it." : ""; setHidden(svc, !plan.service);
-      src.textContent = "Written by Genie from your words; go over any line with Producer Z, your AI producer. Human producer time is a paid add-on. Included means it works in the studio today; rolling out means the piece is being wired now. Results vary and depend on many factors.";
+      src.textContent = "Written by Genie from your words; go over any line with Producer Z, your AI producer. Human producer time is a paid add-on. Everything listed works in the studio today. Results vary and depend on many factors.";
       if (chk) { if (plan.start) { chk.setAttribute("href", plan.start); setHidden(chk, false); } else { setHidden(chk, true); } }
       setHidden(refusedEl, !plan.refused); setHidden(actions, plan.refused); setHidden(ol, plan.refused);
     } else {
       setHidden(studioEl, true); setHidden(openEl, true); setHidden(extra, true); setHidden(svc, true); setHidden(refusedEl, true); setHidden(actions, false); setHidden(ol, false);
       if (chk) setHidden(chk, true);
-      src.textContent = "Your starter plan, built in your browser from your words; Genie refines it with you. Included means it works in the studio today. Rolling out means the piece is being wired now; you can do it by hand in the studio until then. Results vary and depend on many factors.";
+      src.textContent = "Your starter plan, built in your browser from your words; Genie refines it with you. Everything listed works in the studio today. Results vary and depend on many factors.";
     }
     setHidden(card, false); setHidden(planBody, false); setHidden(f, true); setHidden(done, true);
     lset("mw_genie_plan", JSON.stringify({ wish: plan.wish, plan_id: plan.plan_id || "", at: Date.now() }));

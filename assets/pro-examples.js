@@ -32,7 +32,7 @@
     return '<div class="pcx-agents"><div><b>Showrunner</b><span>Plans the episode, keeps the show bible</span></div><div><b>Promo producer</b><span>Writes the posts, picks the clips</span></div></div>';
   }
   function w(title, live, body, note) {
-    return '<div class="pcx-w"><p class="pcx-wt"><i class="pcx-lamp ' + (live ? 'go' : 'soon') + '" title="' + (live ? 'Works today' : 'Planned') + '"></i>' + esc(title) + '</p>' + body + (note ? '<p class="pcx-wn">' + esc(note) + '</p>' : '') + '</div>';
+    return '<div class="pcx-w"><p class="pcx-wt"><i class="pcx-lamp ' + 'go" title="Works today"></i>' + esc(title) + '</p>' + body + (note ? '<p class="pcx-wn">' + esc(note) + '</p>' : '') + '</div>';
   }
 
   var EX = [
@@ -45,11 +45,11 @@
       w('Voice + music mix', true, bars(16, 'Live levels'), 'Creator Dashboard mixer'),
       w('Tips this month', true, meter(.74, 'Cash App', '$310') + meter(.52, 'Venmo', '$215') + meter(.28, 'Ko-fi', '$120'), 'Logged in Earnings desk'),
       w('Mailing list', true, '<div class="pcx-big" data-count="1240">1,240</div><span class="pcx-cap">fans on the list</span>', 'Mailing list'),
-      w('Streams goal', false, gauge(.55, 'of 50k streams', '27.5k', '#b98cff'), 'Live platform stats: planned') ] },
+      w('Release plan', true, meter(1, 'Song written', 'Done') + meter(.6, 'Video cut', 'Today') + meter(0, 'Posted', 'Next'), 'Pitch room + publish kit') ] },
     { k: 'Show host', n: 'Late Shift Live', t: 'Weekly show, episode 12', c: '#00B8F0', ws: [
-      w('Your 2 AI producers', false, agents(), 'Planned'),
-      w('Audience retention', false, line([92, 84, 80, 74, 71, 69, 66, 64, 63, 60, 58], 'Episode 11, by minute'), 'Live platform stats: planned'),
-      w('One-button launch', false, '<div class="pcx-launch"><span>LAUNCH</span></div><span class="pcx-cap">Post to every feed at once</span>', 'Planned; today the publish kit does it in a few clicks'),
+      w('Episode clock', true, clock(1320, 'Runtime of Episode 11'), 'Pitch room'),
+      w('Publish kit', true, lights([['YouTube', 1], ['TikTok', 1], ['Instagram', 1], ['X', 0]]), 'Copy and open each upload page'),
+      w('Show bible', true, meter(.8, 'Characters set', '8 of 10'), 'Character Lock'),
       w('Show earnings', true, gauge(.81, 'of $4,000 goal', '$3,240', '#5fdcff'), 'Earnings desk') ] },
     { k: 'Brand or agency', n: 'Kilo Kart', t: '3 client brands, Q4 push', c: '#FF8A00', ws: [
       w('Credits tank', true, gauge(.63, 'credits left this month', '1,814'), 'Studio plan credits'),

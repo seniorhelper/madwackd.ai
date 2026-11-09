@@ -5,7 +5,7 @@
   var LABEL = { youtube: 'YouTube', tiktok: 'TikTok', instagram: 'Instagram', facebook: 'Facebook', x: 'X', linkedin: 'LinkedIn', pinterest: 'Pinterest', threads: 'Threads' };
   var ORDER = ['youtube', 'tiktok', 'instagram', 'facebook', 'x', 'linkedin', 'pinterest', 'threads'];
   var SITE = { youtube: 'yt', tiktok: 'tt', instagram: 'ig', facebook: 'fb', x: 'x', linkedin: 'li', pinterest: 'pin', threads: 'th' }; /* API id -> Publish desk switch id */
-  var TEXT = { coming_soon: 'Coming soon', not_connected: 'Not connected', connected: 'Connected', sending: 'Sending', queued: 'Queued', posted: 'Posted', failed: 'Failed' };
+  var TEXT = { coming_soon: 'Not available', not_connected: 'Not connected', connected: 'Connected', sending: 'Sending', queued: 'Queued', posted: 'Posted', failed: 'Failed' };
 
   /* status payload (or null) -> [{id, label, state, text, tone}]; tone drives the light colour: off | warn | on | bad */
   function lights(status) {
@@ -13,7 +13,7 @@
     ((status && status.platforms) || []).forEach(function (p) { by[p.platform] = p.state; });
     return ORDER.map(function (id) {
       var st = by[id] || 'coming_soon';
-      return { id: id, label: LABEL[id], state: st, text: TEXT[st] || 'Coming soon', tone: st === 'connected' ? 'on' : st === 'not_connected' ? 'warn' : 'off' };
+      return { id: id, label: LABEL[id], state: st, text: TEXT[st] || 'Not available', tone: st === 'connected' ? 'on' : st === 'not_connected' ? 'warn' : 'off' };
     });
   }
 
@@ -21,7 +21,7 @@
   function canLaunch(o) {
     o = o || {};
     if (!o.signedIn) return { ok: false, why: 'Sign in with a paid plan to use it.' };
-    if (!o.status || o.status.state !== 'ready') return { ok: false, why: 'Coming soon. Use the copy-and-open kit below for now.' };
+    if (!o.status || o.status.state !== 'ready') return { ok: false, why: 'Not switched on. Use the copy-and-open kit below.' };
     if (!o.jobId) return { ok: false, why: 'Pick a finished video.' };
     if (!String(o.caption || '').trim()) return { ok: false, why: 'Write a caption first.' };
     if (String(o.caption).length > 2200) return { ok: false, why: 'Caption is over 2,200 characters.' };

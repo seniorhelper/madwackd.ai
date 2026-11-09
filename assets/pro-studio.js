@@ -60,7 +60,7 @@
     { n: 'Doorhanger AI', d: 'Make a local business bookable by AI assistants.', u: 'https://doorhanger.ai/', c: '#FF2E93', dom: 'doorhanger.ai' },
     { n: 'ProveHound', d: 'Local pro directory ordered by checked records.', u: 'https://www.provehound.com/', c: '#FF8A00', dom: 'provehound.com' },
     { n: 'Madwackd Productions', d: 'Our film and production company.', u: 'https://www.madwackd.com/', c: '#00B8F0', dom: 'madwackd.com' },
-    { n: 'Video Propulsion', d: 'Video promotion service. Its own site is coming soon: call us to book it.', u: 'tel:+18004818638', c: '#7ED321', dom: '1-800-481-8638', soon: true }
+    { n: 'Video Propulsion', d: 'Video promotion service: call us to book it.', u: 'tel:+18004818638', c: '#7ED321', dom: '1-800-481-8638' }
   ];
   var FREE_TOOLS = [
     ['Hook writer', 'hk-h'], ['8-second script fitter', 'sf-h'], ['Prompt builder', 'pb-h'], ['Safe-zone checker', 'sz-h'], ['Caption maker', 'cp-h'],
@@ -465,17 +465,17 @@
       '<div class="pcs-card w7"><p class="pcs-led pink">Write once</p><div class="f"><label for="pcs-cap">Caption</label><textarea id="pcs-cap" maxlength="5000">' + esc(S.caption) + '</textarea></div>' +
         '<div class="row"><div><label for="pcs-lnk">Link</label><input type="url" id="pcs-lnk" value="' + esc(S.link) + '" placeholder="https://"></div><div><label for="pcs-tags">Hashtags</label><input type="text" id="pcs-tags" value="' + esc(S.tags) + '" placeholder="#shortfilm #comedy"></div></div>' +
         '<p class="pcs-led amber">Length meters</p><div id="pcs-lens"></div></div>' +
-      '<div class="pcs-card w12 pcs-launchcard"><p class="pcs-led pink">One Launch button <span class="pcs-beta">Beta</span></p>' +
+      '<div class="pcs-card w12 pcs-launchcard" id="pcs-launchcard" hidden><p class="pcs-led pink">One Launch button <span class="pcs-beta">Beta</span></p>' +
         '<div class="pcs-lights" id="pcs-lights" aria-live="polite"></div>' +
         '<div class="row"><div><label for="pcs-lj">Finished video</label><select id="pcs-lj" disabled><option value="">Sign in to pick a render</option></select></div>' +
         '<div class="pcs-lbtns"><button class="pcs-b hot pcs-biglaunch" type="button" id="pcs-launch" disabled>Launch to my feeds</button>' +
         '<button class="pcs-b" type="button" id="pcs-lconn" disabled>Connect my feeds</button></div></div>' +
-        '<p class="pcs-note" id="pcs-lmsg" role="status">Coming soon. Use the copy-and-open kit below for now.</p>' +
+        '<p class="pcs-note" id="pcs-lmsg" role="status">Use the copy-and-open kit below.</p>' +
         '<div class="pcs-lstats" id="pcs-lstats"></div></div>' +
       '<div class="pcs-card w5"><p class="pcs-led">Mass publish kit</p><div class="pcs-kit" id="pcs-kit"></div>' +
         '<div class="pcs-btns"><button class="pcs-b hot" type="button" id="pcs-copyall">Copy caption</button></div>' +
         '<p class="pcs-note">The kit always works: it copies your caption and opens each upload page, so a full rollout takes a few clicks. Use it for any feed the Launch button does not cover yet.</p></div>' +
-      '<div class="pcs-card w12"><p class="pcs-led violet">Feed wall</p><div class="pcs-launch" id="pcs-wall"></div><p class="pcs-note"><span class="pcs-soon">Coming soon</span> Live posts from each channel shown right here. Today each switch adds a one-click link to that profile.</p></div></div>';
+      '<div class="pcs-card w12"><p class="pcs-led violet">Feed wall</p><div class="pcs-launch" id="pcs-wall"></div><p class="pcs-note">Each switch adds a one-click link to that profile.</p></div></div>';
     function paint() {
       var cap = fullCaption(), on = PLATFORMS.filter(function (p) { return S.socials[p.id].on; });
       $('#pcs-lens').innerHTML = on.length ? on.map(function (p) {
@@ -529,6 +529,12 @@
         lsay(Object.keys(res).map(function (k) { return (L.LABEL[k] || k) + ': ' + (res[k].state || '?') + (res[k].message ? ' (' + res[k].message + ')' : ''); }).join(' · '));
         if (r.state !== 'done' && n < 20) setTimeout(function () { lpoll(id, n + 1); }, 4000); else if (r.state === 'done') lstats();
       }, function () { if (n < 20) setTimeout(function () { lpoll(id, n + 1); }, 6000); });
+    }
+    /* The Launch button only shows when the server says social_launch is on. Off or unreachable: it stays hidden. */
+    if (L && mode === 'live' && window.MW_CONFIG && window.MW_CONFIG.apiBase) {
+      fetch(String(window.MW_CONFIG.apiBase).replace(/\/+$/, '') + '/v2/config', { credentials: 'omit' }).then(function (r) { return r.json(); }).then(function (c) {
+        if (c && c.features && c.features.social_launch === true) { var card = $('#pcs-launchcard'); if (card) card.hidden = false; }
+      }).catch(function () {});
     }
     if (L && mode === 'live') {
       L.status().then(function (st) { LS.status = st; lpaint(); if (st.state === 'ready') lstats(); }, function () { lpaint(); });
@@ -651,7 +657,7 @@
       '</div><div class="pcs-card w6"><p class="pcs-led">Preview</p><div class="pcs-tipbtns" id="pcs-tip-prev"></div>' +
         '<div class="pcs-btns"><button class="pcs-b hot" type="button" id="pcs-tip-dl">Download my tip page</button><button class="pcs-b" type="button" id="pcs-tip-bio">Copy link-in-bio text</button><button class="pcs-b ghost" type="button" id="pcs-tip-code">Copy button code</button></div>' +
         '<p class="pcs-note"><b style="color:#fff">Madwackd takes 0% of your tips.</b> Fans pay you directly through the app they pick, so the money never passes through us. Each payment app\'s own fees and terms still apply. Tips you receive may be taxable income.</p>' +
-        '<p class="pcs-note">The tip page is a single file you can host anywhere, such as your own site. <span class="pcs-soon">Coming soon</span> A hosted tip page at a Madwackd link.</p></div></div>';
+        '<p class="pcs-note">The tip page is a single file you can host anywhere, such as your own site.</p></div></div>';
     function paint() {
       var l = tipLinks();
       $('#pcs-tip-prev').innerHTML = l.length ? l.map(function (x) {
@@ -684,7 +690,7 @@
   var TIEINS = [
     { n: 'SEO gauge', st: 'go', now: 'Works today, right here: scores a page\'s on-page basics in your browser.', u: '#pcs-w-gauge', c: '#7ED321', dom: 'Built in' },
     { n: 'Conversion analysis', st: 'go', now: 'Quick checks in the gauge, then the free Conversion Audit and Conversion Gauge at Search Converts.', u: 'https://searchconverts.com/cro-audit/', c: '#FFD60A', dom: 'searchconverts.com' },
-    { n: 'Launch a sales funnel', st: 'go', now: 'Opens Eye To Ad\'s lead generation team to plan and build the funnel. In-dash funnel builder: coming soon.', u: 'https://eyetoad.com/lead-generation-agency/', c: '#FF8A00', dom: 'eyetoad.com' },
+    { n: 'Launch a sales funnel', st: 'go', now: 'Opens Eye To Ad\'s lead generation team to plan and build the funnel.', u: 'https://eyetoad.com/lead-generation-agency/', c: '#FF8A00', dom: 'eyetoad.com' },
     { n: 'AI Speed to Leads', st: 'go', now: 'Every new lead gets an email and an AI voice call in about 60 seconds. Hear the live demo call you.', u: 'https://aispeedtoleads.com/demo/', c: '#7ED321', dom: 'aispeedtoleads.com' },
     { n: 'Vettley', st: 'go', now: 'Free 0 to 100 trust score from public signals your site and listing show. Add your business free.', u: 'https://www.vettley.com/add-your-business/', c: '#00B8F0', dom: 'vettley.com' },
     { n: 'USA Business Search', st: 'go', now: 'Free business directory listing in about 2 minutes. Verified and Featured upgrades are optional.', u: 'https://usabusinesssearch.com/add-your-business/', c: '#8B3DFF', dom: 'usabusinesssearch.com' },
@@ -692,8 +698,6 @@
     { n: 'allofus.one creator tools', st: 'go', now: 'Nine free creator tools: hooks, captions, teleprompter, safe zones and more.', u: 'https://allofus.one/creators/tools/', c: '#FFD60A', dom: 'allofus.one' }
   ];
   var ACCOUNTS = [
-    { n: 'Google Search Console', st: 'soon', d: 'Clicks, impressions and positions for your own site, read-only. Google\'s API is free, but our app needs Google\'s OAuth review for read-only Search Console access first.', now: 'Open your Search Console', u: 'https://search.google.com/search-console' },
-    { n: 'Ahrefs', st: 'soon', d: 'Backlinks and keyword data with your own Ahrefs API key. Ahrefs API access needs a paid Ahrefs plan (Lite and up, from $129/mo at ahrefs.com/pricing), billed by Ahrefs, not us.', now: 'About the Ahrefs API', u: 'https://docs.ahrefs.com/' },
     { n: 'Screaming Frog', st: 'go', d: 'Desktop crawler with no cloud API, so there is nothing to sign in to. Export the Internal: HTML tab as CSV and drop it in the crawl reader above. The free version crawls up to 500 URLs.', now: 'Get the SEO Spider', u: 'https://www.screamingfrog.co.uk/seo-spider/' },
     { n: 'SEO Time Machine', st: 'go', d: 'Eye To Ad\'s free planner: enter where you rank now, where you want to be and your budget, and it estimates an arrival window. An estimate, not a promise.', now: 'Start the machine', u: 'https://eyetoad.com/seo-time-machine/' }
   ];
@@ -840,7 +844,7 @@
       if (kind === 'ta') return '<div class="f"><label for="' + id + '">' + lab + '</label><textarea id="' + id + '" data-site="' + k + '" maxlength="' + (max || 1200) + '" placeholder="' + esc(ph) + '">' + v + '</textarea></div>';
       return '<div class="f"><label for="' + id + '">' + lab + '</label><input type="' + (kind || 'text') + '" id="' + id + '" data-site="' + k + '" maxlength="' + (max || 160) + '" placeholder="' + esc(ph) + '" value="' + v + '"></div>';
     }
-    function stLamp(s) { return s === 'go' ? '<span class="pcs-st go">Works today</span>' : '<span class="pcs-st soon">Coming soon</span>'; }
+    function stLamp(s) { return s === 'go' ? '<span class="pcs-st go">Works today</span>' : ''; }
     bay.innerHTML = head('Websites & SEO', 'Make a fast one-page site free, then pick how far you want to go: DIY hosting, a custom site, or a site built to win searches.', sampleTag()) +
       '<div class="pcs-grid">' +
       /* 1. Generator */
@@ -866,7 +870,7 @@
         '<h3>A website built to win searches and leads, then yours to buy.</h3>' +
         '<p>We custom-code an automated site for your business and run it every month: SEO, AIO (showing up in Google AI Overviews, ChatGPT and other AI answers) and AI agents that answer and follow up with your leads. It is built to compete for the top searches in your industry and your area.</p>' +
         '<ul class="pcs-ticks"><li>Custom-coded, fast, no page builder</li><li>Monthly SEO and AIO content, links and fixes</li><li>AI agents that answer leads around the clock</li><li>Prefer proof first? Ask about the option to buy the site once its first-page rankings and AI citations are bringing you money</li></ul>' +
-        '<p class="pcs-price"><b>$20,000 to $50,000</b> depending on your market, scope and complexity. Terms, including any buy-later option, are agreed in writing before work starts.</p>' +
+        '<p class="pcs-price"><b>From $30,000</b>, depending on your market, scope and complexity. Terms, including any buy-later option, are agreed in writing before work starts.</p>' +
         '<div class="pcs-btns"><a class="pcs-b hot" href="/book/?want=web">Request a plan</a><a class="pcs-b" href="https://eyetoad.com/custom-website-design/#start" target="_blank" rel="nofollow noopener">Talk to Eye To Ad</a><a class="pcs-b ghost" href="https://eyetoad.com/seo-time-machine/" target="_blank" rel="nofollow noopener">Estimate your timeline</a><a class="pcs-b ghost" href="tel:+18004818638">1-800-481-8638</a></div>' +
         '<p class="pcs-note"><b style="color:#fff">No guarantees.</b> Nobody can promise rankings, AI citations, traffic or leads, and we don\'t. Google and AI tools decide what they show, and results depend on your market, competition and history. We show you the work and the numbers every month.</p></div>' +
       /* 3. Three levels */
@@ -875,7 +879,7 @@
           '<div class="pcs-btns"><a class="pcs-b sm" href="https://www.buyweburl.com/products/website-builder" target="_blank" rel="nofollow noopener">Website builder</a><a class="pcs-b sm" href="https://www.buyweburl.com/products/cpanel" target="_blank" rel="nofollow noopener">Hosting</a><a class="pcs-b sm ghost" href="https://www.buyweburl.com/products/domain-registration" target="_blank" rel="nofollow noopener">Domains</a></div></div>' +
         '<div class="pcs-lvl" style="--c:#00B8F0"><p class="k">Built for you</p><h3>Custom CMS site</h3><p class="p">A WordPress or Shopify site set up and designed for you, so you can edit pages and products yourself.</p><p class="pcs-note">Quoted per project after a short call.</p>' +
           '<div class="pcs-btns"><a class="pcs-b sm" href="/book/?want=web">Get a quote</a></div></div>' +
-        '<div class="pcs-lvl" style="--c:#FF2E93"><p class="k">Custom code</p><h3>Custom website or app</h3><p class="p">Hand-coded sites, portals, booking and quote tools, and web apps. From about <b>$20,000</b>, depending on complexity.</p><p class="pcs-note">Scope and price agreed in writing first.</p>' +
+        '<div class="pcs-lvl" style="--c:#FF2E93"><p class="k">Custom code</p><h3>Custom website or app</h3><p class="p">Hand-coded sites, portals, booking and quote tools, and web apps. Starts at <b>$30,000</b> (up to about $100,000 for large builds), depending on complexity. Prefer a subscription? Ask about owning your site for $99 a month.</p><p class="pcs-note">Scope and price agreed in writing first.</p>' +
           '<div class="pcs-btns"><a class="pcs-b sm hot" href="/book/?want=web">Request a call</a><a class="pcs-b sm ghost" href="https://eyetoad.com/custom-website-design/" target="_blank" rel="nofollow noopener">See custom work</a></div></div>' +
       '</div></div>' +
       /* 4. Gauge + crawl reader */
@@ -891,7 +895,7 @@
       /* 5. Tie-ins */
       '<div class="pcs-card w12"><p class="pcs-led cyan">Launch buttons: grow from here</p><div class="pcs-launch">' +
         TIEINS.map(function (x) { var ext = /^https?:/.test(x.u); return '<a class="pcs-lb" style="--c:' + x.c + '" href="' + esc(x.u) + '"' + (ext ? ' target="_blank" rel="nofollow noopener"' : ' data-jump="1"') + '><b>' + esc(x.n) + '</b>' + stLamp(x.st) + '<span>' + esc(x.now) + '</span><em>' + esc(x.dom) + '</em></a>'; }).join('') +
-        '</div><p class="pcs-note">These are separate businesses in our network, each with its own prices and terms. Live results from each one inside this dashboard: coming soon.</p></div>' +
+        '</div><p class="pcs-note">These are separate businesses in our network, each with its own prices and terms.</p></div>' +
       /* 6. Account links */
       '<div class="pcs-card w12"><p class="pcs-led pink">Connect your SEO accounts</p><ul class="pcs-accts">' +
         ACCOUNTS.map(function (x) { return '<li><div><b>' + esc(x.n) + '</b> ' + stLamp(x.st) + '<p>' + esc(x.d) + '</p></div><a class="pcs-b sm" href="' + esc(x.u) + '" target="_blank" rel="nofollow noopener">' + esc(x.now) + '</a></li>'; }).join('') +
