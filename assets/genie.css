@@ -447,3 +447,5 @@
 .stage-dark{z-index:1}
 .stage-svg{z-index:2}
 .stage-frame.painted .stage-svg{opacity:0;transition:opacity .5s .2s}
+
+@media (max-width:640px){.post-table{display:block;overflow-x:auto;max-width:100%}}

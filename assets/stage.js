@@ -93,7 +93,7 @@
     var img = useB ? gB : gA; var r = (img || genie).getBoundingClientRect(), s = scene.getBoundingClientRect();
     var bw = gSay.offsetWidth || 260, bh = gSay.offsetHeight || 60;
     var top_ = !SMALL && stage.classList.contains("s-console");
-    var side = !top_ && !SMALL && holo && (stage.classList.contains("s-dash") || stage.classList.contains("s-holo"));
+    var side = !top_ && !SMALL && holo && stage.classList.contains("s-holo");
     gSay.classList.toggle("left", !!side);
     var x, y;
     if (side) {            /* beside the dashboard, at the Genie's head height, tail pointing back at him */
@@ -287,17 +287,19 @@
 
   if (SMALL) console_(true);        /* phones: the panel sits under the stage and never covers it */
   function markSeen() { try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } }
+  function holoInert(on) { if (holo) { holo.inert = !!on; if (on) holo.setAttribute("aria-hidden", "true"); else holo.removeAttribute("aria-hidden"); } }
+  holoInert(true);
   function reset() {
     cls("s-spot", false); cls("s-spotslow", false); SCENES.forEach(function (c) { cls(c, false); }); gold = false; wisps(false);
     if (onair) onair.className = "gs-onair"; if (gSay) gSay.classList.remove("show"); holoMode("creator");
-    if (!SMALL) console_(false);
+    if (!SMALL) console_(false); holoInert(true);
   }
   function finale() {
     clearAll(); loadSet(); preloadPoses(); fxStart();
     END.forEach(function (c) { cls(c, true); }); cls("s-signs", false);
     pose(POSES.present ? "present" : "point"); gold = true; wisps(true);
     if (onair) onair.className = "gs-onair on"; if (!zOn) zEnter();
-    played = true; playing = false; console_(true); markSeen();
+    played = true; playing = false; console_(true); markSeen(); holoInert(SMALL);
   }
   if (skipBtn) skipBtn.addEventListener("click", function () { finale(); later(function () { say("g-6", 5200); }, 900); });
   function play() {
@@ -342,7 +344,7 @@
     T(function () { cls("s-signsout", true); }, 34100);
     /* curtain call: the wish, the console */
     T(function () {
-      cls("s-done", true); console_(true); markSeen(); played = true; playing = false;
+      cls("s-done", true); console_(true); markSeen(); played = true; playing = false; holoInert(SMALL);
       pose("point"); say("g-6", 5200);
       if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
       spotOnEl(genie, 0);

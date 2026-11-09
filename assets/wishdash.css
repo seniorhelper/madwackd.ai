@@ -37,7 +37,7 @@
 .wd-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;grid-column:1/-1}
 .wd-bar i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#FF2E93,#FF8A00)}
 .wd-pub{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.wd-pub span{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(0,0,0,.3);border:1px solid var(--wd-line);border-radius:8px;padding:8px 10px;font-size:.74rem}
+.wd-pub span{overflow-wrap:normal;word-break:normal;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;background:rgba(0,0,0,.3);border:1px solid var(--wd-line);border-radius:8px;padding:8px 10px;font-size:.74rem}
 .wd-pub em{font-style:normal;color:#7ED321;font-weight:700;font-size:.66rem;white-space:nowrap}
 .wd-pub em::before{content:"✓ "}
 .wd-pub em.wait{color:var(--wd-mute)}.wd-pub em.wait::before{content:""}
@@ -73,7 +73,7 @@
 /* the mode switch must stay clickable above the veil */
 .wd-top{position:relative;z-index:4}
 /* section framing */
-.wd-section{padding:64px 0 72px;background:#07060b;color:#F4F0FA}
+.wd-section{padding:64px 0 72px;background:#07060b;color:#F4F0FA;overflow:hidden;overflow:clip}
 .wd-section .sec-head h2{color:#fff}
 .wd-section .sec-head p{color:#B9B2C8}
 .wd-section .kicker{color:#B9B2C8}

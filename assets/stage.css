@@ -3,8 +3,9 @@
    set pieces with torn edges that fly in from the loft, the wings and the trap; a sunrise; the dream dashboard built centre
    stage; three dashboard signs on ropes; the console as the curtain call. Shared by the home page and /custom-creator-studio/.
    Transforms and opacity only (no blend modes, no backdrop filters). Pointer parallax through --px / --py. Still under reduced motion. */
-.gstage{--px:0;--py:0;--velvet:url(/assets/img/stage/genie/velvet-tile.webp);--boards:url(/assets/img/stage/genie/boards-tile.webp);--boards-size:512px 256px;position:relative;overflow:hidden;background:#07060b;color:#F4F0FA;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 28px}
-@media (min-width:901px){.gstage{min-height:max(880px,calc(100vh - 150px))}}
+.gstage{--hs:1;--px:0;--py:0;--velvet:url(/assets/img/stage/genie/velvet-tile.webp);--boards:url(/assets/img/stage/genie/boards-tile.webp);--boards-size:512px 256px;position:relative;overflow:hidden;overflow:clip;background:#07060b;color:#F4F0FA;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 28px}
+@media (min-width:901px){.gstage{min-height:clamp(640px,calc(100svh - 80px),900px)}}
+@media (min-width:901px) and (max-width:1250px){.gstage{--hs:.8}}
 .gs-scene{position:absolute;inset:0;perspective:1200px;perspective-origin:50% 40%;overflow:hidden}
 .gs-scene>*{position:absolute}
 @keyframes fadeIn{to{opacity:1}}
@@ -77,10 +78,10 @@
   -webkit-mask-image:radial-gradient(14px at 50% 100%,transparent 98%,#000) 0 0/28px 100% repeat-x,linear-gradient(#000 0 0);-webkit-mask-composite:source-out;mask-image:radial-gradient(14px at 50% 100%,transparent 98%,#000) 0 0/28px 100% repeat-x,linear-gradient(#000 0 0);mask-composite:subtract}
 .gs-valance::after{content:"";position:absolute;left:0;right:0;bottom:0;height:14px;background:radial-gradient(circle at 50% 100%,#f7df9a 0 3px,rgba(247,223,154,0) 4px) 0 0/14px 14px repeat-x,linear-gradient(90deg,#b8862e,#f7df9a,#b8862e)}
 /* ---------- On Air: dark, a flicker, then full neon for the whole show ---------- */
-.gs-onair{left:50%;top:4%;transform:translateX(-50%);z-index:12;font:800 .78rem/1 Poppins,Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:8px 13px;border:2px solid #4a1020;border-radius:7px;color:#6f2636;background:#170a0e}
+.gs-onair{left:50%;top:4%;transform:translateX(-50%);z-index:12;font:800 .78rem/1 Poppins,Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:8px 13px;border:2px solid #6a2030;border-radius:7px;color:#d98a9a;background:#170a0e}
 .gs-onair.flick{animation:onairFlick 1s steps(1) forwards}
 .gs-onair.on{color:#fff;background:#ff1f4b;border-color:#ffc2cf;text-shadow:0 0 6px #fff,0 0 14px #ff8aa6;box-shadow:0 0 14px 2px rgba(255,31,75,.95),0 0 46px 10px rgba(255,31,75,.55),0 0 90px 24px rgba(255,31,75,.25),inset 0 0 10px rgba(255,255,255,.45);animation:neonHum 3s ease-in-out infinite}
-@keyframes onairFlick{0%{color:#fff;background:#ff1f4b;box-shadow:0 0 30px rgba(255,31,75,.9)}12%{color:#6f2636;background:#170a0e;box-shadow:none}22%{color:#fff;background:#ff1f4b;box-shadow:0 0 30px rgba(255,31,75,.9)}30%{color:#6f2636;background:#170a0e;box-shadow:none}55%{color:#fff;background:#ff1f4b;box-shadow:0 0 40px rgba(255,31,75,.9)}62%{color:#6f2636;background:#170a0e;box-shadow:none}100%{color:#fff;background:#ff1f4b}}
+@keyframes onairFlick{0%{color:#fff;background:#ff1f4b;box-shadow:0 0 30px rgba(255,31,75,.9)}12%{color:#d98a9a;background:#170a0e;box-shadow:none}22%{color:#fff;background:#ff1f4b;box-shadow:0 0 30px rgba(255,31,75,.9)}30%{color:#d98a9a;background:#170a0e;box-shadow:none}55%{color:#fff;background:#ff1f4b;box-shadow:0 0 40px rgba(255,31,75,.9)}62%{color:#d98a9a;background:#170a0e;box-shadow:none}100%{color:#fff;background:#ff1f4b}}
 @keyframes neonHum{0%,100%{opacity:1}50%{opacity:.93}}
 /* ---------- act 1: title cards fly in as set pieces ---------- */
 .gs-cards{left:0;right:0;top:0;bottom:0;z-index:8;pointer-events:none;perspective:1000px}
@@ -166,12 +167,12 @@
 .gs-sunwash{inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(60% 50% at 50% 30%,rgba(255,196,110,.28),rgba(255,196,110,0) 70%),linear-gradient(180deg,rgba(255,180,90,0) 40%,rgba(255,170,80,.16) 100%)}
 .gstage.s-sun .gs-sunwash{animation:fadeIn 2.6s ease .6s forwards}
 /* ---------- act 4: the dream dashboard is built centre stage, then steps to the side ---------- */
-.gs-holo-beam{position:absolute;right:2.5%;bottom:-4%;width:30%;height:46%;background:linear-gradient(180deg,rgba(0,184,240,0),rgba(0,184,240,.32));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;pointer-events:none;filter:blur(2px);z-index:9}
-.gs-holo{position:absolute;right:2.5%;top:14%;width:30%;max-width:520px;z-index:10;pointer-events:none;opacity:0;transform-origin:50% 0;transform:perspective(1200px) translateX(-100%) translateY(80px) scale(1.1) rotateX(38deg);transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity .7s ease}
-.gstage.s-dash .gs-holo{opacity:1;transform:perspective(1200px) translateX(-100%) scale(1.22);pointer-events:auto}
+.gs-holo-beam{position:absolute;right:2.5%;bottom:-4%;width:440px;height:46%;background:linear-gradient(180deg,rgba(0,184,240,0),rgba(0,184,240,.32));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;pointer-events:none;filter:blur(2px);z-index:9}
+.gs-holo{position:absolute;right:2.5%;top:13%;width:440px;z-index:10;pointer-events:none;opacity:0;transform-origin:50% 0;transform:perspective(1200px) translateX(-40%) translateY(80px) scale(calc(var(--hs) * 1.05)) rotateX(38deg);transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity .7s ease}
+.gstage.s-dash .gs-holo{opacity:1;transform:perspective(1200px) translateX(-30%) scale(calc(var(--hs) * 1.14));pointer-events:auto}
 .gs-holo .wd-lock{transition:opacity .6s ease}
 .gstage:not(.s-holo) .gs-holo .wd-lock{opacity:0}
-.gstage.s-holo .gs-holo{opacity:1;transform:perspective(1200px) rotateY(-10deg) rotateX(4deg);pointer-events:auto}
+.gstage.s-holo .gs-holo{opacity:1;transform:perspective(1200px) rotateY(-10deg) rotateX(4deg) scale(var(--hs));pointer-events:auto}
 .gstage.s-holo .gs-holo-beam{animation:fadeIn .8s ease .6s forwards}
 .gs-holo .wd{border-color:rgba(0,184,240,.5);box-shadow:0 0 0 1px rgba(0,184,240,.25),0 30px 80px rgba(0,0,0,.6),0 0 70px rgba(0,184,240,.3)}
 .gs-holo .wd::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 2px,transparent 2px 5px);z-index:4}
@@ -194,7 +195,7 @@
 .gs-sign span{display:block;margin-top:6px;font:600 clamp(.72rem,1vw,.9rem)/1.3 Inter,sans-serif;color:#3d2a14}
 .gs-sign em{display:inline-block;margin-top:8px;font:800 .72rem/1 Inter,sans-serif;font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#C2185B;border-radius:999px;padding:6px 9px}
 .gs-sign i{display:block;margin:0 auto 6px;font:800 .66rem/1 Inter,sans-serif;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:#7a4c14}
-.gs-sign.s1{left:4.5%}.gs-sign.s2{left:23%}.gs-sign.s3{left:41.5%;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 40%),linear-gradient(180deg,#ffe9a8,#ffcf5a);box-shadow:0 0 0 3px #3a2410,0 24px 40px rgba(0,0,0,.55),0 0 40px rgba(255,214,10,.45)}
+.gs-sign.s1{left:max(110px,7%)}.gs-sign.s2{left:calc(max(110px,7%) + 19%)}.gs-sign.s3{left:calc(max(110px,7%) + 38%);background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 40%),linear-gradient(180deg,#ffe9a8,#ffcf5a);box-shadow:0 0 0 3px #3a2410,0 24px 40px rgba(0,0,0,.55),0 0 40px rgba(255,214,10,.45)}
 .gstage.s-signs .gs-sign{animation:signDrop 1.6s cubic-bezier(.3,.7,.3,1) forwards}
 .gstage.s-signs .gs-sign.s2{animation-delay:.25s}.gstage.s-signs .gs-sign.s3{animation-delay:.5s}
 .gstage.s-signs.s-signsout .gs-sign{animation:signUp .8s cubic-bezier(.6,0,.8,.3) forwards}
@@ -227,7 +228,8 @@
 .gstage.s-console .gs-skip{display:none}
 /* ---------- the console: hidden until the show is over, closable ---------- */
 .gs-wrap{position:relative;z-index:12;width:100%;max-width:1240px;margin:0 auto;padding:0 32px;transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-.gstage:not(.s-console) .gs-wrap{opacity:0;transform:translateY(40px);visibility:hidden;pointer-events:none}
+.gstage:not(.s-console) .gs-wrap{opacity:0;transform:translateY(40px);visibility:hidden}
+.gs-wrap{pointer-events:none}.gstage.s-console .gs-wrap .gs-panel{pointer-events:auto}
 .gstage.s-closed .gs-wrap{display:none}
 .gs-panel{max-width:600px;margin:0;padding:24px 26px;border-radius:20px;background:rgba(12,10,20,.92);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 90px rgba(0,0,0,.65),0 0 60px rgba(255,46,147,.1),inset 0 1px 0 rgba(255,255,255,.1);position:relative}
 .gs-panel::before{content:"";position:absolute;inset:-1px;border-radius:21px;padding:1px;background:linear-gradient(135deg,rgba(255,46,147,.9),rgba(139,61,255,.6) 45%,rgba(0,184,240,.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
@@ -276,6 +278,7 @@
 .gs-replay:hover{background:rgba(255,255,255,.16)}
 /* at the curtain call the lamp steps right so the Genie stands between the console and the dashboard */
 @media (min-width:901px){
+  .gstage.s-dash .gs-lamp{left:20%}
   .gstage.s-console .gs-lamp{left:54%}
   .gstage.s-console.s-g2 .gs-genie{transform:scale(.88)}
   .gs-wrap{max-width:none;padding:0 0 0 calc(2.6% + 22px)}
@@ -290,11 +293,12 @@
   .gs-pros{display:none}
   .gs-beam{width:70vw}
   .gs-onair{top:5%;left:3%;transform:none;font-size:.62rem;padding:5px 9px}
-  .gs-card{top:42%;width:86%;font-size:clamp(1.25rem,6vw,1.7rem)}
+  .gs-card{top:54%;width:88%;font-size:clamp(1.1rem,5.4vw,1.5rem)}
+  .gs-card .chips{margin-top:8px;gap:5px}
   .gs-card small{font-size:.9rem;margin-top:8px}
   .gs-card .chips span{font-size:.66rem;padding:6px 9px}
   .gs-lamp{left:40%;bottom:16%;width:68px}
-  .gs-gsay{max-width:200px;font-size:.82rem;padding:8px 11px}
+  .gs-gsay{max-width:46%;font-size:.8rem;padding:7px 10px}
   .gstage.s-signs:not(.s-signsout) .gs-gsay{opacity:0}
   .gs-kicker{font-size:.64rem;letter-spacing:.1em}
   .gs-f-ground,.gs-f-near{display:none}
@@ -303,8 +307,9 @@
   .gstage.s-dash .gs-holo{transform:translateX(-50%) scale(.5)}
   .gstage.s-holo .gs-holo{opacity:0;transform:translateX(-50%) translateY(-30px) scale(.45);pointer-events:none}
   .gs-holo-beam{display:none}
-  .gs-sign{top:9%;width:30%;padding:8px 6px 9px;border-radius:9px}
-  .gs-sign.s1{left:2.5%}.gs-sign.s2{left:35%}.gs-sign.s3{left:67.5%}
+  .gs-sign{top:19%;width:29%;padding:7px 5px 8px;border-radius:9px}
+  .gs-sign span{display:none}
+  .gs-sign.s1{left:4%}.gs-sign.s2{left:35.5%}.gs-sign.s3{left:67%}
   .gs-sign b{font-size:.84rem}.gs-sign span{font-size:.62rem}.gs-sign em{font-size:.56rem;padding:4px 6px}.gs-sign i{font-size:.52rem}
   .gs-z{right:4%;bottom:8%}
   .gs-z-actor{width:84px;height:84px}
@@ -333,3 +338,8 @@
   .gs-z-actor,.gs-holo .wd-card,.gs-holo .wd-top{transform:none;opacity:1}
   .gs-fx,.gs-spot,.gs-cards,.gs-signs,.gs-gsay{display:none}
 }
+
+/* the hologram's unlock line sits under the tiles, not over them */
+.gs-holo .wd-lock{position:static;background:none;padding:6px 12px 14px;pointer-events:auto}
+.gs-holo .wd-lock p small,.gs-holo .wd-sample{display:none}
+.gs-holo .wd-q li:nth-child(3){display:none}
