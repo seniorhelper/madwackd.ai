@@ -1,0 +1,31 @@
+/* /book/ request-a-call calendar */
+.bk-hero{padding-bottom:12px}
+.bk-sec{padding:12px 0 72px}
+.bk-grid{display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:18px;align-items:start}
+.bk-panel{background:#fff;border:3px solid var(--ink);border-radius:16px;box-shadow:4px 5px 0 var(--ink);padding:18px}
+.bk-h{display:flex;align-items:center;gap:10px;font-size:1.15rem;margin:0 0 12px}
+.bk-h span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--pink);border:2px solid var(--ink);font-size:.9rem}
+.bk-dow,.bk-days{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.bk-dow{margin-bottom:6px;font-size:.72rem;font-weight:700;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.06em}
+.bk-day{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:52px;border:2px solid var(--line-2);border-radius:10px;background:#fff;cursor:pointer;font:inherit;color:var(--ink);padding:4px}
+.bk-day small{font-size:.62rem;color:var(--muted);text-transform:uppercase}
+.bk-day b{font-size:1.1rem}
+.bk-day:hover{border-color:var(--ink)}
+.bk-day.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.bk-day.on small{color:#FF7CC0}
+.bk-hint{font-size:.85rem;color:var(--muted);margin:0 0 10px}
+.bk-times{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-height:330px;overflow:auto;padding-right:2px}
+.bk-time{min-height:44px;border:2px solid var(--line-2);border-radius:10px;background:#fff;font:600 .9rem Inter,sans-serif;color:var(--ink);cursor:pointer}
+.bk-time:hover{border-color:var(--ink)}
+.bk-time.on{background:var(--pink);border-color:var(--ink);box-shadow:2px 3px 0 var(--ink)}
+.bk-pick{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--bone);font-size:.9rem}
+.bk-pick.ok{background:#F4FDE4;border:2px solid var(--ink)}
+.bk-form label{display:block;margin:10px 0 4px;font-weight:600;font-size:.88rem}
+.bk-form .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bk-form input[type=text],.bk-form input[type=tel],.bk-form input[type=email],.bk-form select,.bk-form textarea{width:100%}
+.bk-form .check{display:flex;gap:8px;font-weight:400;font-size:.78rem;line-height:1.4}
+.bk-form .btn{margin-top:12px}
+.bk-alt{margin-top:22px;text-align:center}
+@media (max-width:1000px){.bk-grid{grid-template-columns:1fr 1fr}.bk-grid .bk-panel:last-child{grid-column:1/-1}}
+@media (max-width:640px){.bk-grid{grid-template-columns:1fr}.bk-form .row{grid-template-columns:1fr}.bk-times{grid-template-columns:repeat(2,1fr)}}
+.bk-form .check input{width:20px;height:20px;min-height:0;margin:2px 0 0;padding:0;flex:none}
