@@ -70,6 +70,8 @@
   /* Booking assistant: four required answers decide whether the request goes to a person.
      Not a fit yet -> nothing is sent; the visitor gets the self-serve paths instead. */
   var Q = { make: document.getElementById('bk-make'), who: document.getElementById('bk-who-are'), budget: document.getElementById('bk-budget'), when: document.getElementById('bk-when') };
+  /* ?want=web (from the Pro Studio Websites & SEO room) pre-picks the website option; the visitor can change it. */
+  try { if (new URLSearchParams(location.search).get('want') === 'web' && Q.make) Q.make.value = 'A website, SEO or AI search work'; } catch (e) {}
   var route = document.getElementById('bk-route'), qual = document.getElementById('bk-qual'), subj = document.getElementById('bk-subject');
   var SELF = '<p>Start tonight, no call needed: the <a href="/creator-studio/">free Creator Studio tools</a>, a <a href="/studio/?buy=test_drive">$5 Test Drive</a> (one finished clip), <a href="/pricing/">plans from $29 a month</a>, and Producer Z, our AI producer, any hour (the chat button on every page). See <a href="/producers/#work-with-us">how to work with us</a>.</p>';
   function assess() {
