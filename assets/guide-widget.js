@@ -16,7 +16,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261108z";
+  var V = "20261108z2";
   /* The guide's name, in one place (Zach, Nov 8: Producer Z, he/him). MW_CONFIG.guideName can override it. */
   var NAME = String((window.MW_CONFIG && window.MW_CONFIG.guideName) || "Producer Z");
   var A = "/assets/z/";

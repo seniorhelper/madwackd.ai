@@ -217,12 +217,16 @@
     if (e.detail && e.detail.on) { if (mouth.hidden && !REDUCED && vid) talk(4000); return; }
     mouth.hidden = true; if (vid) { vid.style.visibility = ""; vid.loop = false; }
   });
-  function speak(text) {
+  function speak(text, ticket) {
     if (!VO) return;
     var paid = ["pro", "studio", "creators_beta", "genie_team", "business", "agency", "whitelabel"].indexOf(TIER) > -1;
-    if (paid && API && window.MW_ID_TOKEN && VO.canSpeak()) {
-      fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
-        Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text, lips: true }) })
+    /* studio voice: paid plans (their minutes), or any visitor when the server signed this exact reply (ticket) */
+    var signedIn = paid && window.MW_ID_TOKEN;
+    if (API && VO.canSpeak() && (signedIn || ticket)) {
+      var hd = { "Content-Type": "application/json" };
+      if (signedIn) hd.Authorization = "Bearer " + window.MW_ID_TOKEN;
+      fetch(API + "/v2/guide/voice", { method: "POST", headers: hd,
+        body: JSON.stringify(signedIn ? { text: text, lips: true } : { text: text, say: ticket, lips: true }) })
         .then(function (r) { if (!r.ok) throw 0; return r.json(); })
         .then(function (j) {
           var bin = atob(j.audio_b64 || ""), buf = new Uint8Array(bin.length);
@@ -399,7 +403,7 @@
         say(reply, j.links || []);
         if (j.offer_lead && j.lead_form) offerLead(j.lead_form);
         if (j.lead && j.lead.qualified) root.querySelector(".zg-live").hidden = false;   /* the server decides */
-        if (spokenAsk || (VO && VO.canSpeak())) speak(reply);
+        if (spokenAsk || (VO && VO.canSpeak())) speak(reply, j.say);
         if (typeof j.messages_left === "number" && j.messages_left > 0 && j.messages_left <= 2) {
           note(j.messages_left + (j.messages_left === 1 ? " free message" : " free messages") + " left today." +
             (TIER === "anon" ? " A free account gets more." : ""));
