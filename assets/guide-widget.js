@@ -16,7 +16,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261108z2";
+  var V = "20261108z3";
   /* The guide's name, in one place (Zach, Nov 8: Producer Z, he/him). MW_CONFIG.guideName can override it. */
   var NAME = String((window.MW_CONFIG && window.MW_CONFIG.guideName) || "Producer Z");
   var A = "/assets/z/";
@@ -99,6 +99,24 @@
   });
   var lipsReady = false, lipsLoading = false, talkRaf = 0, talkTimer = 0, curAudio = null;
   function emit(name, detail) { try { window.dispatchEvent(new CustomEvent(name, { detail: detail })); } catch (e) { /* old browser */ } }
+  /* One speaker at a time across the site (the Genie stage, Z, anything else that talks).
+     claim(id, stopFn) stops whoever is talking and takes the floor; release(id) when done; current() -> id or null.
+     Created here only if the page hasn't made one, so a richer shared version can replace it with the same shape. */
+  if (!window.MWAudio) window.MWAudio = (function () {
+    var cur = null;
+    return {
+      claim: function (id, stop) {
+        if (cur && cur.id !== id) { var prev = cur; cur = null; try { prev.stop(); } catch (e) { /* ignore */ } }
+        cur = { id: id, stop: stop || function () {} };
+        emit("mw:audio-claim", { id: id });
+      },
+      release: function (id) { if (cur && cur.id === id) cur = null; },
+      current: function () { return cur ? cur.id : null; },
+      stopAll: function () { if (cur) { var prev = cur; cur = null; try { prev.stop(); } catch (e) { /* ignore */ } } }
+    };
+  })();
+  var ME = "z-guide";
+  function othersTalking() { var c = window.MWAudio.current && window.MWAudio.current(); return !!c && c !== ME; }
   function loadLips() {
     if (lipsReady || lipsLoading || REDUCED) return;
     lipsLoading = true;
@@ -115,6 +133,7 @@
   function talkEnd() {
     cancelAnimationFrame(talkRaf); clearInterval(talkTimer); talkRaf = 0; talkTimer = 0;
     mouth("rest"); emit("mw:z-talk", { on: false });
+    if (window.MWAudio) window.MWAudio.release(ME);
   }
   function shapesOf(word) {
     var out = [], w = String(word || "").toLowerCase().replace(/[^a-z]/g, "");
@@ -166,11 +185,13 @@
       talkEnd();
     },
     /* the browser's own voice (free) with text-timed lips */
-    speak: function (text, done) {
+    /* polite = an idle bubble line: never talks over anyone else (the stage show, a video) */
+    speak: function (text, done, polite) {
       text = forSpeech(text);
-      if (!text || !voice.canSpeak() || !("speechSynthesis" in window)) { if (done) done(); return false; }
+      if (!text || !voice.canSpeak() || !("speechSynthesis" in window) || (polite && othersTalking())) { if (done) done(); return false; }
       loadLips();
       voice.stop();
+      window.MWAudio.claim(ME, voice.stop);
       try {
         var u = new SpeechSynthesisUtterance(text), pv = pickVoice(), resync = null;
         if (pv) u.voice = pv;
@@ -185,7 +206,8 @@
     /* a studio-voice clip (paid plans): per-character mouth timeline if given, else the audio's loudness */
     playAudio: function (audio, mouths) {
       if (!voice.canSpeak()) return false;
-      loadLips(); voice.stop(); curAudio = audio;
+      loadLips(); voice.stop(); curAudio = audio; audio.__mwz = true;
+      window.MWAudio.claim(ME, voice.stop);
       var ctx = null, an = null, buf = null, i = 0, last = "", flip = 0;
       if (!(mouths && mouths.length) && (window.AudioContext || window.webkitAudioContext)) {
         try {
@@ -216,6 +238,30 @@
       return true;
     }
   };
+  /* Safety net: any unmuted <audio>/<video> (including new Audio() clips the stage plays) takes the floor when it
+     starts, so Z never talks over it, even on pages that don't call MWAudio themselves. Muted clips are ignored. */
+  (function () {
+    var MP = window.HTMLMediaElement && HTMLMediaElement.prototype;
+    if (!MP || MP.__mwAudioHooked) return;
+    MP.__mwAudioHooked = true;
+    var play = MP.play;
+    MP.play = function () {
+      var el = this;
+      try {
+        if (!el.muted && el.volume > 0 && !el.__mwz) {
+          window.MWAudio.claim("media", function () { try { el.pause(); } catch (e) { /* ignore */ } });
+          var done = function () { if (window.MWAudio.current() === "media") window.MWAudio.release("media"); };
+          el.addEventListener("ended", done, { once: true });
+          el.addEventListener("pause", done, { once: true });
+        }
+      } catch (e) { /* never block playback */ }
+      return play.apply(this, arguments);
+    };
+  })();
+  /* someone else took the floor (stage line, video): Z goes quiet at once */
+  window.addEventListener("mw:audio-claim", function (e) {
+    if (e.detail && e.detail.id !== ME && (curAudio || (window.speechSynthesis && speechSynthesis.speaking))) voice.stop();
+  });
   if (window.speechSynthesis && speechSynthesis.addEventListener) speechSynthesis.addEventListener("voiceschanged", function () { /* warm list */ });
 
   /* ================= markup ================= */
@@ -299,7 +345,7 @@
     sayBox.classList.remove("is-in"); void sayBox.offsetWidth; sayBox.classList.add("is-in");
     var ms = Math.max(7000, text.split(/\s+/).length * 380);
     function later() { bubbleTimer = setTimeout(hideBubble, ms); }
-    if (speakIt && voice.canSpeak()) { voice.speak(text, later); } else later();
+    if (speakIt && voice.canSpeak()) { voice.speak(text, later, true); } else later();
   }
   ["pointerenter", "focusin"].forEach(function (ev) { sayBox.addEventListener(ev, function () { clearTimeout(bubbleTimer); }); });
   sayBox.addEventListener("pointerleave", function () { if (!sayBox.hidden) bubbleTimer = setTimeout(hideBubble, 5000); });

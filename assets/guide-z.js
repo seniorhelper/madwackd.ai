@@ -14,7 +14,9 @@
     "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
     "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/", "/apply/", "/awards/", "/collaborate/",
     "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/", "/launch-pad/",
-    "/book/", "/support/", "/contact/", "/pro-studio/", "/custom-creator-studio/"];
+    "/book/", "/support/", "/contact/", "/pro-studio/", "/custom-creator-studio/",
+    "/studio/?buy=test_drive", "/studio/?buy=starter", "/studio/?buy=pro", "/studio/?buy=studio",
+    "/studio/?buy=pack_100", "/studio/?buy=pack_500", "/studio/?buy=pack_1000", "/studio/?buy=pack_5000"];
   /* family only (Zach, Nov 8): parent studio, Eye To Ad Media (SEO, AIO, websites), Search Converts (conversion) */
   var FAMILY = ["https://www.madwackd.com/", "https://eyetoad.com/", "https://searchconverts.com/"];
   var SAFE = "Sorry, I fumbled that one. Try me again, or see Pricing and the free tools.";
