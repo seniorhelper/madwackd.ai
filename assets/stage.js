@@ -68,16 +68,44 @@
   }
 
   /* ---------------- voices: optional studio-voice lines, only after the visitor turns sound on ---------------- */
-  var soundOn = false, voCache = {};
+  /* One audio element for every line (phones unlock it once, on the Sound click), one speaker at a time through
+     window.MWVoice (assets/mw-voice.js): a new line lets a nearly finished one end first, otherwise cuts it, and
+     Producer Z's chat voice stays quiet while the stage is talking. */
+  var soundOn = false, voEl = null, voQ = [], holdT = 0, lineId = "", lineUntil = 0, voEnd = 0;
+  function MV() { return window.MWVoice || null; }
+  function voEnsure() {
+    if (voEl) return voEl;
+    voEl = new Audio(); voEl.preload = "auto";
+    voEl.addEventListener("ended", function () { voEnd = 0; var next = voQ.shift(); if (next && soundOn) voPlay(next); else if (MV()) MV().release("stage"); });
+    return voEl;
+  }
+  function voStop() { voQ = []; voEnd = 0; if (voEl) { try { voEl.pause(); } catch (e) { /* ignore */ } } if (MV()) MV().release("stage"); }
+  function voPlay(id) {
+    var a = voEnsure();
+    if (MV()) MV().claim("stage", voStop);
+    a.muted = false; a.src = "/assets/audio/stage/" + id + ".mp3"; voEnd = Date.now() + Math.round((DUR[id] || 3) * 1000) + 150;
+    try { var p = a.play(); if (p && p.catch) p.catch(function () { /* blocked: the bubble still shows the line */ }); } catch (e) { /* no audio */ }
+  }
+  function voUnlock() {             /* nothing to say right now: start and stop the element inside the click so phones allow it later */
+    var a = voEnsure(); if (!a.paused) return;
+    a.muted = true; a.src = "/assets/audio/stage/z-3.mp3";
+    try { var p = a.play(); if (p && p.then) p.then(function () { a.pause(); a.muted = false; }, function () { a.muted = false; }); else { a.pause(); a.muted = false; } } catch (e) { a.muted = false; }
+  }
+  function vo(id) {
+    if (!soundOn) return;
+    /* a line already talking finishes first: the next ones wait their turn (at most two waiting) */
+    if (voEl && !voEl.paused && !voEl.muted && voEnd > Date.now()) { voQ.push(id); if (voQ.length > 2) voQ.shift(); }
+    else voPlay(id);
+  }
   if (soundBtn && stage.getAttribute("data-vo") === "1") soundBtn.hidden = false;
   if (soundBtn) soundBtn.addEventListener("click", function () {
     soundOn = !soundOn; soundBtn.setAttribute("aria-pressed", soundOn ? "true" : "false"); soundBtn.textContent = soundOn ? "Sound off" : "Sound on";
-    if (!soundOn) Object.keys(voCache).forEach(function (k) { try { voCache[k].pause(); } catch (e) { /* ignore */ } });
+    if (!soundOn) { voStop(); return; }
+    /* say what is on screen right now; after the show, the Genie repeats his invitation */
+    if (lineId && Date.now() < lineUntil - 600) voPlay(lineId);
+    else if (played && !playing) say("g-6", 5200);
+    else voUnlock();
   });
-  function vo(id) {
-    if (!soundOn) return;
-    try { var a = voCache[id] || (voCache[id] = new Audio("/assets/audio/stage/" + id + ".mp3")); a.currentTime = 0; var p = a.play(); if (p && p.catch) p.catch(function () { /* blocked */ }); } catch (e) { /* no audio */ }
-  }
 
   /* ---------------- speech: Producer Z's bubble and the Genie's bubble ---------------- */
   var lastLine = "Hi, I'm Producer Z. Tell me what you want your studio to be and I'll show you.";
@@ -157,7 +185,16 @@
     clearTimeout(gTimer); if (ms) gTimer = setTimeout(function () { gSay.classList.remove("show"); }, ms);
   }
   var DUR = { "z-1": 2.07, "z-2": 4.5, "z-3": 1.48, "g-1": 3.1, "g-2": 4.04, "g-3": 4.82, "g-4": 1.81, "g-5": 5.45, "g-6": 6.53 };
-  function say(id, ms) { var l = LINES[id]; if (!l) return; ms = Math.max(ms || 0, Math.round((DUR[id] || 0) * 1000) + 500); if (l[0] === "z") zSpeak(l[1], ms); else gSpeak(l[1], ms); vo(id); }
+  function say(id, ms) {
+    var l = LINES[id]; if (!l) return; ms = Math.max(ms || 0, Math.round((DUR[id] || 0) * 1000) + 500);
+    lineId = id; lineUntil = Date.now() + Math.round((DUR[id] || 2) * 1000);
+    if (l[0] === "z") zSpeak(l[1], ms); else gSpeak(l[1], ms);
+    if (soundOn) {          /* the chat guide waits while the stage is talking */
+      if (MV()) MV().hold("stage", true);
+      clearTimeout(holdT); holdT = setTimeout(function () { if (MV()) MV().hold("stage", false); }, lineUntil - Date.now() + 2500);
+    }
+    vo(id);
+  }
 
   /* ---------------- canvas: light-reactive dust, layered soft smoke, floor haze, sparkles and sparks ----------------
      Smoke puffs are soft textures baked once at start (lumpy blobs of radial gradients, lit from above and shadowed
@@ -400,7 +437,7 @@
     if (text) zSpeak(text, 7000);
   }
   if (actor) actor.addEventListener("click", function () {
-    try { if ("speechSynthesis" in window) { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(lastLine); u.rate = 1.03; speechSynthesis.speak(u); } } catch (e) { /* no speech */ }
+    voStop();               /* the chat guide does the talking from here; never two voices */
     spotOnEl(actor, 10);
     window.dispatchEvent(new CustomEvent("mw:guide-open", { detail: { topic: "help", context: "genie-stage" } }));
   });
@@ -473,7 +510,7 @@
   function reset() {
     cls("s-spot", false); cls("s-spotslow", false); SCENES.forEach(function (c) { cls(c, false); }); gold = false; wisps(false);
     if (onair) onair.className = "gs-onair"; if (gSay) gSay.classList.remove("show"); holoMode("creator");
-    ctaShow(false); zWander(false);
+    ctaShow(false); zWander(false); voStop(); lineId = "";
     if (!SMALL) console_(false); holoInert(true);
   }
   function finale() {
@@ -557,7 +594,7 @@
       }
     };
     if (document.readyState === "complete") setTimeout(go, 350); else window.addEventListener("load", function () { setTimeout(go, 350); });
-    document.addEventListener("visibilitychange", function () { if (document.hidden) { fxStop(); if (playing) { clearAll(); playing = false; } } else if (inView && !played) play(); else if (inView) fxStart(); });
+    document.addEventListener("visibilitychange", function () { if (document.hidden) { fxStop(); voStop(); if (playing) { clearAll(); playing = false; } } else if (inView && !played) play(); else if (inView) fxStart(); });
   }
   window.addEventListener("resize", function () { if (fxOn) size(); zPos(); ctaPlace(); if (gSay && gSay.classList.contains("show")) gPlace(); }, { passive: true });
 
