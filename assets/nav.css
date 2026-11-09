@@ -1,7 +1,7 @@
 /* Madwackd header v2: night-navy band with lit icon tiles. Markup comes from _build/build-header.mjs. */
 .site-header.mh{position:relative;z-index:50;background:linear-gradient(180deg,#0B1A3A 0%,#081429 100%);border-bottom:1px solid rgba(56,240,255,.16);box-shadow:0 10px 30px -18px rgba(3,8,24,.9);color:#CFDBF1;backdrop-filter:none;-webkit-backdrop-filter:none}
 .mh-bar{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:10px 20px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav acts";align-items:center;column-gap:18px}
-.mh .neo-brand{grid-area:brand;justify-self:start}
+.mh-brand{grid-area:brand;justify-self:start;position:relative;line-height:0}
 .mh .neo{--w:250px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 8px 24px -10px rgba(255,46,147,.35)}
 .mh a:focus-visible{outline:3px solid #38F0FF;outline-offset:3px;border-radius:12px}
 
@@ -72,3 +72,14 @@
   .mh-t:hover .mh-em,.mh-cta:hover{transform:none}
 }
 @media print{.site-header.mh{background:#fff;color:#000;box-shadow:none}.mh-tiles,.mh-acts{display:none}}
+
+/* Green AI emblem (Spark Sprout): a small lit badge on the logo's corner, links to Our mission */
+.mh-green{position:absolute;right:-6px;bottom:-6px;z-index:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px;box-sizing:border-box;border-radius:50%;background:linear-gradient(135deg,#9BEA4A,#2FC46B);color:#06231A;border:2px solid #0B1A3A;box-shadow:0 0 0 1px rgba(155,234,74,.35),0 0 14px -2px rgba(126,211,33,.75);transition:transform .15s var(--ease),box-shadow .15s}
+.mh-green svg{width:17px;height:17px}
+.mh-green:hover{transform:scale(1.08);box-shadow:0 0 0 1px rgba(155,234,74,.5),0 0 20px -2px rgba(126,211,33,.95)}
+.mh a.mh-green:focus-visible{border-radius:50%}
+@media (max-width:640px){.mh-green{width:26px;height:26px;right:3px;bottom:-5px}.mh-green svg{width:16px;height:16px}}
+@media (prefers-reduced-motion:reduce){.mh-green{transition:none}.mh-green:hover{transform:none}}
+/* Footer note: the same emblem in a soft green chip */
+.foot-climate{align-items:center}
+.foot-climate .leaf{width:32px;height:32px;padding:6px;box-sizing:border-box;margin:0;border-radius:10px;background:#F4FDE4;border:1px solid #CDEBA6;color:#2F6B00}

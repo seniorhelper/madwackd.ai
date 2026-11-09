@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
-const NAV_CSS_V = '20261108a';
+const NAV_CSS_V = '20261108b';
 const brand = fs.readFileSync(path.join(here, 'brand.html'), 'utf8').trim();
 
 // Custom icons: 24px grid, 1.9 stroke, round caps and joins, currentColor.
@@ -21,6 +21,8 @@ const ICON = {
   price: '<path d="M3 3h8.2l9.3 9.3a1.8 1.8 0 0 1 0 2.5l-5.7 5.7a1.8 1.8 0 0 1-2.5 0L3 11.2z"/><circle cx="7.6" cy="7.6" r="1.4"/>',
   people: '<circle cx="12" cy="9" r="3.6"/><path d="M5 21c.6-3.6 3.4-6 7-6s6.4 2.4 7 6"/><path d="M6.6 9.5V8.6a5.4 5.4 0 0 1 10.8 0v.9"/><path d="M17.4 9.5v1.2c0 1.2-1 2.1-2.2 2.1H13.5"/>',
   phone: '<path d="M5.2 3h3.1l1.7 4.4-2.2 1.5a12 12 0 0 0 7.3 7.3l1.5-2.2 4.4 1.7v3.1a2.2 2.2 0 0 1-2.4 2.2A16.5 16.5 0 0 1 3 5.4 2.2 2.2 0 0 1 5.2 3z"/>',
+  // Spark Sprout: the green AI emblem (Zach picked option B, 2026-11-08). Same paths as the footer note.
+  sprout: '<path d="M10 21v-8"/><path d="M10 15c-3.8 0-6.5-2.6-6.5-6.5 3.9 0 6.5 2.7 6.5 6.5z"/><path d="M10 12.5c0-4.1 2.6-7 7-7 0 4.3-2.8 7-7 7z"/><path d="M18.5 13.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" fill="currentColor"/>',
   go: '<path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5"/>',
 };
 
@@ -43,7 +45,7 @@ function header(pagePath, acct) {
   }).join('');
   return `<header class="site-header mh">
   <div class="mh-bar">
-    ${brand}
+    <div class="mh-brand">${brand}<a class="mh-green" href="/our-mission/" aria-label="Our mission: 1.5% of our revenue goes to carbon removal" title="1.5% of our revenue goes to carbon removal">${svg(ICON.sprout)}</a></div>
     <nav class="mh-tiles" aria-label="Main">${tiles}</nav>
     <div class="mh-acts">${acct ? '<span class="mw-acct" data-mw-account></span>' : ''}<a class="mh-call" href="tel:+18004818638">${svg(ICON.phone)}<span class="mh-num"><span class="sr-only">Call </span>1-800-481-8638</span></a><a class="mh-cta" href="/studio/?buy=test_drive" data-tour="start">Start for $5${svg(ICON.go)}</a></div>
   </div>
