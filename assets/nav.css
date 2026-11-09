@@ -1,0 +1,74 @@
+/* Madwackd header v2: night-navy band with lit icon tiles. Markup comes from _build/build-header.mjs. */
+.site-header.mh{position:relative;z-index:50;background:linear-gradient(180deg,#0B1A3A 0%,#081429 100%);border-bottom:1px solid rgba(56,240,255,.16);box-shadow:0 10px 30px -18px rgba(3,8,24,.9);color:#CFDBF1;backdrop-filter:none;-webkit-backdrop-filter:none}
+.mh-bar{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:10px 20px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand nav acts";align-items:center;column-gap:18px}
+.mh .neo-brand{grid-area:brand;justify-self:start}
+.mh .neo{--w:250px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 8px 24px -10px rgba(255,46,147,.35)}
+.mh a:focus-visible{outline:3px solid #38F0FF;outline-offset:3px;border-radius:12px}
+
+/* Tiles */
+.mh-tiles{grid-area:nav;display:flex;justify-content:center;gap:4px;min-width:0}
+.mh-t{--c:#00B8F0;--g:#8B3DFF;--on:#fff;position:relative;flex:0 1 84px;min-width:max-content;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:66px;padding:0 4px;border-radius:12px;color:#CFDBF1;text-decoration:none;font:700 11.5px/1.15 var(--head);letter-spacing:0;transition:background .15s,color .15s}
+.mh-t:hover{color:#fff;background:rgba(255,255,255,.045)}
+.mh-l{display:block;max-width:100%;white-space:nowrap}
+.mh-em{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;box-sizing:border-box;border-radius:11px;border:1.5px solid transparent;background:linear-gradient(150deg,#13244A,#0B1A3A) padding-box,linear-gradient(135deg,var(--c),var(--g)) border-box;box-shadow:0 4px 12px rgba(0,0,0,.28);color:#fff;transition:transform .15s var(--ease),box-shadow .15s,background .15s}
+@supports (color:color-mix(in srgb,red,blue)){.mh-em{color:color-mix(in srgb,var(--c) 50%,#fff)}}
+.mh-em::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--c);opacity:.2;pointer-events:none}
+.mh-em svg{position:relative;width:21px;height:21px;display:block}
+.mh-t:hover .mh-em{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.4),0 0 14px -4px var(--c)}
+.mh-t[aria-current=page]{color:#fff}
+.mh-t[aria-current=page] .mh-em{color:var(--on);background:linear-gradient(135deg,var(--c),var(--g)) padding-box,linear-gradient(135deg,var(--c),var(--g)) border-box;box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 18px -2px var(--c)}
+.mh-t[aria-current=page] .mh-em::before{opacity:0}
+.mh-t[aria-current=page]::after{content:"";position:absolute;left:50%;bottom:2px;width:26px;height:3px;margin-left:-13px;border-radius:3px;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 8px var(--c)}
+
+/* Phone + Start */
+.mh-acts{grid-area:acts;justify-self:end;display:flex;align-items:center;gap:10px;min-width:0}
+.mh-call,.mh-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;box-sizing:border-box;border-radius:12px;text-decoration:none;white-space:nowrap;font-family:var(--head)}
+.mh-call{padding:0 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:700;font-size:.9rem;font-variant-numeric:tabular-nums;transition:background .15s,border-color .15s}
+.mh-call:hover{background:rgba(255,255,255,.12);border-color:rgba(56,240,255,.5);color:#fff}
+.mh-call svg{width:18px;height:18px;color:#38F0FF;flex:none}
+.mh-cta{padding:0 16px;background:linear-gradient(135deg,#D10F6F 0%,#7A2EE6 100%);color:#fff;font-weight:800;font-size:.95rem;box-shadow:0 8px 22px -8px rgba(255,46,147,.75),inset 0 1px 0 rgba(255,255,255,.18);transition:transform .15s var(--ease),box-shadow .15s}
+.mh-cta:hover{color:#fff;transform:translateY(-1px);box-shadow:0 12px 28px -8px rgba(255,46,147,.9),inset 0 1px 0 rgba(255,255,255,.22)}
+.mh-cta svg{width:17px;height:17px;flex:none}
+.mh .mw-acct{font-size:.82rem}
+.mh .mw-acct .mw-acct-who{color:#CFDBF1}
+.mh .mw-acct .btn-top{color:#fff}
+
+/* Laptops: still one row; the phone number becomes an icon button (its link still reads "Call 1-800-481-8638") */
+@media (max-width:1259px){
+  .mh .neo{--w:210px}
+  .mh-bar{column-gap:12px}
+  .mh-call{width:44px;padding:0}
+  .mh-num{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+}
+/* Two rows: brand + actions on top, tiles on a band below */
+@media (max-width:999px){
+  .mh .neo{--w:184px}
+  .mh-bar{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"brand acts" "nav nav";row-gap:8px;padding-top:8px;padding-bottom:2px}
+  .mh-tiles{margin:0 -20px;padding:6px 12px 2px;border-top:1px solid rgba(56,240,255,.1)}
+  .mh-t{flex:1 1 0;max-width:150px}
+}
+@media (max-width:1439px){
+  .mh .mw-acct .mw-acct-who{display:none}
+}
+@media (max-width:640px){
+  .mh-bar{padding:8px 12px 2px;column-gap:8px}
+  .mh .neo{--w:min(200px,calc(100vw - 24px - 44px - 116px - 16px))}
+  .mh-acts{gap:8px}
+  /* Pro Studio adds a Sign in chip; on phones it takes the call button's spot (the number stays in the page footer) */
+  .mh-acts:has(.mw-acct > *) .mh-call{display:none}
+  .mh-bar:has(.mw-acct > *) .neo{--w:min(180px,calc(100vw - 24px - 116px - 70px - 16px))}
+  .mh .mw-acct .btn-top{min-height:44px;display:inline-flex;align-items:center;padding:0 4px}
+  .mh-call{width:44px;padding:0}
+  .mh-num{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .mh-cta{padding:0 12px;font-size:.88rem;gap:6px}
+  .mh-cta svg{width:15px;height:15px}
+  .mh-tiles{margin:0 -12px;padding:6px 4px 2px;gap:0}
+  .mh-t{flex:1 1 auto;height:60px;gap:4px;padding:0 1px;font-size:clamp(9.5px,2.75vw,11px);letter-spacing:-.01em}
+  .mh-em{width:33px;height:33px;border-radius:10px}
+  .mh-em svg{width:19px;height:19px}
+}
+@media (prefers-reduced-motion:reduce){
+  .mh-t,.mh-em,.mh-call,.mh-cta{transition:none}
+  .mh-t:hover .mh-em,.mh-cta:hover{transform:none}
+}
+@media print{.site-header.mh{background:#fff;color:#000;box-shadow:none}.mh-tiles,.mh-acts{display:none}}
