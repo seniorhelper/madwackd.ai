@@ -81,7 +81,7 @@
           if (x.ok) {
             f.reset(); f.hidden = true;
             try { sessionStorage.removeItem("mw_chat_summary"); } catch (e1) { /* ignore */ }
-            var done = document.getElementById("lead-done"); if (done) { done.hidden = false; done.focus(); }
+            if (window.mwTrack) window.mwTrack("generate_lead", { lead_source: location.pathname }); var done = document.getElementById("lead-done"); if (done) { done.hidden = false; done.focus(); }
             return;
           }
           busy = false; token = "";

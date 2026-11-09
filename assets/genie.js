@@ -174,8 +174,7 @@
     else if (wantsClients) items.push({ t: "Clients from your channel", w: "Your posts link to a page people and AI answers can read; free AI-search tools from Denver SEO, and done-for-you help quoted separately.", s: "Included" });
     else if (wantsAudience) items.push({ t: "A home for your audience", w: "An allofus.one brand page the algorithm can't take away, linked from every export.", s: "Included" });
     if (wantsIncome) items.push({ t: "Numbers you can trust", w: "Log or import views and revenue by source next to what you posted. Never sample data shown as yours.", s: "Rolling out" });
-    items.push({ t: "One published press release and a Creator Spotlight", w: "A producer drafts the release from your words; you approve every line; we publish it on our distribution network and feature you on madwackd.ai.", s: "Included" });
-    items.push({ t: "A human producer pass", w: "A real producer reviews this plan, your brand kit and your tone within one business day, then it counts.", s: "Included" });
+    items.push({ t: "One published press release and a Creator Spotlight", w: "We draft the release from your words; you approve every line; we publish it on our distribution network and feature you on madwackd.ai.", s: "Included" });
     var text = items.map(function (it, i) { return (i + 1) + ". " + it.t + " [" + it.s + "]: " + it.w; }).join("\n");
     return { wish: wish, items: items, text: text };
   }
@@ -203,13 +202,13 @@
       plan.week.forEach(function (w) { var li = document.createElement("li"); li.textContent = w; week.appendChild(li); });
       setHidden(extra, plan.refused || (!plan.team.length && !plan.week.length));
       svc.textContent = plan.service ? "This one wants a producer: " + plan.service + ". Tell Genie Start and your producer quotes it." : ""; setHidden(svc, !plan.service);
-      src.textContent = "Written by Genie from your words. A human producer checks every line before it counts. Included means it works in the studio today; rolling out means the piece is being wired now. Results vary and depend on many factors.";
+      src.textContent = "Written by Genie from your words; go over any line with Producer Z, your AI producer. Human producer time is a paid add-on. Included means it works in the studio today; rolling out means the piece is being wired now. Results vary and depend on many factors.";
       if (chk) { if (plan.start) { chk.setAttribute("href", plan.start); setHidden(chk, false); } else { setHidden(chk, true); } }
       setHidden(refusedEl, !plan.refused); setHidden(actions, plan.refused); setHidden(ol, plan.refused);
     } else {
       setHidden(studioEl, true); setHidden(openEl, true); setHidden(extra, true); setHidden(svc, true); setHidden(refusedEl, true); setHidden(actions, false); setHidden(ol, false);
       if (chk) setHidden(chk, true);
-      src.textContent = "Your starter plan, built in your browser from your words; Genie refines it with you. Included means it works in the studio today. Rolling out means the piece is being wired now; your producer covers it by hand until then. Results vary and depend on many factors.";
+      src.textContent = "Your starter plan, built in your browser from your words; Genie refines it with you. Included means it works in the studio today. Rolling out means the piece is being wired now; you can do it by hand in the studio until then. Results vary and depend on many factors.";
     }
     setHidden(card, false); setHidden(planBody, false); setHidden(f, true); setHidden(done, true);
     lset("mw_genie_plan", JSON.stringify({ wish: plan.wish, plan_id: plan.plan_id || "", at: Date.now() }));
@@ -297,7 +296,7 @@
       var plat = document.getElementById("g-platform"), nm = document.getElementById("g-name");
       plat.required = (mode === "start"); nm.required = (mode === "start");
       document.getElementById("form-lead").textContent = mode === "start"
-        ? "Start: a producer gets your dream and this plan, and replies within one business day with your founding-rate checkout link. Nothing is charged now."
+        ? "Start: the studio gets your dream and this plan, and we email your founding-rate checkout link within one business day. Nothing is charged now."
         : "Think about it: we keep this plan under your email, and nobody calls unless you ask.";
       document.getElementById("genie-submit").textContent = mode === "start" ? "Put me on the Founding Creator list" : "Keep my plan";
       setHidden(planBody, true); setHidden(f, false); setHidden(done, true);
@@ -352,7 +351,7 @@
       var btn = document.getElementById("genie-submit"); btn.disabled = true;
       /* The lead server replies without CORS headers for fetch, so the reply is opaque: a resolved promise means it was delivered. */
       fetch(LEAD_URL, { method: "POST", mode: "no-cors", body: body, credentials: "omit", referrerPolicy: "strict-origin-when-cross-origin" })
-        .then(function () { busy = false; btn.disabled = false; note(gn, "", false); finish(mode, name, email); })
+        .then(function () { busy = false; btn.disabled = false; note(gn, "", false); if (window.mwTrack) window.mwTrack("generate_lead", { lead_source: "genie_" + mode }); finish(mode, name, email); })
         .catch(function () { busy = false; btn.disabled = false; note(gn, "We couldn't reach the studio. Please try again, or call 1-800-481-8638.", true); });
     });
   }

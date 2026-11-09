@@ -262,7 +262,7 @@
   $("lv-signup-go").addEventListener("click", function () {
     if (!$("lv-terms").checked) { msg("Please confirm you are 18 or older and accept the Terms.", "bad"); return; }
     if (TS_KEY && !tsToken) { msg("Please finish the human check first.", "bad"); return; }
-    api("POST", "/v2/signup", { accept_terms: true, confirm_age_18: true, turnstile_token: useToken() }).then(function () { msg(""); refreshMe(); }).catch(function (e) { msg(e.message, "bad"); });
+    api("POST", "/v2/signup", { accept_terms: true, confirm_age_18: true, turnstile_token: useToken() }).then(function () { msg(""); track("sign_up", { method: "studio" }); refreshMe(); }).catch(function (e) { msg(e.message, "bad"); });
   });
 
   /* ---------- quote -> confirm -> render -> poll ---------- */
@@ -346,11 +346,14 @@
   });
 
   /* ---------- billing ---------- */
-  function checkout(item) { api("POST", "/v2/billing/checkout", { item: item }).then(function (r) { location.href = r.url; }).catch(function (e) { msg(e.message, "bad"); }); }
+  function track(n, p) { if (window.mwTrack) window.mwTrack(n, p); }
+  function priceOf(item) { var hit = cfg && (cfg.catalog || []).filter(function (i) { return i.item === item; })[0]; return hit ? Number(hit.usd) || 0 : 0; }
+  /* begin_checkout when Stripe opens; purchase when Stripe sends the buyer back with checkout=success (once per checkout). */
+  function checkout(item) { var usd = priceOf(item); store("mw_paying", item + "|" + usd); track("begin_checkout", { currency: "USD", value: usd, items: [{ item_id: item, price: usd, quantity: 1 }] }); api("POST", "/v2/billing/checkout", { item: item }).then(function (r) { location.href = r.url; }).catch(function (e) { msg(e.message, "bad"); }); }
   function portal() { api("POST", "/v2/billing/portal").then(function (r) { location.href = r.url; }).catch(function (e) { msg(e.message, "bad"); }); }
   function checkoutReturn() {
     var q = new URLSearchParams(location.search).get("checkout");
-    if (q === "success") { msg("Thanks! Your credits appear as soon as Stripe confirms the payment, usually within a minute.", "ok"); setTimeout(refreshMe, 8000); history.replaceState(null, "", location.pathname); }
+    if (q === "success") { var paid = store("mw_paying").split("|"); store("mw_paying", null); if (paid[0]) track("purchase", { transaction_id: "mw-" + Date.now() + "-" + Math.floor(Math.random() * 1e6), currency: "USD", value: Number(paid[1]) || 0, items: [{ item_id: paid[0], price: Number(paid[1]) || 0, quantity: 1 }] }); msg("Thanks! Your credits appear as soon as Stripe confirms the payment, usually within a minute.", "ok"); setTimeout(refreshMe, 8000); history.replaceState(null, "", location.pathname); }
     if (q === "cancel") { msg("Checkout canceled. Nothing was charged.", ""); history.replaceState(null, "", location.pathname); }
   }
 

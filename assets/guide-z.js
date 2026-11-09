@@ -434,7 +434,7 @@
     { sel: "[data-tour='best-work']", optional: true, text: "Our best work: music videos made by our studio team." },
     { sel: "[data-tour='creator-studio'], a[href='/creator-studio/']", text: "Free tools: hook writer, script fitter, captions and more. No account needed." },
     { sel: "[data-tour='start'], a[href='/studio/']", text: "Make a video: the Studio shows the exact price before every render. Start with the $5 Test Drive." },
-    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes commercial spots from $2,500, quoted on a free call: 1-800-481-8638." },
+    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes commercial spots from $2,500, with a written quote first: 1-800-481-8638." },
     { sel: ".zgl-btn", text: "That's me, in the spotlight. Click any time and ask me anything." }
   ];
   var spot = el("div", "zg-spot"), tip = el("div", "zg-tip");

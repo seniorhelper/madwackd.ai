@@ -761,3 +761,6 @@ a:hover{color:var(--signal-text)}
 .choose-list li{margin-bottom:10px;font-size:1rem}
 @media (max-width:980px){.choose-cards{grid-template-columns:1fr}.choose-card a{padding:20px}}
 @media (max-width:640px){.choose-jump .btn{flex:1 1 100%}}
+/* /producers/ "How to work with us" ladder */
+.wwu{list-style:none;padding:0;margin:24px 0 0}.wwu .card{display:flex;flex-direction:column;gap:6px}.wwu .card h3{margin:0}.wwu .card p{margin:0}.wwu .card a{margin-top:auto;font-weight:700}
+@media (max-width:900px){.wwu.grid-3{grid-template-columns:1fr}}

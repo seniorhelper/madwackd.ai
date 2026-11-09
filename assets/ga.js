@@ -18,3 +18,14 @@ gtag('js', new Date());
   function arm() { setTimeout(start, 4500); }
   if (document.readyState === 'complete') arm(); else window.addEventListener('load', arm);
 })();
+
+/* Conversion events for ads (GA4 G-G7JZJY1KQ2 through the Google tag above). No personal data in any event.
+   buy_click: a link to /studio/?buy=<item>. phone_click: a tel: link. Leads, checkouts, purchases and sign-ups
+   are sent by site.js, book.js, genie.js and studio-live.js with window.mwTrack. */
+window.mwTrack = function (name, params) { try { gtag('event', name, params || {}); } catch (e) { /* never block the page */ } };
+document.addEventListener('click', function (e) {
+  var a = e.target && e.target.closest ? e.target.closest('a[href]') : null; if (!a) return;
+  var h = a.getAttribute('href') || '', m = h.match(/[?&]buy=([a-z0-9_]{2,40})/);
+  if (m) window.mwTrack('buy_click', { item_id: m[1], link_page: location.pathname });
+  else if (/^tel:/.test(h)) window.mwTrack('phone_click', { link_page: location.pathname });
+}, true);

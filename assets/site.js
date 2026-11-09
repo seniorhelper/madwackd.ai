@@ -29,6 +29,8 @@
     if (fbtn) { fbtn.disabled = true; setTimeout(function () { fbtn.disabled = false; }, 3000); }
     f.addEventListener("submit", function (e) {
       if (!f.getAttribute("action") || Date.now() - started < 3000) { e.preventDefault(); }
+      /* lead conversion, after every other submit check on the page has run */
+      setTimeout(function () { if (!e.defaultPrevented && window.mwTrack) window.mwTrack("generate_lead", { lead_source: location.pathname }); }, 0);
     });
   });
   if (/[?&]sent=1/.test(location.search)) {

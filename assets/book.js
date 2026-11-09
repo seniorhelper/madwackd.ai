@@ -1,4 +1,4 @@
-/* /book/: pick a day and a time for a free call. This is a request, not an instant booking:
+/* /book/: four qualifying questions, then a day and a time for a free call. This is a request, not an instant booking:
    the chosen slot goes into the form, and a person confirms by phone or email. Times are Mountain time. */
 (function () {
   'use strict';
@@ -66,8 +66,31 @@
   cal.addEventListener('click', function (e) { var b = e.target.closest('[data-d]'); if (!b) return; chosen.d = b.getAttribute('data-d'); chosen.t = null; renderCal(); renderSlots(); sync(); var f = slots.querySelector('button'); if (f) f.focus(); });
   slots.addEventListener('click', function (e) { var b = e.target.closest('[data-t]'); if (!b) return; chosen.t = b.getAttribute('data-t'); renderSlots(); sync(); });
   var form = cal.closest('form');
+
+  /* Booking assistant: four required answers decide whether the request goes to a person.
+     Not a fit yet -> nothing is sent; the visitor gets the self-serve paths instead. */
+  var Q = { make: document.getElementById('bk-make'), who: document.getElementById('bk-who-are'), budget: document.getElementById('bk-budget'), when: document.getElementById('bk-when') };
+  var route = document.getElementById('bk-route'), qual = document.getElementById('bk-qual'), subj = document.getElementById('bk-subject');
+  var SELF = '<p>Start tonight, no call needed: the <a href="/creator-studio/">free Creator Studio tools</a>, a <a href="/studio/?buy=test_drive">$5 Test Drive</a> (one finished clip), <a href="/pricing/">plans from $29 a month</a>, and Producer Z, our AI producer, any hour (the chat button on every page). See <a href="/producers/#work-with-us">how to work with us</a>.</p>';
+  function assess() {
+    var who = Q.who.value, budget = Q.budget.value, when = Q.when.value;
+    if (!Q.make.value || !who || !budget || !when) return { done: false };
+    if (who === 'Just exploring' || when === 'Just researching') return { done: true, ok: false, why: '<p><strong>Thanks. A call is not the best next step yet.</strong> Our producers’ calls go to projects that are ready to start. When yours is, change your answers above and send the request.</p>' };
+    if (budget === 'Under $500' || (budget === 'Not sure yet' && /^A creator/.test(who))) return { done: true, ok: false, why: '<p><strong>Thanks. For this budget, self-serve is the fastest way to a finished video.</strong> Producer calls are for projects from about $500 up; done-for-you commercial spots start at $2,500.</p>' };
+    return { done: true, ok: true };
+  }
+  function showRoute(a) {
+    if (a.done && !a.ok) { route.innerHTML = a.why + SELF; route.hidden = false; } else { route.hidden = true; route.innerHTML = ''; }
+  }
+  Object.keys(Q).forEach(function (k) { if (Q[k]) Q[k].addEventListener('change', function () { var a = assess(); if (a.done) showRoute(a); else showRoute({ done: false }); }); });
+
   form.addEventListener('submit', function (e) {
-    if (!fDate.value || !fTime.value) { e.preventDefault(); pick.textContent = 'Please pick a day and a time first.'; pick.classList.remove('ok'); pick.focus(); }
+    var a = assess();
+    if (!a.done) { e.preventDefault(); var first = [Q.make, Q.who, Q.budget, Q.when].filter(function (el) { return !el.value; })[0]; if (first) first.focus(); return; }
+    if (!a.ok) { e.preventDefault(); showRoute(a); route.focus(); if (window.gtag) window.gtag('event', 'book_call_routed', { budget: Q.budget.value, timeline: Q.when.value }); return; }
+    if (!fDate.value || !fTime.value) { e.preventDefault(); pick.textContent = 'Please pick a day and a time first.'; pick.classList.remove('ok'); pick.focus(); return; }
+    qual.value = 'Qualified by the booking assistant: ' + Q.who.value + '; ' + Q.make.value + '; budget ' + Q.budget.value + '; start ' + Q.when.value;
+    subj.value = 'Qualified call request: ' + Q.make.value + ' (' + Q.budget.value + ', ' + Q.when.value + ')';
   });
   renderCal(); renderSlots(); sync();
 })();

@@ -35,7 +35,7 @@
     "/apply/": ["Filling out a quote? Tell me the project in a sentence and I'll help you describe it so the team can price it fast.", ["Help me describe it", "What does it cost?"]],
     "/collaborate/": ["Got an idea to make together? Pitch me the one-sentence version and I'll help you shape it.", ["Help me pitch it", "How does it work?"]],
     "/awards/": ["Made something great in the studio? I can walk you through nominating it for Madwackd Picks.", ["How do I nominate?", "What do you judge?"]],
-    "/launch-pad/": ["Launching something? Tell me the brand or project in one sentence and I'll point you to the right tool, or help you book your free call with Zach.", ["Which tool fits me?", "Book a call with Zach", "What does it cost?"]],
+    "/launch-pad/": ["Launching something? Tell me the brand or project in one sentence and I'll point you to the right tool, or help you request a fit call.", ["Which tool fits me?", "Request a call", "What does it cost?"]],
     "/producers-corner/": ["Reading up? Ask me anything from the guides, or let's turn it into your video.", ["What does a commercial cost?", "Plan my first video"]],
     "/vision/": ["Big-ideas page! Ask me about the vision, or let's get back to making video.", ["Tell me the short version", "Make a video"]],
     "/vault/": ["Every clip in the Vault came out of this studio. Want to make one like it?", ["Make one like these", "What does it cost?"]],
