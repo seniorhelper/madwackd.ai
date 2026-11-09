@@ -7,6 +7,20 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  /* Custom icons (no emoji): 24px grid, round caps, currentColor. Always decorative: the button carries the label. */
+  var ICP = {
+    home: '<path d="M6 5v14"/><path d="M18 5.5 9.5 12l8.5 6.5z"/>',
+    play: '<path d="M7.5 5v14l11-7z"/>',
+    pause: '<path d="M8 5v14M16 5v14"/>',
+    stop: '<rect x="6" y="6" width="12" height="12" rx="2"/>',
+    left: '<path d="m15 5-7 7 7 7"/>',
+    right: '<path d="m9 5 7 7-7 7"/>',
+    lock: '<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><path d="M12 14.5v2.5"/>',
+    video: '<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10.5 5-3v9l-5-3"/>',
+    audio: '<path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+    image: '<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="9.5" r="1.8"/><path d="m3.5 18 5.5-5.5 4 4 2.5-2.5 5 4.5"/>'
+  };
+  var IC = function (n) { return '<svg class="sb-ic" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (ICP[n] || '') + '</svg>'; };
 
   var S = {
     tier: 'anon', access: null, me: null, boardId: 'main', boards: [], board: null, updatedAt: null,
@@ -180,9 +194,9 @@
       '<header class="sb-top" role="banner">' +
         '<div class="sb-brand"><span class="sb-logo" aria-hidden="true">MW</span><div><strong>MADWACKD STUDIO</strong><input id="sb-name" class="sb-name" aria-label="Board name" maxlength="80"></div></div>' +
         '<div class="sb-transport" role="group" aria-label="Transport">' +
-          '<button data-tr="home" aria-label="Back to start" title="Back to start (Home)">⏮</button>' +
-          '<button data-tr="play" class="sb-play" aria-label="Play" title="Play / pause (Space)">▶</button>' +
-          '<button data-tr="stop" aria-label="Stop" title="Stop">■</button>' +
+          '<button data-tr="home" aria-label="Back to start" title="Back to start (Home)">' + IC('home') + '</button>' +
+          '<button data-tr="play" class="sb-play" aria-label="Play" title="Play / pause (Space)">' + IC('play') + '</button>' +
+          '<button data-tr="stop" aria-label="Stop" title="Stop">' + IC('stop') + '</button>' +
           '<output id="sb-tc" class="sb-tc" aria-label="Timecode">00:00:00</output>' +
           '<label class="sb-bpm" title="Tempo for the beat grid">BPM <input id="sb-bpm" type="number" min="40" max="240" step="1"></label>' +
         '</div>' +
@@ -248,7 +262,7 @@
       sec.dataset.panel = id; sec.setAttribute('aria-label', p.title);
       sec.innerHTML = '<header class="ph"><span class="grip" draggable="true" title="Drag to move" aria-hidden="true">⠿</span><h2>' + esc(p.title) + '</h2>' +
         (locked ? '<span class="lock-tag">Studio</span>' : '') +
-        '<div class="pa"><button data-pa="left" aria-label="Move ' + esc(p.title) + ' earlier">◀</button><button data-pa="right" aria-label="Move ' + esc(p.title) + ' later">▶</button>' +
+        '<div class="pa"><button data-pa="left" aria-label="Move ' + esc(p.title) + ' earlier">' + IC('left') + '</button><button data-pa="right" aria-label="Move ' + esc(p.title) + ' later">' + IC('right') + '</button>' +
         '<button data-pa="shrink" aria-label="Make ' + esc(p.title) + ' smaller">−</button><button data-pa="grow" aria-label="Make ' + esc(p.title) + ' bigger">+</button>' +
         '<button data-pa="hide" aria-label="Hide ' + esc(p.title) + '">×</button></div></header><div class="pb"></div>';
       g.appendChild(sec);
@@ -262,7 +276,7 @@
     var lc = B.lockCopy(feature, S.tier), body = $('.pb', sec);
     body.setAttribute('inert', ''); body.setAttribute('aria-hidden', 'true');
     var o = document.createElement('div'); o.className = 'lock';
-    o.innerHTML = '<div class="lock-card"><span class="lock-ico" aria-hidden="true">🔒</span><h3>' + esc(lc.title) + '</h3><p>' + esc(lc.body) + '</p>' +
+    o.innerHTML = '<div class="lock-card"><span class="lock-ico" aria-hidden="true">' + IC('lock') + '</span><h3>' + esc(lc.title) + '</h3><p>' + esc(lc.body) + '</p>' +
       '<a class="btn pri" href="' + esc(lc.href) + '">' + esc(lc.cta) + '</a>' + (lc.alt ? ' <a class="btn" href="' + esc(lc.alt.href) + '">' + esc(lc.alt.text) + '</a>' : '') + '</div>';
     sec.appendChild(o);
   }
@@ -313,12 +327,12 @@
     var end = B.totalDuration(S.board);
     if (S.t >= end - 0.05) S.t = 0;
     S.playing = true; M.audio.play(S.board, S.t);
-    var pb = $('.sb-play'); pb.textContent = '❚❚'; pb.setAttribute('aria-label', 'Pause');
+    var pb = $('.sb-play'); pb.innerHTML = IC('pause'); pb.setAttribute('aria-label', 'Pause');
     tick();
   }
   function pause() {
     S.playing = false; M.audio.stop(); cancelAnimationFrame(raf);
-    var pb = $('.sb-play'); if (pb) { pb.textContent = '▶'; pb.setAttribute('aria-label', 'Play'); }
+    var pb = $('.sb-play'); if (pb) { pb.innerHTML = IC('play'); pb.setAttribute('aria-label', 'Play'); }
     drawMonitor(true);
   }
   function seek(t) {
@@ -392,7 +406,7 @@
       return '<article class="frame" role="listitem" draggable="true" data-id="' + esc(f.id) + '"><div class="frame-art" data-color="' + esc(f.color || '#f5c84b') + '"><span>' + (i + 1) + '</span><input type="color" value="' + esc(f.color || '#f5c84b') + '" data-f="color" aria-label="Frame color"></div>' +
         '<input data-f="title" maxlength="80" value="' + esc(f.title) + '" aria-label="Frame title">' +
         '<textarea data-f="notes" rows="3" maxlength="600" aria-label="Frame notes">' + esc(f.notes) + '</textarea>' +
-        '<div class="row"><label class="mini">sec <input data-f="dur" type="number" min="1" max="60" value="' + esc(f.dur || 4) + '"></label><button data-to-shot title="Make a shot from this frame">→ Shot</button><button data-mv="-1" class="ghost" aria-label="Move frame earlier">◀</button><button data-mv="1" class="ghost" aria-label="Move frame later">▶</button><button data-del class="ghost" aria-label="Delete frame">×</button></div></article>';
+        '<div class="row"><label class="mini">sec <input data-f="dur" type="number" min="1" max="60" value="' + esc(f.dur || 4) + '"></label><button data-to-shot title="Make a shot from this frame">→ Shot</button><button data-mv="-1" class="ghost" aria-label="Move frame earlier">' + IC('left') + '</button><button data-mv="1" class="ghost" aria-label="Move frame later">' + IC('right') + '</button><button data-del class="ghost" aria-label="Delete frame">×</button></div></article>';
     }).join('') + '<button class="frame add" data-add>+ Frame</button></div>';
     $$('.frame-art', el).forEach(function (a) { a.style.background = 'linear-gradient(135deg,' + a.dataset.color + ',#0b0b12)'; });
     $$('.frame[data-id]', el).forEach(function (card) {
@@ -808,7 +822,7 @@
   };
   function mediaLi(it) {
     if (!it) return '';
-    var ico = { video: '🎬', audio: '🎵', image: '🖼' }[it.kind] || '•';
+    var ico = ICP[it.kind] ? IC(it.kind) : '•';
     return '<li draggable="true" data-media="' + esc(it.id) + '"><span aria-hidden="true">' + ico + '</span><span class="mname">' + esc(it.name) + '</span><span class="muted">' + (it.dur && isFinite(it.dur) ? it.dur.toFixed(1) + ' s' : it.kind === 'image' ? 'still' : '') + '</span>' +
       '<button data-add class="ghost" aria-label="Add ' + esc(it.name) + ' to the end of the timeline">+</button>' + (it.demo ? '' : '<button data-rm class="ghost" aria-label="Remove ' + esc(it.name) + '">×</button>') + '</li>';
   }
