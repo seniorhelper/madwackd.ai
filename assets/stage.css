@@ -4,7 +4,8 @@
    stage; three dashboard signs on ropes; the console as the curtain call. Shared by the home page and /custom-creator-studio/.
    Transforms and opacity only (no blend modes, no backdrop filters). Pointer parallax through --px / --py. Still under reduced motion. */
 .gstage{--hs:1;--px:0;--py:0;--velvet:url(/assets/img/stage/genie/velvet-tile.webp);--boards:url(/assets/img/stage/genie/boards-tile.webp);--boards-size:512px 256px;position:relative;overflow:hidden;overflow:clip;background:#07060b;color:#F4F0FA;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 28px}
-@media (min-width:901px){.gstage{min-height:clamp(640px,calc(100svh - 80px),900px)}}
+@media (min-width:901px){.gstage{min-height:clamp(600px,calc(100vh - 121px),1040px)}}
+@supports (height:1svh){@media (min-width:901px){.gstage{min-height:clamp(600px,calc(100svh - 121px),1040px)}}}
 @media (min-width:901px) and (max-width:1250px){.gstage{--hs:.8}}
 .gs-scene{position:absolute;inset:0;perspective:1200px;perspective-origin:50% 40%;overflow:hidden}
 .gs-scene>*{position:absolute}
@@ -328,7 +329,7 @@
 }
 /* ---------- phones and tablets: a tall stage band (most of the screen), the console always under it ---------- */
 @media (max-width:900px){
-  .gstage{--mh:clamp(380px,60vh,560px);--zw:clamp(88px,24vw,124px);min-height:0;padding:var(--mh) 0 16px;justify-content:flex-start}
+  .gstage{--hdr:168px;--peek:112px;--mh:clamp(360px,calc(100vh - var(--hdr) - var(--peek)),720px);--zw:clamp(88px,24vw,124px);min-height:0;padding:var(--mh) 0 16px;justify-content:flex-start}
   .gs-scene{height:var(--mh);inset:auto 0 auto 0;top:0}
   .gs-floor{height:40%}
   .gs-pros{display:none}
@@ -339,7 +340,7 @@
   .gs-card small{font-size:clamp(.95rem,4.2vw,1.15rem);margin-top:10px}
   .gs-card .chips span{font-size:.72rem;padding:7px 10px}
   .gs-lamp{left:34%;bottom:15%;width:clamp(74px,20vw,120px)}
-  .gstage.s-console .gs-lamp{left:27%}
+  .gstage.s-console .gs-lamp{left:31%}
   .gs-gsay{font-size:.92rem;padding:9px 12px;border-width:2.5px}
   .gs-wish{max-width:min(190px,48vw)}
   .gs-wishbtn{padding:11px 12px 10px;border-radius:13px}
@@ -371,10 +372,11 @@
   .gcon .btn-start{width:100%}
   .gs-foot-row{justify-content:flex-start}
 }
-@supports (height:1svh){@media (max-width:900px){.gstage{--mh:clamp(380px,60svh,560px)}}}
+@supports (height:1svh){@media (max-width:900px){.gstage{--mh:clamp(360px,calc(100svh - var(--hdr) - var(--peek)),720px)}}}
+@media (max-width:400px){.gstage{--hdr:158px}}@media (max-width:360px){.gstage{--hdr:136px;--peek:100px}}
 @media (min-width:600px) and (max-width:900px){.gs-holo{transform:translateX(-50%) translateY(40px) scale(.7)}.gstage.s-dash .gs-holo{transform:translateX(-50%) scale(.8)}.gs-sign span{font-size:.82rem}}
 @media (max-width:420px){.gs-sign span{display:none}}
-@media (max-width:380px){.gcon textarea{min-height:76px}.gs-long{display:none}.gs-wishbtn b{font-size:1.02rem;white-space:nowrap}.gs-wishbtn{padding:10px 9px 9px}}
+@media (max-width:380px){.gs-gsay{font-size:.84rem;padding:8px 10px}.gcon textarea{min-height:76px}.gs-long{display:none}.gs-wishbtn b{font-size:1.02rem;white-space:nowrap}.gs-wishbtn{padding:10px 9px 9px}}
 /* ---------- reduced motion: the finished scene, no animation ---------- */
 @media (prefers-reduced-motion:reduce){
   .gstage *{animation:none!important;transition:none!important}
@@ -392,3 +394,68 @@
 .gs-holo .wd-q li:nth-child(3){display:none}
 /* shorter desktops: the hologram stays above the fold and clear of the chat orb */
 @media (min-width:901px) and (max-height:860px){.gs-holo{top:10%}.gs-holo .wd-q li:nth-child(n+2){display:none}.gs-holo .wd-tank{margin-top:4px}}
+
+/* ---------- the wish console: the focus after the show (brighter, gold-edged wish box) ---------- */
+.gs-panel{background:linear-gradient(160deg,rgba(46,14,66,.97),rgba(20,10,36,.97) 52%,rgba(8,24,44,.97));box-shadow:0 0 0 1px rgba(255,214,10,.22),0 40px 90px rgba(0,0,0,.65),0 0 80px rgba(255,46,147,.22),inset 0 1px 0 rgba(255,255,255,.12)}
+.gcon label[for="wish"]{display:flex;align-items:center;gap:8px;color:#FFD60A;font-size:.86rem;letter-spacing:.08em}
+.gcon label[for="wish"]::before{content:"";width:14px;height:14px;flex:none;background:#FFD60A;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.gcon textarea{min-height:104px;font-size:1.08rem;background:rgba(255,255,255,.07);border:2px solid rgba(255,214,10,.55);box-shadow:0 0 0 4px rgba(255,214,10,.07),0 0 34px rgba(255,46,147,.16)}
+.gcon textarea:focus{border-color:#FFD60A;box-shadow:0 0 0 4px rgba(255,214,10,.22),0 0 40px rgba(255,46,147,.3)}
+.gcon textarea::placeholder{color:#b3aac6}
+/* the Genie grows the wish: a reaction line and idea chips under the box */
+.gs-grow{margin:10px 0 2px}
+.gs-grow-say{margin:0 0 8px;font:700 .92rem/1.4 Poppins,Inter,sans-serif;color:#F4F0FA}
+.gs-grow-say b{color:#FFD60A}
+.gs-grow-chips{display:flex;flex-wrap:wrap;gap:7px}
+.gs-grow-chips button{font:700 .82rem/1.25 Inter,sans-serif;color:#15121F;background:linear-gradient(90deg,#FFE680,#FFC94A);border:0;border-radius:999px;padding:9px 13px;min-height:36px;cursor:pointer;text-align:left;box-shadow:0 4px 14px rgba(255,190,40,.25)}
+.gs-grow-chips button::before{content:"+ ";font-weight:800}
+.gs-grow-chips button:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.gs-grow-chips button:focus-visible,.gs-grow-z:focus-visible{outline:3px solid #00B8F0;outline-offset:2px}
+.gs-grow-chips button.start{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+.gs-grow-chips button.start::before{content:""}
+.gs-grow-foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:9px;font:500 .78rem/1.4 Inter,sans-serif;color:#B9B2C8}
+.gs-grow-z{font:700 .8rem/1 Inter,sans-serif;color:#F4F0FA;background:rgba(0,184,240,.14);border:1px solid rgba(0,184,240,.5);border-radius:999px;padding:8px 12px;min-height:32px;cursor:pointer}
+/* the cards and signs on the stage open the wish box */
+.gs-card,.gs-sign{pointer-events:auto;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.gs-grow-chips button:hover{transform:none}}
+
+/* ---------- Loading your studio: five ring gauges come online (an animation of the studio's tools, not live status) ---------- */
+.mw-load{position:relative;background:radial-gradient(80% 120% at 50% 0%,#2a1640 0%,#120b1e 55%,#0a0712 100%);color:#F4F0FA;padding:44px 0 48px;text-align:center;overflow:hidden}
+.mw-load::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.025) 0 2px,transparent 2px 6px)}
+.mw-load .wrap{position:relative}
+.mw-load-k{margin:0 0 22px;font:800 .9rem/1 Inter,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#7CF2C8;text-shadow:0 0 14px rgba(124,242,200,.5)}
+.mw-rings{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(14px,3vw,34px);margin:0 auto;padding:0;list-style:none;max-width:900px}
+.mw-ring{width:clamp(92px,14vw,128px);text-align:center}
+.mw-ring svg{display:block;width:100%;height:auto;overflow:visible}
+.mw-ring .trk{fill:none;stroke:rgba(255,255,255,.14);stroke-width:7}
+.mw-ring .tick{fill:none;stroke:rgba(255,255,255,.18);stroke-width:2;stroke-dasharray:1 7.3}
+.mw-ring .arc{fill:none;stroke:#3fe0d0;stroke-width:7;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;stroke-dasharray:283;stroke-dashoffset:283;filter:drop-shadow(0 0 6px rgba(63,224,208,.6))}
+.mw-ring.done .arc{stroke:#FF2E93;filter:drop-shadow(0 0 8px rgba(255,46,147,.75))}
+.mw-ring .val{font:800 19px/1 Poppins,Inter,sans-serif;fill:#fff}
+.mw-ring.done .val{fill:#FFD60A;font-size:15px;letter-spacing:.06em}
+.mw-ring b{display:block;margin-top:10px;font:800 .74rem/1.2 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#d9d2e8}
+.mw-load-line{margin:26px 0 6px;font:800 clamp(1.5rem,3.4vw,2.3rem)/1.1 Poppins,Inter,sans-serif;color:#fff}
+.mw-load-line span{color:#FFD60A}
+.mw-load-cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font:800 1rem/1 Poppins,Inter,sans-serif;color:#15121F;background:linear-gradient(90deg,#FFD60A,#FF8A00);border-radius:999px;padding:14px 22px;text-decoration:none;box-shadow:0 10px 30px rgba(255,138,0,.35)}
+.mw-load-cta:focus-visible{outline:3px solid #00B8F0;outline-offset:3px}
+.mw-load-note{margin:14px auto 0;max-width:560px;font:500 .78rem/1.45 Inter,sans-serif;color:#a79fbb}
+/* desktop: the console sits on the stage, so it stays compact enough to fit the screen with the wish ideas */
+@media (min-width:901px){
+  .gstage .gs-modes{display:none}
+  .gstage .gs-line{margin-bottom:10px}
+  .gstage .gs-ladder{margin-bottom:10px}
+  .gstage .gcon textarea{min-height:80px}
+  .gstage .gs-grow{margin-top:8px}
+  .gstage .gs-grow-chips button{padding:7px 11px;min-height:30px;font-size:.78rem}
+  .gstage .gs-grow-foot{margin-top:6px}
+  .gstage .gcon-row{margin:10px 0 8px}
+}
+@media (min-width:901px) and (max-height:860px){.gstage .gs-line{display:none}.gstage .gs-grow-foot span{display:none}}
+@media (min-width:901px){
+  .gstage .gs-panel{max-width:590px}
+  .gstage .gs-h1{font-size:clamp(1.8rem,2.5vw,2.45rem)}
+  .gstage .gs-grow-chips button.start:nth-child(4){display:none}
+  .gstage .gs-grow-foot{flex-wrap:nowrap}
+  .gstage .gs-grow-foot span{flex:1;min-width:0}
+  .gstage .gs-grow-z{flex:none}
+}

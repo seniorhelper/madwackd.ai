@@ -158,7 +158,7 @@
   function gPlace() {
     if (!gSay || !genie || !scene) return;
     var s = scene.getBoundingClientRect(), G = figBox(s), gap = 12;
-    var mw = Math.min(SMALL ? s.width * .62 : 320, Math.max(150, s.width * .5));
+    var mw = Math.min(SMALL ? s.width * (s.width < 380 ? .8 : .64) : 320, Math.max(150, s.width * .5));
     gSay.style.maxWidth = mw.toFixed(0) + "px";
     var bw = gSay.offsetWidth || 240, bh = gSay.offsetHeight || 60;
     var cands = [
@@ -396,7 +396,7 @@
      images switched by an attribute (nothing re-decodes mid-stride). Reduced motion: he just stands on his mark. ---------------- */
   var zx = 1.15, zRaf = 0, zWanderT = 0, zSpeaking = false, ZMARK = SMALL ? .8 : .82;
   /* after the show on phones he crosses to the left wing, so the wish sign has the right side to itself */
-  var ZEND = SMALL ? .13 : ZMARK, zEndFace = !SMALL;
+  var ZEND = SMALL ? .145 : ZMARK, zEndFace = !SMALL;
   function zArtLoad() {
     if (!zWrap || zWrap.getAttribute("data-loaded")) return; zWrap.setAttribute("data-loaded", "1");
     var base = zWrap.getAttribute("data-art") || "";
@@ -636,9 +636,81 @@
   });
 
   /* "Unlock: build yours now" and the Dream-it link go to the console and focus it */
-  document.querySelectorAll(".wd-unlock, .gs-ladder a[href='#wish']").forEach(function (a) {
+  /* the title cards and the three signs on the stage open the wish box too (mouse/touch; keyboard has the sign and links) */
+  if (scene) scene.addEventListener("click", function (e) { if (e.target.closest && e.target.closest(".gs-card, .gs-sign")) goWish(); });
+  document.querySelectorAll(".wd-unlock, .gs-ladder a[href='#wish'], a[data-go-wish]").forEach(function (a) {
     a.addEventListener("click", function (e) { if (goWish()) e.preventDefault(); });
   });
+
+  /* ---------------- the Genie grows the wish: a reaction and idea chips that add to it (suggestions only; a producer
+     reviews every wish before anything is built or charged). "Talk it over with Producer Z" opens the real chat. ---------------- */
+  (function grow() {
+    if (!wish || !wish.form) return;
+    var box = document.createElement("div"); box.className = "gs-grow"; box.setAttribute("aria-live", "polite");
+    box.innerHTML = '<p class="gs-grow-say"></p><div class="gs-grow-chips"></div><div class="gs-grow-foot"><span>Just ideas: a producer reviews every wish before anything is built or charged.</span><button type="button" class="gs-grow-z">Talk it over with Producer Z</button></div>';
+    var note = document.getElementById("wish-note"); wish.form.insertBefore(box, note || wish.nextSibling);
+    var sayEl = box.querySelector(".gs-grow-say"), chips = box.querySelector(".gs-grow-chips");
+    var STARTS = [["I make music", "I make music and I want a dashboard that "], ["I run a local business", "I run a local business and I want a dashboard that "], ["I make videos or a podcast", "I make videos and a podcast, and I want a dashboard that "], ["I'm launching a product", "I'm launching a product and I want a dashboard that "]];
+    var IDEAS = [
+      [/music|song|beat|album|single|band|rap|artist|\bdj\b|tour/i, ["cuts my chorus into 9-second hooks for Reels and Shorts", "makes a lyric video for every single", "puts my merch link on every post", "plans my release week day by day"]],
+      [/shop|store|bakery|restaurant|cafe|salon|clinic|roof|plumb|client|customer|local|business|service/i, ["turns my best reviews into short video ads", "posts my weekly specials everywhere at once", "shows the leads from my website in one place", "keeps my logo and colors on everything"]],
+      [/youtube|vlog|podcast|stream|episode|channel|creator|tiktok|shorts|reels|video/i, ["turns each episode into five short clips", "drafts titles and thumbnail ideas for every upload", "plans what I post each day this week", "tells me which hook did best"]],
+      [/launch|product|\bapp\b|book|course|event|drop/i, ["drafts a press release for launch day", "makes a 15-second teaser and a 30-second trailer", "counts down to launch with a post each day", "collects sign-ups in one list"]]
+    ];
+    var ANY = ["keeps my brand kit on every export", "shows the price of every render before I press go", "lets Producer Z check my cut before I post", "drafts a press release when I have news"];
+    var REACT = ["<b>Ohhh, great idea.</b> Want it to also…", "<b>Love it.</b> Let's make it bigger. What if it also…", "<b>Now we're talking.</b> Should it also…", "<b>Yes!</b> One more wish inside your wish. Does it also…"];
+    var t = 0, n = 0;
+    function btn(label, cls, fn) { var b = document.createElement("button"); b.type = "button"; b.textContent = label; if (cls) b.className = cls; b.addEventListener("click", fn); chips.appendChild(b); }
+    function toEnd() { wish.focus(); try { wish.setSelectionRange(wish.value.length, wish.value.length); } catch (e) { /* ignore */ } }
+    function add(text) {
+      var v = wish.value.replace(/\s+$/, "");
+      if (!v) wish.value = "I want a dashboard that " + text + ".";
+      else if (/that$/i.test(v)) wish.value = v + " " + text + ".";
+      else wish.value = (/[.!?…]$/.test(v) ? v + " It also " : v + ", and ") + text + ".";
+      toEnd(); render();
+    }
+    function render() {
+      var v = wish.value.trim(); chips.innerHTML = "";
+      if (v.length < 12) {
+        sayEl.innerHTML = "<b>Start anywhere.</b> Who is it for?";
+        STARTS.forEach(function (s0) { btn(s0[0], "start", function () { wish.value = s0[1]; toEnd(); render(); }); });
+        return;
+      }
+      var pool = [], low = v.toLowerCase();
+      IDEAS.forEach(function (g) { if (g[0].test(v)) pool = pool.concat(g[1]); });
+      pool = pool.concat(ANY).filter(function (x, i, a) { return a.indexOf(x) === i && low.indexOf(x.slice(0, 18).toLowerCase()) < 0; });
+      if (!pool.length) { sayEl.innerHTML = "<b>That's a big wish.</b> Press START NOW and a producer plans it with you."; return; }
+      sayEl.innerHTML = REACT[n % REACT.length];
+      pool.slice(0, 3).forEach(function (x) { btn(x, "", function () { n++; add(x); }); });
+    }
+    wish.addEventListener("input", function () { clearTimeout(t); t = setTimeout(render, 650); });
+    box.querySelector(".gs-grow-z").addEventListener("click", function () {
+      window.dispatchEvent(new CustomEvent("mw:guide-open", { detail: { topic: "wish", text: wish.value.trim().slice(0, 600), context: "genie-wish" } }));
+    });
+    render();
+  })();
+
+  /* ---------------- Loading your studio: the five rings fill one by one when the section scrolls into view ---------------- */
+  (function rings() {
+    var sec = document.getElementById("mw-load"); if (!sec) return;
+    var items = [].slice.call(sec.querySelectorAll(".mw-ring"));
+    function finish(r) { r.classList.add("done"); r.querySelector(".arc").style.strokeDashoffset = "0"; r.querySelector(".val").textContent = "READY"; }
+    if (REDUCED || !("IntersectionObserver" in window)) { items.forEach(finish); return; }
+    var ran = false;
+    new IntersectionObserver(function (en, ob) {
+      if (!en[0].isIntersecting || ran) return; ran = true; ob.disconnect();
+      items.forEach(function (r, i) {
+        var arc = r.querySelector(".arc"), val = r.querySelector(".val"), t0 = 0, dur = 1100 + i * 140;
+        setTimeout(function () {
+          requestAnimationFrame(function f(now) {
+            if (!t0) t0 = now; var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 2.2);
+            arc.style.strokeDashoffset = (283 * (1 - e)).toFixed(1); val.textContent = Math.round(e * 100) + "%";
+            if (k < 1) requestAnimationFrame(f); else finish(r);
+          });
+        }, i * 520);
+      });
+    }, { threshold: .35 }).observe(sec);
+  })();
 
   /* ---------------- console form on pages other than the Genie page: carry the wish over ---------------- */
   var form = document.getElementById("wish-form");
