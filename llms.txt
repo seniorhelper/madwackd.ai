@@ -26,6 +26,9 @@ Key facts:
 - [Contact](https://www.madwackd.ai/contact/): call 1-800-481-8638 or send a message; a real person replies within one business day.
 - [Our mission](https://www.madwackd.ai/our-mission/)
 - Video Vault (https://www.madwackd.ai/vault/): real videos made in Madwackd Studio, filterable by ads, music, comedy and cinematic.
+- [Pro Creator Studio](https://www.madwackd.ai/pro-studio/): the creator console included with every paid plan (Starter $29/mo, Pro $89/mo, Studio $299/mo): earnings goal meter, pitch room, publish kit for 8 platforms, mailing list, tip jar with a 0% cut, one-page site builder with an SEO gauge. Includes four animated example dashboards; green lights work today, amber are planned.
+- [Request a call](https://www.madwackd.ai/book/): free 30-minute call with a producer or marketing expert for qualified projects. A request, not a confirmed booking; a person confirms within one business day.
+- [Sitemap](https://www.madwackd.ai/sitemap/): every public page in one list.
 - Creator Studio (free browser tools, no card): https://www.madwackd.ai/creator-studio/
 - Custom Creator Studio (tell Genie what you make; a personalized creator dashboard and AI production team, Founding Creator $99/mo for 12 months then $299, cancel anytime): https://www.madwackd.ai/custom-creator-studio/
 - [Founder's vision](https://www.madwackd.ai/vision/): founder Zach Wennstedt's goal of data centers that heat homes and grow food on their roofs. A vision, not an existing facility.
@@ -50,6 +53,9 @@ Key facts:
 
 ## Our best work
 - Tell Me Why (country music video, 4:19) and What Love Really Is (neon cartoon music video, 5:01). Written and produced by Zach Wennstedt. A Madwackd Studio production. These are custom productions (many shots, retakes and a human edit), not one-prompt clips. Watch: https://www.madwackd.ai/vault/
+
+## Getting your video seen
+- Making video and getting it found are two jobs. Madwackd makes the video. Founder Zach Wennstedt also runs Eye To Ad Media (https://eyetoad.com: SEO, AI search optimization and websites that convert) and Search Converts (https://searchconverts.com: turning traffic into revenue). No ranking guarantees are made.
 
 ## AI producer guide
 - Madi is Madwackd Studio's AI producer (an AI, and she says so). She knows the site, plans and prices and helps visitors plan a video. Chat button on every page.
