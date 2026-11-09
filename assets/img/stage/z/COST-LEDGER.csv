@@ -1,0 +1,6 @@
+date_utc,name,model,est_cost_usd,aspect,refs,output,status,note
+2026-11-09T01:47:43+00:00,walk-a,gemini-3.1-flash-image,0.101,3:4,ref-z.png,walk-a.png,ok,
+2026-11-09T01:48:17+00:00,walk-b,gemini-3.1-flash-image,0.101,3:4,walk-a.png,walk-b.png,ok,
+2026-11-09T01:48:34+00:00,walk-c,gemini-3.1-flash-image,0.101,3:4,walk-a.png,walk-c.png,ok,
+2026-11-09T01:48:51+00:00,z-cheer,gemini-3.1-flash-image,0.101,3:4,walk-a.png,z-cheer.png,ok,
+2026-11-09T01:49:17+00:00,walk-c2,gemini-3.1-flash-image,0.101,3:4,walk-a.png,walk-c2.png,ok,
