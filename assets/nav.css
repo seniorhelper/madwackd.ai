@@ -83,3 +83,10 @@
 /* Footer note: the same emblem in a soft green chip */
 .foot-climate{align-items:center}
 .foot-climate .leaf{width:32px;height:32px;padding:6px;box-sizing:border-box;margin:0;border-radius:10px;background:#F4FDE4;border:1px solid #CDEBA6;color:#2F6B00}
+.mh-stub{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:44px;box-sizing:border-box;padding:5px 14px 5px 24px;background:linear-gradient(180deg,#FFE27A,#FFC83D);color:#2a1700;text-decoration:none;font-family:var(--head);line-height:1;border-radius:5px;transform:rotate(-3deg);box-shadow:0 8px 18px -8px rgba(255,200,61,.8);-webkit-mask:radial-gradient(circle 6px at 0 50%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,#0000 97%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 6px at 0 50%,#0000 97%,#000) left/51% 100% no-repeat,radial-gradient(circle 6px at 100% 50%,#0000 97%,#000) right/51% 100% no-repeat;transition:transform .15s}
+.mh-stub::before{content:"";position:absolute;top:6px;bottom:6px;left:14px;border-left:2px dashed rgba(42,23,0,.4)}
+.mh-stub small{font-size:.56rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.mh-stub b{font-size:.9rem;font-weight:900;white-space:nowrap}
+.mh-stub:hover,.mh-stub:focus-visible{color:#2a1700;transform:rotate(0) translateY(-1px)}
+@media (max-width:640px){.mh-stub{position:absolute;right:14px;top:calc(100% - 6px);min-height:34px;padding:4px 10px 4px 20px;transform:rotate(-3deg);box-shadow:0 8px 16px -6px rgba(0,0,0,.55)}.mh-stub::before{left:10px}.mh-stub small{display:none}.mh-stub b{font-size:.8rem}}
+@media (prefers-reduced-motion:reduce){.mh-stub{transition:none}}
