@@ -38,7 +38,6 @@ Key facts:
 - Founder site: https://zacharytyewennstedt.com/
 
 ## Compare
-- [ElevenLabs vs Madwackd Studio (2026)](https://www.madwackd.ai/compare/elevenlabs/): honest comparison for video makers. ElevenLabs is a voice platform (audio, cloning, dubbing, agents, image and video on third-party models); Madwackd is a video studio with voice built in, a credit quote before every render, human producers, a $5 Test Drive and a consent check for custom voices. Facts checked on elevenlabs.io on 2026-11-08.
 
 ## Producer's Corner (guides)
 - [Producer's Corner](https://www.madwackd.ai/producers-corner/): guides on video ads, AI voiceovers, commercial costs, AI music videos and the Custom Creator Studio.

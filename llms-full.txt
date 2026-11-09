@@ -382,116 +382,6 @@ Free Creator Studio tools ($0); Starter $29 and Pro $89 plans; Custom Creator St
 
 ---
 
-# ElevenLabs vs Madwackd Studio (2026): Voice Platform or Video Studio?
-URL: https://www.madwackd.ai/compare/elevenlabs/
-Updated: 2026-11-08
-
-Short answer: ElevenLabs is a voice platform. You get audio: text to speech, cloned voices, dubbing, music, sound effects and voice agents, and an image and video product that runs on other companies' video models. Madwackd Studio is a video studio with the voiceover built in: you get a finished clip, you see the credit price before every render, and a human producer is one phone call away. If you need audio files, pick ElevenLabs. If you need a finished video with a voice and a price you can see first, that is what Madwackd Studio is for.
-
-This page is written by the founder of Madwackd Studio, so read it knowing that. Every ElevenLabs fact below comes from elevenlabs.io as it read on November 8, 2026, with no claims beyond what their own pages say. ElevenLabs is a trademark of its owner; we use the name only to identify their product. Prices change; check both pricing pages before you buy.
-
-## What each one actually is
-
-ElevenLabs describes itself around voice: text to speech with 17,500+ voices in 90+ languages (their numbers), voice cloning and voice design, dubbing, speech to text, music, sound effects, a voice-agent platform and an API. Its home page also lists an "Image & Video" product that uses third-party video models. Plans are sold as monthly credits that roughly equal minutes of audio.
-
-Madwackd Studio is an AI video studio from a Denver production company. You describe a shot, the studio shows the credit estimate (seconds x model x takes) before anything renders, you approve it, and the clip comes back with sound. Voiceovers come from a curated set of stock voice styles inside the same project. Real producers run whole projects for people who would rather not do it themselves, and nine free Creator Studio tools run in your browser with no account.
-
-## Side by side
-
-What you care about | ElevenLabs (elevenlabs.io, Nov 8, 2026) | Madwackd Studio | 
-
-What comes out | Audio files; images and video through its Image & Video product | Finished video clips with voice, exported for social and web | 
-
-Price before the job | Monthly credits per plan; no per-job quote described | Credit estimate shown before every render; a budget cap on every project | 
-
-Cheapest way to try | Free plan, 10,000 credits a month (about 10 minutes of audio) | Free Creator Studio tools, no card; $5 Test Drive, 50 credits, one per account | 
-
-Commercial use | Commercial license listed from the Starter plan ($6/mo) up | See the terms of service and acceptable use | 
-
-Voice choice | 17,500+ voices, 90+ languages (their claim) | A curated set of styles: narrator, trailer, upbeat promo, friendly neighbor, documentary | 
-
-Your own voice | Voice cloning and voice design, live | Not offered today; stock styles only. Any custom voice would need a consent check first | 
-
-Consent and rights paper trail | Cloning policies on their site | Consent step before any custom voice; wording, time and a fingerprint of the sample go into the project's rights pack | 
-
-A human you can call | Contact Sales for Enterprise | Producers at 1-800-481-8638; done-for-you spots from $2,500 | 
-
-If the render fails | Not stated on the pricing page | Technical failures with no video refund credits automatically | 
-
-Content labels | See their site | Every clip carries an invisible provenance mark | 
-
-## Where ElevenLabs is bigger
-
-If your job is audio, ElevenLabs has more of everything: more voices, more languages, voice cloning you can use today, dubbing, a developer API and a voice-agent product. Podcasters, app builders, audiobook narrators and anyone building a phone agent should start there. Madwackd Studio does not try to be a general text-to-speech service, and we are still in early access.
-
-## Where Madwackd Studio is different
-
-- The voice is attached to a finished video. You never export audio from one tool and line it up in another. Shot, voiceover and export live in one project.
-
-- You see the price first. Every render shows its credit estimate before you confirm, and each project has a spending cap. Prepaid credits mean the balance never goes below zero.
-
-- People, not just plans. A junior, senior or executive producer can run the whole thing, quoted up front. Commercial spots start at $2,500, music videos at $5,000.
-
-- Consent first. No custom voice is made until you confirm it is your own voice or you hold written permission, and that consent is stored with the project.
-
-- Free tools before any money. The Creator Studio hook writer, script fitter, caption maker and six more run on your device with no sign-up.
-
-## Pricing side by side
-
-Both from the public pricing pages. ElevenLabs credits roughly equal minutes of audio; Madwackd credits pay for render time, and a clip is one 8-second Fast shot at 720p with sound.
-
-ElevenLabs (monthly) | Madwackd Studio (monthly or one-time) | 
-
-Free: $0, 10,000 credits | Free account and Creator Studio tools: $0 | 
-
-Starter: $6, 30,000 credits | Test Drive: $5 one time, 50 credits | 
-
-Creator: $22, 121,000 credits | Starter: $29, 250 credits (about 10 clips) | 
-
-Pro: $99, 600,000 credits | Pro: $89, 900 credits (about 37 clips) | 
-
-Scale: $299, 1.8M credits | Studio: $299, 2,880 credits (about 120 clips) | 
-
-Business: $990, 6M credits | Credit packs: $14 for 100 up to $515 for 5,000; done-for-you from $2,500 | 
-
-Full Madwackd details, including what is and is not refunded, are on the pricing page. These are the prices you pay today; results vary by project.
-
-## Which one should you pick?
-
-- You need narration for a podcast, audiobook, app or phone agent. ElevenLabs. Madwackd does not sell standalone audio.
-
-- You need a 15 to 30 second ad or social clip with a voice, and you want to know the cost before you start. Madwackd Studio. Fit your script with the free script fitter, then run a $5 Test Drive.
-
-- You want someone to make the whole thing. Madwackd producers, quoted up front. ElevenLabs does not list a done-for-you service.
-
-- You already have a cloned voice you love. Keep using it where its license allows. For Madwackd videos, use the stock styles; custom voices are not offered today.
-
-## Questions people ask
-
-### Is Madwackd Studio an ElevenLabs alternative?
-
-Only if you need a finished video. ElevenLabs is a voice platform: text to speech, voice cloning, dubbing, music and voice agents, plus an image and video product on third-party models. Madwackd Studio is a video studio with the voiceover built in, a credit quote before every render and human producers you can call. If you need audio files for a podcast, an app or a voice agent, ElevenLabs is the better fit.
-
-### Can I use a voiceover I made in ElevenLabs inside Madwackd Studio?
-
-Madwackd Studio's voice layer is built around its own stock voice styles and consent-checked custom voices, so we do not advertise importing third-party voice files. If you have audio you must keep, call a producer and we will tell you honestly whether it fits the project. Any audio you bring is subject to its own license terms.
-
-### Does Madwackd Studio clone voices?
-
-Not today. Stock voice styles (narrator, trailer, upbeat promo, friendly neighbor, documentary) are live, and no real person's voice is cloned. Any custom voice, when it is offered, needs a consent check: your own voice, or written permission from the speaker. We never make voices of celebrities or public figures.
-
-### What does it cost to try each one?
-
-ElevenLabs lists a Free plan with 10,000 credits a month (about 10 minutes of audio) and a Starter plan at $6 a month, checked on elevenlabs.io/pricing on November 8, 2026. Madwackd Studio has free Creator Studio tools with no card, and a $5 Test Drive with 50 credits, about two 8-second shots at 720p, one per account.
-
-### Does ElevenLabs make video?
-
-Its site lists an Image & Video product that runs on third-party video models, alongside its voice products. It does not describe a per-job price quote before a render, human producers or a done-for-you service. Check elevenlabs.io for current features; this page reflects November 8, 2026.
-
-Try it for $5. One Test Drive, about two shots with sound, price shown before each one. Or call 1-800-481-8638 and a producer plans it with you. Start for $5
-
----
-
 # How to Add an AI Voiceover to a Video (2026): A Producer's Guide
 URL: https://www.madwackd.ai/producers-corner/ai-voiceover-for-video/
 Updated: 2026-11-08
@@ -630,7 +520,7 @@ A normal read runs about 150 words a minute, so 60 words fits 25 seconds with ro
 
 ## Commercial rights, in plain words
 
-A voice you are allowed to use in a personal clip is not always a voice you are allowed to use in an ad. Free tiers on voice platforms commonly exclude commercial use. As one example, ElevenLabs lists a commercial license from its $6-a-month Starter plan up, not on its Free plan, as of November 8, 2026. Read the plan page of whatever you use before the ad goes live, and keep a copy of the license terms with the ad. Madwackd's terms are on the terms of service and acceptable use pages, and every project keeps a rights pack with prompts, versions, consents and receipts.
+A voice you are allowed to use in a personal clip is not always a voice you are allowed to use in an ad. Free tiers on voice platforms commonly exclude commercial use. Read the plan page of whatever you use before the ad goes live, and keep a copy of the license terms with the ad. Madwackd's terms are on the terms of service and acceptable use pages, and every project keeps a rights pack with prompts, versions, consents and receipts.
 
 ## The AI label: what each platform requires
 
@@ -710,7 +600,7 @@ Video studio with voice built in | Render time for the finished shot, voice incl
 
 ## AI voice platform pricing (dated)
 
-Platforms sell audio in credits that roughly equal minutes. As the most-searched example, ElevenLabs listed these on its pricing page on November 8, 2026: Free $0 for 10,000 credits (about 10 minutes, no commercial license listed); Starter $6 for 30,000; Creator $22 for 121,000; Pro $99 for 600,000; Scale $299 for 1.8 million; Business $990 for 6 million, with a commercial license from Starter up. Other platforms are in the same shape: a free tier without commercial rights, a creator tier in the tens of dollars, pro tiers around a hundred. Two costs hide behind the plan price: regenerations count against your minutes, and the video is a separate tool and a separate bill.
+Platforms sell audio in credits that roughly equal minutes. A typical shape, as of November 2026: a free tier without commercial rights, a creator tier in the tens of dollars, pro tiers around a hundred. Two costs hide behind the plan price: regenerations count against your minutes, and the video is a separate tool and a separate bill.
 
 ## Human voice actor rates
 
@@ -772,7 +662,7 @@ Per minute of audio, yes, by a wide margin: creator plans on voice platforms run
 
 ### How much does an AI voiceover cost per minute?
 
-On ElevenLabs, checked November 8, 2026, the Creator plan is $22 a month for about 121 minutes, roughly 18 cents a minute if you use it all; the Free plan gives about 10 minutes with no commercial license. Madwackd Studio does not sell voice by the minute: the voice is part of an 8-second video shot that costs about 24 credits, $2.40 to $3.40, with the quote shown before you render.
+Voice platforms typically charge around $20 a month for about two hours of audio, roughly 15 to 20 cents a minute if you use it all, and free tiers usually exclude commercial use. Madwackd Studio does not sell voice by the minute: the voice is part of an 8-second video shot that costs about 24 credits, $2.40 to $3.40, with the quote shown before you render.
 
 ### Are free AI voices free for commercial use?
 
