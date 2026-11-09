@@ -98,7 +98,7 @@
   var launcher = L ? L.button : null;
 
   function isOpen() { return !panel.hidden; }
-  function open(topic) {
+  function open(topic, detail) {
     if (L) L.hideBubble(false);
     if (!isOpen()) {
       panel.hidden = false;
@@ -107,10 +107,21 @@
       wave();
       document.addEventListener("pointermove", look, { passive: true });
     }
-    if (!log.childNodes.length && topic !== "help" && topic !== "dashboard") {
+    if (!log.childNodes.length && topic !== "help" && topic !== "dashboard" && topic !== "wish") {
       var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm " + NAME + ", your AI producer. What are you making?", ["Take the tour", "What does it cost?"]];
       say(g[0], [], g[1]);
       if (VO && VO.canSpeak()) VO.speak(g[0], null, true);   /* greeting: never over the stage show */
+    }
+    if (topic === "wish") {   /* the Genie console's "Talk it over with Producer Z": grow the visitor's wish together */
+      var wish = String((detail && detail.text) || "").replace(/\s+/g, " ").trim().slice(0, 600);
+      if (wish) {
+        say("Let's grow that wish together. I'll ask a couple of questions, then make it bigger and clearer.");
+        send("Here's my wish so far: " + wish + ". Help me make it bigger and clearer.");
+      } else {
+        var wl = "Tell me your wish in a sentence: what should your dashboard do for you? I'll help you make it bigger and clearer.";
+        say(wl, [], ["For my channel", "For my business", "A talking brand"]);
+        if (VO && VO.canSpeak()) VO.speak(wl, null, true);
+      }
     }
     if (topic === "help") {
       var hl = "Love it. What are you making, and what should it do for you? I'll plan it, price it, and point you to the right next step.";
@@ -474,7 +485,7 @@
     launcher.setAttribute("aria-controls", "zg-panel"); launcher.setAttribute("aria-expanded", "false");
     launcher.addEventListener("click", toggle);
     document.body.appendChild(launcher);
-    window.addEventListener("mw:guide-open", function (e) { open(e.detail && e.detail.topic); });
+    window.addEventListener("mw:guide-open", function (e) { open(e.detail && e.detail.topic, e.detail); });
     window.addEventListener("mw:guide-tour", function () { tour(0); });
   }
 

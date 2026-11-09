@@ -16,7 +16,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261108z4";
+  var V = "20261108z5";
   /* The guide's name, in one place (Zach, Nov 8: Producer Z, he/him). MW_CONFIG.guideName can override it. */
   var NAME = String((window.MW_CONFIG && window.MW_CONFIG.guideName) || "Producer Z");
   var A = "/assets/z/";
@@ -302,6 +302,26 @@
 
   /* ---------- speech bubble (text always shown; spoken too when his sound is on) ---------- */
   function hideBubble() { clearTimeout(bubbleTimer); sayBox.hidden = true; acts.textContent = ""; }
+  /* The bubble never sits on key buttons (pages mark them [data-go-wish] or [data-z-avoid]): it waits until the
+     visitor scrolls them clear, then speaks up. */
+  var AVOID = "[data-go-wish],[data-z-avoid],.mw-load-note", lastRect = null, pending = null, scrollT = 0;
+  function hits(r) {
+    if (!r) return false;
+    var els = document.querySelectorAll(AVOID);
+    for (var i = 0; i < els.length; i++) {
+      var b = els[i].getBoundingClientRect();
+      if (b.width && b.height && b.left < r.right + 8 && b.right > r.left - 8 && b.top < r.bottom + 8 && b.bottom > r.top - 8) return true;
+    }
+    return false;
+  }
+  addEventListener("scroll", function () {
+    if (scrollT) return;
+    scrollT = setTimeout(function () {
+      scrollT = 0;
+      if (!sayBox.hidden && hits(sayBox.getBoundingClientRect())) { pending = null; hideBubble(); return; }
+      if (pending && sayBox.hidden && !hits(lastRect)) { var p = pending; pending = null; bubble(p[0], p[1], p[2]); }
+    }, 250);
+  }, { passive: true });
   function bubble(text, buttons, speakIt) {
     if (!standing || root.classList.contains("is-open")) return;
     clearTimeout(bubbleTimer);
@@ -314,6 +334,8 @@
       acts.appendChild(x);
     });
     sayBox.hidden = false;
+    lastRect = sayBox.getBoundingClientRect();
+    if (hits(lastRect)) { hideBubble(); pending = [text, buttons, speakIt]; return; }
     sayBox.classList.remove("is-in"); void sayBox.offsetWidth; sayBox.classList.add("is-in");
     var ms = Math.max(7000, text.split(/\s+/).length * 380);
     function later() { bubbleTimer = setTimeout(hideBubble, ms); }
@@ -359,7 +381,7 @@
     btn.addEventListener(ev, function () { load().catch(function () {}); }, { once: true, passive: true });
     actor.addEventListener(ev, function () { load().catch(function () {}); }, { once: true, passive: true });
   });
-  window.addEventListener("mw:guide-open", function (e) { var t = e.detail && e.detail.topic; engage(function (z) { z.open(t); }); });
+  window.addEventListener("mw:guide-open", function (e) { var d = e.detail || {}; engage(function (z) { z.open(d.topic, d); }); });
   window.addEventListener("mw:guide-tour", function () { engage(function (z) { z.tour(0); }); });
 
   function firstHello() {
