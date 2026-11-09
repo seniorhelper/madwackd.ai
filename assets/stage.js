@@ -107,11 +107,11 @@
     if (holo && (stage.classList.contains("s-dash") || stage.classList.contains("s-holo")) && shown(holo)) o.push(rel(holo, s));
     var pn = $(".gs-panel"); if (!SMALL && stage.classList.contains("s-console") && !stage.classList.contains("s-closed") && pn) o.push(rel(pn, s));
     if (stage.classList.contains("s-signs") && !stage.classList.contains("s-signsout")) stage.querySelectorAll(".gs-sign").forEach(function (el) { o.push(rel(el, s)); });
-    if (zWrap && !zWrap.hidden && actor) o.push(rel(actor, s));
+    if (zWrap && !zWrap.hidden && actor) { var za = rel(actor, s); o.push(za, za); }
     if (skip !== "cta" && wishCta && !wishCta.hidden) o.push(rel(wishCta, s));
     if (skip !== "say" && gSay && gSay.classList.contains("show")) o.push(rel(gSay, s));
     if (onair) o.push(rel(onair, s));
-    var ctl = $(".gs-ctrl"); if (ctl) o.push(rel(ctl, s));
+    var ctl = $(".gs-ctrl"); if (ctl) { var cr = rel(ctl, s); cr.l -= 6; cr.t -= 6; o.push(cr, cr); }
     return o;
   }
   /* try spots around him in order; never on his body, then as clear of everything else as the stage allows */
@@ -358,6 +358,8 @@
      aside for the Genie and watches him, and after the show strolls a few steps now and then. The frames are stacked
      images switched by an attribute (nothing re-decodes mid-stride). Reduced motion: he just stands on his mark. ---------------- */
   var zx = 1.15, zRaf = 0, zWanderT = 0, zSpeaking = false, ZMARK = SMALL ? .8 : .82;
+  /* after the show on phones he crosses to the left wing, so the wish sign has the right side to itself */
+  var ZEND = SMALL ? .13 : ZMARK, zEndFace = !SMALL;
   function zArtLoad() {
     if (!zWrap || zWrap.getAttribute("data-loaded")) return; zWrap.setAttribute("data-loaded", "1");
     var base = zWrap.getAttribute("data-art") || "";
@@ -365,7 +367,7 @@
   }
   function zFrame(f) { if (actor) actor.setAttribute("data-f", f); }
   function zFace(left) { if (zWrap) zWrap.classList.toggle("face-l", !!left); }
-  function zPos() { if (!zWrap || !scene) return; var w = scene.clientWidth, aw = zWrap.offsetWidth || 120; zWrap.style.transform = "translate3d(" + (zx * w - aw / 2).toFixed(1) + "px,0,0)"; }
+  function zPos() { if (!zWrap || !scene) return; var w = scene.clientWidth, aw = zWrap.offsetWidth || 120; zWrap.style.transform = "translate3d(" + (zx * w - aw / 2).toFixed(1) + "px,0,0)"; zWrap.classList.toggle("say-r", zx < .5); }
   function zWalk(to, cb) {
     if (!zWrap) return; cancelAnimationFrame(zRaf); zRaf = 0;
     if (REDUCED) { zx = to; zPos(); zFrame(zSpeaking ? "ch" : "w2"); if (cb) cb(); return; }
@@ -383,7 +385,7 @@
   function zWander(on) {
     clearTimeout(zWanderT); if (!on || REDUCED || !zWrap) return;
     zWanderT = setTimeout(function wander() {
-      if (inView && !document.hidden && !zSpeaking && !zRaf) { var lo = ZMARK - .05, hi = ZMARK + .05; zWalk(lo + Math.random() * (hi - lo), function () { zFace(true); }); }
+      if (inView && !document.hidden && !zSpeaking && !zRaf) { var home = played ? ZEND : ZMARK, lo = home - (SMALL ? .03 : .05), hi = home + (SMALL ? .03 : .05); zWalk(lo + Math.random() * (hi - lo), function () { zFace(played ? zEndFace : true); }); }
       zWanderT = setTimeout(wander, 7000 + Math.random() * 4500);
     }, 4500);
   }
@@ -480,7 +482,7 @@
     pose(POSES.present ? "present" : "point"); gold = true; wisps(true);
     if (onair) onair.className = "gs-onair on"; if (!zOn) zEnter();
     played = true; playing = false; console_(true); markSeen(); holoInert(SMALL);
-    if (zOn) zWalk(ZMARK, function () { zFace(true); }); zWander(true);
+    if (zOn) zWalk(ZEND, function () { zFace(zEndFace); }); zWander(true);
     if (REDUCED) ctaShow(true); else later(function () { ctaShow(true); }, 2600);
   }
   if (skipBtn) skipBtn.addEventListener("click", function () { finale(); later(function () { say("g-6", 5200); }, 900); });
@@ -531,7 +533,7 @@
       pose("point"); say("g-6", 5200);
       if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
       spotOnEl(genie, 0);
-      if (zOn) zWalk(ZMARK, function () { zFace(true); }); zWander(true);
+      if (zOn) zWalk(ZEND, function () { zFace(zEndFace); }); zWander(true);
     }, 34700);
     T(function () { ctaShow(true); }, 36900);
     T(function () { pose(POSES.wink ? "wink" : "out"); }, 41800);
