@@ -174,7 +174,7 @@
       '</div>' +
       '<div class="pcs-demo" id="pcs-demo" hidden></div>' +
       '<div class="pcs-body">' +
-        '<div class="pcs-strip" role="tablist" aria-label="Studio rooms" id="pcs-strip"></div>' +
+        '<div class="pcs-strip"><div class="pcs-tabs" role="tablist" aria-label="Studio rooms" id="pcs-strip"></div><div id="pcs-foot"></div></div>' +
         '<div class="pcs-bay" id="pcs-bay"></div>' +
       '</div>' +
       '<div class="pcs-toast" role="status" aria-live="polite"></div>';
@@ -225,8 +225,8 @@
       var p = PANELS.filter(function (x) { return x.id === id; })[0]; if (!p) return;
       html += '<button type="button" class="pcs-tab" role="tab" id="pcs-t-' + id + '" aria-controls="pcs-bay" aria-selected="' + (id === active) + '" tabindex="' + (id === active ? 0 : -1) + '" data-tab="' + id + '"><span class="lamp" aria-hidden="true"></span>' + esc(p.name) + '</button>';
     });
-    html += '<p class="pcs-strip-foot">' + (variant === 'hero' ? '<a href="/pro-studio/">Open the full studio &rarr;</a>' : 'Runs in your browser. Nothing is uploaded.') + '</p>';
-    strip.innerHTML = html;
+    var foot = '<p class="pcs-strip-foot">' + (variant === 'hero' ? '<a href="/pro-studio/">Open the full studio &rarr;</a>' : 'Runs in your browser. Nothing is uploaded.') + '</p>';
+    strip.innerHTML = html; $('#pcs-foot').innerHTML = foot;
   }
   function go(id) {
     if (S.hidden.indexOf(id) > -1 && id !== 'custom') { S.hidden = S.hidden.filter(function (x) { return x !== id; }); changed(); }

@@ -22,6 +22,8 @@
 /* body: channel strip + bay */
 .pcs-body{display:grid;grid-template-columns:200px 1fr;min-height:520px}
 .pcs-strip{background:var(--rail);border-right:2px solid #000;padding:12px 10px;display:flex;flex-direction:column;gap:6px}
+.pcs-tabs{display:flex;flex-direction:column;gap:6px}
+#pcs-foot{margin-top:auto}
 .pcs-tab{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:linear-gradient(180deg,#2a2438,#1d1829);border:1px solid #000;border-radius:8px;padding:9px 10px;cursor:pointer;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 0 #000;font-weight:600;font-size:.88rem;color:var(--dim);transition:transform .08s}
 .pcs-tab:hover{color:#fff}
@@ -153,6 +155,7 @@
 @media (max-width:900px){
   .pcs-body{grid-template-columns:1fr}
   .pcs-strip{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:2px solid #000;padding:8px}
+  .pcs-tabs{flex-direction:row;gap:6px}
   .pcs-tab{width:auto;flex:none;white-space:nowrap}
   .pcs-strip-foot{display:none}
   .pcs-card,.pcs-card.w4,.pcs-card.w5,.pcs-card.w7,.pcs-card.w8{grid-column:span 12}
