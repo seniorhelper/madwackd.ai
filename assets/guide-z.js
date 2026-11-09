@@ -1,4 +1,4 @@
-/* Madwackd Studio - Madi, the AI director (full half: chat panel, full-body character, tour, read-aloud).
+/* Madwackd Studio - Producer Z, the AI producer (full half: chat panel, full-body character, tour, talking lips).
    Loaded on demand by /assets/guide-widget.js. Plain JS, no inline handlers (CSP script-src 'self').
    Renders replies with textContent only. Links are rebuilt from an allowlist. Needs /assets/config.js. */
 (function () {
@@ -13,9 +13,11 @@
   var PATHS = ["/", "/features/", "/how-it-works/", "/voice/", "/pricing/", "/producers/", "/vault/",
     "/creator-studio/", "/dashboard/", "/studio/", "/trust/", "/about/", "/our-mission/", "/terms/",
     "/privacy/", "/refunds/", "/acceptable-use/", "/ai-disclosure/", "/apply/", "/awards/", "/collaborate/",
-    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/", "/launch-pad/"];
-  var FAMILY = ["https://www.madwackd.com/"];   /* our parent studio only: the guide refers to no other company */
-  var SAFE = "Sorry, I couldn't answer that one well. Call 1-800-481-8638 and a producer will help.";
+    "/creator-dashboard-demo/", "/producers-corner/", "/studio-board/", "/vision/", "/early-access/", "/launch-pad/",
+    "/book/", "/support/", "/contact/", "/pro-studio/", "/custom-creator-studio/"];
+  /* family only (Zach, Nov 8): parent studio, Eye To Ad Media (SEO, AIO, websites), Search Converts (conversion) */
+  var FAMILY = ["https://www.madwackd.com/", "https://eyetoad.com/", "https://searchconverts.com/"];
+  var SAFE = "Sorry, I fumbled that one. Try me again, or see Pricing and the free tools.";
 
   /* Second line of defense; the server already filtered. */
   function scrub(text) {
@@ -46,8 +48,8 @@
   var TIER = String(window.MW_USER_TIER || "anon");
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var L = window.__mwzLauncher || null;
-  var NAME = String((L && L.name) || (window.MW_CONFIG && window.MW_CONFIG.guideName) || "Madi");
-  var Z = "/assets/z/", ZV = "20261106v3";
+  var NAME = String((L && L.name) || (window.MW_CONFIG && window.MW_CONFIG.guideName) || "Producer Z");
+  var Z = "/assets/z/", ZV = "20261108z";
   var history = [];
   var busy = false;
   var store = {
@@ -70,20 +72,22 @@
   var root = el("div", "zg");
   root.innerHTML =
     '<section class="zg-panel" id="zg-panel" role="dialog" aria-modal="false" aria-labelledby="zg-title" hidden>' +
-    '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="' + NAME + ': click for an action!">' +
+    '<header class="zg-stage"><button class="zg-actor" type="button" aria-label="' + NAME + ': your AI producer">' +
     '<video muted playsinline preload="metadata" aria-hidden="true" poster="' + Z + 'z-hero.webp?v=' + ZV + '"></video>' +
     '<img class="zg-mouth" alt="" aria-hidden="true" hidden></button>' +
-    '<div class="zg-name"><strong id="zg-title">' + NAME + '</strong><small>Your AI director</small></div>' +
+    '<div class="zg-name"><strong id="zg-title">' + NAME + '</strong><small>AI producer</small></div>' +
+    '<button class="zg-mute" type="button" aria-pressed="false">Sound on</button>' +
     '<button class="zg-x" type="button" aria-label="Close ' + NAME + '">&times;</button></header>' +
     '<div class="zg-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="zg-quick"></div>' +
-    '<p class="zg-humanrow"><a class="zg-human" href="/support/#contact" data-human>Talk to a human</a></p>' +
+    '<p class="zg-humanrow"><a class="zg-human" href="/support/#contact" data-human>Order or account help</a>' +
+    '<span class="zg-live" hidden> <a class="zg-human zg-book" href="/book/">Request a call</a> <a class="zg-human" href="tel:+18004818638">Call 1-800-481-8638</a></span></p>' +
     '<form class="zg-form"><label class="zg-sr" for="zg-in">Ask ' + NAME + '</label>' +
     '<input id="zg-in" maxlength="800" autocomplete="off" placeholder="Ask about prices, tools, your video...">' +
     '<button class="zg-mic" type="button" aria-pressed="false" aria-label="Talk to ' + NAME + '" hidden>' +
     '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12z"/></svg></button>' +
     '<button class="zg-send" type="submit">Send</button></form>' +
-    '<p class="zg-fine">' + NAME + ' is an AI guide and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
+    '<p class="zg-fine">' + NAME + ' is an AI producer and can make mistakes. Prices on /pricing/ are final. Don\'t share card or personal details here.</p>' +
     "</section>";
   (L ? L.root : document.body).appendChild(root);
 
@@ -102,10 +106,15 @@
       document.addEventListener("pointermove", look, { passive: true });
     }
     if (!log.childNodes.length && topic !== "help" && topic !== "dashboard") {
-      var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm " + NAME + ", your AI director. What are you making?", ["Take the tour", "What does it cost?"]];
+      var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm " + NAME + ", your AI producer. What are you making?", ["Take the tour", "What does it cost?"]];
       say(g[0], [], g[1]);
+      if (VO && VO.canSpeak()) speak(g[0]);
     }
-    if (topic === "help") say("Love it. What are you making, and who is it for? I'll plan it, price it, or hand it to our team.", [], ["An ad for my business", "A music video", "Something for social"]);
+    if (topic === "help") {
+      var hl = "Love it. What are you making, and what should it do for you? I'll plan it, price it, and point you to the right next step.";
+      say(hl, [], ["An ad for my business", "A talking brand or website", "A music video"]);
+      if (VO && VO.canSpeak()) speak(hl);
+    }
     if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
     input.focus();
   }
@@ -113,7 +122,7 @@
     if (!isOpen()) return;
     panel.hidden = true;
     if (L) L.root.classList.remove("is-open");
-    if (launcher) { launcher.setAttribute("aria-expanded", "false"); launcher.setAttribute("aria-label", "Ask " + NAME + ", the AI director"); launcher.focus(); }
+    if (launcher) { launcher.setAttribute("aria-expanded", "false"); launcher.setAttribute("aria-label", "Ask " + NAME + ", the AI producer"); launcher.focus(); }
     document.removeEventListener("pointermove", look);
     rest();
   }
@@ -176,7 +185,7 @@
     if (who !== "you" && "speechSynthesis" in window) {
       var sp = el("button", "zg-say", "Read aloud");
       sp.type = "button";
-      sp.addEventListener("click", function () { speak(row.firstChild.textContent); });
+      sp.addEventListener("click", function () { if (VO && !VO.on()) VO.set(true); speak(row.firstChild.textContent); });
       row.appendChild(sp);
     }
     log.appendChild(row);
@@ -193,33 +202,25 @@
   }
   function note(text) { var n = el("p", "zg-note", text); log.appendChild(n); log.scrollTop = log.scrollHeight; }
 
-  /* ---------------- voice: browser speech for everyone (free); studio voice + lip-sync for Pro/Studio ----------------
-     Lips: six clay mouth frames (/assets/z/mouth-<shape>.webp) laid over his still, switched on by MW_CONFIG.zLips.
-     Until then he uses the talking clip. */
-  var SHAPES = ["rest", "mbp", "fv", "a", "e", "o"], mouth = root.querySelector(".zg-mouth"), lipsReady = false, lipRaf = 0;
-  (function probeLips() {
-    if (REDUCED || !C.zLips) return;        /* set zLips: true in /assets/config.js once the mouth frames are uploaded */
-    var img = new Image();
-    img.onload = function () { lipsReady = true; SHAPES.forEach(function (s) { (new Image()).src = Z + "mouth-" + s + ".webp?v=" + ZV; }); };
-    img.src = Z + "mouth-rest.webp?v=" + ZV;
-  })();
-  function lipsOn() { if (vid) { vid.pause(); vid.style.visibility = "hidden"; } mouth.hidden = false; }
-  function lipsOff() { cancelAnimationFrame(lipRaf); mouth.hidden = true; if (vid) vid.style.visibility = ""; setMouth("rest"); }
-  function setMouth(s) { var src = Z + "mouth-" + s + ".webp?v=" + ZV; if (mouth.getAttribute("src") !== src) mouth.setAttribute("src", src); }
-  function lipSync(audio, mouths) {          /* mouths = [[seconds, shape], ...] from the API */
-    lipsOn();
-    var i = 0;
-    (function step() {
-      var now = audio.currentTime;
-      while (i + 1 < mouths.length && mouths[i + 1][0] <= now) i++;
-      setMouth(mouths[i] ? mouths[i][1] : "rest");
-      if (!audio.paused && !audio.ended) lipRaf = requestAnimationFrame(step);
-    })();
-    audio.addEventListener("ended", lipsOff, { once: true });
-    audio.addEventListener("pause", lipsOff, { once: true });
-  }
+  /* ---------------- voice: one engine in the launcher (guide-widget.js) ----------------
+     Browser voice for everyone (free) with text-timed lips; the studio voice with its mouth timeline for paid plans.
+     He speaks only after the visitor interacted and has his sound on; every spoken line is also in the chat log. */
+  var VO = (L && L.voice) || null, mouth = root.querySelector(".zg-mouth");
+  window.addEventListener("mw:z-mouth", function (e) {
+    var d = e.detail || {};
+    if (!d.src || REDUCED || panel.hidden) return;
+    if (vid) { vid.pause(); vid.style.visibility = "hidden"; }
+    mouth.hidden = false;
+    if (mouth.getAttribute("src") !== d.src) mouth.setAttribute("src", d.src);
+  });
+  window.addEventListener("mw:z-talk", function (e) {
+    if (e.detail && e.detail.on) { if (mouth.hidden && !REDUCED && vid) talk(4000); return; }
+    mouth.hidden = true; if (vid) { vid.style.visibility = ""; vid.loop = false; }
+  });
   function speak(text) {
-    if (["pro", "studio", "business", "agency", "whitelabel"].indexOf(TIER) > -1 && API && window.MW_ID_TOKEN) {
+    if (!VO) return;
+    var paid = ["pro", "studio", "creators_beta", "genie_team", "business", "agency", "whitelabel"].indexOf(TIER) > -1;
+    if (paid && API && window.MW_ID_TOKEN && VO.canSpeak()) {
       fetch(API + "/v2/guide/voice", { method: "POST", headers: { "Content-Type": "application/json",
         Authorization: "Bearer " + window.MW_ID_TOKEN }, body: JSON.stringify({ text: text, lips: true }) })
         .then(function (r) { if (!r.ok) throw 0; return r.json(); })
@@ -227,38 +228,21 @@
           var bin = atob(j.audio_b64 || ""), buf = new Uint8Array(bin.length);
           for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
           var a = new Audio(URL.createObjectURL(new Blob([buf], { type: "audio/mpeg" })));
-          var pr = a.play();
-          if (pr && pr.catch) pr.catch(function () { browserSpeak(text); });
-          if (lipsReady && j.mouths && j.mouths.length) lipSync(a, j.mouths); else talk(text.length * 55);
+          if (!VO.playAudio(a, j.mouths || [])) VO.speak(text);
         })
-        .catch(function () { browserSpeak(text); });
+        .catch(function () { VO.speak(text); });
       return;
     }
-    browserSpeak(text);
+    VO.speak(text);
   }
-  function femaleVoice() {
-    var vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
-    var en = vs.filter(function (v) { return /^en(-|_|$)/i.test(v.lang); });
-    var pick = en.filter(function (v) { return /female|samantha|zira|aria|jenny|ava|allison|susan|serena|victoria|karen|moira|tessa|fiona|libby|sonia|natasha/i.test(v.name); });
-    return pick[0] || null;
+  function syncPanelMute() {
+    var b = root.querySelector(".zg-mute"); if (!b || !VO) return;
+    var on = VO.on();
+    b.setAttribute("aria-pressed", on ? "false" : "true");
+    b.setAttribute("aria-label", on ? "Mute " + NAME : "Turn on " + NAME + "'s voice");
+    b.textContent = on ? "Sound on" : "Muted";
   }
-  function browserSpeak(text) {
-    try {
-      speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text), fv = femaleVoice();
-      if (fv) u.voice = fv;
-      u.rate = 1.03;
-      if (lipsReady) {                      /* no timing from the browser: open and close on each word */
-        var k = 0, cyc = ["a", "e", "o", "mbp", "e", "a"];
-        u.onstart = function () { lipsOn(); };
-        u.onboundary = function () { setMouth(cyc[k++ % cyc.length]); setTimeout(function () { setMouth("rest"); }, 140); };
-        u.onend = u.onerror = function () { lipsOff(); };
-      } else {
-        talk(text.length * 55);
-      }
-      speechSynthesis.speak(u);
-    } catch (e) { /* no speech */ }
-  }
+  window.addEventListener("mw:z-voice", syncPanelMute);
 
   /* ---------------- push to talk: the browser's own speech recognition (free; Chrome, Edge, Safari) ---------------- */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition, mic = root.querySelector(".zg-mic"), rec = null;
@@ -344,11 +328,11 @@
       fetch(API + "/v2/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
         .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (x) {
-          if (!x.ok) { msg.textContent = (x.j && x.j.message) || "That didn't send. Call 1-800-481-8638 instead."; btn.disabled = false; return; }
+          if (!x.ok) { msg.textContent = (x.j && x.j.message) || "That didn't send. Try again in a minute, or use the quote form."; btn.disabled = false; return; }
           f.remove();
           say("Got it! A real person on our team will reach out within one business day. Anything else while you wait?");
         })
-        .catch(function () { msg.textContent = "That didn't send. Call 1-800-481-8638 instead."; btn.disabled = false; });
+        .catch(function () { msg.textContent = "That didn't send. Try again in a minute, or use the quote form."; btn.disabled = false; });
     });
   }
 
@@ -365,7 +349,7 @@
     return tsLoad;
   }
   function humanCheck() {
-    if (!TS_KEY) { say("I need a quick human check that isn't loading right now. Sign in to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in" }]); return; }
+    if (!TS_KEY) { say("I need a quick human check that isn't loading right now. Sign in to keep chatting, or browse the free tools.", [{ href: "/studio/", label: "Sign in" }, { href: "/creator-studio/", label: "Free tools" }]); return; }
     var box = el("div", "zg-check");
     box.appendChild(el("p", "", "Quick human check, then I'm all yours."));
     var slot = el("div", "");
@@ -386,7 +370,7 @@
     if (!text || busy) return;
     say(text, [], [], "you");
     history.push({ role: "user", text: text });
-    if (!API) { say("I'm warming up. Meanwhile: Test Drive is $5 for about two shots, or call 1-800-481-8638.", [{ href: "/pricing/", label: "Pricing" }]); return; }
+    if (!API) { say("I'm warming up. Meanwhile: the Test Drive is $5 for about two shots.", [{ href: "/pricing/", label: "Pricing" }]); return; }
     post("");
   }
   function post(token) {
@@ -406,7 +390,7 @@
       .then(function (r) { status = r.status; return r.json().catch(function () { return {}; }); })
       .then(function (j) {
         if (status === 403 && j.needs_check) {
-          if (token) { say("That human check didn't go through. Sign in (free) to keep chatting, or call 1-800-481-8638.", [{ href: "/studio/", label: "Sign in free" }]); return; }
+          if (token) { say("That human check didn't go through. Sign in (free) to keep chatting.", [{ href: "/studio/", label: "Sign in free" }]); return; }
           humanCheck(); return;
         }
         if (j.pass) session.set("mw_z_pass", String(j.pass).slice(0, 64));
@@ -414,7 +398,8 @@
         history.push({ role: "assistant", text: reply });
         say(reply, j.links || []);
         if (j.offer_lead && j.lead_form) offerLead(j.lead_form);
-        if (spokenAsk) speak(reply);
+        if (j.lead && j.lead.qualified) root.querySelector(".zg-live").hidden = false;   /* the server decides */
+        if (spokenAsk || (VO && VO.canSpeak())) speak(reply);
         if (typeof j.messages_left === "number" && j.messages_left > 0 && j.messages_left <= 2) {
           note(j.messages_left + (j.messages_left === 1 ? " free message" : " free messages") + " left today." +
             (TIER === "anon" ? " A free account gets more." : ""));
@@ -434,8 +419,8 @@
     { sel: "[data-tour='best-work']", optional: true, text: "Our best work: music videos made by our studio team." },
     { sel: "[data-tour='creator-studio'], a[href='/creator-studio/']", text: "Free tools: hook writer, script fitter, captions and more. No account needed." },
     { sel: "[data-tour='start'], a[href='/studio/']", text: "Make a video: the Studio shows the exact price before every render. Start with the $5 Test Drive." },
-    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes commercial spots from $2,500, with a written quote first: 1-800-481-8638." },
-    { sel: ".zgl-btn", text: "That's me, in the spotlight. Click any time and ask me anything." }
+    { sel: "[data-tour='pricing'], a[href='/pricing/']", text: "Rather not do it yourself? Our team makes commercial spots from $2,500, with a written quote first." },
+    { sel: ".zgl.is-stand .zgl-actor, .zgl-btn", text: "That's me. I'm always on set: click me any time and ask me anything." }
   ];
   var spot = el("div", "zg-spot"), tip = el("div", "zg-tip");
   tip.setAttribute("role", "dialog");
@@ -469,6 +454,8 @@
 
   /* ---------------- wiring ---------------- */
   root.querySelector(".zg-x").addEventListener("click", close);
+  root.querySelector(".zg-mute").addEventListener("click", function () { if (VO) VO.set(!VO.on()); });
+  syncPanelMute();
   form.addEventListener("submit", function (e) { e.preventDefault(); var v = input.value; input.value = ""; send(v); });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;

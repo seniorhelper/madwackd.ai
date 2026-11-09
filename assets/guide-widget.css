@@ -1,6 +1,6 @@
-/* Madi launcher (loads with the page; small). Three states, all position:fixed (no layout shift):
-   1. entrance card: the claymation director walks on with a speech bubble (once per visit, after page load)
-   2. spotlight: a real movie-set spotlight in the corner until someone needs him
+/* Producer Z launcher (loads with the page; small). Three states, all position:fixed (no layout shift):
+   1. standing: Z stands in the corner on every page with speech bubbles, mute and hide controls
+   2. spotlight: a real movie-set spotlight when the visitor hid him (or on app pages)
    3. chat panel: guide-z.css (lazy)
    prefers-reduced-motion: stills only, no flicker, no motion. */
 .zgl{position:fixed;right:16px;bottom:16px;z-index:90;font:600 14px/1.35 Inter,system-ui,sans-serif;color:#F4F0FA}
@@ -35,22 +35,34 @@
 .zgl.is-on .zgl-beam{animation:zgl-poweron 1.2s ease-out}
 .zgl.is-card .zgl-btn,.zgl.is-card .zgl-beam,.zgl.is-card .zgl-glow{visibility:hidden}
 
-/* ---- entrance card ---- */
-.zgl-card{position:absolute;right:-8px;bottom:-8px;display:flex;align-items:flex-end;gap:6px}
+/* ---- standing Z (always on set) ---- */
+.zgl.is-stand .zgl-btn,.zgl.is-stand .zgl-beam,.zgl.is-stand .zgl-glow,.zgl.is-open .zgl-card{visibility:hidden}
+.zgl.is-stage .zgl-btn,.zgl.is-stage .zgl-beam{visibility:hidden}
+.zgl-card{position:absolute;right:-6px;bottom:-6px;display:flex;flex-direction:column;align-items:flex-end}
 .zgl-card[hidden]{display:none}
-.zgl-actor{position:relative;display:block;width:216px;height:198px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%}
-.zgl-actor video,.zgl-actor img{display:block;width:100%;height:100%;object-fit:cover;
-  -webkit-mask-image:radial-gradient(ellipse 58% 62% at 50% 46%,#000 68%,transparent 100%);mask-image:radial-gradient(ellipse 58% 62% at 50% 46%,#000 68%,transparent 100%)}
-.zgl-say{position:relative;margin-bottom:110px;width:min(250px,calc(100vw - 236px));padding:12px 14px;border-radius:16px 16px 4px 16px;
+.zgl-body{position:relative}
+.zgl-actor{position:relative;display:block;width:150px;height:138px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%}
+.zgl-actor img{display:block;width:100%;height:100%;object-fit:cover;transform-origin:50% 92%;
+  -webkit-mask-image:radial-gradient(ellipse 58% 62% at 50% 46%,#000 68%,transparent 100%);mask-image:radial-gradient(ellipse 58% 62% at 50% 46%,#000 68%,transparent 100%);
+  filter:drop-shadow(0 10px 18px rgba(10,8,16,.45));animation:zgl-idle 4.2s ease-in-out infinite}
+.zgl.is-talking .zgl-actor img{animation:zgl-talk .5s ease-in-out infinite}
+.zgl-actor:hover img{filter:drop-shadow(0 10px 18px rgba(10,8,16,.45)) brightness(1.08)}
+.zgl-tools{position:absolute;top:2px;right:2px;display:flex;gap:6px;opacity:.85;transition:opacity .2s}
+.zgl-card:hover .zgl-tools,.zgl-tools:focus-within{opacity:1}
+.zgl-mute,.zgl-x{position:relative;width:30px;height:30px;padding:0;border:1px solid #3A3350;border-radius:50%;background:#15121F;color:#F4F0FA;
+  font-size:19px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.zgl-mute::after,.zgl-x::after{content:"";position:absolute;inset:-7px}      /* 44px touch target */
+.zgl-mute[aria-pressed="true"]{color:#B8B0C8}
+.zgl-say{position:relative;margin:0 6px 4px 0;width:min(260px,calc(100vw - 32px));padding:12px 14px;border-radius:16px 16px 4px 16px;
   background:#15121F;border:1px solid #3A3350;box-shadow:0 12px 32px rgba(10,8,16,.4)}
-.zgl-say p{margin:0 0 10px;font-weight:500}
-.zgl-say .go,.zgl-say .help{display:block;width:100%;min-height:40px;margin-top:6px;padding:0 12px;border-radius:999px;border:1px solid #3A3350;background:#221D30;color:#F4F0FA;cursor:pointer;text-align:left}
-.zgl-say .go{background:#FF2E93;border-color:#FF2E93;color:#15121F;font-weight:700}
-.zgl-x{position:absolute;top:-12px;right:-12px;width:32px;height:32px;padding:0;border:1px solid #3A3350;border-radius:50%;background:#15121F;color:#fff;font-size:20px;line-height:1;cursor:pointer}
-.zgl-x::after{content:"";position:absolute;inset:-6px}          /* 44px touch target */
+.zgl-say[hidden]{display:none}
+.zgl-say::after{content:"";position:absolute;right:46px;bottom:-8px;width:14px;height:14px;background:#15121F;border-right:1px solid #3A3350;border-bottom:1px solid #3A3350;transform:rotate(45deg)}
+.zgl-say p{margin:0;font-weight:500}
+.zgl-acts:not(:empty){margin-top:10px}
+.zgl-acts button{display:block;width:100%;min-height:40px;margin-top:6px;padding:0 12px;border-radius:999px;border:1px solid #3A3350;background:#221D30;color:#F4F0FA;cursor:pointer;text-align:left}
+.zgl-acts .go{background:#FF2E93;border-color:#FF2E93;color:#15121F;font-weight:700}
 .zgl-card.is-in .zgl-actor{animation:zgl-walkon .7s cubic-bezier(.2,1.2,.4,1) both}
-.zgl-card.is-in .zgl-say{animation:zgl-bubble .4s .55s ease-out both}
-.zgl-card.is-out{animation:zgl-shrink .5s ease-in forwards}
+.zgl-say.is-in{animation:zgl-bubble .35s ease-out both}
 
 @keyframes zgl-dust{to{background-position:-120px -24px}}
 @keyframes zgl-flicker{0%{opacity:1}12%{opacity:.25}20%{opacity:1}34%{opacity:.4}42%{opacity:1}100%{opacity:1}}
@@ -59,16 +71,17 @@
 @keyframes zgl-pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 @keyframes zgl-walkon{from{transform:translateX(120px);opacity:0}to{transform:none;opacity:1}}
 @keyframes zgl-bubble{from{transform:translateY(8px) scale(.9);opacity:0}to{transform:none;opacity:1}}
-@keyframes zgl-shrink{to{transform:translate(40px,40px) scale(.25);opacity:0}}
+@keyframes zgl-idle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(-1.2deg)}}
+@keyframes zgl-talk{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-2px) scaleY(1.015) rotate(.6deg)}}
 
 @media (max-width:480px){
   .zgl{right:10px;bottom:10px}.zgl-beam{width:160px}
-  .zgl-card{flex-direction:column;align-items:flex-end;gap:0}
-  .zgl-actor{width:156px;height:143px}
-  .zgl-say{margin:0 4px -6px 0;width:min(260px,calc(100vw - 28px))}
-  .zgl-x{right:-6px;top:-14px}
+  .zgl-actor{width:108px;height:99px}
+  .zgl-say{width:min(250px,calc(100vw - 32px));font-size:13.5px}
+  .zgl-say::after{right:34px}
+  .zgl-mute,.zgl-x{width:28px;height:28px;font-size:17px}
 }
 @media (prefers-reduced-motion:reduce){
-  .zgl *,.zgl-card.is-in .zgl-actor,.zgl-card.is-in .zgl-say{animation:none!important;transition:none!important}
+  .zgl *,.zgl-card.is-in .zgl-actor,.zgl-say.is-in{animation:none!important;transition:none!important}
 }
 @media print{.zgl{display:none}}
