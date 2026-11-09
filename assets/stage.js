@@ -27,7 +27,10 @@
 
   /* ---------------- the Genie's poses (claymation stills, swapped on cue) ---------------- */
   var POSES = [];
-  try { POSES = JSON.parse(genieImg && genieImg.getAttribute("data-poses") || "[]"); } catch (e) { POSES = []; }
+  try { POSES = JSON.parse(genieImg && genieImg.getAttribute(SMALL && genieImg.getAttribute("data-poses-m") ? "data-poses-m" : "data-poses") || "[]"); } catch (e) { POSES = []; }
+  /* the painted set pieces load on cue (after the page's largest paint), phone sizes on phones */
+  var setLoaded = false;
+  function loadSet() { if (setLoaded) return; setLoaded = true; stage.querySelectorAll(".gs-flat img[data-src]").forEach(function (im) { im.setAttribute("src", (SMALL && im.getAttribute("data-src-m")) || im.getAttribute("data-src")); }); }
   var posesReady = false;
   /* the lamp and Genie only appear when their art is really there (a missing file never leaves a hole in the show) */
   var lampImg = lamp && lamp.querySelector("img.lamp");
@@ -162,11 +165,12 @@
   if (seen || SMALL) console_(true);        /* phones: the panel sits under the stage, nothing to hide */
   function markSeen() { try { sessionStorage.setItem("mw_show_seen", "1"); } catch (e) { /* ignore */ } }
   if (skipBtn) skipBtn.addEventListener("click", function () { clearAll(); finale(); fxStart(); if (!zOn) zEnter(); markSeen(); });
-  function reset() { spotOff(); SCENES.forEach(function (c) { cls(c, false); }); gold = false; pose(0); if (onair) onair.classList.remove("on"); }
-  function finale() { END.forEach(function (c) { cls(c, true); }); pose(POSES.length - 1); gold = true; if (onair) onair.classList.add("on"); played = true; playing = false; console_(true); }
+  function reset() { spotOff(); SCENES.forEach(function (c) { cls(c, false); }); gold = false; if (posesReady) pose(0); if (onair) onair.classList.remove("on"); }
+  function finale() { loadSet(); END.forEach(function (c) { cls(c, true); }); pose(POSES.length - 1); gold = true; if (onair) onair.classList.add("on"); played = true; playing = false; console_(true); }
   function play() {
     if (playing) return; playing = true; clearAll(); reset();
-    fxStart(); preloadPoses();
+    fxStart();
+    later(function () { loadSet(); preloadPoses(); pose(0); }, 4500);                      /* art for acts 2 and 3 loads once the opening is on screen */
     var t = SMALL ? .8 : 1;                                                     /* phones get a brisker show */
     function T(fn, ms) { later(fn, Math.round(ms * t)); }
     /* act 0: lights, On Air, curtains */
