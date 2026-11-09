@@ -465,9 +465,16 @@
       '<div class="pcs-card w7"><p class="pcs-led pink">Write once</p><div class="f"><label for="pcs-cap">Caption</label><textarea id="pcs-cap" maxlength="5000">' + esc(S.caption) + '</textarea></div>' +
         '<div class="row"><div><label for="pcs-lnk">Link</label><input type="url" id="pcs-lnk" value="' + esc(S.link) + '" placeholder="https://"></div><div><label for="pcs-tags">Hashtags</label><input type="text" id="pcs-tags" value="' + esc(S.tags) + '" placeholder="#shortfilm #comedy"></div></div>' +
         '<p class="pcs-led amber">Length meters</p><div id="pcs-lens"></div></div>' +
+      '<div class="pcs-card w12 pcs-launchcard"><p class="pcs-led pink">One Launch button <span class="pcs-beta">Beta</span></p>' +
+        '<div class="pcs-lights" id="pcs-lights" aria-live="polite"></div>' +
+        '<div class="row"><div><label for="pcs-lj">Finished video</label><select id="pcs-lj" disabled><option value="">Sign in to pick a render</option></select></div>' +
+        '<div class="pcs-lbtns"><button class="pcs-b hot pcs-biglaunch" type="button" id="pcs-launch" disabled>Launch to my feeds</button>' +
+        '<button class="pcs-b" type="button" id="pcs-lconn" disabled>Connect my feeds</button></div></div>' +
+        '<p class="pcs-note" id="pcs-lmsg" role="status">Coming soon. Use the copy-and-open kit below for now.</p>' +
+        '<div class="pcs-lstats" id="pcs-lstats"></div></div>' +
       '<div class="pcs-card w5"><p class="pcs-led">Mass publish kit</p><div class="pcs-kit" id="pcs-kit"></div>' +
         '<div class="pcs-btns"><button class="pcs-b hot" type="button" id="pcs-copyall">Copy caption</button></div>' +
-        '<p class="pcs-note">Today the kit copies your caption and opens each upload page, so a full rollout takes a few clicks. <span class="pcs-soon">Coming soon</span> Posting straight to your accounts from here.</p></div>' +
+        '<p class="pcs-note">The kit always works: it copies your caption and opens each upload page, so a full rollout takes a few clicks. Use it for any feed the Launch button does not cover yet.</p></div>' +
       '<div class="pcs-card w12"><p class="pcs-led violet">Feed wall</p><div class="pcs-launch" id="pcs-wall"></div><p class="pcs-note"><span class="pcs-soon">Coming soon</span> Live posts from each channel shown right here. Today each switch adds a one-click link to that profile.</p></div></div>';
     function paint() {
       var cap = fullCaption(), on = PLATFORMS.filter(function (p) { return S.socials[p.id].on; });
@@ -496,6 +503,62 @@
     });
     bay.addEventListener('click', function (e) { var b = e.target.closest('[data-cp]'); if (b) copy(fullCaption(), 'Caption'); });
     $('#pcs-copyall').addEventListener('click', function () { copy(fullCaption(), 'Caption'); });
+    /* ---- One Launch button (Beta). Needs a paid plan, a finished render, a connected feed, and the server switched on. ---- */
+    var L = window.MWLaunch, LS = { status: null, jobs: [], busy: false, shown: false };
+    function lsay(t) { var m = $('#pcs-lmsg'); if (m) m.textContent = t; }
+    function lpaint() {
+      var box = $('#pcs-lights'); if (!box || !L) return;
+      box.innerHTML = L.lights(LS.status).map(function (l) { return '<span class="pcs-light ' + l.tone + '"><i aria-hidden="true"></i>' + l.label + ' <em>' + l.text + '</em></span>'; }).join('');
+      var plats = L.pickPlatforms(LS.status, S.socials), c = L.canLaunch({ signedIn: mode === 'live', status: LS.status, jobId: $('#pcs-lj').value, caption: fullCaption(), platforms: plats });
+      $('#pcs-launch').disabled = !c.ok || LS.busy;
+      $('#pcs-lconn').disabled = !(mode === 'live' && LS.status && LS.status.state === 'ready') || LS.busy;
+      if (!LS.busy && !LS.shown) lsay(c.ok ? 'Ready: ' + plats.length + ' feed' + (plats.length === 1 ? '' : 's') + '.' : c.why);
+    }
+    function lstats() {
+      L.stats().then(function (st) {
+        var ks = Object.keys(st.platforms || {});
+        $('#pcs-lstats').innerHTML = ks.length ? '<p class="pcs-led amber">Your numbers</p>' + ks.map(function (k) {
+          var v = st.platforms[k] || {};
+          return '<div class="pcs-lstat"><b>' + esc(L.LABEL[k] || k) + '</b><span>' + (v.followers == null ? 'n/a' : Number(v.followers).toLocaleString('en-US')) + ' followers</span><span>' + (v.views == null ? 'n/a' : Number(v.views).toLocaleString('en-US')) + ' views</span></div>';
+        }).join('') + '<p class="pcs-note">' + (st.updated_at ? 'Updated ' + esc(String(st.updated_at).slice(0, 16).replace('T', ' ')) + ' UTC. ' : '') + 'Straight from each platform. Earnings are not shown.</p>' : '';
+      }, function () {});
+    }
+    function lpoll(id, n) {
+      L.post(id).then(function (r) {
+        var res = r.results || {};
+        lsay(Object.keys(res).map(function (k) { return (L.LABEL[k] || k) + ': ' + (res[k].state || '?') + (res[k].message ? ' (' + res[k].message + ')' : ''); }).join(' · '));
+        if (r.state !== 'done' && n < 20) setTimeout(function () { lpoll(id, n + 1); }, 4000); else if (r.state === 'done') lstats();
+      }, function () { if (n < 20) setTimeout(function () { lpoll(id, n + 1); }, 6000); });
+    }
+    if (L && mode === 'live') {
+      L.status().then(function (st) { LS.status = st; lpaint(); if (st.state === 'ready') lstats(); }, function () { lpaint(); });
+      L.jobs().then(function (r) {
+        LS.jobs = (r.jobs || []).filter(function (j) { return j.status === 'done'; });
+        var sel = $('#pcs-lj'); sel.disabled = !LS.jobs.length;
+        sel.innerHTML = LS.jobs.length ? '<option value="">Pick a finished video</option>' + LS.jobs.map(function (j) { return '<option value="' + esc(j.id) + '">' + esc(String(j.prompt || 'Render').slice(0, 60)) + '</option>'; }).join('') : '<option value="">No finished renders yet</option>';
+        lpaint();
+      }, function () {});
+      $('#pcs-lj').addEventListener('change', function () { LS.shown = false; lpaint(); });
+      $('#pcs-lconn').addEventListener('click', function () {
+        LS.busy = true; lpaint(); lsay('Opening the connect page...');
+        L.connect().then(function (r) {
+          LS.busy = false; LS.shown = true; lpaint();
+          var m = $('#pcs-lmsg'); m.textContent = ''; var a = document.createElement('a');
+          a.href = r.connect_url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Open the connect page (the link works for 48 hours)';
+          m.appendChild(a); m.appendChild(document.createTextNode('. Then come back and reload this page.'));
+        }, function (e) { LS.busy = false; LS.shown = false; lpaint(); lsay(e.message || 'Could not open the connect page.'); });
+      });
+      $('#pcs-launch').addEventListener('click', function () {
+        var plats = L.pickPlatforms(LS.status, S.socials);
+        LS.busy = true; LS.shown = true; lpaint(); lsay('Sending to ' + plats.length + ' feed' + (plats.length === 1 ? '' : 's') + '...');
+        L.publish({ job_id: $('#pcs-lj').value, caption: fullCaption().slice(0, 2200), platforms: plats, idempotency_key: L.newKey() }).then(function (r) {
+          LS.busy = false; lpaint(); lsay('Sent. Checking each feed...'); lpoll(r.post_id, 0);
+        }, function (e) { LS.busy = false; lpaint(); lsay((e.message || 'Not sent.') + ' The copy-and-open kit still works.'); });
+      });
+    }
+    bay.addEventListener('input', function () { LS.shown = false; if (L) lpaint(); });
+    bay.addEventListener('change', function () { LS.shown = false; if (L) lpaint(); });
+    if (L) lpaint();
     paint();
   }
 
