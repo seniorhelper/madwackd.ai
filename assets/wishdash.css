@@ -80,23 +80,16 @@
 .wd-frame{position:relative;max-width:1100px;margin:0 auto;padding:10px;border-radius:24px;background:linear-gradient(135deg,rgba(255,46,147,.35),rgba(139,61,255,.25) 50%,rgba(0,184,240,.3));box-shadow:0 60px 120px rgba(0,0,0,.6)}
 .wd-frame::before{content:"";position:absolute;inset:-40px;border-radius:40px;background:radial-gradient(60% 50% at 50% 60%,rgba(255,46,147,.18),transparent 70%);z-index:-1;filter:blur(10px)}
 /* the hologram on the stage */
-.gs-holo{position:absolute;right:5%;top:12%;width:36%;max-width:560px;z-index:9;pointer-events:none;opacity:0;transform:perspective(900px) translateY(120px) rotateX(55deg) scale(.7);transform-origin:50% 100%}
-.gstage.s-holo .gs-holo{animation:holoUp 1.4s cubic-bezier(.2,.7,.2,1) forwards;pointer-events:auto}
-@keyframes holoUp{0%{opacity:0;transform:perspective(900px) translateY(120px) rotateX(55deg) scale(.7)}60%{opacity:1}100%{opacity:1;transform:perspective(900px) translateY(0) rotateX(6deg) scale(1)}}
-.gs-holo .wd{border-color:rgba(0,184,240,.45);box-shadow:0 0 0 1px rgba(0,184,240,.25),0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(0,184,240,.25)}
-.gs-holo .wd::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 2px,transparent 2px 5px);z-index:4}
 .gs-holo .wd-mini{font-size:.74rem}
 .gs-holo .wd-mini .wd-body{grid-template-columns:1fr}
-.gs-holo .wd-mini .wd-rail,.gs-holo .wd-mini .wd-card.pub,.gs-holo .wd-mini .wd-card.zcard,.gs-holo .wd-mini .wd-card.grow,.gs-holo .wd-mini .wd-kit,.gs-holo .wd-mini .wd-pr,.gs-holo .wd-mini .wd-week div:nth-child(n+5),.gs-holo .wd-mini .wd-sample{display:none}
+.gs-holo .wd-mini .wd-rail,.gs-holo .wd-mini .wd-card.zcard,.gs-holo .wd-mini .wd-card.grow,.gs-holo .wd-mini .wd-kit,.gs-holo .wd-mini .wd-pr,.gs-holo .wd-mini .wd-week div:nth-child(n+5),.gs-holo .wd-mini .wd-sample{display:none}
 .gs-holo .wd-mini .wd-grid{grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px 12px}
 .gs-holo .wd-mini .wd-week{grid-template-columns:repeat(4,1fr)}
 .gs-holo .wd-mini .wd-top{padding:10px 12px}
 .gs-holo .wd-mini .wd-mode button{padding:6px 9px;font-size:.66rem}
 .gs-holo .wd-lock{padding:10px}
 .gs-holo .wd-lock p{font-size:.82rem}.gs-holo .wd-unlock{padding:10px 16px;font-size:.82rem}
-.gs-holo-beam{position:absolute;left:50%;bottom:-6%;width:70%;height:40%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(0,184,240,0),rgba(0,184,240,.35));clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;pointer-events:none;filter:blur(2px)}
-.gstage.s-holo .gs-holo-beam{animation:fadeIn .8s ease forwards}
 @media (max-width:1100px){.wd-grid{grid-template-columns:1fr 1fr}.wd-card.week,.wd-card.zcard{grid-column:1/-1}.wd-card.grow{grid-column:span 2}}
-@media (max-width:900px){.gs-holo,.gs-holo-beam{display:none}.wd-body{grid-template-columns:1fr}.wd-rail{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--wd-line);padding:8px 10px}.wd-rail span{white-space:nowrap}}
+@media (max-width:900px){.wd-body{grid-template-columns:1fr}.wd-rail{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--wd-line);padding:8px 10px}.wd-rail span{white-space:nowrap}}
 @media (max-width:640px){.wd-grid{grid-template-columns:1fr;padding:12px}.wd-card.zcard,.wd-card.grow{grid-column:auto}.wd-week{grid-template-columns:repeat(3,1fr)}.wd-week div:nth-child(n+4){display:none}.wd-who small{display:none}.wd-grid{padding-bottom:44px}.wd-frame{padding:6px;border-radius:18px}.wd-section{padding:48px 0 56px}.wd-lock{padding:12px 12px 40px}.wd-sample{left:10px;bottom:10px}}
-@media (prefers-reduced-motion:reduce){.wd-unlock::after,.gs-holo,.gs-holo-beam{animation:none!important}.wd-unlock::after{display:none}.gstage .gs-holo{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.wd-unlock::after{animation:none!important;display:none}}
