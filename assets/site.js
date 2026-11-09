@@ -25,8 +25,10 @@
     f.setAttribute("method", "POST");
     var next = f.querySelector('input[name="_next"]');
     if (next) { next.value = location.origin + location.pathname + "?sent=1#form"; }
+    var started = Date.now(), fbtn = f.querySelector("button[type=submit]");
+    if (fbtn) { fbtn.disabled = true; setTimeout(function () { fbtn.disabled = false; }, 3000); }
     f.addEventListener("submit", function (e) {
-      if (!f.getAttribute("action")) { e.preventDefault(); }
+      if (!f.getAttribute("action") || Date.now() - started < 3000) { e.preventDefault(); }
     });
   });
   if (/[?&]sent=1/.test(location.search)) {
