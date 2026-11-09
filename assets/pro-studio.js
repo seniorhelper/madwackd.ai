@@ -17,6 +17,7 @@
     { id: 'publish', name: 'Publish desk' },
     { id: 'mail', name: 'Mailing list' },
     { id: 'tips', name: 'Tip jar' },
+    { id: 'web', name: 'Websites & SEO' },
     { id: 'market', name: 'Marketing bay' },
     { id: 'expert', name: 'Experts & upgrades' },
     { id: 'custom', name: 'Customize' }
@@ -108,7 +109,7 @@
   /* ---------- state ---------- */
   function blank() {
     var s = { v: 1, name: 'My Studio', accent: '#FF2E93', goal: 1500, entries: [], boosters: {}, pitch: { fmt: 'Short film' },
-      socials: {}, caption: '', tags: '', link: '', contacts: [], subject: '', body: '', tips: {}, pr: {}, bio: {},
+      socials: {}, caption: '', tags: '', link: '', contacts: [], subject: '', body: '', tips: {}, pr: {}, bio: {}, site: { tpl: 'creator', color: '#FF2E93', theme: 'dark' },
       order: PANELS.map(function (p) { return p.id; }), hidden: [] };
     PLATFORMS.forEach(function (p) { s.socials[p.id] = { on: false, h: '' }; });
     return s;
@@ -137,6 +138,7 @@
     s.subject = 'New video: Midnight Laundromat'; s.body = 'Hi! My new short film is out tonight. Watch it here: https://example.com/watch\n\nThanks for being on my list.';
     s.tips = { cashapp: 'neonalley', venmo: 'neonalley', kofi: 'neonalley' };
     s.pr = { head: 'Denver filmmaker releases haunted-laundromat comedy short', city: 'Denver, CO', what: 'Neon Alley Pictures today released Midnight Laundromat, a 9-minute comedy short made in Madwackd Studio.', quote: 'We wanted a ghost story you can laugh at in under ten minutes.', who: 'Jordan Vale, director', about: 'Neon Alley Pictures makes short comedy films and brand videos.' };
+    s.site = { tpl: 'creator', color: '#FF2E93', theme: 'dark', name: 'Neon Alley Pictures', tag: 'Short comedy films and brand videos people remember', about: 'Neon Alley Pictures is a Denver film crew making short comedy films, music videos and 30-second brand spots. We write, shoot and edit in house, and every project gets a cut ready for YouTube, TikTok and Instagram.', city: 'Denver, CO', phone: '', email: 'hello@example.com', url: 'https://example.com/', cta: 'Book a spot', ctaUrl: 'mailto:hello@example.com', items: 'Short films | Comedy shorts from 3 to 12 minutes, festival ready.\nMusic videos | Concept, shoot and edit for independent artists.\nBrand spots | 15 and 30-second ads cut for every social feed.', faq: 'How long does a brand spot take? | Most 30-second spots take two to three weeks from script to final cut.\nDo you travel? | Yes. We are based in Denver and shoot across Colorado.' };
     s.bio = { name: 'Neon Alley Pictures', make: 'short comedy films and music videos', who: 'brands that want to be remembered', proof: '2M views across platforms', cta: 'Book a spot' };
     return s;
   }
@@ -158,7 +160,8 @@
     if (!s || typeof s !== 'object') return b;
     Object.keys(b).forEach(function (k) { if (s[k] === undefined) s[k] = b[k]; });
     PLATFORMS.forEach(function (p) { if (!s.socials[p.id]) s.socials[p.id] = { on: false, h: '' }; });
-    PANELS.forEach(function (p) { if (s.order.indexOf(p.id) < 0) s.order.push(p.id); });
+    PANELS.forEach(function (p) { if (s.order.indexOf(p.id) < 0) { var ci = s.order.indexOf('custom'); if (ci < 0) s.order.push(p.id); else s.order.splice(ci, 0, p.id); } });
+    if (!s.site || typeof s.site !== 'object') s.site = b.site;
     return s;
   }
   function changed() { save(); }
@@ -252,7 +255,7 @@
     old.parentNode.replaceChild(bay, old);
     bay.setAttribute('role', 'tabpanel'); bay.setAttribute('aria-labelledby', 'pcs-t-' + active);
     stopTimerIfLeaving();
-    ({ earn: pEarn, pitch: pPitch, publish: pPublish, mail: pMail, tips: pTips, market: pMarket, expert: pExpert, custom: pCustom }[active] || pEarn)(bay);
+    ({ earn: pEarn, pitch: pPitch, publish: pPublish, mail: pMail, tips: pTips, web: pWeb, market: pMarket, expert: pExpert, custom: pCustom }[active] || pEarn)(bay);
   }
   function head(title, sub, extra) { return '<div class="pcs-h"><h2>' + title + '</h2>' + (extra || '') + '<p>' + sub + '</p></div>'; }
   function sampleTag() { return mode === 'demo' ? ' <span class="pcs-sample">Sample</span>' : ''; }
@@ -603,6 +606,286 @@
     $('#pcs-tip-code').addEventListener('click', function () {
       var l = tipLinks(); if (!l.length) { toast('Add a tip account first'); return; }
       copy(l.map(function (x) { return '<a href="' + esc(x.u) + '" rel="noopener">Tip on ' + esc(x.t.n) + '</a>'; }).join('\n'), 'Button code');
+    });
+    paint();
+  }
+
+  /* ---------- Websites & SEO ----------
+     Landing-page generator, SEO gauge and crawl reader all run in this browser. Nothing is uploaded.
+     Prices for buyweburl.com were read from its product pages on 2026-11-08. */
+  var SITE_TPL = {
+    creator: { n: 'Creator or artist portfolio', type: 'Person', h2: 'What I make', faqH: 'Questions people ask', ctaD: 'Work with me' },
+    local: { n: 'Local service business', type: 'LocalBusiness', h2: 'Services', faqH: 'Common questions', ctaD: 'Get a free quote' },
+    launch: { n: 'Product or brand launch', type: 'Organization', h2: 'What you get', faqH: 'Questions', ctaD: 'Get early access' }
+  };
+  var TIEINS = [
+    { n: 'SEO gauge', st: 'go', now: 'Works today, right here: scores a page\'s on-page basics in your browser.', u: '#pcs-w-gauge', c: '#7ED321', dom: 'Built in' },
+    { n: 'Conversion analysis', st: 'go', now: 'Quick checks in the gauge, then the free Conversion Audit and Conversion Gauge at Search Converts.', u: 'https://searchconverts.com/cro-audit/', c: '#FFD60A', dom: 'searchconverts.com' },
+    { n: 'Launch a sales funnel', st: 'go', now: 'Opens Eye To Ad\'s lead generation team to plan and build the funnel. In-dash funnel builder: coming soon.', u: 'https://eyetoad.com/lead-generation-agency/', c: '#FF8A00', dom: 'eyetoad.com' },
+    { n: 'AI Speed to Leads', st: 'go', now: 'Every new lead gets an email and an AI voice call in about 60 seconds. Hear the live demo call you.', u: 'https://aispeedtoleads.com/demo/', c: '#7ED321', dom: 'aispeedtoleads.com' },
+    { n: 'Vettley', st: 'go', now: 'Free 0 to 100 trust score from public signals your site and listing show. Add your business free.', u: 'https://www.vettley.com/add-your-business/', c: '#00B8F0', dom: 'vettley.com' },
+    { n: 'USA Business Search', st: 'go', now: 'Free business directory listing in about 2 minutes. Verified and Featured upgrades are optional.', u: 'https://usabusinesssearch.com/add-your-business/', c: '#8B3DFF', dom: 'usabusinesssearch.com' },
+    { n: 'ProveHound', st: 'go', now: 'For licensed trade pros: claim your free listing, ranked by checked license records. No lead fees.', u: 'https://www.provehound.com/claim/', c: '#FF2E93', dom: 'provehound.com' },
+    { n: 'allofus.one creator tools', st: 'go', now: 'Nine free creator tools: hooks, captions, teleprompter, safe zones and more.', u: 'https://allofus.one/creators/tools/', c: '#FFD60A', dom: 'allofus.one' }
+  ];
+  var ACCOUNTS = [
+    { n: 'Google Search Console', st: 'soon', d: 'Clicks, impressions and positions for your own site, read-only. Google\'s API is free, but our app needs Google\'s OAuth review for read-only Search Console access first.', now: 'Open your Search Console', u: 'https://search.google.com/search-console' },
+    { n: 'Ahrefs', st: 'soon', d: 'Backlinks and keyword data with your own Ahrefs API key. Ahrefs API access needs a paid Ahrefs plan (Lite and up, from $129/mo at ahrefs.com/pricing), billed by Ahrefs, not us.', now: 'About the Ahrefs API', u: 'https://docs.ahrefs.com/' },
+    { n: 'Screaming Frog', st: 'go', d: 'Desktop crawler with no cloud API, so there is nothing to sign in to. Export the Internal: HTML tab as CSV and drop it in the crawl reader above. The free version crawls up to 500 URLs.', now: 'Get the SEO Spider', u: 'https://www.screamingfrog.co.uk/seo-spider/' },
+    { n: 'SEO Time Machine', st: 'go', d: 'Eye To Ad\'s free planner: enter where you rank now, where you want to be and your budget, and it estimates an arrival window. An estimate, not a promise.', now: 'Start the machine', u: 'https://eyetoad.com/seo-time-machine/' }
+  ];
+  function safeUrl(u) { u = String(u || '').trim(); return /^https?:\/\/[^\s"'<>]+$/i.test(u) ? u : ''; }
+  function safeCta(u) { u = String(u || '').trim(); if (/^mailto:[^\s"'<>]+$/i.test(u) || /^tel:\+?[\d-]+$/i.test(u)) return u; return safeUrl(u); }
+  function telOf(p) { var d = String(p || '').replace(/[^\d+]/g, ''); return d.replace(/\D/g, '').length >= 7 ? d : ''; }
+  function hexOk(c) { return /^#[0-9a-f]{6}$/i.test(String(c || '')) ? c : '#FF2E93'; }
+  function inkOn(hex) {
+    var n = parseInt(hex.slice(1), 16), ch = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+    var L = .2126 * ch[0] + .7152 * ch[1] + .0722 * ch[2];
+    return (L + .05) / .05 >= 1.05 / (L + .05) ? '#111111' : '#ffffff';
+  }
+  function pairs(text) {
+    return String(text || '').split('\n').map(function (l) { var i = l.indexOf('|'); return i < 0 ? [l.trim(), ''] : [l.slice(0, i).trim(), l.slice(i + 1).trim()]; }).filter(function (x) { return x[0]; }).slice(0, 12);
+  }
+  function sitePage(st) {
+    var t = SITE_TPL[st.tpl] || SITE_TPL.creator, name = String(st.name || 'Your name').slice(0, 80), tag = String(st.tag || '').slice(0, 140);
+    var about = String(st.about || '').slice(0, 1200), url = safeUrl(st.url), cta = String(st.cta || t.ctaD).slice(0, 40), ctaU = safeCta(st.ctaUrl);
+    var tel = telOf(st.phone), email = isEmail(st.email) ? String(st.email).trim() : '', city = String(st.city || '').slice(0, 80);
+    var acc = hexOk(st.color), ink = inkOn(acc), dark = st.theme !== 'light';
+    var bg = dark ? '#0f0d14' : '#ffffff', fg = dark ? '#f4f1fa' : '#15121f', soft = dark ? '#1b1724' : '#f5f3f8', line = dark ? '#2e2840' : '#e3dfea', dim = dark ? '#c9c2d8' : '#4a4458';
+    if (!ctaU) ctaU = email ? 'mailto:' + email : (tel ? 'tel:' + tel : '#contact');
+    var title = (tag ? name + ' | ' + tag : name).slice(0, 65);
+    var desc = (about || tag || name).replace(/\s+/g, ' ').slice(0, 158);
+    var items = pairs(st.items), faq = pairs(st.faq).filter(function (x) { return x[1]; });
+    var ent = { '@type': t.type, '@id': (url || '') + '#main-entity', name: name, description: desc };
+    if (url) ent.url = url; if (tel) ent.telephone = tel; if (email) ent.email = email;
+    if (city) { if (t.type === 'LocalBusiness') { ent.areaServed = city; ent.address = { '@type': 'PostalAddress', addressLocality: city.split(',')[0].trim(), addressRegion: (city.split(',')[1] || '').trim() || undefined }; } }
+    if (t.type !== 'Person' && items.length) ent.makesOffer = items.map(function (x) { return { '@type': 'Offer', itemOffered: { '@type': 'Service', name: x[0], description: x[1] || undefined } }; });
+    if (t.type === 'Person' && items.length) ent.knowsAbout = items.map(function (x) { return x[0]; });
+    var graph = [{ '@type': 'WebPage', '@id': (url || '') + '#webpage', name: title, description: desc, url: url || undefined, about: { '@id': ent['@id'] } }, ent];
+    if (faq.length) graph.push({ '@type': 'FAQPage', mainEntity: faq.map(function (x) { return { '@type': 'Question', name: x[0], acceptedAnswer: { '@type': 'Answer', text: x[1] } }; }) });
+    var ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+    var css = ':root{--a:' + acc + ';--ink:' + ink + ';--bg:' + bg + ';--fg:' + fg + ';--soft:' + soft + ';--line:' + line + ';--dim:' + dim + '}' +
+      '*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}' +
+      'a{color:inherit}.w{max-width:960px;margin:0 auto;padding:0 20px}.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:var(--a);color:var(--ink);padding:8px 12px;z-index:9}' +
+      'header{border-bottom:1px solid var(--line)}header .w{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;flex-wrap:wrap}.brand{font-weight:800;font-size:1.1rem;text-decoration:none}' +
+      '.btn{display:inline-block;background:var(--a);color:var(--ink);font-weight:700;text-decoration:none;padding:12px 20px;border-radius:10px;min-height:44px}.btn.o{background:transparent;color:var(--fg);border:2px solid var(--a)}' +
+      '.hero{padding:64px 0 48px}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:0 0 16px}.lede{font-size:1.15rem;color:var(--dim);max-width:62ch;margin:0 0 24px}.row{display:flex;gap:12px;flex-wrap:wrap}' +
+      'section{padding:40px 0;border-top:1px solid var(--line)}h2{font-size:1.6rem;margin:0 0 20px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;list-style:none;margin:0;padding:0}' +
+      '.cards li{background:var(--soft);border:1px solid var(--line);border-top:4px solid var(--a);border-radius:12px;padding:18px}.cards h3{margin:0 0 6px;font-size:1.1rem}.cards p{margin:0;color:var(--dim)}' +
+      'details{border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:0 0 10px;background:var(--soft)}summary{font-weight:700;cursor:pointer}details p{margin:8px 0 0;color:var(--dim)}' +
+      'address{font-style:normal}footer{padding:24px 0;color:var(--dim);font-size:.9rem;border-top:1px solid var(--line)}' +
+      'a:focus-visible,summary:focus-visible{outline:3px solid var(--a);outline-offset:3px}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}';
+    var contact = [];
+    if (tel) contact.push('<a class="btn" href="tel:' + esc(tel) + '">Call ' + esc(st.phone) + '</a>');
+    if (email) contact.push('<a class="btn o" href="mailto:' + esc(email) + '">Email ' + esc(email) + '</a>');
+    return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+      '<title>' + esc(title) + '</title>\n<meta name="description" content="' + esc(desc) + '">\n' +
+      (url ? '<link rel="canonical" href="' + esc(url) + '">\n<meta property="og:url" content="' + esc(url) + '">\n' : '') +
+      '<meta name="twitter:card" content="summary">\n<meta property="og:type" content="website">\n<meta property="og:title" content="' + esc(title) + '">\n<meta property="og:description" content="' + esc(desc) + '">\n' +
+      '<meta name="theme-color" content="' + acc + '">\n<style>' + css + '</style>\n<script type="application/ld+json">' + ld + '</script>\n</head>\n<body>\n' +
+      '<a class="skip" href="#main">Skip to content</a>\n<header><div class="w"><a class="brand" href="#main">' + esc(name) + '</a><a class="btn" href="' + esc(ctaU) + '">' + esc(cta) + '</a></div></header>\n' +
+      '<main id="main">\n<div class="hero"><div class="w"><h1>' + esc(tag || name) + '</h1>' + (about ? '<p class="lede">' + esc(about) + '</p>' : '') +
+      '<div class="row"><a class="btn" href="' + esc(ctaU) + '">' + esc(cta) + '</a>' + (items.length ? '<a class="btn o" href="#offer">' + esc(t.h2) + '</a>' : '') + '</div></div></div>\n' +
+      (items.length ? '<section id="offer" aria-labelledby="offer-h"><div class="w"><h2 id="offer-h">' + esc(t.h2) + '</h2><ul class="cards">' + items.map(function (x) { return '<li><h3>' + esc(x[0]) + '</h3>' + (x[1] ? '<p>' + esc(x[1]) + '</p>' : '') + '</li>'; }).join('') + '</ul></div></section>\n' : '') +
+      (faq.length ? '<section aria-labelledby="faq-h"><div class="w"><h2 id="faq-h">' + esc(t.faqH) + '</h2>' + faq.map(function (x) { return '<details><summary>' + esc(x[0]) + '</summary><p>' + esc(x[1]) + '</p></details>'; }).join('') + '</div></section>\n' : '') +
+      '<section id="contact" aria-labelledby="contact-h"><div class="w"><h2 id="contact-h">Contact ' + esc(name) + '</h2><address>' + (city ? '<p>' + esc(city) + '</p>' : '') +
+      '<div class="row">' + (contact.join('') || '<a class="btn" href="' + esc(ctaU) + '">' + esc(cta) + '</a>') + '</div></address></div></section>\n</main>\n' +
+      '<footer><div class="w">&copy; ' + new Date().getFullYear() + ' ' + esc(name) + '</div></footer>\n</body>\n</html>\n';
+  }
+
+  /* SEO gauge: parses HTML with DOMParser (scripts never run, nothing is fetched) and checks on-page basics. */
+  function gaugeHtml(html) {
+    var d = new DOMParser().parseFromString(String(html || ''), 'text/html');
+    function q(s) { return d.querySelector(s); }
+    function qa(s) { return Array.prototype.slice.call(d.querySelectorAll(s)); }
+    var title = (q('title') && q('title').textContent.trim()) || '', md = q('meta[name="description" i]'), mdv = md ? (md.getAttribute('content') || '').trim() : '';
+    var h1 = qa('h1').length, imgs = qa('img'), noalt = imgs.filter(function (i) { return !i.hasAttribute('alt'); }).length;
+    var lds = qa('script[type="application/ld+json"]'), ldOk = lds.length > 0 && lds.every(function (s) { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } });
+    var body = d.body ? d.body.cloneNode(true) : null; if (body) Array.prototype.slice.call(body.querySelectorAll('script,style,noscript')).forEach(function (n) { n.remove(); });
+    var words = body ? (body.textContent.match(/[A-Za-z0-9À-ɏ']+/g) || []).length : 0;
+    var links = qa('a[href]'), tel = links.some(function (a) { return /^tel:/i.test(a.getAttribute('href')); });
+    var mail = links.some(function (a) { return /^mailto:/i.test(a.getAttribute('href')); }), form = qa('form').length > 0;
+    var seo = [
+      [10, title.length >= 15 && title.length <= 65, 'Title tag 15 to 65 characters', title ? 'Yours is ' + title.length + ' characters.' : 'No title tag found.'],
+      [10, mdv.length >= 50 && mdv.length <= 160, 'Meta description 50 to 160 characters', mdv ? 'Yours is ' + mdv.length + ' characters.' : 'No meta description found.'],
+      [10, h1 === 1, 'Exactly one H1 heading', 'Found ' + h1 + '.'],
+      [5, qa('h2').length > 0, 'H2 headings break up the page', 'Found ' + qa('h2').length + '.'],
+      [10, !!q('meta[name="viewport" i]'), 'Mobile viewport tag', 'Needed for phones.'],
+      [5, !!(q('html') && q('html').getAttribute('lang')), 'Page language set (html lang)', 'Helps screen readers and search engines.'],
+      [5, !!q('link[rel="canonical" i]'), 'Canonical URL', 'Tells search engines the main address of the page.'],
+      [10, ldOk, 'Schema (JSON-LD) present and valid', lds.length ? (ldOk ? lds.length + ' block(s) parse cleanly.' : 'A JSON-LD block does not parse.') : 'No JSON-LD found.'],
+      [5, noalt === 0, 'Every image has alt text', imgs.length ? noalt + ' of ' + imgs.length + ' images missing alt.' : 'No images on the page.'],
+      [5, !!q('meta[property="og:title" i]'), 'Social share tags (og:title)', 'Controls how the link looks when shared.'],
+      [5, words >= 200, 'At least 200 words of visible text', 'Found about ' + words + '. Thin pages give search engines and AI tools little to quote.']
+    ];
+    var conv = [
+      [7, tel, 'Tap-to-call phone link', 'A tel: link lets phone visitors call in one tap.'],
+      [7, mail || form, 'A way to reach you (form or email link)', form ? 'Form found.' : (mail ? 'Email link found.' : 'No form or email link found.')],
+      [6, links.length >= 2 && !!q('a.btn, button, a[class*="btn" i], a[class*="button" i]'), 'A clear call-to-action button', 'Visitors need one obvious next step.']
+    ];
+    var all = seo.concat(conv), tot = 0, got = 0;
+    all.forEach(function (c) { tot += c[0]; if (c[1]) got += c[0]; });
+    return { score: Math.round(got / tot * 100), seo: seo, conv: conv };
+  }
+  function seoGaugeSvg(score) {
+    var a = Math.PI - Math.PI * Math.max(0, Math.min(100, score)) / 100, x = (110 + Math.cos(a) * 74).toFixed(1), y = (112 - Math.sin(a) * 74).toFixed(1);
+    return '<svg class="pcs-gauge" viewBox="0 0 220 132" role="img" aria-label="SEO gauge: ' + score + ' out of 100">' +
+      '<defs><linearGradient id="pcs-sg" x1="0" x2="1"><stop offset="0" stop-color="#FF4D4D"/><stop offset=".55" stop-color="#FFC23D"/><stop offset="1" stop-color="#39FF88"/></linearGradient></defs>' +
+      '<path d="M6 116 A104 104 0 0 1 214 116 Z" fill="#14101c" stroke="#000" stroke-width="3"/><path d="M24 112 A86 86 0 0 1 196 112" fill="none" stroke="url(#pcs-sg)" stroke-width="9" stroke-linecap="round"/>' +
+      '<line x1="110" y1="112" x2="' + x + '" y2="' + y + '" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="112" r="9" fill="var(--acc)" stroke="#000" stroke-width="2"/>' +
+      '<text x="110" y="96" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Poppins,Inter,sans-serif">' + score + '</text></svg>';
+  }
+
+  /* Screaming Frog crawl reader: parses an exported CSV in the browser. */
+  function parseCsv(text) {
+    var rows = [], row = [], f = '', q = false, i, c;
+    for (i = 0; i < text.length; i++) {
+      c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+      else f += c;
+    }
+    if (f || row.length) { row.push(f); rows.push(row); }
+    return rows.filter(function (r) { return r.length > 1 || r[0]; });
+  }
+  function crawlSummary(rows) {
+    var h = rows[0].map(function (x) { return x.replace(/^﻿/, '').trim().toLowerCase(); });
+    function col(n) { return h.indexOf(n); }
+    var A = col('address'), S2 = col('status code'), CT = col('content type'), IX = col('indexability'), T = col('title 1'), M = col('meta description 1'), H = col('h1-1'), W = col('word count');
+    if (A < 0) return null;
+    var data = rows.slice(1).filter(function (r) { return CT < 0 || /html/i.test(r[CT] || ''); });
+    var titles = {}, out = { n: data.length, s3: [], s4: [], s5: [], noidx: [], notitle: [], dupe: [], nometa: [], noh1: [], thin: [] };
+    data.forEach(function (r) { var t = T > -1 ? (r[T] || '').trim() : ''; if (t) titles[t] = (titles[t] || 0) + 1; });
+    data.forEach(function (r) {
+      var u = r[A], s = S2 > -1 ? Number(r[S2]) : 0;
+      if (s >= 300 && s < 400) out.s3.push(u); if (s >= 400 && s < 500) out.s4.push(u); if (s >= 500) out.s5.push(u);
+      if (IX > -1 && /non/i.test(r[IX] || '')) out.noidx.push(u);
+      if (s && s >= 300) return;
+      if (T > -1) { var t = (r[T] || '').trim(); if (!t) out.notitle.push(u); else if (titles[t] > 1) out.dupe.push(u); }
+      if (M > -1 && !(r[M] || '').trim()) out.nometa.push(u);
+      if (H > -1 && !(r[H] || '').trim()) out.noh1.push(u);
+      if (W > -1 && r[W] !== '' && Number(r[W]) < 200) out.thin.push(u);
+    });
+    return out;
+  }
+
+  function pWeb(bay) {
+    var st = S.site;
+    function fi(k, lab, ph, kind, max) {
+      var v = esc(st[k] || ''), id = 'pcs-w-' + k;
+      if (kind === 'ta') return '<div class="f"><label for="' + id + '">' + lab + '</label><textarea id="' + id + '" data-site="' + k + '" maxlength="' + (max || 1200) + '" placeholder="' + esc(ph) + '">' + v + '</textarea></div>';
+      return '<div class="f"><label for="' + id + '">' + lab + '</label><input type="' + (kind || 'text') + '" id="' + id + '" data-site="' + k + '" maxlength="' + (max || 160) + '" placeholder="' + esc(ph) + '" value="' + v + '"></div>';
+    }
+    function stLamp(s) { return s === 'go' ? '<span class="pcs-st go">Works today</span>' : '<span class="pcs-st soon">Coming soon</span>'; }
+    bay.innerHTML = head('Websites & SEO', 'Make a fast one-page site free, then pick how far you want to go: DIY hosting, a custom site, or a site built to win searches.', sampleTag()) +
+      '<div class="pcs-grid">' +
+      /* 1. Generator */
+      '<div class="pcs-card w5"><p class="pcs-led pink">Landing-page generator <span class="pcs-sample">Free</span></p>' +
+        '<div class="f"><label for="pcs-w-tpl">Template</label><select id="pcs-w-tpl" data-site="tpl">' + Object.keys(SITE_TPL).map(function (k) { return '<option value="' + k + '"' + (st.tpl === k ? ' selected' : '') + '>' + SITE_TPL[k].n + '</option>'; }).join('') + '</select></div>' +
+        fi('name', 'Name or brand', 'Neon Alley Pictures', 'text', 80) + fi('tag', 'Headline (your H1)', 'What you do, for whom', 'text', 140) +
+        fi('about', 'About (2 to 4 sentences, true facts only)', 'Who you are, what you do, where', 'ta', 1200) +
+        '<div class="row"><div>' + fi('cta', 'Button text', 'Book a call', 'text', 40) + '</div><div>' + fi('ctaUrl', 'Button link', 'https://, mailto: or tel:', 'text', 300) + '</div></div>' +
+        '<div class="row"><div>' + fi('phone', 'Phone', '303-555-0100', 'text', 30) + '</div><div>' + fi('email', 'Email', 'you@yourdomain.com', 'email', 120) + '</div></div>' +
+        '<div class="row"><div>' + fi('city', 'City, State', 'Denver, CO', 'text', 80) + '</div><div>' + fi('url', 'Page address (for canonical)', 'https://yourdomain.com/', 'url', 300) + '</div></div>' +
+        fi('items', 'Offer cards, one per line: Title | short line', 'Brand spots | 30-second ads for every feed', 'ta', 1500) +
+        fi('faq', 'FAQ, one per line: Question? | Answer', 'Do you travel? | Yes, across Colorado.', 'ta', 2000) +
+        '<label>Brand color</label><div class="pcs-btns" id="pcs-w-sw">' + SWATCHES.map(function (c) { return '<button type="button" class="pcs-b sm" data-wc="' + c + '" aria-label="Brand color ' + c + '" aria-pressed="' + (st.color === c) + '" style="background:' + c + ';width:40px"></button>'; }).join('') +
+        '<label class="pcs-b sm ghost" style="margin:0">Custom <input type="color" id="pcs-w-color" value="' + hexOk(st.color) + '" aria-label="Custom brand color" style="width:28px;height:22px;border:0;padding:0;background:none"></label></div>' +
+        '<div class="f" style="margin-top:8px"><label for="pcs-w-theme">Background</label><select id="pcs-w-theme" data-site="theme"><option value="dark"' + (st.theme !== 'light' ? ' selected' : '') + '>Dark</option><option value="light"' + (st.theme === 'light' ? ' selected' : '') + '>Light</option></select></div>' +
+      '</div>' +
+      '<div class="pcs-card w7"><p class="pcs-led cyan">Live preview</p><iframe class="pcs-site-prev" id="pcs-w-prev" title="Preview of your one-page site" sandbox="" loading="lazy"></iframe>' +
+        '<div class="pcs-btns"><button class="pcs-b hot" type="button" id="pcs-w-dl">Download index.html</button><button class="pcs-b" type="button" id="pcs-w-copy">Copy HTML</button><button class="pcs-b ghost" type="button" id="pcs-w-check">Score it in the SEO gauge</button></div>' +
+        '<p class="pcs-note" id="pcs-w-size"></p>' +
+        '<p class="pcs-note">One file, no scripts, no trackers: mobile-ready, keyboard-friendly, with title, description, share tags and schema (JSON-LD) for search engines and AI tools. Schema helps them read the page; it does not guarantee rich results or rankings. Upload the file as index.html to any host, such as <a href="https://www.buyweburl.com/products/cpanel" target="_blank" rel="nofollow noopener">cPanel hosting from $4.99/mo</a>.</p></div>' +
+      /* 2. Big upsell */
+      '<div class="pcs-card w12 pcs-hero-offer"><p class="pcs-led amber">Zach\'s offer &middot; Eye To Ad Media, Denver SEO since 2012</p>' +
+        '<h3>A website built to win searches and leads, then yours to buy.</h3>' +
+        '<p>We custom-code an automated site for your business and run it every month: SEO, AIO (showing up in Google AI Overviews, ChatGPT and other AI answers) and AI agents that answer and follow up with your leads. It is built to compete for the top searches in your industry and your area.</p>' +
+        '<ul class="pcs-ticks"><li>Custom-coded, fast, no page builder</li><li>Monthly SEO and AIO content, links and fixes</li><li>AI agents that answer leads around the clock</li><li>Prefer proof first? Ask about the option to buy the site once its first-page rankings and AI citations are bringing you money</li></ul>' +
+        '<p class="pcs-price"><b>$20,000 to $50,000</b> depending on your market, scope and complexity. Terms, including any buy-later option, are agreed in writing before work starts.</p>' +
+        '<div class="pcs-btns"><a class="pcs-b hot" href="/book/">Request a plan</a><a class="pcs-b" href="https://eyetoad.com/custom-website-design/#start" target="_blank" rel="nofollow noopener">Talk to Eye To Ad</a><a class="pcs-b ghost" href="https://eyetoad.com/seo-time-machine/" target="_blank" rel="nofollow noopener">Estimate your timeline</a><a class="pcs-b ghost" href="tel:+18004818638">1-800-481-8638</a></div>' +
+        '<p class="pcs-note"><b style="color:#fff">No guarantees.</b> Nobody can promise rankings, AI citations, traffic or leads, and we don\'t. Google and AI tools decide what they show, and results depend on your market, competition and history. We show you the work and the numbers every month.</p></div>' +
+      /* 3. Three levels */
+      '<div class="pcs-card w12"><p class="pcs-led">Hosting and sites: pick your level</p><div class="pcs-levels">' +
+        '<div class="pcs-lvl" style="--c:#7ED321"><p class="k">Do it yourself</p><h3>DIY site or hosting</h3><p class="p">Website builder from <b>$5.99/mo</b>. cPanel hosting from <b>$4.99/mo</b>. WordPress hosting from <b>$12.99/mo</b>.</p><p class="pcs-note">Through buyweburl.com. Prices as listed on its product pages on Nov 8, 2026; taxes and ICANN fees extra.</p>' +
+          '<div class="pcs-btns"><a class="pcs-b sm" href="https://www.buyweburl.com/products/website-builder" target="_blank" rel="nofollow noopener">Website builder</a><a class="pcs-b sm" href="https://www.buyweburl.com/products/cpanel" target="_blank" rel="nofollow noopener">Hosting</a><a class="pcs-b sm ghost" href="https://www.buyweburl.com/products/domain-registration" target="_blank" rel="nofollow noopener">Domains</a></div></div>' +
+        '<div class="pcs-lvl" style="--c:#00B8F0"><p class="k">Built for you</p><h3>Custom CMS site</h3><p class="p">A WordPress or Shopify site set up and designed for you, so you can edit pages and products yourself.</p><p class="pcs-note">Quoted per project after a short call.</p>' +
+          '<div class="pcs-btns"><a class="pcs-b sm" href="/book/">Get a quote</a></div></div>' +
+        '<div class="pcs-lvl" style="--c:#FF2E93"><p class="k">Custom code</p><h3>Custom website or app</h3><p class="p">Hand-coded sites, portals, booking and quote tools, and web apps. From about <b>$20,000</b>, depending on complexity.</p><p class="pcs-note">Scope and price agreed in writing first.</p>' +
+          '<div class="pcs-btns"><a class="pcs-b sm hot" href="/book/">Book a free call</a><a class="pcs-b sm ghost" href="https://eyetoad.com/custom-website-design/" target="_blank" rel="nofollow noopener">See custom work</a></div></div>' +
+      '</div></div>' +
+      /* 4. Gauge + crawl reader */
+      '<div class="pcs-card w7" id="pcs-w-gauge"><p class="pcs-led amber">SEO gauge <span class="pcs-sample">Free</span></p>' +
+        '<div class="f"><label for="pcs-w-html">Paste a page\'s HTML (open the page, View Source, select all, copy)</label><textarea id="pcs-w-html" maxlength="2000000" placeholder="&lt;!doctype html&gt;..."></textarea></div>' +
+        '<div class="pcs-btns"><button class="pcs-b hot" type="button" id="pcs-w-gpaste">Score pasted HTML</button><button class="pcs-b" type="button" id="pcs-w-ggen">Score my generated page</button></div>' +
+        '<div id="pcs-w-gout" aria-live="polite"></div>' +
+        '<p class="pcs-note">Checks one page\'s on-page basics only. It cannot see speed, backlinks, rankings or competitors.</p></div>' +
+      '<div class="pcs-card w5"><p class="pcs-led violet">Crawl reader for Screaming Frog <span class="pcs-sample">Free</span></p>' +
+        '<p class="pcs-note" style="margin-top:0">In the SEO Spider, open the Internal tab, filter HTML, and Export to CSV. Drop the file here for a site-wide fix list. It is read in your browser and never uploaded.</p>' +
+        '<label class="pcs-b" style="margin-top:8px">Choose crawl CSV<input type="file" id="pcs-w-csv" accept=".csv,text/csv" hidden></label>' +
+        '<div id="pcs-w-cout" aria-live="polite"></div></div>' +
+      /* 5. Tie-ins */
+      '<div class="pcs-card w12"><p class="pcs-led cyan">Launch buttons: grow from here</p><div class="pcs-launch">' +
+        TIEINS.map(function (x) { var ext = /^https?:/.test(x.u); return '<a class="pcs-lb" style="--c:' + x.c + '" href="' + esc(x.u) + '"' + (ext ? ' target="_blank" rel="nofollow noopener"' : ' data-jump="1"') + '><b>' + esc(x.n) + '</b>' + stLamp(x.st) + '<span>' + esc(x.now) + '</span><em>' + esc(x.dom) + '</em></a>'; }).join('') +
+        '</div><p class="pcs-note">These are separate businesses in our network, each with its own prices and terms. Live results from each one inside this dashboard: coming soon.</p></div>' +
+      /* 6. Account links */
+      '<div class="pcs-card w12"><p class="pcs-led pink">Connect your SEO accounts</p><ul class="pcs-accts">' +
+        ACCOUNTS.map(function (x) { return '<li><div><b>' + esc(x.n) + '</b> ' + stLamp(x.st) + '<p>' + esc(x.d) + '</p></div><a class="pcs-b sm" href="' + esc(x.u) + '" target="_blank" rel="nofollow noopener">' + esc(x.now) + '</a></li>'; }).join('') +
+        '</ul><p class="pcs-note">We only connect read-only access, and only when you click to allow it. Nothing connects in the demo.</p></div>' +
+      '</div>';
+
+    var prev = $('#pcs-w-prev'), pend = 0;
+    function paint() {
+      var html = sitePage(S.site);
+      prev.srcdoc = html;
+      $('#pcs-w-size').textContent = 'File size: ' + (new Blob([html]).size / 1024).toFixed(1) + ' KB. Template: ' + (SITE_TPL[S.site.tpl] || SITE_TPL.creator).n + ', schema type ' + (SITE_TPL[S.site.tpl] || SITE_TPL.creator).type + '.';
+      var cu = $('#pcs-w-ctaUrl'); if (cu) { var bad = cu.value.trim() && !safeCta(cu.value); cu.setAttribute('aria-invalid', bad ? 'true' : 'false'); cu.style.borderColor = bad ? '#FF4D4D' : ''; }
+      var uu = $('#pcs-w-url'); if (uu) { var bad2 = uu.value.trim() && !safeUrl(uu.value); uu.setAttribute('aria-invalid', bad2 ? 'true' : 'false'); uu.style.borderColor = bad2 ? '#FF4D4D' : ''; }
+    }
+    function later() { clearTimeout(pend); pend = setTimeout(paint, 250); }
+    function showGauge(html) {
+      var r = gaugeHtml(html), out = $('#pcs-w-gout');
+      function list(arr) { return '<ul class="pcs-checks">' + arr.map(function (c) { return '<li class="' + (c[1] ? 'ok' : 'no') + '"><span aria-hidden="true">' + (c[1] ? '&#10003;' : '&#10007;') + '</span><span class="sr-only">' + (c[1] ? 'Pass: ' : 'Fix: ') + '</span><b>' + esc(c[2]) + '</b> <small>' + esc(c[3]) + '</small></li>'; }).join('') + '</ul>'; }
+      var convFails = r.conv.filter(function (c) { return !c[1]; }).length;
+      out.innerHTML = '<div class="pcs-gwrap">' + seoGaugeSvg(r.score) + '<p class="pcs-note">' + (r.score >= 85 ? 'Strong basics.' : r.score >= 60 ? 'Good start, a few fixes to make.' : 'Several basics are missing.') + ' Score out of 100.</p></div>' +
+        '<p class="pcs-led" style="margin-top:8px">Search basics</p>' + list(r.seo) +
+        '<p class="pcs-led amber" style="margin-top:8px">Conversion quick check</p>' + list(r.conv) +
+        '<p class="pcs-note">' + (convFails ? 'Traffic that cannot act is wasted. ' : 'Basics are in place. ') + 'For a full conversion analysis, run the free Conversion Audit at Search Converts.</p>' +
+        '<div class="pcs-btns"><a class="pcs-b hot sm" href="https://searchconverts.com/cro-audit/" target="_blank" rel="nofollow noopener">Free conversion audit</a><a class="pcs-b sm" href="https://searchconverts.com/website-conversion-rate/" target="_blank" rel="nofollow noopener">Conversion gauge</a><a class="pcs-b sm ghost" href="https://eyetoad.com/free-seo-audit/" target="_blank" rel="nofollow noopener">Free full SEO audit</a></div>';
+    }
+    bay.addEventListener('input', function (e) {
+      var k = e.target.getAttribute('data-site'); if (!k) return;
+      S.site[k] = e.target.value; changed(); later();
+    });
+    bay.addEventListener('change', function (e) {
+      var k = e.target.getAttribute('data-site'); if (k) { S.site[k] = e.target.value; changed(); paint(); return; }
+      if (e.target.id === 'pcs-w-color') { S.site.color = hexOk(e.target.value); $$('[data-wc]', bay).forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); changed(); paint(); }
+    });
+    $('#pcs-w-sw').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-wc]'); if (!b) return; S.site.color = b.getAttribute('data-wc'); $('#pcs-w-color').value = S.site.color;
+      $$('[data-wc]', bay).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); changed(); paint();
+    });
+    $('#pcs-w-dl').addEventListener('click', function () { download('index.html', sitePage(S.site), 'text/html'); });
+    $('#pcs-w-copy').addEventListener('click', function () { copy(sitePage(S.site), 'HTML'); });
+    $('#pcs-w-check').addEventListener('click', function () { showGauge(sitePage(S.site)); $('#pcs-w-gauge').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    $('#pcs-w-ggen').addEventListener('click', function () { showGauge(sitePage(S.site)); });
+    $('#pcs-w-gpaste').addEventListener('click', function () { var v = $('#pcs-w-html').value; if (!v.trim()) { toast('Paste some HTML first'); return; } showGauge(v); });
+    bay.addEventListener('click', function (e) { var j = e.target.closest('[data-jump]'); if (!j) return; e.preventDefault(); var g = $('#pcs-w-gauge'); g.scrollIntoView({ behavior: 'smooth', block: 'start' }); $('#pcs-w-html').focus({ preventScroll: true }); });
+    $('#pcs-w-csv').addEventListener('change', function () {
+      var f = this.files && this.files[0], out = $('#pcs-w-cout'); this.value = ''; if (!f) return;
+      if (f.size > 25 * 1024 * 1024) { out.innerHTML = '<p class="pcs-note">That file is over 25 MB. Export just the Internal: HTML tab.</p>'; return; }
+      var r = new FileReader();
+      r.onload = function () {
+        var rows = parseCsv(String(r.result || '')), s = rows.length > 1 ? crawlSummary(rows) : null;
+        if (!s) { out.innerHTML = '<p class="pcs-note">That does not look like a Screaming Frog Internal export. It needs an Address column.</p>'; return; }
+        var rowsOut = [['Pages crawled (HTML)', s.n, null], ['Broken (4xx)', s.s4.length, s.s4], ['Server errors (5xx)', s.s5.length, s.s5], ['Redirects (3xx)', s.s3.length, s.s3], ['Non-indexable', s.noidx.length, s.noidx],
+          ['Missing title', s.notitle.length, s.notitle], ['Duplicate titles', s.dupe.length, s.dupe], ['Missing meta description', s.nometa.length, s.nometa], ['Missing H1', s.noh1.length, s.noh1], ['Under 200 words', s.thin.length, s.thin]];
+        out.innerHTML = '<ul class="pcs-crawl">' + rowsOut.map(function (x) {
+          return '<li class="' + (x[2] && x[1] ? 'bad' : '') + '"><span>' + x[0] + '</span><b>' + x[1].toLocaleString('en-US') + '</b>' + (x[2] && x[1] ? '<details><summary>Show up to 10</summary><ul>' + x[2].slice(0, 10).map(function (u) { return '<li>' + esc(u) + '</li>'; }).join('') + '</ul></details>' : '') + '</li>';
+        }).join('') + '</ul><div class="pcs-btns"><a class="pcs-b sm hot" href="https://eyetoad.com/free-seo-audit/" target="_blank" rel="nofollow noopener">Have Eye To Ad fix it</a></div>';
+      };
+      r.readAsText(f);
     });
     paint();
   }
