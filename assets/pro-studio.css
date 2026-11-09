@@ -265,3 +265,13 @@
 @media (max-width:980px){#pcx{grid-template-columns:1fr}}
 @media (max-width:420px){.pcx-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.pcx-onair{animation:none}}
+.pcs-beta{display:inline-block;font:700 .62rem/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:4px 6px;border-radius:5px;background:#2a1a3a;color:#e9b6ff;border:1px solid #6a3f8a;vertical-align:middle;margin-left:6px}
+.pcs-lights{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.pcs-light{display:inline-flex;align-items:center;gap:6px;background:#15111f;border-radius:999px;padding:5px 10px;font-size:.8rem}
+.pcs-light i{width:10px;height:10px;border-radius:50%;background:#5a5170;display:inline-block}
+.pcs-light.on i{background:#3ddc84;box-shadow:0 0 8px #3ddc84}.pcs-light.warn i{background:#f5b942}.pcs-light.bad i{background:#ff5d6c}
+.pcs-light em{font-style:normal;color:var(--dim);font-size:.72rem}
+.pcs-lbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.pcs-biglaunch{font-size:1.15rem;padding:16px 28px;min-height:56px}
+.pcs-biglaunch:disabled,.pcs-lbtns .pcs-b:disabled{opacity:.55;cursor:not-allowed}
+.pcs-lstat{display:flex;gap:14px;flex-wrap:wrap;font-size:.84rem;padding:4px 0}.pcs-lstat b{min-width:96px}
