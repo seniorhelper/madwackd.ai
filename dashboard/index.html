@@ -12,7 +12,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
 <link rel="stylesheet" href="/assets/site.css?v=20261108b">
-<link rel="stylesheet" href="/assets/dashboard.css?v=20261107p">
+<link rel="stylesheet" href="/assets/dashboard.css?v=20261108ag">
 <link rel="stylesheet" href="/assets/guide-widget.css?v=20261108z">
 <script src="/assets/ga.js" defer></script>
 </head>
@@ -42,6 +42,52 @@
     <button id="upgrade-close" type="button" class="btn-mini" aria-label="Dismiss upgrade note">Dismiss</button>
   </div>
   <p id="status" class="status" role="status" aria-live="polite">Welcome. Pick a one-click start, or load a file.</p>
+
+  <section id="producers" class="card producers" aria-labelledby="pr-h" hidden>
+    <div class="card-head pr-head">
+      <h2 id="pr-h">Your 2 AI producers</h2>
+      <span class="muted small">Balance: <b id="pr-balance"></b></span>
+      <button id="pr-stop" class="btn-top pr-stop" type="button">Stop all</button>
+    </div>
+    <p id="pr-killed" class="pr-alert" hidden>Your producers are paused studio-wide right now. Nothing is being charged.</p>
+    <p id="pr-paused" class="pr-alert" hidden>Your producers are stopped. <button id="pr-resume" class="btn-mini" type="button">Resume</button></p>
+    <p class="muted small">Your <b>Showrunner</b> plans episodes, keeps your show bible and writes scripts. Your <b>Promo producer</b> picks clips, writes posts and cuts versions. They work while you're away, inside the budget you set.</p>
+    <div class="pr-grid">
+      <fieldset class="pr-budget"><legend>Budget</legend>
+        <label class="blk">Daily budget ($5 to $1,000)
+          <input id="pr-daily-range" type="range" min="5" max="1000" step="5" value="20" aria-label="Daily budget slider">
+          <input id="pr-daily" type="number" min="5" max="1000" step="1" value="20" inputmode="decimal"></label>
+        <label class="blk">Most one task can cost (credits) <input id="pr-cap" type="number" min="0" step="1" inputmode="numeric"></label>
+        <label class="blk">Auto-approve tasks up to (credits, 0 = always ask) <input id="pr-auto" type="number" min="0" step="1" value="0" inputmode="numeric"></label>
+        <button id="pr-save" class="btn-top" type="button">Save limits</button>
+        <p id="pr-today" class="small"></p>
+        <meter id="pr-meter" min="0" max="1" value="0" aria-label="Today's producer spend"></meter>
+      </fieldset>
+      <div class="pr-new">
+        <label class="blk">Who's it for?
+          <select id="pr-who"><option value="showrunner">Showrunner</option><option value="promo">Promo producer</option></select></label>
+        <label class="blk">Leave a task <textarea id="pr-brief" rows="3" maxlength="2000" placeholder="Write episode 4 and two 15-second promo scripts"></textarea></label>
+        <button id="pr-quote" class="btn-big-solid" type="button">Get a quote (free)</button>
+        <p id="pr-msg" class="small" role="status" aria-live="polite"></p>
+        <ul id="pr-alerts" class="pr-alerts"></ul>
+      </div>
+    </div>
+    <h3>Tasks</h3>
+    <ul id="pr-tasks" class="pr-tasks"></ul>
+    <details id="pr-bible-open"><summary>Show bible</summary>
+      <label class="blk"><span class="sr-only">Show bible</span><textarea id="pr-bible" rows="8" maxlength="12000" placeholder="Show name, premise, host, tone, recurring bits, what's happened so far"></textarea></label>
+      <button id="pr-bible-save" class="btn-top" type="button">Save show bible</button>
+    </details>
+    <details><summary>Talk to a producer</summary>
+      <label class="blk">Producer <select id="pr-chat-who"><option value="showrunner">Showrunner</option><option value="promo">Promo producer</option></select></label>
+      <label class="blk">Message <input id="pr-chat-in" type="text" maxlength="2000" autocomplete="off"></label>
+      <button id="pr-chat-send" class="btn-top" type="button">Send</button>
+      <p id="pr-chat-out" class="pr-out"></p>
+      <p id="pr-msgs" class="muted small"></p>
+    </details>
+    <details><summary>Activity log</summary><ul id="pr-log" class="pr-log"></ul></details>
+    <p id="pr-terms" class="muted small pr-terms"></p>
+  </section>
 
 </div>
   <aside class="rail" aria-label="Project and plan">
@@ -183,6 +229,7 @@
 <!-- Sign-in first (shared with /studio/), then the dashboard sees the right plan. -->
 <script src="/assets/config.js"></script>
 <script src="/assets/mw-auth.js"></script>
+<script src="/assets/dash-producers.js?v=20261108b" defer></script>
 <script src="/assets/mw-app-boot.js" data-mode="reload" data-load="/assets/dashboard.js?v=20261108a /assets/guide-widget.js?v=20261108z"></script>
 </body>
 </html>
