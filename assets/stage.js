@@ -360,7 +360,7 @@
       /* start by geometry (observers can starve in hidden or throttled tabs); the observer then pauses and resumes */
       var r = stage.getBoundingClientRect();
       inView = r.bottom > 0 && r.top < (window.innerHeight || 800);
-      if (inView && !document.hidden) play();
+      if (inView && !document.hidden && !played) play();
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(function (en) {
           inView = en[0].isIntersecting;
