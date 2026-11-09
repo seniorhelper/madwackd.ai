@@ -110,12 +110,12 @@
     if (!log.childNodes.length && topic !== "help" && topic !== "dashboard") {
       var g = L && L.greet ? L.greet(location.pathname) : ["Hi, I'm " + NAME + ", your AI producer. What are you making?", ["Take the tour", "What does it cost?"]];
       say(g[0], [], g[1]);
-      if (VO && VO.canSpeak()) speak(g[0]);
+      if (VO && VO.canSpeak()) VO.speak(g[0], null, true);   /* greeting: never over the stage show */
     }
     if (topic === "help") {
       var hl = "Love it. What are you making, and what should it do for you? I'll plan it, price it, and point you to the right next step.";
       say(hl, [], ["An ad for my business", "A talking brand or website", "A music video"]);
-      if (VO && VO.canSpeak()) speak(hl);
+      if (VO && VO.canSpeak()) VO.speak(hl, null, true);
     }
     if (topic === "dashboard") say("This is your Creator Dashboard: Mix, Sounds, Video and Voices. Want a one-click start, or help with your edit?");
     input.focus();

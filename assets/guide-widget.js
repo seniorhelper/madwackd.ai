@@ -16,7 +16,7 @@
   "use strict";
   if (typeof document === "undefined" || window.__mwzLauncher) return;
 
-  var V = "20261108z3";
+  var V = "20261108z4";
   /* The guide's name, in one place (Zach, Nov 8: Producer Z, he/him). MW_CONFIG.guideName can override it. */
   var NAME = String((window.MW_CONFIG && window.MW_CONFIG.guideName) || "Producer Z");
   var A = "/assets/z/";
@@ -99,24 +99,15 @@
   });
   var lipsReady = false, lipsLoading = false, talkRaf = 0, talkTimer = 0, curAudio = null;
   function emit(name, detail) { try { window.dispatchEvent(new CustomEvent(name, { detail: detail })); } catch (e) { /* old browser */ } }
-  /* One speaker at a time across the site (the Genie stage, Z, anything else that talks).
-     claim(id, stopFn) stops whoever is talking and takes the floor; release(id) when done; current() -> id or null.
-     Created here only if the page hasn't made one, so a richer shared version can replace it with the same shape. */
-  if (!window.MWAudio) window.MWAudio = (function () {
-    var cur = null;
-    return {
-      claim: function (id, stop) {
-        if (cur && cur.id !== id) { var prev = cur; cur = null; try { prev.stop(); } catch (e) { /* ignore */ } }
-        cur = { id: id, stop: stop || function () {} };
-        emit("mw:audio-claim", { id: id });
-      },
-      release: function (id) { if (cur && cur.id === id) cur = null; },
-      current: function () { return cur ? cur.id : null; },
-      stopAll: function () { if (cur) { var prev = cur; cur = null; try { prev.stop(); } catch (e) { /* ignore */ } } }
-    };
-  })();
-  var ME = "z-guide";
-  function othersTalking() { var c = window.MWAudio.current && window.MWAudio.current(); return !!c && c !== ME; }
+  /* One speaker at a time: the shared window.MWVoice (assets/mw-voice.js, owned by the stage). Stage pages load it
+     before stage.js; on other pages Z loads it here. Every call is guarded, so Z still works if it fails to load. */
+  if (!window.MWVoice) {
+    var mv = document.createElement("script"); mv.src = "/assets/mw-voice.js"; mv.async = true; document.head.appendChild(mv);
+  }
+  var ME = "z";
+  function MV() { return window.MWVoice || null; }
+  /* someone else is talking, or the stage show is performing with sound on */
+  function othersTalking() { var m = MV(); return !!m && (m.held(ME) || (!!m.speaking() && m.speaking() !== ME)); }
   function loadLips() {
     if (lipsReady || lipsLoading || REDUCED) return;
     lipsLoading = true;
@@ -133,7 +124,7 @@
   function talkEnd() {
     cancelAnimationFrame(talkRaf); clearInterval(talkTimer); talkRaf = 0; talkTimer = 0;
     mouth("rest"); emit("mw:z-talk", { on: false });
-    if (window.MWAudio) window.MWAudio.release(ME);
+    if (MV()) MV().release(ME);
   }
   function shapesOf(word) {
     var out = [], w = String(word || "").toLowerCase().replace(/[^a-z]/g, "");
@@ -191,7 +182,7 @@
       if (!text || !voice.canSpeak() || !("speechSynthesis" in window) || (polite && othersTalking())) { if (done) done(); return false; }
       loadLips();
       voice.stop();
-      window.MWAudio.claim(ME, voice.stop);
+      if (MV()) MV().claim(ME, voice.stop);
       try {
         var u = new SpeechSynthesisUtterance(text), pv = pickVoice(), resync = null;
         if (pv) u.voice = pv;
@@ -206,8 +197,8 @@
     /* a studio-voice clip (paid plans): per-character mouth timeline if given, else the audio's loudness */
     playAudio: function (audio, mouths) {
       if (!voice.canSpeak()) return false;
-      loadLips(); voice.stop(); curAudio = audio; audio.__mwz = true;
-      window.MWAudio.claim(ME, voice.stop);
+      loadLips(); voice.stop(); curAudio = audio;
+      if (MV()) MV().claim(ME, voice.stop);
       var ctx = null, an = null, buf = null, i = 0, last = "", flip = 0;
       if (!(mouths && mouths.length) && (window.AudioContext || window.webkitAudioContext)) {
         try {
@@ -238,29 +229,10 @@
       return true;
     }
   };
-  /* Safety net: any unmuted <audio>/<video> (including new Audio() clips the stage plays) takes the floor when it
-     starts, so Z never talks over it, even on pages that don't call MWAudio themselves. Muted clips are ignored. */
-  (function () {
-    var MP = window.HTMLMediaElement && HTMLMediaElement.prototype;
-    if (!MP || MP.__mwAudioHooked) return;
-    MP.__mwAudioHooked = true;
-    var play = MP.play;
-    MP.play = function () {
-      var el = this;
-      try {
-        if (!el.muted && el.volume > 0 && !el.__mwz) {
-          window.MWAudio.claim("media", function () { try { el.pause(); } catch (e) { /* ignore */ } });
-          var done = function () { if (window.MWAudio.current() === "media") window.MWAudio.release("media"); };
-          el.addEventListener("ended", done, { once: true });
-          el.addEventListener("pause", done, { once: true });
-        }
-      } catch (e) { /* never block playback */ }
-      return play.apply(this, arguments);
-    };
-  })();
   /* someone else took the floor (stage line, video): Z goes quiet at once */
-  window.addEventListener("mw:audio-claim", function (e) {
-    if (e.detail && e.detail.id !== ME && (curAudio || (window.speechSynthesis && speechSynthesis.speaking))) voice.stop();
+  window.addEventListener("mw:voice", function (e) {
+    var o = e.detail && e.detail.owner;
+    if (o && o !== ME && (curAudio || (window.speechSynthesis && speechSynthesis.speaking))) voice.stop();
   });
   if (window.speechSynthesis && speechSynthesis.addEventListener) speechSynthesis.addEventListener("voiceschanged", function () { /* warm list */ });
 
