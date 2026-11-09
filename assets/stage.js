@@ -60,7 +60,7 @@
   function talk(ms) {
     if (!genie) return;
     clearInterval(flapT);
-    var base = talkOK && POSES["talk-closed"] ? "talk-closed" : "";
+    var base = talkOK && POSES["talk-closed"] && (curPose === "point" || curPose === "talk-closed") ? "talk-closed" : "";
     var prev = curPose;
     if (base) pose(base);
     genie.classList.add("talk");
@@ -113,7 +113,8 @@
     talk(Math.max(900, ms - 400));
     clearTimeout(gTimer); if (ms) gTimer = setTimeout(function () { gSay.classList.remove("show"); }, ms);
   }
-  function say(id, ms) { var l = LINES[id]; if (!l) return; if (l[0] === "z") zSpeak(l[1], ms); else gSpeak(l[1], ms); vo(id); }
+  var DUR = { "z-1": 2.07, "z-2": 4.5, "z-3": 1.48, "g-1": 3.1, "g-2": 4.04, "g-3": 4.82, "g-4": 1.81, "g-5": 5.45, "g-6": 6.53 };
+  function say(id, ms) { var l = LINES[id]; if (!l) return; ms = Math.max(ms || 0, Math.round((DUR[id] || 0) * 1000) + 500); if (l[0] === "z") zSpeak(l[1], ms); else gSpeak(l[1], ms); vo(id); }
 
   /* ---------------- canvas: dust motes, sprite smoke (tinted, additive), sparkles and sparks ---------------- */
   var ctx = fx && fx.getContext ? fx.getContext("2d") : null, W = 0, H = 0, DPR = 1, parts = [], raf = 0, lastT = 0, fxOn = false, gold = false;
@@ -334,19 +335,19 @@
     layers.forEach(function (L, i) { T(function () { cls(L[0], true); var p = at($(L[1]), L[2], L[3]); sparks(p.x, p.y, 26); }, 18500 + i * 380); });
     /* act 4: the dream dashboard is built centre stage, for a creator, then for a business */
     T(function () { cls("s-dash", true); pose(POSES.present ? "present" : "point"); spotOnEl(holo, 40); tickCredits(); say("g-3", 2400); }, 21600);
-    T(function () { holoMode("business"); say("g-4", 2000); var h = at(holo, .5, .2); sparks(h.x, h.y, 30); }, 24200);
-    T(function () { holoMode("creator"); }, 26300);
+    T(function () { holoMode("business"); say("g-4", 2000); var h = at(holo, .5, .2); sparks(h.x, h.y, 30); }, 26200);
+    T(function () { holoMode("creator"); }, 28200);
     /* act 5: three dashboards drop in on ropes */
-    T(function () { cls("s-holo", true); cls("s-signs", true); pose("point"); say("g-5", 3200); spotPct(.36, .3); }, 26500);
-    T(function () { cls("s-signsout", true); }, 30200);
+    T(function () { cls("s-holo", true); cls("s-signs", true); pose("point"); say("g-5", 3200); spotPct(.36, .3); }, 28500);
+    T(function () { cls("s-signsout", true); }, 34100);
     /* curtain call: the wish, the console */
     T(function () {
       cls("s-done", true); console_(true); markSeen(); played = true; playing = false;
-      pose(POSES.wink ? "wink" : "out"); say("g-6", 5200);
+      pose("point"); say("g-6", 5200);
       if (wish) { wish.classList.add("glow"); setTimeout(function () { wish.classList.remove("glow"); }, 2600); }
       spotOnEl(genie, 0);
-    }, 30900);
-    T(function () { pose(POSES.present ? "present" : "point"); }, 36300);
+    }, 34700);
+    T(function () { pose(POSES.wink ? "wink" : "out"); }, 41800);
   }
   if (replayBtn) replayBtn.addEventListener("click", function () { playing = false; play(); });
 

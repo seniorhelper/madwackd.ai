@@ -9,8 +9,8 @@ through the active gcloud login with `prompts/gen.py` (same route as `madwackd-s
 Chroma key, despill, resize: `prompts/key.py`; seamless tiles: `prompts/tile.py`; page export: `prompts/export.py`
 (numpy + Pillow, no paid tool). Google's SynthID watermark is embedded in the renders.
 
-**Cost:** 29 calls x $0.101 (Vertex list price for a 2K still, counted even when the safety filter returned no
-image) = **$2.93 estimated**, cap was $10. Per-call rows: `COST-LEDGER.csv`. Not checked against the Google bill.
+**Cost:** 38 calls x $0.101 (Vertex list price for a 2K still, counted even when the safety filter returned no
+image) = **$3.84 estimated**, cap was $10. Per-call rows: `COST-LEDGER.csv`. Not checked against the Google bill.
 
 | Group | Calls | Est. |
 |---|---|---|
@@ -18,6 +18,7 @@ image) = **$2.93 estimated**, cap was $10. Per-call rows: `COST-LEDGER.csv`. Not
 | Scene layers (4 kept; first set of 4 discarded) | 8 | $0.81 |
 | Paint splats | 2 | $0.20 |
 | Velvet + boards tiles | 2 | $0.20 |
+| Round 2 face/arm edits (3 kept; 6 filter blocks) | 9 | $0.91 |
 
 ## Page files (root of this folder, the names `index.html` uses; all WebP, all under 250 KB)
 
@@ -37,6 +38,11 @@ image) = **$2.93 estimated**, cap was $10. Per-call rows: `COST-LEDGER.csv`. Not
 | boards-tile.webp | 1024x512 | 90 | seamless, horizontal planks with footlight scuffs, tested 2x2 |
 | splat-pink.webp | 719x800 | 63 | transparent |
 | splat-gold.webp | 664x800 | 82 | transparent |
+| genie-talk-open.webp | 1458x1200 | 67 | byte-copy of genie-point (open grin) |
+| genie-talk-closed.webp | 1458x1200 | 65 | genie-point with a closed smile; differs from talk-open only inside x 820-991, y 244-449 |
+| genie-present.webp | 1458x1200 | 52 | both palms open to the viewer's right, big grin (full re-render, same frame) |
+| genie-wink.webp | 1458x1200 | 77 | genie-out with a wink; differs from genie-out only inside x 784-996, y 254-374 |
+| *-600.webp | 729x600 | 22 to 34 | half-size of genie-out, genie-point, talk-open, talk-closed, present, wink |
 
 ### How the five poses line up
 All five share one 1458x1200 frame. The **smoke tail ends at (729, 1140)**, the point where the lamp spout tip
@@ -53,6 +59,12 @@ of the spout. Check: `masters/_preview-genie-aligned.jpg` (yellow cross = that p
   plus `lamp-alone` (closed lid). Useful if the lamp should ever be part of the same image.
 - Full-quality PNGs of every page file, `scene-1-sky` to `scene-4-foreground` at WebP q90, previews.
 
+### Round 2 (talk, present, wink)
+Edits were made with Gemini on the raw green-screen masters, aligned to the master (shift 0,0 both times) and only the
+changed face region patched back before keying (`prompts/patch.py`), so the talk pair and out/wink are pixel-identical
+outside the boxes listed above. The "mouth open mid-word" edit was blocked by the safety filter three times; the
+original pointing frame already has an open, teeth-showing grin, so it serves as talk-open.
+
 ## Known rough spots
 1. **genie-half was rendered with a different lamp** (ornate lid). Not visible on the page since the lamp is cut
    out, but the smoke column base is a little wider than in the other poses. Three regenerations with the matching
@@ -60,7 +72,8 @@ of the spout. Check: `masters/_preview-genie-aligned.jpg` (yellow cross = that p
 2. genie-point presents with an open palm, not a single finger (the finger wording is what the filter blocked twice).
 3. genie-puff is small; it was boosted 1.6x relative to its lamp so it reads at stage size.
 4. scene-trees has painted sky between the canopies (part of the band, so the sky layer does not show through there).
-5. Keyed edges checked at 2x on dark: clean. Smoke tails keep a 1 px warm rim that the model painted as rim light.
+5. genie-present is a full re-render of the pointing frame (arms and mouth changed), so its clay texture is not pixel-identical to genie-point; framing and lamp scale match.
+6. Keyed edges checked at 2x on dark: clean. Smoke tails keep a 1 px warm rim that the model painted as rim light.
 
 ## Prompts
 Full text of every prompt in `prompts/*.txt`. Shared blocks:
