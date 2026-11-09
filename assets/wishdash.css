@@ -21,8 +21,8 @@
 .wd-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-auto-flow:dense;gap:12px;padding:14px 16px 16px}
 .wd-card{background:var(--wd-panel);border:1px solid var(--wd-line);border-radius:12px;padding:12px 14px}
 .wd-card.week,.wd-card.zcard{grid-column:1/-1}
-.wd-card h4{margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;flex-wrap:wrap;font:800 .76rem/1.2 Poppins,Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--wd-mute)}
-.wd-card h4 i{font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;color:#7ED321;font-size:.72rem}
+.wd-card h3{margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;flex-wrap:wrap;font:800 .76rem/1.2 Poppins,Inter,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--wd-mute)}
+.wd-card h3 i{font-style:normal;font-weight:600;letter-spacing:0;text-transform:none;color:#7ED321;font-size:.72rem}
 .wd-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .wd-week div{background:rgba(0,0,0,.35);border-radius:8px;padding:8px 6px;border:1px solid var(--wd-line)}
 .wd-week div b{display:block;font-size:.66rem;color:var(--wd-mute);margin-bottom:6px}
