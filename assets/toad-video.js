@@ -1,0 +1,3 @@
+/* TOAD commercial click-to-play facade. Master: eyetoad.com _build/toad-video/toad-video.js */
+(function(){var s=document.getElementById('toad-video');if(!s)return;var b=s.querySelector('.tv-play'),M=s.getAttribute('data-m');if(!b||!M)return;
+b.addEventListener('click',function(){var c=navigator.connection,hd=(screen.width*(window.devicePixelRatio||1))>=1600&&!(c&&c.saveData),v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='none';v.poster=M+'/toad-104-poster-1280.webp';v.setAttribute('aria-label','TOAD commercial, 1 minute 44 seconds');v.src=M+'/toad-104-'+(hd?'1080':'720')+'.mp4';b.replaceWith(v);v.focus();var p=v.play();if(p&&p.catch)p.catch(function(){});},{once:true});})();

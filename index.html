@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://www.googletagmanager.com https://challenges.cloudflare.com; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'; frame-src https://challenges.cloudflare.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data: https://eyetoad.com; media-src 'self' blob: https://eyetoad.com; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://www.googletagmanager.com https://challenges.cloudflare.com; form-action https://clients.eyetoad.com; base-uri 'self'; object-src 'none'; frame-src https://challenges.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Madwackd Studio: AI Video Ads and Music Videos With Voice</title>
 <meta name="description" content="The ultimate AI video tool: ads, music videos and trailers with voice, priced before every render. Do it yourself, or hand it to a real human producer.">
@@ -35,6 +35,7 @@
 <link rel="stylesheet" href="/assets/stage.css?v=20261109r">
 <link rel="stylesheet" href="/assets/wishdash.css?v=20261109c">
 <link rel="stylesheet" href="/assets/guide-widget.css?v=20261108z">
+<link rel="stylesheet" href="/assets/toad-video.css?v=1">
 <script src="/assets/ga.js" defer></script>
 </head>
 <body>
@@ -157,6 +158,22 @@
     <p class="gs-cap">A stage drawn live in your browser: painted set pieces, a claymation-style Genie and Producer Z made for this page (AI-generated stills, not stop-motion). Dashboard numbers are sample data, not results; results vary.</p>
     <button type="button" class="gs-replay">Replay the show</button>
   </div>
+</section>
+<section class="tv-sec" id="toad-video" data-m="https://eyetoad.com/media/toad" aria-labelledby="tv-h">
+<div class="tv-in">
+<p class="tv-kick">Watch &middot; 1:44</p>
+<h2 id="tv-h">Meet the TOAD</h2>
+<p class="tv-sub">A 1:44 spot from Eye To Ad Media: the website that talks back, plus THE EARTH MOVIE presale.</p>
+<div class="tv-box">
+<button type="button" class="tv-play" aria-label="Play video: the TOAD commercial, 1 minute 44 seconds, with sound">
+<img src="https://eyetoad.com/media/toad/toad-104-poster-1280.webp" srcset="https://eyetoad.com/media/toad/toad-104-poster-640.webp 640w, https://eyetoad.com/media/toad/toad-104-poster-1280.webp 1280w" sizes="(max-width:992px) 100vw, 960px" width="1280" height="720" alt="" loading="lazy" decoding="async">
+<span class="tv-btn" aria-hidden="true"><svg viewBox="0 0 24 24" width="38" height="38"><path fill="#fff" d="M8 5.5v13l11-6.5z"/></svg></span>
+<span class="tv-len" aria-hidden="true">1:44</span>
+</button>
+</div>
+</div>
+<script src="/assets/toad-video.js?v=1" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoObject","name":"Meet the TOAD: the website that talks back","description":"Eye To Ad Media's TOAD commercial: a talking website that answers calls, replies to leads and gets found on Google and AI search, built on a network we own and run. It also previews THE EARTH MOVIE presale, where 1.5% of ticket sales go to carbon removal through Stripe Climate.","thumbnailUrl":["https://eyetoad.com/media/toad/toad-104-thumb.jpg","https://eyetoad.com/media/toad/toad-104-poster-1280.webp"],"uploadDate":"2026-11-09","duration":"PT1M44S","contentUrl":"https://eyetoad.com/media/toad/toad-104-1080.mp4","publisher":{"@type":"Organization","name":"Eye To Ad Media","url":"https://eyetoad.com/"}}</script>
 </section>
 <section class="mw-load" id="mw-load" aria-labelledby="mw-load-h">
   <div class="wrap">
