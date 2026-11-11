@@ -329,7 +329,7 @@
 }
 /* ---------- phones and tablets: a tall stage band (most of the screen), the console always under it ---------- */
 @media (max-width:900px){
-  .gstage{--hdr:168px;--peek:112px;--mh:clamp(360px,calc(100vh - var(--hdr) - var(--peek)),720px);--zw:clamp(88px,24vw,124px);min-height:0;padding:var(--mh) 0 16px;justify-content:flex-start}
+  .gstage{--hdr:97px;--peek:158px;--mh:clamp(360px,calc(100vh - var(--hdr) - var(--peek)),720px);--zw:clamp(88px,24vw,124px);min-height:0;padding:var(--mh) 0 16px;justify-content:flex-start}
   .gs-scene{height:var(--mh);inset:auto 0 auto 0;top:0}
   .gs-floor{height:40%}
   .gs-pros{display:none}
@@ -373,7 +373,7 @@
   .gs-foot-row{justify-content:flex-start}
 }
 @supports (height:1svh){@media (max-width:900px){.gstage{--mh:clamp(360px,calc(100svh - var(--hdr) - var(--peek)),720px)}}}
-@media (max-width:400px){.gstage{--hdr:158px}}@media (max-width:360px){.gstage{--hdr:136px;--peek:100px}}
+
 @media (min-width:600px) and (max-width:900px){.gs-holo{transform:translateX(-50%) translateY(40px) scale(.7)}.gstage.s-dash .gs-holo{transform:translateX(-50%) scale(.8)}.gs-sign span{font-size:.82rem}}
 @media (max-width:420px){.gs-sign span{display:none}}
 @media (max-width:380px){.gs-gsay{font-size:.84rem;padding:8px 10px}.gcon textarea{min-height:76px}.gs-long{display:none}.gs-wishbtn b{font-size:1.02rem;white-space:nowrap}.gs-wishbtn{padding:10px 9px 9px}}
@@ -459,3 +459,29 @@
   .gstage .gs-grow-foot span{flex:1;min-width:0}
   .gstage .gs-grow-z{flex:none}
 }
+
+/* ---------- stage pages: slim top bar (logo, call, Start for $5); the six tiles ride in a band at the foot of the stage
+   (desktop: the bottom of the first screen; phones: right under the stage picture, the wish console peeking below).
+   Same tile design as the header (nav.css). ---------- */
+.site-header.mh-slim .mh-bar{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"brand . acts"}
+.gstage .mh-band{position:relative;z-index:14;flex:none;width:100%;background:linear-gradient(180deg,#0B1A3A 0%,#081429 100%);border-top:1px solid rgba(56,240,255,.2);border-bottom:1px solid rgba(56,240,255,.16);box-shadow:0 -10px 30px -16px rgba(3,8,24,.9);color:#CFDBF1}
+.gstage .mh-band .mh-tiles{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:5px 12px;border-top:0}
+@media (min-width:901px){
+  .gstage{--bandh:78px;padding-bottom:0}
+  .gstage .gs-scene{bottom:var(--bandh)}
+  .gstage .gs-foot-row{position:absolute;right:max(16px,calc((100% - 1240px)/2 + 32px));bottom:calc(var(--bandh) + 12px);left:auto;margin:0;padding:0;max-width:min(560px,calc(100% - 700px))}
+  .gstage .gs-wrap{margin-bottom:16px}
+  .gstage .mh-band{margin-top:0}
+}
+@media (max-width:999px){
+  .site-header.mh-slim .mh-bar{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"brand acts";padding-bottom:8px}
+  .gstage .mh-band .mh-tiles{margin:0;padding:4px 8px}
+  .gstage .mh-band .mh-t{flex:1 1 0;max-width:150px}
+}
+@media (max-width:900px){
+  .gstage{--hdr:97px;--peek:158px}
+  .gstage .mh-band{order:-1;margin:0 0 14px}
+}
+@media (max-width:400px){.gstage{--hdr:87px}}
+@media (max-width:360px){.gstage{--hdr:65px;--peek:150px}}
+@media (max-width:640px){.gstage .mh-band .mh-tiles{padding:3px 2px}.gstage .mh-band .mh-t{flex:1 1 auto}}
