@@ -485,3 +485,4 @@
 @media (max-width:400px){.gstage{--hdr:87px}}
 @media (max-width:360px){.gstage{--hdr:65px;--peek:150px}}
 @media (max-width:640px){.gstage .mh-band .mh-tiles{padding:3px 2px}.gstage .mh-band .mh-t{flex:1 1 auto}}
+.gstage .gs-replay{white-space:nowrap;flex:none}
