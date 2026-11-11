@@ -1,0 +1,69 @@
+/* Private Custom Creator Studio (/my-studio/). Genie look: dark stage, Poppins heads, madwackd brights. */
+[hidden]{display:none!important}
+:root{--ms-bg:#15121F;--ms-bg2:#1E1A2B;--ms-bg3:#2A2440;--ms-ink:#F4F0FA;--ms-mute:#B9B0CC;--ms-line:rgba(255,255,255,.12);--brand:#8B3DFF}
+.ms-body{margin:0;background:var(--ms-bg);color:var(--ms-ink);font-family:Inter,system-ui,sans-serif;line-height:1.5;
+  background-image:radial-gradient(1200px 500px at 50% -10%,color-mix(in srgb,var(--brand) 35%,transparent),transparent 70%)}
+.ms-body a{color:inherit}
+.ms-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;max-width:1240px;margin:0 auto}
+.ms-brand{font-family:Poppins,sans-serif;font-weight:700;font-size:20px;text-decoration:none;margin-right:auto}
+.ms-brand b{color:#FF2E93}
+.ms-pill{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--ms-line);color:var(--ms-mute)}
+.mw-acct{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ms-mute)}
+.mw-acct-who{max-width:28ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ms{max-width:1240px;margin:0 auto;padding:8px 16px 64px}
+.ms h1,.ms h2,.ms h3{color:var(--ms-ink);font-family:Poppins,sans-serif;line-height:1.15;margin:0 0 10px}
+.ms h1{font-size:clamp(28px,5vw,48px)}
+.ms h2{font-size:22px}
+.ms .ms-col h3,.ms h3{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--ms-mute)}
+.ms-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 18px;border-radius:10px;border:0;cursor:pointer;
+  font:600 15px Poppins,sans-serif;text-decoration:none;color:#fff;background:linear-gradient(135deg,#FF2E93,var(--brand))}
+.ms-btn:hover{filter:brightness(1.08)}
+.ms-btn:focus-visible,.ms input:focus-visible,.ms textarea:focus-visible,.ms select:focus-visible,.ms-team button:focus-visible,.ms-tools a:focus-visible{outline:3px solid #FFD60A;outline-offset:2px}
+.ms-btn-ghost{background:transparent;border:1px solid var(--ms-line);color:var(--ms-ink)}
+.ms-small{min-height:36px;font-size:13px;padding:0 12px}
+.ms-gate{text-align:center;padding:72px 0}
+.ms-gate p{color:var(--ms-mute);max-width:52ch;margin:0 auto 16px}
+.ms-gate-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ms-lamp{width:84px;height:84px;margin:0 auto 18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFD60A,#FF8A00 45%,#8B3DFF 100%);box-shadow:0 0 60px rgba(255,214,10,.35)}
+.ms-hero{padding:32px 0 24px}
+.ms-kicker{font-weight:600;color:#FFD60A;margin:0 0 6px;text-transform:uppercase;letter-spacing:.08em;font-size:13px}
+.ms-tag{color:var(--ms-mute);font-size:18px;margin:0 0 18px}
+.ms-wish{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;background:var(--ms-bg2);border:1px solid var(--ms-line);border-radius:14px;padding:10px}
+.ms-wish textarea{flex:1 1 300px}
+.ms-poof{min-width:120px;font-size:18px;background:linear-gradient(135deg,#FFD60A,#FF8A00 40%,#FF2E93)}
+.ms-fine{font-size:13px;color:var(--ms-mute);margin:8px 0 0}
+.ms input,.ms textarea,.ms select{width:100%;box-sizing:border-box;background:var(--ms-bg);color:var(--ms-ink);border:1px solid var(--ms-line);border-radius:10px;padding:10px 12px;font:15px Inter,sans-serif}
+.ms textarea{resize:vertical}
+.ms input[type=color]{width:64px;height:44px;padding:4px}
+.ms-card{background:var(--ms-bg2);border:1px solid var(--ms-line);border-radius:14px;padding:20px;margin:18px 0}
+.ms-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ms-save{font-size:13px;color:var(--ms-mute)}
+.ms-sub{color:var(--ms-mute);margin:0 0 14px}
+.ms-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ms-col{background:var(--ms-bg);border-radius:12px;padding:12px;min-height:90px}
+.ms-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ms-list li{background:var(--ms-bg3);border-left:4px solid var(--brand);border-radius:8px;padding:10px;font-size:14px;overflow-wrap:anywhere}
+.ms-list .ms-acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ms-list .ms-acts button{min-height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--ms-line);background:transparent;color:var(--ms-ink);cursor:pointer;font-size:12px}
+.ms-empty{color:var(--ms-mute);font-size:13px}
+.ms-team{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.ms-team button{width:100%;text-align:left;min-height:120px;padding:14px;border-radius:12px;border:2px solid var(--ms-line);background:var(--ms-bg);color:var(--ms-ink);cursor:pointer;font:inherit}
+.ms-team button[aria-pressed=true]{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset}
+.ms-team b{display:block;font-family:Poppins,sans-serif;font-size:16px;margin-bottom:4px}
+.ms-team span{display:block;font-size:13px;color:var(--ms-mute)}
+.ms-team a{display:inline-block;margin-top:6px;font-size:13px;color:#00B8F0}
+.ms-team .ms-on{color:#7ED321;font-weight:600}
+.ms-tools{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.ms-tools a{display:block;padding:14px;border-radius:12px;background:var(--ms-bg);border:1px solid var(--ms-line);text-decoration:none;min-height:44px}
+.ms-tools a:hover{border-color:var(--brand)}
+.ms-tools b{display:block;font-family:Poppins,sans-serif}
+.ms-tools span{font-size:13px;color:var(--ms-mute)}
+.ms-kit{display:grid;gap:14px;max-width:720px}
+.ms-kit label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.ms-kit fieldset{border:1px solid var(--ms-line);border-radius:10px;padding:12px;display:grid;gap:8px}
+.ms-kit legend{font-weight:600;font-size:14px;padding:0 4px}
+.ms-hint{font-weight:400;color:var(--ms-mute);font-size:12px}
+.ms-ch{display:grid;grid-template-columns:140px 1fr 44px;gap:8px}
+.ms-x{border:1px solid var(--ms-line);background:transparent;color:var(--ms-ink);border-radius:10px;cursor:pointer;font-size:20px}
+@media (max-width:760px){.ms-cols{grid-template-columns:1fr}.ms-ch{grid-template-columns:1fr 1fr 44px}.ms-wish{flex-direction:column}.ms-wish textarea{flex:none}}
+@media (prefers-reduced-motion:no-preference){.ms-list li{animation:ms-pop .25s ease-out}@keyframes ms-pop{from{transform:scale(.96);opacity:0}to{transform:none;opacity:1}}}

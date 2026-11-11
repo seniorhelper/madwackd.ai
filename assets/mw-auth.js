@@ -127,7 +127,7 @@
         el.appendChild(who); el.appendChild(out);
       } else {
         // /studio/ has both sign-in options (Google, or an emailed sign-in link) and sends you back here afterwards.
-        var back = ['/dashboard/', '/studio-board/', '/creator-studio/', '/owner/'].indexOf(location.pathname) > -1 ? '?return=' + encodeURIComponent(location.pathname) : '';
+        var back = ['/dashboard/', '/studio-board/', '/creator-studio/', '/owner/', '/my-studio/'].indexOf(location.pathname) > -1 ? '?return=' + encodeURIComponent(location.pathname) : '';
         var a = document.createElement('a'); a.className = el.getAttribute('data-mw-btn') || 'btn-top'; a.href = '/studio/' + back + '#live';
         a.textContent = 'Sign in'; a.title = 'Continue with Google or email';
         var hint = document.createElement('span'); hint.className = 'mw-acct-who'; hint.textContent = 'Google or email';

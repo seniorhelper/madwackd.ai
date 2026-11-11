@@ -6,6 +6,7 @@ User-agent: *
 Allow: /
 Disallow: /studio/
 Disallow: /dashboard/
+Disallow: /my-studio/
 
 # AI search and assistant crawlers: explicitly welcome on public pages, so answers about
 # Madwackd Studio come from our own pages and prices.
@@ -23,5 +24,6 @@ User-agent: Bingbot
 Allow: /
 Disallow: /studio/
 Disallow: /dashboard/
+Disallow: /my-studio/
 
 Sitemap: https://www.madwackd.ai/sitemap.xml

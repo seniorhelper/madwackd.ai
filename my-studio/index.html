@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src https://madwackd-studio-api-k5fhrvx7kq-uc.a.run.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com; frame-src https://madwackd-studio.firebaseapp.com; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>My Creator Studio | Madwackd Studio</title>
+<meta name="description" content="A private Madwackd creator studio. Invite only.">
+<meta name="theme-color" content="#15121F">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/fonts.css?v=20261106c">
+<link rel="stylesheet" href="/assets/site.css?v=20261108b">
+<link rel="stylesheet" href="/assets/my-studio.css?v=20261110d">
+</head>
+<body class="ms-body">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="ms-top">
+  <a class="ms-brand" href="/" aria-label="Madwackd Studio home">Madwackd <b>Studio</b></a>
+  <span class="ms-pill">Private studio</span>
+  <span class="mw-acct" data-mw-account data-mw-btn="ms-btn ms-btn-ghost"></span>
+</header>
+
+<main id="main" class="ms">
+
+  <!-- Shown until the API says this account owns a private studio. The page itself holds no personal data. -->
+  <section id="gate" class="ms-gate" aria-live="polite">
+    <div class="ms-lamp" aria-hidden="true"></div>
+    <h1>This creator studio is private.</h1>
+    <p id="gate-msg">Checking your sign-in…</p>
+    <p class="ms-gate-cta"><a id="gate-signin" class="ms-btn" href="/studio/?return=%2Fmy-studio%2F#live" hidden>Sign in</a>
+      <a class="ms-btn ms-btn-ghost" href="/custom-creator-studio/">Get your own Custom Creator Studio</a></p>
+  </section>
+
+  <div id="dash" hidden>
+    <section class="ms-hero" aria-labelledby="hello">
+      <p class="ms-kicker">Your Custom Creator Studio</p>
+      <h1 id="hello">Hi <span id="who-name"></span>. What do you dream of?</h1>
+      <p id="who-tag" class="ms-tag"></p>
+      <form id="wish-form" class="ms-wish" autocomplete="off">
+        <label for="wish-text" class="sr-only">Tell Genie your next idea</label>
+        <textarea id="wish-text" maxlength="500" rows="3" placeholder="A 30-second trailer for my channel, a song video, a funny short…" required></textarea>
+        <button type="submit" class="ms-btn ms-poof">Poof!</button>
+      </form>
+      <p class="ms-fine">Wishes save to your private board. Nothing renders or spends credits until you quote and confirm it in the Creator Dashboard.</p>
+    </section>
+
+    <section class="ms-card" aria-labelledby="board-h">
+      <div class="ms-row"><h2 id="board-h">Wish board</h2><span id="save-state" class="ms-save" role="status"></span></div>
+      <div class="ms-cols">
+        <div class="ms-col"><h3>Wishes</h3><ul id="col-wish" class="ms-list"></ul></div>
+        <div class="ms-col"><h3>Brewing</h3><ul id="col-brewing" class="ms-list"></ul></div>
+        <div class="ms-col"><h3>Done</h3><ul id="col-done" class="ms-list"></ul></div>
+      </div>
+    </section>
+
+    <section class="ms-card" aria-labelledby="team-h">
+      <h2 id="team-h">Your production team</h2>
+      <p class="ms-sub">Tap a crew member to put them on your team. Each one opens the tool they work in.</p>
+      <ul id="team" class="ms-team"></ul>
+    </section>
+
+    <section class="ms-card" aria-labelledby="tools-h">
+      <h2 id="tools-h">Studio tools</h2>
+      <ul class="ms-tools">
+        <li><a href="/dashboard/"><b>Creator Dashboard</b><span>Mix voice and music, edit, quote and render.</span></a></li>
+        <li><a href="/studio-board/"><b>Studio Board</b><span>Plan posts and projects (Studio plan).</span></a></li>
+        <li><a href="/custom-creator-studio/"><b>Tell Genie</b><span>The Custom Creator Studio page.</span></a></li>
+        <li id="tool-owner" hidden><a href="/owner/"><b>Owner console</b><span>Money, spend, leads, alerts.</span></a></li>
+      </ul>
+    </section>
+
+    <section class="ms-card" aria-labelledby="kit-h">
+      <h2 id="kit-h">Brand kit</h2>
+      <form id="kit" class="ms-kit" autocomplete="off">
+        <label>Studio name <input id="k-name" maxlength="40"></label>
+        <label>Tagline <input id="k-tag" maxlength="120" placeholder="One line about what you make"></label>
+        <label>Brand color <input id="k-color" type="color" value="#8B3DFF"></label>
+        <fieldset><legend>Channels</legend><div id="k-channels"></div>
+          <button type="button" id="k-add-ch" class="ms-btn ms-btn-ghost ms-small">Add channel</button></fieldset>
+        <label>Goals <span class="ms-hint">one per line, up to 10</span><textarea id="k-goals" rows="3" maxlength="1300"></textarea></label>
+        <label>Notes <textarea id="k-notes" rows="5" maxlength="4000"></textarea></label>
+        <button type="submit" class="ms-btn">Save brand kit</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<template id="tpl-ch"><div class="ms-ch">
+  <select aria-label="Platform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="x">X</option><option value="twitch">Twitch</option><option value="other">Other</option></select>
+  <input aria-label="Handle" maxlength="60" placeholder="@handle">
+  <button type="button" class="ms-x" aria-label="Remove channel">×</button></div></template>
+
+<script src="/assets/config.js"></script>
+<script src="/assets/mw-auth.js?v=20261110d"></script>
+<script src="/assets/my-studio.js?v=20261110d" defer></script>
+</body>
+</html>

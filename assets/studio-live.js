@@ -53,7 +53,7 @@
     return "Sign-in didn't work. Please try again.";
   }
   /* ---------- come back to the app page you started from (/studio/?return=/dashboard/) ---------- */
-  var RETURNS = ["/dashboard/", "/studio-board/", "/creator-studio/", "/owner/"];
+  var RETURNS = ["/dashboard/", "/studio-board/", "/creator-studio/", "/owner/", "/my-studio/"];
   (function () {
     var r = new URLSearchParams(location.search).get("return");
     if (r && RETURNS.indexOf(r) > -1) { store("mw_return", r + "|" + Date.now()); history.replaceState(null, "", location.pathname + location.hash); }
